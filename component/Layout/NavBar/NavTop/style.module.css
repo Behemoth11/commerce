@@ -1,6 +1,6 @@
 .navTop {
   --nav-bottom-line: 4px;
-  border-bottom: var(--nav-bottom-line) solid var(--accent-color);
+  border-bottom: var(--nav-bottom-line) solid var(--theme-color);
 }
 
 .navTop > div {
