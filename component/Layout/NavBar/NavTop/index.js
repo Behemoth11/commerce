@@ -20,7 +20,7 @@ const index = () => {
         </div>
         <div className="flex-center">MOMENT</div>
         <div className=" flex flex-right">
-          <div style={{ margin: 20 }}>
+          <div style={{ marginTop: 10 }}>
             <svg
               width="27"
               height="31"
