@@ -11,13 +11,14 @@
     --burger-height: 15px;
     --burger-width: 30px;
     --bar-height: 2px;
-    --burger-color: var(--body-neutral-dark);
+    --burger-color: var(--text-color);
     --burger-margin: 7px;
 
 
     width: var(--burger-width);
     height: var(--burger-height);
     margin: var(--burger-margin);
+    flex: 1;
     position: relative;
     cursor: pointer;
     &::before, &::after, .middle{
