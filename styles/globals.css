@@ -56,12 +56,13 @@ a {
   height: 100%;
 }
 
-.container, .big-container {
+.container {
   height: 100%;
   width: 100%;
 }
 
 .big-container {
+  width: 100%;
   max-width: var(--page-max-width);
 }
 

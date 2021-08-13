@@ -63,8 +63,8 @@ a {
 }
 
 .big-container{
-  @extend .container;
-  max-width: var(--page-max-width)
+  width: 100%;
+  max-width: var(--page-max-width);
 }
 
 
