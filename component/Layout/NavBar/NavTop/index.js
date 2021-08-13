@@ -20,7 +20,7 @@ const index = () => {
         </div>
         <div className="flex-center">MOMENT</div>
         <div className=" flex flex-right">
-          <div style={{ marginTop: 10 }}>
+          <div style={{ margin: 20 }}>
             <svg
               width="27"
               height="31"
@@ -30,16 +30,16 @@ const index = () => {
             >
               <path
                 d="M20.5 10C20.5 15.2712 16.4467 19.5 11.5 19.5C6.55329 19.5 2.5 15.2712 2.5 10C2.5 4.72882 6.55329 0.5 11.5 0.5C16.4467 0.5 20.5 4.72882 20.5 10Z"
-                fill="#202030"
-                stroke="white"
+                fill="white"
+                stroke="#202030"
               />
               <rect
                 x="0.6"
                 y="7.6"
                 width="21.8"
                 height="17.8"
-                fill="#202030"
-                stroke="white"
+                fill="white"
+                stroke="#202030"
                 stroke-width="1.2"
               />
               <ellipse cx="21" cy="25.5" rx="6" ry="5.5" fill="white" />

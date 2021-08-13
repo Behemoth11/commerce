@@ -4,12 +4,12 @@
   --border-radius: 2px;
   --margin: 5px;
   --padding: 5px;
-  --text-color: white;
+  --text-color: rgb(0, 0, 0);
   --theme-color: #202030;
   --accent-color: #bb245c;
   --body-background: white;
   --body-neutral-dark: black;
-  --body-neutral-light: #202030;
+  --body-neutral-light: #ffffff;
   --page-max-width: 1200px;
   --animation-duration: 0.5s;
 }
