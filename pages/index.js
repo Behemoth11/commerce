@@ -107,6 +107,7 @@ export default function Home() {
         tincidunt metus eros, eget commodo nisl laoreet eu. Duis quis neque
         odio. Cras leo felis, tempus non ornare in, porta a diam. Fusce vitae
         ultrices.~
-    </div>
+      </div>
+      </div>
   );
 }

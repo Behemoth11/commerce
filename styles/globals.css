@@ -34,7 +34,6 @@ body {
 }
 
 #__next {
-  border: 2px solid blue;
   height: 100%;
   width: 100%;
   font-size: 1em;
