@@ -1,0 +1,51 @@
+
+.navTop{
+    --nav-bottom-line: 4px;
+    border-bottom: var(--nav-bottom-line) solid var(--accent-color);
+    & > div{
+        padding: 0 calc(var(--padding)*5)
+    }
+}
+
+.burgerDiv{
+    --burger-height: 15px;
+    --burger-width: 30px;
+    --bar-height: 2px;
+    --burger-color: var(--body-neutral-dark);
+    --burger-margin: 7px;
+
+
+    width: var(--burger-width);
+    height: var(--burger-height);
+    margin: var(--burger-margin);
+    position: relative;
+    cursor: pointer;
+    &::before, &::after, .middle{
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: var(--bar-height);
+        background-color: var(--burger-color);
+        transition: transform var(animation-duration) ease-in-out;
+    } 
+
+    &::before{
+        top:0
+    }
+    &::after{
+        bottom: 0;
+    }
+
+    .middle{
+        top: calc(50% - var(--bar-height)/2);
+        transform: translateX(calc(-1 * var(--burger-width)/5));
+        transition: transform calc(var(--animation-duration)/3) ease-in-out;
+    }
+
+    &:active{
+        .middle{
+            transform: translate(0)
+        }
+    }
+
+}
