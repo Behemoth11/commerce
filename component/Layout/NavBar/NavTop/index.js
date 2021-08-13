@@ -40,7 +40,7 @@ const index = () => {
                 height="17.8"
                 fill="white"
                 stroke="#202030"
-                stroke-width="1.2"
+                strokeWidth="1.2"
               />
               <ellipse cx="21" cy="25.5" rx="6" ry="5.5" fill="white" />
               <circle cx="20.8125" cy="25.1875" r="4.8125" fill="#202030" />
