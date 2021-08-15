@@ -29,6 +29,11 @@
   }
 }
 
+.navigation{
+  position: absolute;
+  background-color: var(--theme-color);
+}
+
 .headerSection {
   color: var(--text-color-light);
   height: var(--navigation-height);

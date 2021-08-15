@@ -142,6 +142,12 @@ a {
   cursor: pointer;
 }
 
+.no-shrink {
+  width: 100%;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
 @media (hover: none) {
   .pointer {
     cursor: default;

@@ -2,6 +2,7 @@
 import styles from "./style.module.css";
 import Link from "next/link";
 import { useNavBarState } from "../NavBarContext";
+import { useTransition, animated } from "react-spring";
 
 const littleLinkList = "about us// contact us// feedback".split("//");
 
@@ -9,14 +10,31 @@ const Navigation = ({
   mainMenu,
   headers,
   title,
+  index,
+  visible,
   updateSideBar,
   regression,
   sideBarLocation,
 }) => {
   const { sideBarIsOpen, toggleNavBar } = useNavBarState();
 
-  return (
-    <div className={`vertical-flex container`}>
+  console.log(
+    `here it is ${title} and I am ${visible ? "visible" : "not visible"}`
+  );
+
+  const animate = useTransition(visible, {
+    from: {
+      transform: "translateX(100%)",
+    },
+    enter: { transform: "translateX(0%)" },
+    leave: { transform: "translateX(100%)" },
+  });
+
+  return animate(
+    (_styles, visible) => visible && <animated.div
+      className={`${styles.navigation} vertical-flex container no-shrink`}
+      style={_styles}
+    >
       <div className={`${styles.headerSection} flex align-center`}>
         {!mainMenu && (
           <div
@@ -43,13 +61,18 @@ const Navigation = ({
           hasDescendant ? (
             <div
               key={label}
-              onClick={() => updateSideBar(label)}
+              onClick={() => updateSideBar(label,index)}
               className={`max-width flex pointer align-center ${styles.linkContainer}`}
             >
               {label}
             </div>
           ) : (
-            <Link key={label} href={`/explore?categories=${sideBarLocation.split('/').slice(1,).join("&&")}+${label}`}>
+            <Link
+              key={label}
+              href={`/explore?categories=${sideBarLocation
+                .slice(1)
+                .join("&&")}+${label}`}
+            >
               <div
                 className={`max-width flex pointer align-center ${styles.linkContainer}`}
               >
@@ -71,7 +94,7 @@ const Navigation = ({
           ))}
         </ul>
       </div>
-    </div>
+    </animated.div>
   );
 };
 

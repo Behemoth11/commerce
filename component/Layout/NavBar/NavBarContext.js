@@ -6,7 +6,7 @@ const SideBarContext = React.createContext({
 });
 
 const NavBarProvider = ({ children }) => {
-  const [sideBarIsOpen, setSideBarIsOpen] = useState(false); //remeber to change this to true
+  const [sideBarIsOpen, setSideBarIsOpen] = useState(true); //remeber to change this to true
 
   useEffect(() => {
     const page = document.getElementById("__next");
