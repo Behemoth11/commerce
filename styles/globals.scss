@@ -1,26 +1,34 @@
 :root {
   --border: 2px;
+  --thin-border: 1px;
   --border-radius: 2px;
   --margin: 5px;
+  --large-margin: 8px;
+  --larger-margin: 50px;
   --padding: 5px;
-  --text-color: rgb(0, 0, 0);
-  --theme-color: #202030;
+  --large-padding: 15px;
+  --text-color-dark: rgb(0, 0, 0);
+  --text-color-light: rgb(255, 255, 255);
+  --theme-color: #0f0f13;
   --accent-color: #bb245c;
-  --body-background: white;
-  --body-neutral-dark: black;
+  --secondary-accent-color: #bb245bb1;
+  --body-background: #ffffff;
+  --body-neutral-dark: #000000;
   --body-neutral-light: #ffffff;
   --page-max-width: 1200px;
+  --large-font-size: 1.2em;
+  --medium-font-size: 0.8em;
   --animation-duration: 0.5s;
 }
 
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
-
-html{
+html {
   height: 100vh;
   width: 100vw;
 }
@@ -32,7 +40,21 @@ body {
   overflow: hidden;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1em;
+  font-weight: normal;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Manrope&display=swap");
 
 #__next {
   height: 100%;
@@ -40,80 +62,84 @@ body {
   font-size: 1em;
   background-color: var(--body-background);
   overflow-y: auto;
-  font-family: 'Manrope', sans-serif;
-  color: var(--text-color)
+  font-family: "Manrope", sans-serif;
+  color: var(--text-color-dark);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.max-width{
+.max-width {
   width: 100%;
 }
 
-.max-height{
+.max-height {
   height: 100%;
 }
 
-.container{
+.container {
   height: 100%;
   width: 100%;
 }
 
-.big-container{
+.big-container {
   width: 100%;
   max-width: var(--page-max-width);
 }
 
-
-.flex{
+.flex {
   display: flex;
 }
-.center-children{
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+}
+.center-children {
   align-items: center;
   justify-content: center;
 }
 
-.align-center{
+.align-center {
   align-items: center;
 }
 
-.justify-center{
+.justify-center {
   justify-content: center;
 }
 
-.flex-left{
+.flex-left {
   margin-right: auto;
 }
 
-.flex-center{
+.flex-center {
   margin-left: auto;
   margin-right: auto;
 }
 
-.flex-right{
+.flex-right {
   margin-left: auto;
 }
 
-.hidden-overflow{
+.hidden-overflow {
   overflow: hidden;
 }
 
+.pointer{
+  cursor: pointer
+}
+@media (hover: none){
+  .pointer{
+    cursor:default;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////////
 
-.blue{
+.blue {
   background-color: blue;
 }
-.green{
+.green {
   background-color: green;
 }
 
-.purple{
+.purple {
   background-color: purple;
 }
-
-
-

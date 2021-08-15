@@ -1,5 +1,5 @@
 .navTop {
-  --nav-bottom-line: 4px;
+  --nav-bottom-line: 2px;
   border-bottom: var(--nav-bottom-line) solid var(--theme-color);
 }
 
@@ -8,14 +8,11 @@
 }
 
 .burgerDiv {
-  --burger-height: 15px;
-  --burger-width: 30px;
-  --bar-height: 2px;
-  --burger-color: var(--text-color);
-  --burger-margin: 7px;
   width: var(--burger-width);
   height: var(--burger-height);
   margin: var(--burger-margin);
+  -webkit-transform: translateX(calc(-1 * var(--burger-margin)));
+          transform: translateX(calc(-1 * var(--burger-margin)));
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;

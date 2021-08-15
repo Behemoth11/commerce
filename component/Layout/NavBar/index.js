@@ -1,18 +1,21 @@
-
-
-
-import {useState} from 'react'
-import NavTop from './NavTop'
-import NavSide from './NavSide'
+import { useEffect } from "react";
+import NavTop from "./NavTop";
+import NavSide from "./NavSide";
 // @ts-ignore
-import styles from './style.module.css';
+import styles from "./style.module.css";
+import NavBarContext, { useNavBarState } from "./NavBarContext.js";
 
 const index = () => {
-    return (
-        <div className={`${styles.navigation} max-width`}>
-            <NavTop/>
-        </div>
-    )
-}
+  const { sideBarIsOpen } = useNavBarState();
 
-export default index
+  return (
+    <div className={`${styles.navigation} max-width`}>
+      <NavBarContext>
+        <NavTop />
+        <NavSide />
+      </NavBarContext>
+    </div>
+  );
+};
+
+export default index;

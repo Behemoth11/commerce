@@ -1,6 +1,6 @@
 
 .navTop{
-    --nav-bottom-line: 4px;
+    --nav-bottom-line: 2px;
     border-bottom: var(--nav-bottom-line) solid var(--theme-color);
     & > div{
         padding: 0 calc(var(--padding)*5)
@@ -8,16 +8,10 @@
 }
 
 .burgerDiv{
-    --burger-height: 15px;
-    --burger-width: 30px;
-    --bar-height: 2px;
-    --burger-color: var(--text-color);
-    --burger-margin: 7px;
-
-
     width: var(--burger-width);
     height: var(--burger-height);
     margin: var(--burger-margin);
+    transform: translateX(calc(-1 * var(--burger-margin)));
     flex: 1;
     position: relative;
     cursor: pointer;
@@ -48,5 +42,7 @@
             transform: translate(0)
         }
     }
+    &.open{
 
+    }
 }

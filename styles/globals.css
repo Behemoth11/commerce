@@ -1,16 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope&display=swap");
 :root {
   --border: 2px;
+  --thin-border: 1px;
   --border-radius: 2px;
   --margin: 5px;
+  --large-margin: 8px;
+  --larger-margin: 50px;
   --padding: 5px;
-  --text-color: rgb(0, 0, 0);
-  --theme-color: #202030;
+  --large-padding: 15px;
+  --text-color-dark: rgb(0, 0, 0);
+  --text-color-light: rgb(255, 255, 255);
+  --theme-color: #0f0f13;
   --accent-color: #bb245c;
-  --body-background: white;
-  --body-neutral-dark: black;
+  --secondary-accent-color: #bb245bb1;
+  --body-background: #ffffff;
+  --body-neutral-dark: #000000;
   --body-neutral-light: #ffffff;
   --page-max-width: 1200px;
+  --large-font-size: 1.2em;
+  --medium-font-size: 0.8em;
   --animation-duration: 0.5s;
 }
 
@@ -33,19 +41,29 @@ body {
   overflow: hidden;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1em;
+  font-weight: normal;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 #__next {
   height: 100%;
   width: 100%;
   font-size: 1em;
   background-color: var(--body-background);
   overflow-y: auto;
-  font-family: 'Manrope', sans-serif;
-  color: var(--text-color);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+  font-family: "Manrope", sans-serif;
+  color: var(--text-color-dark);
 }
 
 .max-width {
@@ -70,6 +88,16 @@ a {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.vertical-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 .center-children {
@@ -108,6 +136,16 @@ a {
 
 .hidden-overflow {
   overflow: hidden;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+@media (hover: none) {
+  .pointer {
+    cursor: default;
+  }
 }
 
 .blue {

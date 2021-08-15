@@ -1,7 +1,13 @@
 
 
 .navigation{
+    --burger-height: 15px;
+    --burger-width: 30px;
+    --bar-height: 1.8px;
+    --burger-color: var(--text-color-dark);
+    --burger-margin: 7px;
     --navigation-height: 50px;
+    
     position: sticky;
     top: 0;
     left: 0;
