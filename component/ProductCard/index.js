@@ -49,6 +49,7 @@ const index = ({type}) => {
               src={
                 src
               }
+              alt="There will soon be an alt"
               width={100}
               height={(ASPECT_RATIO * IMAGE_PERCENTAGE) / 100}
               layout="responsive"

@@ -46,7 +46,8 @@ const Navigation = ({
               ></div>
             )}
 
-            <h1 className="flex-center">{title}</h1>
+            <h3 className="flex-center">{title}</h3>
+
             {mainMenu && (
               <div
                 className={`${styles.croxSection} flex center-children pointer`}

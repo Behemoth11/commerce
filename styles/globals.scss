@@ -16,6 +16,7 @@
   --body-neutral-dark: #000000;
   --body-neutral-light: #ffffff;
   --page-max-width: 1200px;
+  --larger-font-size: 2em;
   --large-font-size: 1.2em;
   --medium-font-size: 0.8em;
   --animation-duration: 0.5s;
@@ -44,8 +45,14 @@ body {
   overflow: hidden;
 }
 
-h1,
-h2,
+h1{
+  font-size: var(--larger-font-size);
+  font-weight: 100;
+}
+h2{
+  font-size: 1em;
+  font-weight: 100;
+}
 h3,
 h4,
 h5,

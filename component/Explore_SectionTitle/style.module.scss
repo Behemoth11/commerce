@@ -1,0 +1,36 @@
+.sectionTitle{
+    padding: var(--large-padding) var(--padding);
+}
+.header{
+    font-style: italic;
+}
+
+.subHeader{
+    font-size: 0.8em;
+    margin-left: 0.4em;
+    margin-top: var(--large-margin);
+}
+
+.backLink{
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.rubriqueLink a{
+    text-decoration: underline;
+    &:hover{
+    
+    }
+    &:active{
+
+    }
+}
+.rubriqueLink{
+    display: inline-block;
+    font-size: 1em;
+
+    a:last-child{
+        text-decoration: none;
+    }
+}
