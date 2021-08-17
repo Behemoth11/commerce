@@ -19,6 +19,10 @@
   --large-font-size: 1.2em;
   --medium-font-size: 0.8em;
   --animation-duration: 0.5s;
+  --fast-animation-duration: 0.1s;
+
+  /////////cards///////////////
+  --box-gap: 10px;
 }
 
 * {
@@ -52,6 +56,14 @@ h6 {
 a {
   color: inherit;
   text-decoration: none;
+}
+button{
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  padding: 0;
+  cursor: pointer;
+
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Manrope&display=swap");

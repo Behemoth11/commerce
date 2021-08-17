@@ -1,6 +1,6 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import Navigation from "./Navigation";
 import { useNavBarState } from "../NavBarContext";
 import { useTransition, animated } from "react-spring";
@@ -12,7 +12,7 @@ const sideBarSections = {
     content: ["Women", "Men", "Kids", "Utilities"],
     Women: {
       title: "Women",
-      content: ["Skirt", "Ass", "Kids", "Panties"],
+      content: ["Skirt", "ssss", "Kids", "Panties"],
     },
     Men: {
       title: "Men",
@@ -93,9 +93,9 @@ const index = () => {
 
   const sideBarPages = getHeaders(sideBarSections, sideBarLocation);
 
-  console.log(sideBarPages);
+  // console.log(sideBarPages);
   useEffect(() => {
-    console.log(sideBarLocation);
+    // console.log(sideBarLocation);
   }, [sideBarLocation, positionIndex]);
 
   return (
@@ -130,4 +130,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default memo(index);

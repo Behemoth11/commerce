@@ -3,6 +3,7 @@ import styles from "./style.module.css";
 
 import Svg from './Svg.js';
 import { useNavBarState } from '../NavBarContext';
+import { memo } from "react";
 
 
 const index = () => {
@@ -30,4 +31,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default memo(index);

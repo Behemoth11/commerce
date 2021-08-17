@@ -1,0 +1,19 @@
+.container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: auto;
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+.container::-webkit-scrollbar {
+  height: 4px;
+  background-color: #f5f5f5;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: #000000;
+}

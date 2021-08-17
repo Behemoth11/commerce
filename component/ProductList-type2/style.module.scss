@@ -1,0 +1,16 @@
+.container {
+  display: flex;
+  overflow: auto;
+  &::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+  }
+  
+  &::-webkit-scrollbar {
+    height: 4px;
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #000000;
+  }
+}

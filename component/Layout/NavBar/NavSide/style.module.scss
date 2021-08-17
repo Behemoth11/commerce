@@ -53,7 +53,7 @@
   right: 0;
 }
 
-.backArrow {
+.backArrow{
     @extend .croxSection;
     --arrow-size: 20%;
     --arrow-thickness: 1px;
@@ -128,7 +128,11 @@
         transform: rotateZ(-45deg);
         right: calc(var(--padding) + 5px );
         border: solid var(--text-color-light);
+        transition: transform var(--fast-animation-duration) ease-in-out;
         border-width: 0 var(--arrow-thickness) var(--arrow-thickness) 0;
+    }
+    &:active::after{
+      transform: rotateZ(-90deg);
     }
 }
 

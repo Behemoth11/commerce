@@ -4,6 +4,7 @@ import NavSide from "./NavSide";
 // @ts-ignore
 import styles from "./style.module.css";
 import NavBarContext, { useNavBarState } from "./NavBarContext.js";
+import { memo } from "react";
 
 const index = () => {
   const { sideBarIsOpen } = useNavBarState();
@@ -18,4 +19,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default memo(index);

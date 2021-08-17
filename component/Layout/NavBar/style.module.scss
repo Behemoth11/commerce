@@ -9,6 +9,7 @@
     --navigation-height: 50px;
     
     position: sticky;
+    z-index: 2;
     top: 0;
     left: 0;
     height: var(--navigation-height);

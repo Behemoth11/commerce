@@ -144,7 +144,16 @@
           transform: rotateZ(-45deg);
   right: calc(var(--padding) + 5px);
   border: solid var(--text-color-light);
+  -webkit-transition: -webkit-transform var(--fast-animation-duration) ease-in-out;
+  transition: -webkit-transform var(--fast-animation-duration) ease-in-out;
+  transition: transform var(--fast-animation-duration) ease-in-out;
+  transition: transform var(--fast-animation-duration) ease-in-out, -webkit-transform var(--fast-animation-duration) ease-in-out;
   border-width: 0 var(--arrow-thickness) var(--arrow-thickness) 0;
+}
+
+.linkContainer:active::after {
+  -webkit-transform: rotateZ(-90deg);
+          transform: rotateZ(-90deg);
 }
 
 /**********************************Side_Link***************************/

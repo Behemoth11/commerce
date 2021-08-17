@@ -1,0 +1,9 @@
+.container {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  background-color: rgb(255, 255, 255);
+  display: grid;
+  overflow: hidden;
+  gap: var(--box-gap);
+  padding: var(--box-gap);
+}
+
