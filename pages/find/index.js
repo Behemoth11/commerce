@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import ProductList from "../../component/ProductList-type2"
 import ProductList1 from "../../component/ProductList-type1"
 
-function index() {
+function Index() {
   const router = useRouter();
 
   return <div className="big-container">
@@ -12,4 +12,4 @@ function index() {
   </div>;
 }
 
-export default index;
+export default Index;
