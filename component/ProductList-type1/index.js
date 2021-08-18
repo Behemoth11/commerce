@@ -4,33 +4,33 @@ import ProductCard from "../ProductCard";
 
 import { memo } from "react";
 
-const index = () => {
+const index = ({ location }) => {
   return (
-    <div className={styles.container}>
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
-        <ProductCard type="1" />
+    <div className={`${styles.container} ${styles[location]} `}>
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
+      <ProductCard type="1" />
     </div>
   );
 };

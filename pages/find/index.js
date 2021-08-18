@@ -1,7 +1,7 @@
 // @ts-ignore
 import styles from "../../styles/find.module.css";
 import Head from "next/head";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import ProductList1 from "../../component/ProductList-type1";
 import Explore_SectionTitle from "../../component/Explore_SectionTitle";
@@ -10,6 +10,8 @@ function Find() {
   const {
     query: { categories },
   } = useRouter();
+
+  const [tempState, setTempState] = useState('find');
 
   return (
     <div className="big-container">
@@ -23,7 +25,11 @@ function Find() {
       <div className="container">
         <Explore_SectionTitle categories={categories}/>
       </div>
-      <ProductList1 />
+      <button style={ {border: '1px solid var(--accent-color)'} } onClick={()=>{
+        setTempState(prevState => prevState == 'find'? "": 'find')
+      }}>Click me</button>
+      <ProductList1 location={tempState}/>
+
     </div>
   );
 }

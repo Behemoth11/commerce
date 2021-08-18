@@ -1,8 +1,5 @@
 .cardsContainer1 {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .cardsContainer2 {
@@ -10,8 +7,8 @@
   display: flex;
   max-width: 300px;
   align-items: center;
-  margin: calc(var(--box-gap)/2);
   justify-content: center;
+  margin: calc(var(--box-gap)/2);
 }
 
 .cards {
@@ -48,23 +45,27 @@
 /****************************description**************************************/
 .description {
   height: calc(100% - var(--image-percentage));
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   width: 100%;
 }
 
 .buy {
-  height: unquote("clamp(25px,75%, 60px)");
   background-color: var(--accent-color);
   width: unquote("min(100px, 35%)");
   color: var(--text-color-light);
-  margin: var(--margin) 0;
-  
+  margin-bottom: var(--margin);
+  height: 1.8em;
+  &.explore{
+    width: 100%;
+  }
 }
 
 .price {
-  height: unquote("clamp(25px,75%, 60px)");
-  font-size: auto;
   color: var(--text-color-dark);
   padding: var(--padding);
   margin-left: auto;
+  font-size: 0.8em;
+  p{
+    margin: 0px;
+  }
 }

@@ -10,12 +10,15 @@ const index = () => {
   const { sideBarIsOpen } = useNavBarState();
 
   return (
-    <div className={`${styles.navigation} max-width`}>
-      <NavBarContext>
-        <NavTop />
-        <NavSide />
-      </NavBarContext>
-    </div>
+    <>
+      <h3 className={styles.annoncement}>This is something cool</h3>
+      <div className={`${styles.navigation} max-width`}>
+        <NavBarContext>
+          <NavTop />
+          <NavSide />
+        </NavBarContext>
+      </div>
+    </>
   );
 };
 
