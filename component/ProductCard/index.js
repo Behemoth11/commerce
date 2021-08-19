@@ -42,19 +42,19 @@ const index = ({ type }) => {
         <div className={`${styles.container}`}>
           <div className={`${styles.imageSection}`}>
             <div className={`${styles.moreInfo}}`}></div>
-            {/* <Image
+            <Image
               loader={() =>
                 `https://source.unsplash.com/random/${getRandomInteger(
                   500,
                   500
-                )}x${getRandomInteger(230, 260)}`
+                )}x${getRandomInteger(416, 416)}`
               }
               src={src}
               alt="There will soon be an alt"
               width={100}
               height={(ASPECT_RATIO * IMAGE_PERCENTAGE) / 100}
               layout="responsive"
-            /> */}
+            />
           </div>
         </div>
       </div>

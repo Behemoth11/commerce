@@ -1,14 +1,15 @@
 .sideBar {
   background-color: var(--theme-color);
   width: unquote("min(25em, 85vw)");
+  transform: translateX(-100%);
   position: fixed;
   overflow-y: auto;
   height: 100vh;
   top: 0;
-  left: -100%;
+  left: 0;
   transition: transform var(--animation-duration) ease-in-out;
   &.open {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
 }
 

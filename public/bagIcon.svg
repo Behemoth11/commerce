@@ -42,7 +42,7 @@
          d="M 33.363299,5.3389628 A 16.142093,18.343392 0 0 0 17.240543,23.115977 H 49.496985 A 16.142093,18.343392 0 0 0 33.363299,5.3389628 Z M 11.840512,23.115818 H 54.88609 V 59.60894 H 11.840512 Z"
          id="path1626" />
       <path
-         style="color:#0f0f13;fill:#0f0f13;fill-rule:evenodd;stroke-linecap:square;stroke-dashoffset:2.04094;paint-order:fill markers stroke;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:1.84679171;stroke-miterlimit:4;stroke-dasharray:none"
+         style="color:#0f0f13;fill:#0f0f13;fill-rule:evenodd;stroke-linecap:square;stroke-dashoffset:2.04094;paint-order:fill markers stroke;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.52916668;stroke-miterlimit:4;stroke-dasharray:none"
          d="M 33.363281,4.6777344 C 24.445664,4.6850422 17.223768,12.554372 16.654297,22.455078 h -5.474609 v 0.660156 37.154297 H 55.546875 V 22.455078 H 50.083984 C 49.514116,12.549631 42.285237,4.6781807 33.363281,4.6777344 Z m 0,1.3222656 c 8.120164,4.062e-4 14.828306,7.192573 15.394531,16.455078 H 17.980469 C 18.546446,13.197177 25.247192,6.006651 33.363281,6 Z M 12.501953,23.777344 h 4.058594 33.615234 4.048828 V 58.947266 H 12.501953 Z"
          id="path1628" />
     </g>

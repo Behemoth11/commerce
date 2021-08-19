@@ -7,7 +7,6 @@
   display: -ms-flexbox;
   display: flex;
   overflow: auto;
-  padding: var(--padding) 0;
 }
 
 .filterContainer::-webkit-scrollbar-track {

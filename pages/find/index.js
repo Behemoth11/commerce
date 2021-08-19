@@ -41,9 +41,8 @@ function Find() {
 
         <main
           className="container"
-          style={{ marginTop: "var(--large-padding)" }}
         >
-          <ProductListGrid location={"find"} />
+          <ProductListGrid location={""} />
         </main>
       </FindContext>
     </div>

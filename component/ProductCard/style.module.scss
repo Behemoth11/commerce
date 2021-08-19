@@ -3,6 +3,7 @@
 .cardsContainer {
   width: 100%;
 }
+
 .cardsContainer.no-parent-restiction{
   width: unquote("min(100%,360px)");
   scroll-snap-align: start;

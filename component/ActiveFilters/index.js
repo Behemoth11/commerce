@@ -16,13 +16,13 @@ const index = () => {
           <img src='/filter.svg'></img>
         </div>
         <div className={styles.filterContainer}>
-          <Filter content="Fast" />
+          {/* <Filter content="Fast" />
           <Filter content="Blue" />
           <Filter content="Movable" />
           <Filter content="Larmange" />
           <Filter content="Faisable" />
           <Filter content="Big Size" />
-          <Filter content="Affordable" />
+          <Filter content="Affordable" /> */}
         </div>
       </div>
     </>

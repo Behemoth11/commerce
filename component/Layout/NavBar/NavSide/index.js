@@ -66,9 +66,9 @@ const getHeaders = (navContentTodDisplay, _location) => {
 };
 
 const index = () => {
+  const [positionIndex, setPositionIndex] = useState(0);
   const { sideBarIsOpen, toggleNavBar } = useNavBarState();
   const [sideBarLocation, setSideBarLocation] = useState(["categories"]);
-  const [positionIndex, setPositionIndex] = useState(0);
 
   const updateSideBar = (update, index) => {
     setSideBarLocation((prevState) => {
