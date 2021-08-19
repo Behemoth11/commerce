@@ -19,11 +19,11 @@ const index = ({ categories }) => {
             <div className={`${styles.rubriqueLink}`}>
               <Link href={`/`}><a >find</a></Link> /
               {categories.slice(0, -1).map((element) => (
-                <>
-                <Link href="">
+                <span key={element} >
+                <Link href="" >
                   <a>{element.toLowerCase()}</a>
                   </Link> /
-                  </>
+                  </span>
               ))}
               <Link  href={`/`}>
               <a>{categories[categories.length - 1]}</a>

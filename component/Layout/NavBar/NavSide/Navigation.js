@@ -13,15 +13,11 @@ const Navigation = ({
   title,
   index,
   visible,
-  updateSideBar,
   regression,
+  updateSideBar,
   sideBarLocation,
 }) => {
   const { sideBarIsOpen, toggleNavBar } = useNavBarState();
-
-  // console.log(
-  //   `here it is ${title} and I am ${visible ? "visible" : "not visible"}`
-  // );
 
   const animate = useTransition(visible, {
     from: {
@@ -29,8 +25,9 @@ const Navigation = ({
     },
     enter: { transform: "translateX(0%)" },
     leave: { transform: "translateX(100%)" },
+    config: { duration: 200 },
   });
-
+  
   return animate(
     (_styles, visible) =>
       visible && (
@@ -73,10 +70,7 @@ const Navigation = ({
               ) : (
                 <Link
                   key={label}
-                  // href={`/find?categories=${sideBarLocation
-                  //   .slice(1)
-                  //     .join("+")}+${label}`}
-                  href={{ pathname: "/find", query: {categories: [...sideBarLocation.slice(1), label]} }}
+                  href={{ pathname: "/find", query: {categories: [...sideBarLocation.slice(1,index+1), label]} }}
                 >
                   <div
                     className={`max-width flex pointer align-center ${styles.linkContainer}`}

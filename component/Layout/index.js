@@ -5,7 +5,7 @@ function index({ children }) {
   return (
     <>
       <NavBar />
-      <div className="flex center-children">{children}</div>
+      <div className="flex center-children" style={{position: 'relative'}}>{children}</div>
       <Footer />
     </>
   );

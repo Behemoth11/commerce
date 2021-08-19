@@ -3,6 +3,8 @@
   display: -ms-flexbox;
   display: flex;
   overflow: auto;
+  -ms-scroll-snap-type: x mandatory;
+      scroll-snap-type: x mandatory;
 }
 
 .container::-webkit-scrollbar-track {

@@ -1,13 +1,11 @@
 .sideBar {
   background-color: var(--theme-color);
   width: min(25em, 85vw);
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
-  position: absolute;
+  position: fixed;
   overflow-y: auto;
   height: 100vh;
   top: 0;
-  left: 0;
+  left: -100%;
   -webkit-transition: -webkit-transform var(--animation-duration) ease-in-out;
   transition: -webkit-transform var(--animation-duration) ease-in-out;
   transition: transform var(--animation-duration) ease-in-out;
@@ -15,8 +13,8 @@
 }
 
 .sideBar.open {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
 }
 
 .overlay {

@@ -1,17 +1,19 @@
 // @ts-ignore
 import styles from "../../styles/find.module.css";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import ProductList1 from "../../component/ProductList-type1";
+import React, { useEffect, useState } from "react";
+import ActiveFilter from "../../component/ActiveFilters";
+import FilterOverlay from "../../component/FilterOverlay";
+import ProductListGrid from "../../component/ProductList-grid";
 import Explore_SectionTitle from "../../component/Explore_SectionTitle";
+import Filter from "../../component/ActiveFilters/Filter";
+import FindContext from "./FindContext";
 
 function Find() {
   const {
     query: { categories },
   } = useRouter();
-
-  const [tempState, setTempState] = useState('find');
 
   return (
     <div className="big-container">
@@ -21,15 +23,29 @@ function Find() {
         <link rel="icon" href="/favicon.ico" />
         <title>Discover goods in gabon</title>
       </Head>
+      <FindContext>
+        <div className="container">
+          <Explore_SectionTitle
+            categories={
+              Array.isArray(categories)
+                ? categories
+                : categories
+                ? [categories]
+                : categories
+            }
+          />
+        </div>
 
-      <div className="container">
-        <Explore_SectionTitle categories={categories}/>
-      </div>
-      <button style={ {border: '1px solid var(--accent-color)'} } onClick={()=>{
-        setTempState(prevState => prevState == 'find'? "": 'find')
-      }}>Click me</button>
-      <ProductList1 location={tempState}/>
+        <FilterOverlay />
+        <ActiveFilter />
 
+        <main
+          className="container"
+          style={{ marginTop: "var(--large-padding)" }}
+        >
+          <ProductListGrid location={"find"} />
+        </main>
+      </FindContext>
     </div>
   );
 }

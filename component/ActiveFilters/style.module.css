@@ -1,0 +1,77 @@
+.container {
+  padding-top: var(--large-padding);
+}
+
+.filterContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: auto;
+  padding: var(--padding) 0;
+}
+
+.filterContainer::-webkit-scrollbar-track {
+  background-color: #c7aeae;
+}
+
+.filterContainer::-webkit-scrollbar {
+  height: 0px;
+  background-color: #f5f5f5;
+}
+
+.filterContainer::-webkit-scrollbar-thumb {
+  background-color: #000000;
+}
+
+.filterSetter {
+  height: 30px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: var(--padding);
+  padding-right: 0;
+  margin-left: var(--margin);
+}
+
+.filterSetter img {
+  margin: var(--margin);
+  max-height: none;
+  height: 110%;
+}
+
+/********************************************filter styles***********************************/
+.filter {
+  padding: 2px 2px 2px 9px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  border-radius: var(--border-radius);
+  color: var(--text-color-light);
+  margin: calc(var(--margin) / 2);
+  font-size: var(--small-font-size);
+  background-color: var(--theme-color);
+}
+
+.cross {
+  width: 15px;
+  height: 2px;
+  margin: auto 3px;
+  position: relative;
+}
+
+.cross::after, .cross::before {
+  position: absolute;
+  height: 100%;
+  content: "";
+  width: 100%;
+  background-color: var(--body-background);
+}
+
+.cross::after {
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+}
+
+.cross::before {
+  -webkit-transform: rotateZ(-45deg);
+          transform: rotateZ(-45deg);
+}

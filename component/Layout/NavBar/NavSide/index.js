@@ -12,26 +12,22 @@ const sideBarSections = {
     content: ["Women", "Men", "Kids", "Utilities"],
     Women: {
       title: "Women",
-      content: ["Skirt", "ssss", "Kids", "Panties"],
+      content: ["Love", "Bags", "watches", "jewelries"]
     },
     Men: {
       title: "Men",
-      content: ["Suit", "Glass", "computer"],
+      content: ["Suit", "Pant", "Short", "Cap"],
     },
     Kids: {
       title: "Kids",
-      content: ["a bag", "books", "children", "leverages"],
+      content: ["Short", "Underwear", "children", "leverages"],
     },
     Utilities: {
-      title: "Pot",
-      content: ["big", "large", "small"],
-      big: {
-        title: "big",
-        content: ["marchall", "book", "last"],
-        marchall: {
-          title: "marchall",
-          content: ["companies"],
-        },
+      title: "Utilities",
+      content: ["Pot", "Plates", "Ustensils"],
+      Ustensils: {
+        title: "Ustensils",
+        content: ["Spoons", "Fork", "Knifes"],
       },
     },
   },
@@ -39,7 +35,7 @@ const sideBarSections = {
 
 const END_POINT = "END_POINT";
 
-const filterLocation = (object, index) => {
+const formatLocation = (object, index) => {
   const content = object.content.map((element) => {
     return {
       label: element,
@@ -50,24 +46,21 @@ const filterLocation = (object, index) => {
   return { title: object.title, content, index };
 };
 
-const getHeaders = (navStructure, _location) => {
+const getHeaders = (navContentTodDisplay, _location) => {
   const location = _location;
 
-  let result = navStructure[location[0]] || navStructure["categories"];
+  let result =
+    navContentTodDisplay[location[0]] || navContentTodDisplay["categories"];
 
-  let side_pages = [filterLocation(result, 0)];
+  let side_pages = [formatLocation(result, 0)];
 
   for (let i = 1; i < location.length; i++) {
     let _result = result[location[i]];
     if (_result) {
       result = _result;
-      side_pages.push(filterLocation(result, i));
+      side_pages.push(formatLocation(result, i));
     } else break;
   }
-
-  const test = result.content.map((element) => {
-    return { label: element, hasDescendant: result[element] ? true : false };
-  });
 
   return side_pages;
 };
@@ -85,6 +78,7 @@ const index = () => {
     });
     setPositionIndex((prevState) => prevState + 1);
   };
+
   const regressSideBar = () => {
     setPositionIndex((prevState) => {
       return prevState >= 1 ? prevState - 1 : 0;
@@ -92,11 +86,6 @@ const index = () => {
   };
 
   const sideBarPages = getHeaders(sideBarSections, sideBarLocation);
-
-  // console.log(sideBarPages);
-  useEffect(() => {
-    // console.log(sideBarLocation);
-  }, [sideBarLocation, positionIndex]);
 
   return (
     <>
@@ -112,17 +101,15 @@ const index = () => {
       >
         {sideBarPages.map((page) => (
           <Navigation
-            // @ts-ignore
-            title={page.title}
             key={page.title}
-            visible={positionIndex >= page.index}
             index={page.index}
-            mainMenu={page.title === "Menu"}
-            updateSideBar={updateSideBar}
+            title={page.title}
             regression={regressSideBar}
-            // @ts-ignore
-            headers={page.content || [END_POINT]}
+            updateSideBar={updateSideBar}
+            mainMenu={page.title === "Menu"}
             sideBarLocation={sideBarLocation}
+            visible={positionIndex >= page.index}
+            headers={page.content || [END_POINT]}
           />
         ))}
       </div>

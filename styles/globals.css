@@ -2,7 +2,7 @@
 :root {
   --border: 2px;
   --thin-border: 1px;
-  --border-radius: 2px;
+  --border-radius: 15px;
   --margin: 5px;
   --large-margin: 8px;
   --larger-margin: 50px;
@@ -19,8 +19,9 @@
   --page-max-width: 1200px;
   --larger-font-size: 2em;
   --large-font-size: 1.2em;
+  --small-font-size: 0.8em;
   --medium-font-size: 0.8em;
-  --animation-duration: 0.5s;
+  --animation-duration: 0.2s;
   --fast-animation-duration: 0.1s;
   --box-gap: 10px;
 }
@@ -73,6 +74,10 @@ button {
   font-family: inherit;
   padding: 0;
   cursor: pointer;
+}
+
+img {
+  max-height: 100%;
 }
 
 #__next {

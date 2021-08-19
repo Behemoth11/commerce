@@ -1,5 +1,6 @@
 .sectionTitle{
-    padding: var(--large-padding) var(--padding);
+    padding-top: var(--large-padding);
+    margin-left: 0.4em;
 }
 .header{
     font-style: italic;
@@ -7,7 +8,6 @@
 
 .subHeader{
     font-size: 0.8em;
-    margin-left: 0.4em;
     margin-top: var(--large-margin);
 }
 
@@ -19,18 +19,13 @@
 
 .rubriqueLink a{
     text-decoration: underline;
-    &:hover{
-    
-    }
-    &:active{
-
-    }
 }
+
 .rubriqueLink{
     display: inline-block;
     font-size: 1em;
 
-    a:last-child{
+    & > a:last-child{
         text-decoration: none;
     }
 }

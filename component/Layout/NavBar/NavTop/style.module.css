@@ -54,3 +54,23 @@
   -webkit-transform: translate(0);
           transform: translate(0);
 }
+
+.bagIcon {
+  height: 40px;
+}
+
+.bagIcon > img {
+  margin-top: 4px;
+  max-height: 100%;
+  height: calc( var(--burger-height) + 15px);
+}
+
+.ItemsInCart {
+  left: calc( 100%);
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ItemsInCart p {
+  color: var(--text-color-dark);
+}

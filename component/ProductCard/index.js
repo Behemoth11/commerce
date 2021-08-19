@@ -35,14 +35,14 @@ const index = ({ type }) => {
 
   return (
     <div
-      className={`${styles["cardsContainer" + type]} no-shrink`}
+      className={`${styles.cardsContainer} ${styles[type]} no-shrink`}
       ref={cardRef}
     >
       <div className={`${styles.cards}`}>
         <div className={`${styles.container}`}>
           <div className={`${styles.imageSection}`}>
             <div className={`${styles.moreInfo}}`}></div>
-            <Image
+            {/* <Image
               loader={() =>
                 `https://source.unsplash.com/random/${getRandomInteger(
                   500,
@@ -54,16 +54,16 @@ const index = ({ type }) => {
               width={100}
               height={(ASPECT_RATIO * IMAGE_PERCENTAGE) / 100}
               layout="responsive"
-            />
+            /> */}
           </div>
         </div>
       </div>
-      <div className={`${styles.description} max-width`}>
-        <div className={`${styles.price}`}>
+      <div className={`${styles.description} ${styles[type]} max-width`}>
+        <div className={`${styles.price} ${styles[type]}`}>
           <p>10,000 Fcfa</p>
           <p>new</p>
         </div>
-        <button className={`${styles.buy} ${styles.explore}`}>buy</button>
+        <button className={`${styles.buy} ${styles[type]}`}>buy</button>
       </div>
     </div>
   );

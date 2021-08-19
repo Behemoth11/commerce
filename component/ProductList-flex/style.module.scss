@@ -1,6 +1,7 @@
 .container {
   display: flex;
   overflow: auto;
+  scroll-snap-type: x mandatory;
   &::-webkit-scrollbar-track {
     background-color: #f5f5f5;
   }

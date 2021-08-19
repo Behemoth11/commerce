@@ -11,9 +11,9 @@ const index = () => {
 
   return (
     <>
-      <h3 className={styles.annoncement}>This is something cool</h3>
       <div className={`${styles.navigation} max-width`}>
         <NavBarContext>
+          <h3 className={styles.annoncement}>This is something cool</h3>
           <NavTop />
           <NavSide />
         </NavBarContext>

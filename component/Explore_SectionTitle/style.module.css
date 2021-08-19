@@ -1,5 +1,6 @@
 .sectionTitle {
-  padding: var(--large-padding) var(--padding);
+  padding-top: var(--large-padding);
+  margin-left: 0.4em;
 }
 
 .header {
@@ -8,7 +9,6 @@
 
 .subHeader {
   font-size: 0.8em;
-  margin-left: 0.4em;
   margin-top: var(--large-margin);
 }
 
@@ -27,6 +27,6 @@
   font-size: 1em;
 }
 
-.rubriqueLink a:last-child {
+.rubriqueLink > a:last-child {
   text-decoration: none;
 }

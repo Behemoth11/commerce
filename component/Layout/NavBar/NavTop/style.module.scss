@@ -42,7 +42,22 @@
             transform: translate(0)
         }
     }
-    &.open{
+}
 
+.bagIcon{
+    height: 40px;
+    & > img{
+        margin-top: 4px;
+        max-height: 100%;
+        height: calc( var(--burger-height) + 15px);
+    }
+}
+
+.ItemsInCart{
+    left:  calc( 100%);
+    position: absolute;
+    border-radius: 50%;
+    p{
+        color: var(--text-color-dark);
     }
 }
