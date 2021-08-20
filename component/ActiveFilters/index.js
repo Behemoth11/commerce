@@ -2,12 +2,26 @@
 import styles from "./style.module.css";
 import ProductCard from "../ProductCard";
 import Filter from "./Filter.js";
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { useFindContext } from "../../pages/find/FindContext";
-
 
 const index = () => {
   const { toggleFilterOverlay, activeFilter, removeFilter } = useFindContext();
+  const [filter, setFilter] = useState([{}]);
+
+  const getFilter = async () => {
+    let result = await activeFilter
+      .reduce((accum, filter) => [...accum, ...filter.criteria], [])
+      .filter((element) => element.checked === true);
+    return result;
+  };
+
+  useEffect(() => {
+    (async () => {
+      let filter = await getFilter().catch((err) => console.error(err));
+      setFilter(filter);
+    })();
+  }, [activeFilter]);
 
   return (
     <>
@@ -20,12 +34,18 @@ const index = () => {
           <img src="/filter.svg"></img>
         </div>
         <div className={styles.filterContainer}>
-          {activeFilter
-            .reduce((accum, filter) => [...accum, ...filter.criteria], [])
-            .filter((element) => element.checked === true)
-            .map(({ value, filterIndex, criteriaIndex }) => (
-              <Filter key={value} content={value} action={() => removeFilter(filterIndex, criteriaIndex)} />
-            ))}
+          {(filter &&
+            filter
+              // @ts-ignore
+              .map(({ value, filterIndex, criteriaIndex }) => (
+                <Filter
+                  key={value}
+                  content={value}
+                  action={() => removeFilter(filterIndex, criteriaIndex)}
+                />
+              ))) || (
+            <Filter content={"loading"} action={() => toggleFilterOverlay()} />
+          )}
         </div>
       </div>
     </>
