@@ -9,8 +9,9 @@ const NavBarProvider = ({ children }) => {
   const [sideBarIsOpen, setSideBarIsOpen] = useState(false); //remeber to change this to true
 
   useEffect(() => {
-    const page = document.getElementById("__next");
-    page.style.overflow = (sideBarIsOpen && "hidden") || "auto";
+    const {classList} = document.getElementById("__next");
+    sideBarIsOpen? classList.add("navBar_overflow"): classList.remove("navBar_overflow")
+    console.log( (sideBarIsOpen && "disallowed the page to overflow") || "It's fine you can overflow")
   }, [sideBarIsOpen]);
     
     const toggleNavBar = () => {

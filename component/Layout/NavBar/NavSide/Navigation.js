@@ -25,7 +25,7 @@ const Navigation = ({
     },
     enter: { transform: "translateX(0%)" },
     leave: { transform: "translateX(100%)" },
-    config: { duration: 200 },
+    config: { },
   });
   
   return animate(
@@ -45,7 +45,6 @@ const Navigation = ({
 
             <h3 className="flex-center">{title}</h3>
 
-            {/* {mainMenu && ( */}
               <div
                 className={`${styles.croxSection} flex center-children pointer`}
                 onClick={() => toggleNavBar()}
@@ -54,7 +53,6 @@ const Navigation = ({
                   className={`${styles.burger} ${sideBarIsOpen && styles.open}`}
                 ></div>
               </div>
-            {/* )} */}
           </div>
 
           <div className={`${styles.linkSection}`}>

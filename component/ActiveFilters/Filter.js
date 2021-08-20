@@ -3,11 +3,13 @@ import styles from "./style.module.css";
 
 import { memo } from "react";
 
-const index = ({ content }) => {
+const index = ({ content, action }) => {
   return (
     <div className={`${styles.filter} flex`}>
-          <p className=''>{content}</p>
-          <div className={`${styles.cross} no-shrink`}></div>
+      <p className="">{content}</p>
+      <div className={`${styles.crossContainer}`} onClick={() => action()}>
+        <div className={`${styles.cross} `}></div>
+      </div>
     </div>
   );
 };

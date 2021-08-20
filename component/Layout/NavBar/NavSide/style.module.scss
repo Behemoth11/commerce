@@ -7,6 +7,7 @@
   height: 100vh;
   top: 0;
   left: 0;
+  overflow-x: hidden;
   transition: transform var(--animation-duration) ease-in-out;
   &.open {
     transform: translateX(0);
@@ -90,11 +91,11 @@
   &.open {
     &::before {
       transform: rotateZ(45deg);
-      transition-delay: calc(var(--animation-duration));
+      // transition-delay: calc(var(--animation-duration));
     }
     &::after {
       transform: rotateZ(-45deg);
-      transition-delay: calc(var(--animation-duration));
+      // transition-delay: calc(var(--animation-duration));
     }
   }
 }

@@ -1,0 +1,59 @@
+.dropdownContainer {
+  --height: 50px;
+  border-bottom: var(--thin-border) solid #928080;
+  overflow: hidden;
+  height: var(--height);
+  -webkit-transition: height var(--fast-animation-duration) ease;
+  transition: height var(--fast-animation-duration) ease;
+}
+
+.dropdownContainer.open {
+  height: var(--full-height);
+}
+
+.subContainer {
+  padding: 0 var(--large-padding);
+}
+
+.label {
+  font-size: var(--font-size);
+  height: var(--height);
+}
+
+.label .arrow {
+  width: 10px;
+  height: 10px;
+  display: -ms-grid;
+  display: grid;
+  margin-left: auto;
+  position: relative;
+  -webkit-transform: rotateZ(var(--rotation, 45deg)) translateY(var(--translation, -2px));
+          transform: rotateZ(var(--rotation, 45deg)) translateY(var(--translation, -2px));
+  background-color: var(--accent-color);
+  -webkit-transition: -webkit-transform var(--animation-duration) ease-in-out;
+  transition: -webkit-transform var(--animation-duration) ease-in-out;
+  transition: transform var(--animation-duration) ease-in-out;
+  transition: transform var(--animation-duration) ease-in-out, -webkit-transform var(--animation-duration) ease-in-out;
+}
+
+.label .arrow::after {
+  content: "";
+  width: 100%;
+  padding-top: 100%;
+  border: 0 solid var(--theme-color);
+  border-width: 0 var(--thin-border) var(--thin-border) 0;
+}
+
+.label .arrow.open {
+  --rotation: -135deg;
+  --translation: -2px;
+}
+
+.dropdownContainer:nth-child(1) {
+  border-top: var(--thin-border) solid #928080;
+}
+
+.criteria {
+  font-size: var(--font-size);
+  padding: var(--padding);
+}

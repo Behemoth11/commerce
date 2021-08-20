@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope&display=swap");
 :root {
   --border: 2px;
-  --thin-border: 1px;
+  --thin-border: 1.5px;
   --border-radius: 15px;
   --margin: 5px;
   --large-margin: 8px;
@@ -22,7 +22,7 @@
   --small-font-size: 0.8em;
   --medium-font-size: 0.8em;
   --animation-duration: 0.4s;
-  --fast-animation-duration: 0.1s;
+  --fast-animation-duration: 0.2s;
   --box-gap: 10px;
 }
 
@@ -43,6 +43,10 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+
+body > div {
+  overflow: auto;
 }
 
 h1 {
@@ -85,7 +89,6 @@ img {
   width: 100%;
   font-size: 1em;
   background-color: var(--body-background);
-  overflow-y: auto;
   font-family: "Manrope", sans-serif;
   color: var(--text-color-dark);
 }
@@ -176,6 +179,14 @@ img {
   .pointer {
     cursor: default;
   }
+}
+
+.find_overflow {
+  overflow: hidden;
+}
+
+.navBar_overflow {
+  overflow: hidden;
 }
 
 .blue {

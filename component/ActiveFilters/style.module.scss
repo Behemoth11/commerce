@@ -44,6 +44,11 @@
   background-color: var(--theme-color);
 }
 
+
+.crossContainer {
+  display: flex;
+}
+
 .cross {
   width: 15px;
   height: 2px;

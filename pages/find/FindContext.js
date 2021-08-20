@@ -5,26 +5,84 @@ const FilterOverlayContext = React.createContext({
   filterOverlayIsOpen: false,
   removeFilter: undefined,
   addFilter: undefined,
-  activeFilter: [""],
-
+  activeFilter: [
+    {
+      name: "",
+      criteria: [
+        { value: "", checked: false, filterIndex: 0, criteriaIndex: 0 },
+      ],
+    },
+  ],
 });
+
+const rawFilters = [
+  {
+    name: "Color",
+    criteria: [
+      { value: "yellow", checked: false },
+      { value: "purple", checked: false },
+      { value: "marrong", checked: false },
+    ],
+  },
+  {
+    name: "Size",
+    criteria: [
+      { value: "Large", checked: false },
+      { value: "Small", checked: false },
+      {value: "Medium", checked: false },
+    ],
+  },
+  {
+    name: "Diversity",
+    criteria: [
+      { value: "Rare", checked: false },
+      { value: "Very Rare", checked: false },
+      { value: "Not so Rare", checked: false },
+    ],
+  },
+];
+
+const filters = rawFilters.map(({ name, criteria }, filterIndex) => {
+  console.log("The heavy calculation is running again");
+  criteria = criteria.map((element, criteriaIndex) => ({
+    ...element,
+    filterIndex,
+    criteriaIndex,
+  }));
+  return { name, criteria };
+});
+
+console.log(filters);
 
 const FindProvider = ({ children }) => {
   const [filterOverlayIsOpen, setfilterOverlayIsOpen] = useState(false); //remeber to change this to true
-  const [activeFilter, setActiveFilter] = useState([""]);
+  const [activeFilter, setActiveFilter] = useState(filters);
 
   useEffect(() => {
-    const page = document.getElementById("__next");
-    page.style.overflow = (filterOverlayIsOpen && "hidden") || "auto";
+    const { classList } = document.getElementById("__next");
+    filterOverlayIsOpen
+      ? classList.add("find_overflow")
+      : classList.remove("find_overflow");
+    console.log(
+      (filterOverlayIsOpen && "disallowed the page to overflow") ||
+        "It's fine you can overflow"
+    );
   }, [filterOverlayIsOpen]);
+
+  useEffect(() => {
+    console.log(activeFilter)
+  }, [activeFilter])
 
   const toggleFilterOverlay = () => {
     setfilterOverlayIsOpen((prevState) => !prevState);
   };
 
-  const removeFilter = (index) => {
+  const removeFilter = (filterIndex, criteriaIndex) => {
     setActiveFilter((prevState) => {
-      return [...prevState.slice(0, index), ...prevState.slice(index + 1)];
+      const prevStatecopy = prevState.slice();
+      prevStatecopy[filterIndex].criteria[criteriaIndex].checked =
+        !prevStatecopy[filterIndex].criteria[criteriaIndex].checked;
+      return prevStatecopy;
     });
   };
 
@@ -36,7 +94,13 @@ const FindProvider = ({ children }) => {
 
   return (
     <FilterOverlayContext.Provider
-      value={{ filterOverlayIsOpen, toggleFilterOverlay, activeFilter, removeFilter, addFilter }}
+      value={{
+        filterOverlayIsOpen,
+        toggleFilterOverlay,
+        activeFilter,
+        removeFilter,
+        addFilter,
+      }}
     >
       {children}
     </FilterOverlayContext.Provider>

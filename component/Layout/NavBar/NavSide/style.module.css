@@ -8,6 +8,7 @@
   height: 100vh;
   top: 0;
   left: 0;
+  overflow-x: hidden;
   -webkit-transition: -webkit-transform var(--animation-duration) ease-in-out;
   transition: -webkit-transform var(--animation-duration) ease-in-out;
   transition: transform var(--animation-duration) ease-in-out;
@@ -104,15 +105,11 @@
 .burger.open::before {
   -webkit-transform: rotateZ(45deg);
           transform: rotateZ(45deg);
-  -webkit-transition-delay: calc(var(--animation-duration));
-          transition-delay: calc(var(--animation-duration));
 }
 
 .burger.open::after {
   -webkit-transform: rotateZ(-45deg);
           transform: rotateZ(-45deg);
-  -webkit-transition-delay: calc(var(--animation-duration));
-          transition-delay: calc(var(--animation-duration));
 }
 
 /**********************************Side_Link**************************/

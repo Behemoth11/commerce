@@ -3,7 +3,8 @@ import styles from "./style.module.css";
 import ProductCard from "../ProductCard";
 import Filter from "./Filter.js";
 import { memo } from "react";
-import {useFindContext} from '../../pages/find/FindContext';
+import { useFindContext } from "../../pages/find/FindContext";
+
 
 const index = () => {
   const { toggleFilterOverlay, activeFilter, removeFilter } = useFindContext();
@@ -11,18 +12,20 @@ const index = () => {
   return (
     <>
       <div className={styles.container}>
-        <div className={`${styles.filterSetter} flex align-center`} onClick={() => toggleFilterOverlay() } >
+        <div
+          className={`${styles.filterSetter} flex align-center`}
+          onClick={() => toggleFilterOverlay()}
+        >
           <p>Filter</p>
-          <img src='/filter.svg'></img>
+          <img src="/filter.svg"></img>
         </div>
         <div className={styles.filterContainer}>
-          {/* <Filter content="Fast" />
-          <Filter content="Blue" />
-          <Filter content="Movable" />
-          <Filter content="Larmange" />
-          <Filter content="Faisable" />
-          <Filter content="Big Size" />
-          <Filter content="Affordable" /> */}
+          {activeFilter
+            .reduce((accum, filter) => [...accum, ...filter.criteria], [])
+            .filter((element) => element.checked === true)
+            .map(({ value, filterIndex, criteriaIndex }) => (
+              <Filter key={value} content={value} action={() => removeFilter(filterIndex, criteriaIndex)} />
+            ))}
         </div>
       </div>
     </>

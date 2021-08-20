@@ -42,7 +42,7 @@ function Find() {
         <main
           className="container"
         >
-          <ProductListGrid location={""} />
+          <ProductListGrid location={"find"} />
         </main>
       </FindContext>
     </div>

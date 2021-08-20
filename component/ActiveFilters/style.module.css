@@ -50,6 +50,12 @@
   background-color: var(--theme-color);
 }
 
+.crossContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .cross {
   width: 15px;
   height: 2px;

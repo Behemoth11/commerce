@@ -3,6 +3,7 @@ import styles from "./style.module.css";
 import { memo, useEffect } from "react";
 import { useFindContext } from "../../pages/find/FindContext";
 import { useTransition, animated } from "react-spring";
+import DropDownFilter from "../DropDownFilter";
 
 const index = () => {
   const {
@@ -18,7 +19,6 @@ const index = () => {
     },
     enter: { transform: "translatex(0%)" },
     leave: { transform: "translateX(100%)" },
-    config: { duration: 200 },
   });
   return animate(
     (_style, filterOverlayIsOpen) =>
@@ -33,15 +33,15 @@ const index = () => {
             </div>
           </div>
 
-          <div>This is another div</div>
-          <div>This is another div</div>
-          <div>This is another div</div>
-          <div>This is another div</div>
-          <div>This is another div</div>
-          <div>This is another div</div>
-          <div>This is another div</div>
-          <div>This is another div</div>
-          <div>This is another div</div>
+          <div className={styles.filterRubriqueContainer}>
+            {activeFilter.map(({name, criteria}) => (
+              <DropDownFilter
+                key={name}
+                name={name}
+                criteria={criteria}
+              />
+            ))}
+          </div>
         </animated.div>
       )
   );
