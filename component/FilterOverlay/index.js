@@ -1,18 +1,18 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { useFindContext } from "../../pages/find/FindContext";
 import { useTransition, animated } from "react-spring";
 import DropDownFilter from "../DropDownFilter";
 
 const index = () => {
   const {
+    loadFiltersToContext,
     filterOverlayIsOpen,
     toggleFilterOverlay,
-    activeFilter,
-    removeFilter,
-    addFilter,
+    activeFilter
   } = useFindContext();
+
   const animate = useTransition(filterOverlayIsOpen, {
     from: {
       transform: "translateX(100%)",
@@ -20,6 +20,25 @@ const index = () => {
     enter: { transform: "translatex(0%)" },
     leave: { transform: "translateX(100%)" },
   });
+
+  const [Filters, setFilter] = useState(activeFilter);
+
+  useEffect(() => {
+    setFilter(activeFilter);
+  }, [activeFilter]);
+
+  const updateFilter = (filterIndex, criteriaIndex) => {
+    setFilter((prevState) => {
+      const prevFilterCopy = JSON.parse(JSON.stringify(prevState));
+
+      prevFilterCopy[filterIndex].criteria[criteriaIndex].checked =
+        !prevFilterCopy[filterIndex].criteria[criteriaIndex].checked;
+      return prevFilterCopy;
+    });
+  };
+
+  const filter_loadToContext = () => loadFiltersToContext(Filters);
+
   return animate(
     (_style, filterOverlayIsOpen) =>
       filterOverlayIsOpen && (
@@ -27,18 +46,22 @@ const index = () => {
           <div className={`${styles.header}`}>
             <div
               className={styles.crossContainer}
-              onClick={() => toggleFilterOverlay()}
+              onClick={() => {
+                toggleFilterOverlay();
+                filter_loadToContext();
+              }}
             >
               <div className={`${styles.cross} no-shrink`}></div>
             </div>
           </div>
 
           <div className={styles.filterRubriqueContainer}>
-            {activeFilter.map(({name, criteria}) => (
+            {Filters.map(({ name, criteria }) => (
               <DropDownFilter
                 key={name}
                 name={name}
                 criteria={criteria}
+                updateFilter={updateFilter}
               />
             ))}
           </div>

@@ -4,7 +4,7 @@ const FilterOverlayContext = React.createContext({
   toggleFilterOverlay: undefined,
   filterOverlayIsOpen: false,
   removeFilter: undefined,
-  addFilter: undefined,
+  loadFiltersToContext: undefined,
   activeFilter: [
     {
       name: "",
@@ -79,17 +79,15 @@ const FindProvider = ({ children }) => {
 
   const removeFilter = (filterIndex, criteriaIndex) => {
     setActiveFilter((prevState) => {
-      const prevStatecopy = prevState.slice();
+      const prevStatecopy = JSON.parse(JSON.stringify(prevState));
       prevStatecopy[filterIndex].criteria[criteriaIndex].checked =
         !prevStatecopy[filterIndex].criteria[criteriaIndex].checked;
       return prevStatecopy;
     });
   };
 
-  const addFilter = (payload) => {
-    setActiveFilter((prevState) => {
-      return [...prevState, payload];
-    });
+  const loadFiltersToContext = (payload) => {
+    setActiveFilter(payload);
   };
 
   return (
@@ -99,7 +97,7 @@ const FindProvider = ({ children }) => {
         toggleFilterOverlay,
         activeFilter,
         removeFilter,
-        addFilter,
+        loadFiltersToContext,
       }}
     >
       {children}

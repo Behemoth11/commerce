@@ -6,12 +6,10 @@ const setProperty = (object, property, value) => {
   object.current.style.setProperty(property, value);
 };
 
-function index({ name, criteria }) {
+function index({ name, criteria,updateFilter }) {
   const containerRef = useRef();
   const subContainerRef = useRef();
   const [isOpen, setIsOpen] = useState(false);
-  const newCriteria = [...criteria];
-  const [checkbox, setCheckBox] = useState(newCriteria);
 
   useEffect(() => {
     setProperty(
@@ -21,15 +19,6 @@ function index({ name, criteria }) {
       `${subContainerRef.current.offsetHeight}px`
     );
   }, []);
-
-  const handleCheckBoxChange = (criteriaIndex) => {
-    setCheckBox((prevState) => {
-      let checkboxList = prevState.slice();
-      console.log(prevState)
-      checkboxList[criteriaIndex].checked = !checkboxList[criteriaIndex].checked;
-      return checkboxList;
-    });
-  };
 
   return (
     <div
@@ -45,7 +34,7 @@ function index({ name, criteria }) {
           <div className={`${styles.arrow} ${isOpen && styles.open}`}></div>
         </div>
 
-        {checkbox.map(({ value, checked, criteriaIndex }) => (
+        {criteria.map(({ value, checked, filterIndex, criteriaIndex }) => (
           <div key={value} className={`${styles.criteria} flex align-center`}>
             <input
               type="checkbox"
@@ -53,7 +42,7 @@ function index({ name, criteria }) {
               name={`${name}-${value}`}
               value={value}
               checked={checked}
-              onChange={() => handleCheckBoxChange(criteriaIndex)}
+              onChange={() => updateFilter(filterIndex,criteriaIndex)}
             />
             <label htmlFor={`${name}-${value}`}>{value}</label>
           </div>
