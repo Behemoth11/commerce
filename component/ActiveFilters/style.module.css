@@ -7,6 +7,8 @@
   display: -ms-flexbox;
   display: flex;
   overflow: auto;
+  height: 33px;
+  min-width: 1px;
 }
 
 .filterContainer::-webkit-scrollbar-track {
@@ -41,8 +43,8 @@
 /********************************************filter styles***********************************/
 .filter {
   padding: 2px 2px 2px 9px;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
   border-radius: var(--border-radius);
   color: var(--text-color-light);
   margin: calc(var(--margin) / 2);

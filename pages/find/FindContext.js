@@ -15,44 +15,43 @@ const FilterOverlayContext = React.createContext({
   ],
 });
 
-const rawFilters = [
+const filters = [
   {
     name: "Color",
     criteria: [
-      { value: "yellow", checked: false },
-      { value: "purple", checked: false },
-      { value: "marrong", checked: false },
+      { value: "yellow", checked: false,  filterIndex: 0, criteriaIndex: 0 },
+      { value: "purple", checked: false,  filterIndex: 0, criteriaIndex: 1 },
+      { value: "marrong", checked: false, filterIndex: 0, criteriaIndex: 2 },
     ],
   },
   {
     name: "Size",
     criteria: [
-      { value: "Large", checked: false },
-      { value: "Small", checked: false },
-      {value: "Medium", checked: false },
+      { value: "Large", checked: false, filterIndex: 1, criteriaIndex: 0 },
+      { value: "Small", checked: false, filterIndex: 1, criteriaIndex: 1 },
+      {value: "Medium", checked: false, filterIndex: 1, criteriaIndex: 2 },
     ],
   },
   {
     name: "Diversity",
     criteria: [
-      { value: "Rare", checked: false },
-      { value: "Very Rare", checked: false },
-      { value: "Not so Rare", checked: false },
+      { value: "Rare", checked: false, filterIndex: 2, criteriaIndex: 0 },
+      { value: "Very Rare", checked: false, filterIndex: 2, criteriaIndex: 1 },
+      { value: "Not so Rare", checked: false , filterIndex: 2, criteriaIndex: 2},
     ],
   },
 ];
 
-const filters = rawFilters.map(({ name, criteria }, filterIndex) => {
-  console.log("The heavy calculation is running again");
-  criteria = criteria.map((element, criteriaIndex) => ({
-    ...element,
-    filterIndex,
-    criteriaIndex,
-  }));
-  return { name, criteria };
-});
+// const filters = rawFilters.map(({ name, criteria }, filterIndex) => {
+//   console.log("The heavy calculation is running again");
+//   criteria = criteria.map((element, criteriaIndex) => ({
+//     ...element,
+//     filterIndex,
+//     criteriaIndex,
+//   }));
+//   return { name, criteria };
+// });
 
-console.log(filters);
 
 const FindProvider = ({ children }) => {
   const [filterOverlayIsOpen, setfilterOverlayIsOpen] = useState(false); //remeber to change this to true

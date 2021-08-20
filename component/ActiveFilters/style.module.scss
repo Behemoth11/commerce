@@ -5,6 +5,8 @@
 .filterContainer {
   display: flex;
   overflow: auto;
+  height: 33px;
+  min-width: 1px;
   &::-webkit-scrollbar-track {
     background-color: #c7aeae;
   }
@@ -35,7 +37,7 @@
 
 .filter {
   padding: 2px 2px 2px 9px;
-  flex-shrink: 0;
+  align-self: flex-start;
   border-radius: var(--border-radius);
 
   color: var(--text-color-light);
