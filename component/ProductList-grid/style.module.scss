@@ -9,7 +9,7 @@
 
 
 @media (max-width: 570px) {
-  .container.find{
+  .container.double{
     grid-template-columns: unquote("repeat(auto-fill, minmax(48%, 1fr))");
     padding: 0;
     gap: 2px;

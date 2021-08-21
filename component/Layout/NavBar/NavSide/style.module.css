@@ -38,6 +38,12 @@
   pointer-events: auto;
 }
 
+@media (min-width: 750px) {
+  .sideBar, .overlay {
+    display: none;
+  }
+}
+
 .navigation {
   position: absolute;
   background-color: var(--theme-color);

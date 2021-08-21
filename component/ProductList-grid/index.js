@@ -4,9 +4,9 @@ import ProductCard from "../ProductCard";
 
 import { memo } from "react";
 
-const index = ({ location }) => {
+const index = ({ displayType }) => {
   return (
-    <div className={`${styles.container} ${styles[location]} `}>
+    <div className={`${styles.container} ${styles[displayType]} `}>
       <ProductCard type="1" />
       <ProductCard type="1" />
       <ProductCard type="1" />

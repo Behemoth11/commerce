@@ -1,10 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 
 const FilterOverlayContext = React.createContext({
   toggleFilterOverlay: undefined,
   filterOverlayIsOpen: false,
   removeFilter: undefined,
   loadFiltersToContext: undefined,
+  filter: [{ value: 'No filter', filterIndex: 0, criteriaIndex: 0 }],
   activeFilter: [
     {
       name: "",
@@ -42,36 +43,32 @@ const filters = [
   },
 ];
 
-// const filters = rawFilters.map(({ name, criteria }, filterIndex) => {
-//   console.log("The heavy calculation is running again");
-//   criteria = criteria.map((element, criteriaIndex) => ({
-//     ...element,
-//     filterIndex,
-//     criteriaIndex,
-//   }));
-//   return { name, criteria };
-// });
+const getFilter = async (activeFilter) => {
+  let result = await activeFilter
+    .reduce((accum, filter) => [...accum, ...filter.criteria], [])
+    .filter((element) => element.checked === true);
+  return result;
+};
+
+const useFirstTimeLoading = () => {
+
+  const load = useRef(true);
+  useEffect(()=> {
+    load.current = false
+  },[])
+
+  return load.current;
+} 
 
 
 const FindProvider = ({ children }) => {
   const [filterOverlayIsOpen, setfilterOverlayIsOpen] = useState(false); //remeber to change this to true
   const [activeFilter, setActiveFilter] = useState(filters);
+  const [filter, setFilter] = useState();
 
-  useEffect(() => {
-    const { classList } = document.getElementById("__next");
-    filterOverlayIsOpen
-      ? classList.add("find_overflow")
-      : classList.remove("find_overflow");
-    console.log(
-      (filterOverlayIsOpen && "disallowed the page to overflow") ||
-        "It's fine you can overflow"
-    );
-  }, [filterOverlayIsOpen]);
+  const firstTimeLoading = useFirstTimeLoading();
 
-  useEffect(() => {
-    console.log(activeFilter)
-  }, [activeFilter])
-
+  /******************utilities functions for the children ****************/
   const toggleFilterOverlay = () => {
     setfilterOverlayIsOpen((prevState) => !prevState);
   };
@@ -89,11 +86,39 @@ const FindProvider = ({ children }) => {
     setActiveFilter(payload);
   };
 
+
+
+  /****************************************************************** */
+
+  useEffect(() => {
+    (async () => {
+      let filter = await getFilter(activeFilter).catch((err) => console.error(err));
+      // @ts-ignore
+      setFilter(filter);
+      console.log('The async function just ran')
+    })();
+  }, [activeFilter]);
+
+  /*******************data fetching*********************/
+  useEffect(() => {
+    if (firstTimeLoading) return;
+    console.log("I am fetching the data using the filters " + JSON.stringify(filter))
+  },[filter])
+
+  //control the page overlay
+  useEffect(() => {
+    const { classList } = document.getElementById("__next");
+    filterOverlayIsOpen
+      ? classList.add("find_overflow")
+      : classList.remove("find_overflow");
+  }, [filterOverlayIsOpen]);
+
   return (
     <FilterOverlayContext.Provider
       value={{
         filterOverlayIsOpen,
         toggleFilterOverlay,
+        filter,
         activeFilter,
         removeFilter,
         loadFiltersToContext,

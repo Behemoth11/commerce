@@ -1,5 +1,18 @@
 .container {
-  padding-top: var(--large-padding);
+  margin-top: var(--large-padding);
+}
+
+.filterHeader {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  margin: 0 var(--margin);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .filterContainer {
@@ -7,8 +20,8 @@
   display: -ms-flexbox;
   display: flex;
   overflow: auto;
-  height: 33px;
-  min-width: 1px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
 }
 
 .filterContainer::-webkit-scrollbar-track {
@@ -31,7 +44,6 @@
   width: fit-content;
   padding: var(--padding);
   padding-right: 0;
-  margin-left: var(--margin);
 }
 
 .filterSetter img {
@@ -43,6 +55,8 @@
 /********************************************filter styles***********************************/
 .filter {
   padding: 2px 2px 2px 9px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
   -ms-flex-item-align: start;
       align-self: flex-start;
   border-radius: var(--border-radius);

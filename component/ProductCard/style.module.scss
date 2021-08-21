@@ -15,7 +15,7 @@
   z-index: 0;
   width: 100%;
   margin-top: var(--margin);
-  max-width: unquote("calc(50px + var(--max-card-height) * 100 / var(--aspect-ratio))"); //Uncommenting this property will force the card to maintain it's aspect ratio even if more
+  // max-width: unquote("calc(50px + var(--max-card-height) * 100 / var(--aspect-ratio))"); //Uncommenting this property will force the card to maintain it's aspect ratio even if more
   padding-top: unquote("min(var(--max-card-height), calc(var(--aspect-ratio))*1%)");
 }
 

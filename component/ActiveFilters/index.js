@@ -5,34 +5,31 @@ import Filter from "./Filter.js";
 import { memo, useState, useEffect } from "react";
 import { useFindContext } from "../../pages/find/FindContext";
 
-const index = () => {
-  const { toggleFilterOverlay, activeFilter, removeFilter } = useFindContext();
-  const [filter, setFilter] = useState([{}]);
-
-  const getFilter = async () => {
-    let result = await activeFilter
-      .reduce((accum, filter) => [...accum, ...filter.criteria], [])
-      .filter((element) => element.checked === true);
-    return result;
-  };
-
-  useEffect(() => {
-    (async () => {
-      let filter = await getFilter().catch((err) => console.error(err));
-      setFilter(filter);
-    })();
-  }, [activeFilter]);
+const index = ({ displayType ,setDisplayType }) => {
+  const { toggleFilterOverlay, filter, removeFilter } = useFindContext();
 
   return (
     <>
-      <div className={styles.container}>
-        <div
-          className={`${styles.filterSetter} flex align-center`}
-          onClick={() => toggleFilterOverlay()}
-        >
-          <p>Filter</p>
-          <img src="/filter.svg"></img>
+      <div className={`${styles.container}`}>
+        <div className={`${styles.filterHeader}`}>
+          <div
+            className={`${styles.filterSetter}  flex align-center`}
+            onClick={() => toggleFilterOverlay()}
+          >
+            <p>Filter</p>
+            <img src="/filter.svg"></img>
+          </div>
+          <div
+            onClick={() =>
+              setDisplayType(
+                (prevState) => (prevState == "single" && "double") || 'single'
+              )
+            }
+          >
+           {(displayType == "single" && "double") || 'single'}
+          </div>
         </div>
+
         <div className={styles.filterContainer}>
           {(filter &&
             filter

@@ -47,5 +47,7 @@
 .criteria {
   font-size: var(--font-size);
   padding: var(--padding);
-  // margin-left
+  label{
+    margin-left: var(--margin);
+  }
 }

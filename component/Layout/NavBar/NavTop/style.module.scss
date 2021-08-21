@@ -5,7 +5,11 @@
     & > div{
         padding: 0 calc(var(--padding)*5)
     }
+    // transform: scale(0.8);
+    transform-origin: top;
+    transition: height var(--animation-duration) ease;
 }
+
 
 .burgerDiv{
     width: var(--burger-width);
@@ -44,13 +48,19 @@
     }
 }
 
+.brandIcon{
+
+}
+
 .bagIcon{
     height: 40px;
     & > img{
+        transform: scale(0.8);
         margin-top: 4px;
         max-height: 100%;
         height: calc( var(--burger-height) + 15px);
     }
+    transition: height 0.5s ease;
 }
 
 .ItemsInCart{
@@ -61,3 +71,38 @@
         color: var(--text-color-dark);
     }
 }
+
+.rightSection{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin-left: auto;
+    justify-content: space-between;
+    & > div{
+        margin: 0 20px;
+    }
+}
+
+@media (max-width: 750px){
+    .navLink{
+        display: none;
+    }
+    .rightSection{
+        & > div{
+            margin: 0;
+        }
+    }
+}
+
+@media (min-width: 750px){
+    .burgerDivContainer{
+        display: none;
+    }
+    .brandIcon{
+        margin-right: auto;
+        margin-left: 0;
+    }
+}
+
+
+

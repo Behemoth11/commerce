@@ -15,6 +15,8 @@ function Find() {
     query: { categories },
   } = useRouter();
 
+  const [displayType, setDisplayType] = useState('single' || 'double');
+
   return (
     <div className="big-container">
       <Head>
@@ -37,12 +39,12 @@ function Find() {
         </div>
 
         <FilterOverlay />
-        <ActiveFilter />
+        <ActiveFilter displayType={displayType}  setDisplayType={setDisplayType} />
 
         <main
           className="container"
         >
-          <ProductListGrid location={"find"} />
+          <ProductListGrid displayType={displayType} />
         </main>
       </FindContext>
     </div>

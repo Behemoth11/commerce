@@ -17,10 +17,10 @@ const index = ({ categories }) => {
               <a> back </a>
             </div>
             <div className={`${styles.rubriqueLink}`}>
-              <Link href={`/`}><a >find</a></Link> /
+              <Link href={`/`}><a >Home</a></Link> /
               {categories.slice(0, -1).map((element) => (
                 <span key={element} >
-                <Link href="" >
+                <Link href={`/find?categories=${element}`} >
                   <a>{element.toLowerCase()}</a>
                   </Link> /
                   </span>

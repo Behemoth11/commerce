@@ -13,7 +13,6 @@
   z-index: 0;
   width: 100%;
   margin-top: var(--margin);
-  max-width: calc(50px + var(--max-card-height) * 100 / var(--aspect-ratio));
   padding-top: min(var(--max-card-height), calc(var(--aspect-ratio))*1%);
 }
 

@@ -8,6 +8,7 @@
   --larger-margin: 50px;
   --padding: 5px;
   --large-padding: 15px;
+  --media-query: 750px;
   --text-color-dark: rgb(0, 0, 0);
   --text-color-light: rgb(255, 255, 255);
   --theme-color: #0f0f13;

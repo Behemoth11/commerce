@@ -11,7 +11,6 @@ const NavBarProvider = ({ children }) => {
   useEffect(() => {
     const {classList} = document.getElementById("__next");
     sideBarIsOpen? classList.add("navBar_overflow"): classList.remove("navBar_overflow")
-    console.log( (sideBarIsOpen && "disallowed the page to overflow") || "It's fine you can overflow")
   }, [sideBarIsOpen]);
     
     const toggleNavBar = () => {

@@ -1,6 +1,10 @@
 .navTop {
   --nav-bottom-line: 2px;
   border-bottom: var(--nav-bottom-line) solid var(--theme-color);
+  -webkit-transform-origin: top;
+          transform-origin: top;
+  -webkit-transition: height var(--animation-duration) ease;
+  transition: height var(--animation-duration) ease;
 }
 
 .navTop > div {
@@ -57,9 +61,13 @@
 
 .bagIcon {
   height: 40px;
+  -webkit-transition: height 0.5s ease;
+  transition: height 0.5s ease;
 }
 
 .bagIcon > img {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
   margin-top: 4px;
   max-height: 100%;
   height: calc( var(--burger-height) + 15px);
@@ -73,4 +81,42 @@
 
 .ItemsInCart p {
   color: var(--text-color-dark);
+}
+
+.rightSection {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: auto;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.rightSection > div {
+  margin: 0 20px;
+}
+
+@media (max-width: 750px) {
+  .navLink {
+    display: none;
+  }
+  .rightSection > div {
+    margin: 0;
+  }
+}
+
+@media (min-width: 750px) {
+  .burgerDivContainer {
+    display: none;
+  }
+  .brandIcon {
+    margin-right: auto;
+    margin-left: 0;
+  }
 }
