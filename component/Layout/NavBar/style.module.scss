@@ -1,22 +1,26 @@
+.navigation {
+  --burger-height: 15px;
+  --burger-width: 30px;
+  --bar-height: 1.8px;
+  --burger-color: var(--text-color-dark);
+  --burger-margin: 7px;
+  --navigation-height: 50px;
 
-
-.navigation{
-    --burger-height: 15px;
-    --burger-width: 30px;
-    --bar-height: 1.8px;
-    --burger-color: var(--text-color-dark);
-    --burger-margin: 7px;
-    --navigation-height: 50px;
-    
-    position: sticky;
-    z-index: 2;
-    top: 0;
-    left: 0;
-    background-color: var(--body-background);
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  background-color: var(--body-background);
 }
-.annoncement{
-    background-color: var(--theme-color);
-    color: var(--text-color-light);
-    text-align: center;
-    font-size: 0.8em;
+.annoncement {
+  background-color: var(--theme-color);
+  color: var(--text-color-light);
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.hidden {
+  opacity: 0;
+  transform: translateY(-150%);
 }

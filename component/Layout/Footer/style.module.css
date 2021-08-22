@@ -1,7 +1,7 @@
 .footerContainer {
   border-top: var(--border) solid var(--accent-color);
   background-color: var(--theme-color);
-  color: var(--accent-color);
+  color: white;
 }
 
 .footerHeader {
@@ -74,5 +74,5 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: var(--larger-margin);
+  padding: var(--large-margin);
 }

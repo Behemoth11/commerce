@@ -1,10 +1,8 @@
 .navTop {
   --nav-bottom-line: 2px;
+  z-index: -1;
+  background-color: var(--body-background);
   border-bottom: var(--nav-bottom-line) solid var(--theme-color);
-  -webkit-transform-origin: top;
-          transform-origin: top;
-  -webkit-transition: height var(--animation-duration) ease;
-  transition: height var(--animation-duration) ease;
 }
 
 .navTop > div {

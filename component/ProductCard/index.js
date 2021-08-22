@@ -22,7 +22,7 @@ const ASPECT_RATIO = 120;
 const IMAGE_PERCENTAGE = 100;
 const MAX_CARD_HEIGHT = "70vh";
 
-const index = ({ type }) => {
+const index = ({ type , imageLink}) => {
   const cardRef = useRef();
 
   useEffect(() => {
@@ -43,13 +43,13 @@ const index = ({ type }) => {
           <div className={`${styles.imageSection}`}>
             <div className={`${styles.moreInfo}}`}></div>
             <Image
-              loader={() =>
-                `https://source.unsplash.com/random/${getRandomInteger(
-                  500,
-                  500
-                )}x${getRandomInteger(416, 416)}`
-              }
-              src={src}
+              // loader={() =>
+              //   `https://source.unsplash.com/random/${getRandomInteger(
+              //     500,
+              //     500
+              //   )}x${getRandomInteger(416, 416)}`
+              // }
+              src={imageLink || '/images/image1.jpg' }
               alt="There will soon be an alt"
               width={100}
               height={(ASPECT_RATIO * IMAGE_PERCENTAGE) / 100}

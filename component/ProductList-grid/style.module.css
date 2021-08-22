@@ -13,7 +13,7 @@
   .container.double {
     -ms-grid-columns: (minmax(48%, 1fr))[auto-fill];
         grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
-    padding: 0;
+    padding: 0px;
     gap: 2px;
   }
 }

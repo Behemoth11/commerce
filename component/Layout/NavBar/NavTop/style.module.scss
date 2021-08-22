@@ -1,13 +1,14 @@
 
 .navTop{
     --nav-bottom-line: 2px;
+    z-index: -1;
+    
+    background-color: var(--body-background);
+    
     border-bottom: var(--nav-bottom-line) solid var(--theme-color);
     & > div{
         padding: 0 calc(var(--padding)*5)
     }
-    // transform: scale(0.8);
-    transform-origin: top;
-    transition: height var(--animation-duration) ease;
 }
 
 
