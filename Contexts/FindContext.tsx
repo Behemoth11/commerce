@@ -7,7 +7,7 @@ const FilterOverlayContext = React.createContext({
   removeFilter: undefined,
   loadFiltersToContext: undefined,
   filter: [{ value: "No filter", filterIndex: 0, criteriaIndex: 0 }],
-  activeFilter: [
+  allFilter: [
     {
       name: "",
       criteria: [
@@ -49,8 +49,8 @@ const filters = [
   },
 ];
 
-const getFilter = async (activeFilter) => {
-  let result = await activeFilter
+const getFilter = async (allFilter) => {
+  let result = await allFilter
     .reduce((accum, filter) => [...accum, ...filter.criteria], [])
     .filter((element) => element.checked === true);
   return result;
@@ -58,7 +58,7 @@ const getFilter = async (activeFilter) => {
 
 const FindProvider = ({ children }) => {
   const [filterOverlayIsOpen, setfilterOverlayIsOpen] = useState(false); //remeber to change this to true
-  const [activeFilter, setActiveFilter] = useState(filters);
+  const [allFilter, setActiveFilter] = useState(filters);
   const [filter, setFilter] = useState();
 
   const firstTimeLoading = useFirstTimeLoading();
@@ -85,29 +85,25 @@ const FindProvider = ({ children }) => {
 
   useEffect(() => {
     (async () => {
-      let filter = await getFilter(activeFilter).catch((err) =>
+      let filter = await getFilter(allFilter).catch((err) =>
         console.error(err)
       );
       // @ts-ignore
       setFilter(filter);
       console.log("The async function just ran");
     })();
-  }, [activeFilter]);
+  }, [allFilter]);
 
   /*******************data fetching*********************/
-  useEffect(() => {
-    if (firstTimeLoading) return;
-    console.log(
-      "I am fetching the data using the filters " + JSON.stringify(filter)
-    );
-  }, [filter]);
-
   //control the page overlay
   useEffect(() => {
+    if (firstTimeLoading) return;
+
     const { classList } = document.getElementById("__next");
     filterOverlayIsOpen
       ? classList.add("find_overflow")
       : classList.remove("find_overflow");
+    
   }, [filterOverlayIsOpen]);
 
   return (
@@ -116,7 +112,7 @@ const FindProvider = ({ children }) => {
         filterOverlayIsOpen,
         toggleFilterOverlay,
         filter,
-        activeFilter,
+        allFilter,
         removeFilter,
         loadFiltersToContext,
       }}

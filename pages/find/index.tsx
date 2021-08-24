@@ -23,6 +23,7 @@ function Find() {
         <title>Discover goods in gabon</title>
       </Head>
       <FindContext>
+        
         <div className="container">
           <Explore_SectionTitle categories={categories} />
         </div>

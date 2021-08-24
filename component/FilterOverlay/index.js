@@ -10,7 +10,7 @@ const index = () => {
     loadFiltersToContext,
     filterOverlayIsOpen,
     toggleFilterOverlay,
-    activeFilter
+    allFilter
   } = useFindContext();
 
   const animate = useTransition(filterOverlayIsOpen, {
@@ -21,11 +21,11 @@ const index = () => {
     leave: { transform: "translateX(100%)" },
   });
 
-  const [Filters, setFilter] = useState(activeFilter);
+  const [Filters, setFilter] = useState(allFilter);
 
   useEffect(() => {
-    setFilter(activeFilter);
-  }, [activeFilter]);
+    setFilter(allFilter);
+  }, [allFilter]);
 
   const updateFilter = (filterIndex, criteriaIndex) => {
     setFilter((prevState) => {
