@@ -4,27 +4,16 @@ import Image from "next/image";
 import useFitText from "use-fit-text";
 import { useRouter } from "next/router";
 import styles from "./style.module.css";
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { useGlobalContext } from "../../Contexts/GlobalContext";
-import { setProperty } from "../../shared/UtilityFunctions";
 
-const ASPECT_RATIO = 120;
-const IMAGE_PERCENTAGE = 100;
-const MAX_CARD_HEIGHT = "70vh";
+const ASPECT_RATIO = 120;//you may want to change the global css aspect-ratio after changing this
 
 const index = ({ type, imageLink, price }) => {
   const cardRef = useRef();
   const [infoFieldIsOpen, setInfoFieldIsOpen] = useState(false);
   const {setActiveProductData} = useGlobalContext();
   const { fontSize, ref } = useFitText();
-
-  useEffect(() => {
-    if (cardRef.current) {
-      setProperty(cardRef, "--image-percentage", IMAGE_PERCENTAGE + "%");
-      setProperty(cardRef, "--max-card-height", MAX_CARD_HEIGHT);
-      setProperty(cardRef, "--aspect-ratio", ASPECT_RATIO);
-    }
-  }, []);
 
   const {
     query: { categories },
@@ -75,7 +64,7 @@ const index = ({ type, imageLink, price }) => {
               src={imageLink || "/images/image1.jpg"}
               alt="There will soon be an alt"
               width={100}
-              height={(ASPECT_RATIO * IMAGE_PERCENTAGE) / 100}
+              height={ASPECT_RATIO }
               layout="responsive"
             />
           </div>

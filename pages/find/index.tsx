@@ -1,12 +1,11 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-// import FindContext from "../../Contexts/FindContext";
-// import ActiveFilter from "../../component/ActiveFilters";
-// import FilterOverlay from "../../component/FilterOverlay";
+import FindContext from "../../Contexts/FindContext";
+import ActiveFilter from "../../component/ActiveFilters";
+import FilterOverlay from "../../component/FilterOverlay";
 import ProductListGrid from "../../component/ProductList-grid";
 import Explore_SectionTitle from "../../component/Explore_SectionTitle";
-
 
 function Find() {
   const {
@@ -23,23 +22,21 @@ function Find() {
         <link rel="icon" href="/favicon.ico" />
         <title>Discover goods in gabon</title>
       </Head>
-      {/* <FindContext> */}
+      <FindContext>
         <div className="container">
-          <Explore_SectionTitle
-            categories={categories}
-          />
+          <Explore_SectionTitle categories={categories} />
         </div>
 
-        {/* <FilterOverlay />
+        <FilterOverlay />
         <ActiveFilter
           displayType={displayType}
           setDisplayType={setDisplayType}
-        /> */}
+        />
 
         <main className="container">
           <ProductListGrid displayType={displayType} />
         </main>
-      {/* </FindContext> */}
+      </FindContext>
     </div>
   );
 }

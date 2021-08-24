@@ -30,7 +30,7 @@
 }
 
 .imageSection {
-  height: var(--image-percentage);
+  height: 100%;
   position: relative;
   overflow: hidden;
   & > div:nth-child(1) {
@@ -81,7 +81,6 @@
 }
 /****************************description**************************************/
 .description {
-  height: calc(100% - var(--image-percentage));
   margin-left: calc(var(--margin) / 2);
   width: 100%;
 }

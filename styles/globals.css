@@ -25,6 +25,8 @@
   --animation-duration: 0.4s;
   --fast-animation-duration: 0.2s;
   --box-gap: 10px;
+  --max-card-height: 70vh;
+  --aspect-ratio: 120;
 }
 
 * {
