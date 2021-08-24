@@ -1,7 +1,7 @@
 // @ts-ignore
 import styles from "./style.module.css";
 import { memo, useEffect, useState } from "react";
-import { useFindContext } from "../../pages/find/FindContext";
+import { useFindContext } from "../../Contexts/FindContext";
 import { useTransition, animated } from "react-spring";
 import DropDownFilter from "../DropDownFilter";
 

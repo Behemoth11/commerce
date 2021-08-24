@@ -5,7 +5,7 @@ import styles from "./style.module.css";
 import NavBarContext, { useNavBarState } from "./NavBarContext.js";
 import { memo, useState, useEffect } from "react";
 
-const useScrollDirectionToBottom = (sensibility, sampling, element) => {
+const useScrollDirectionToBottom = (sensibility:number, sampling:number, element) => {
   const [toBottom, setToBottom] = useState(false);
 
   useEffect(() => {

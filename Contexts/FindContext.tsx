@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
+import { useFirstTimeLoading } from '../shared/CustomHooks';
 
 const FilterOverlayContext = React.createContext({
   toggleFilterOverlay: undefined,
   filterOverlayIsOpen: false,
   removeFilter: undefined,
   loadFiltersToContext: undefined,
-  filter: [{ value: 'No filter', filterIndex: 0, criteriaIndex: 0 }],
+  filter: [{ value: "No filter", filterIndex: 0, criteriaIndex: 0 }],
   activeFilter: [
     {
       name: "",
@@ -20,8 +21,8 @@ const filters = [
   {
     name: "Color",
     criteria: [
-      { value: "yellow", checked: false,  filterIndex: 0, criteriaIndex: 0 },
-      { value: "purple", checked: false,  filterIndex: 0, criteriaIndex: 1 },
+      { value: "yellow", checked: false, filterIndex: 0, criteriaIndex: 0 },
+      { value: "purple", checked: false, filterIndex: 0, criteriaIndex: 1 },
       { value: "marrong", checked: false, filterIndex: 0, criteriaIndex: 2 },
     ],
   },
@@ -30,7 +31,7 @@ const filters = [
     criteria: [
       { value: "Large", checked: false, filterIndex: 1, criteriaIndex: 0 },
       { value: "Small", checked: false, filterIndex: 1, criteriaIndex: 1 },
-      {value: "Medium", checked: false, filterIndex: 1, criteriaIndex: 2 },
+      { value: "Medium", checked: false, filterIndex: 1, criteriaIndex: 2 },
     ],
   },
   {
@@ -38,7 +39,12 @@ const filters = [
     criteria: [
       { value: "Rare", checked: false, filterIndex: 2, criteriaIndex: 0 },
       { value: "Very Rare", checked: false, filterIndex: 2, criteriaIndex: 1 },
-      { value: "Not so Rare", checked: false , filterIndex: 2, criteriaIndex: 2},
+      {
+        value: "Not so Rare",
+        checked: false,
+        filterIndex: 2,
+        criteriaIndex: 2,
+      },
     ],
   },
 ];
@@ -49,17 +55,6 @@ const getFilter = async (activeFilter) => {
     .filter((element) => element.checked === true);
   return result;
 };
-
-const useFirstTimeLoading = () => {
-
-  const load = useRef(true);
-  useEffect(()=> {
-    load.current = false
-  },[])
-
-  return load.current;
-} 
-
 
 const FindProvider = ({ children }) => {
   const [filterOverlayIsOpen, setfilterOverlayIsOpen] = useState(false); //remeber to change this to true
@@ -86,24 +81,26 @@ const FindProvider = ({ children }) => {
     setActiveFilter(payload);
   };
 
-
-
   /****************************************************************** */
 
   useEffect(() => {
     (async () => {
-      let filter = await getFilter(activeFilter).catch((err) => console.error(err));
+      let filter = await getFilter(activeFilter).catch((err) =>
+        console.error(err)
+      );
       // @ts-ignore
       setFilter(filter);
-      console.log('The async function just ran')
+      console.log("The async function just ran");
     })();
   }, [activeFilter]);
 
   /*******************data fetching*********************/
   useEffect(() => {
     if (firstTimeLoading) return;
-    console.log("I am fetching the data using the filters " + JSON.stringify(filter))
-  },[filter])
+    console.log(
+      "I am fetching the data using the filters " + JSON.stringify(filter)
+    );
+  }, [filter]);
 
   //control the page overlay
   useEffect(() => {
@@ -129,8 +126,8 @@ const FindProvider = ({ children }) => {
   );
 };
 
+export default FindProvider;
+
 export const useFindContext = () => {
   return useContext(FilterOverlayContext);
 };
-
-export default FindProvider;

@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import ProductCard from "../ProductCard";
 import Filter from "./Filter.js";
 import { memo, useState, useEffect } from "react";
-import { useFindContext } from "../../pages/find/FindContext";
+import { useFindContext } from "../../Contexts/FindContext";
 
 const index = ({ displayType ,setDisplayType }) => {
   const { toggleFilterOverlay, filter, removeFilter } = useFindContext();
@@ -11,22 +11,24 @@ const index = ({ displayType ,setDisplayType }) => {
   return (
     <>
       <div className={`${styles.container}`}>
-        <div className={`${styles.filterHeader}`}>
+        <div className={`${styles.filterHeader} `}>
           <div
-            className={`${styles.filterSetter}  flex align-center`}
+            className={`${styles.filterSetter} flex align-center`}
             onClick={() => toggleFilterOverlay()}
           >
             <p>Filter</p>
-            <img src="/filter.svg"></img>
+            <img src="/svg/filter.svg"></img>
           </div>
           <div
+            className={`${styles.displayType} `}
             onClick={() =>
               setDisplayType(
                 (prevState) => (prevState == "single" && "double") || 'single'
               )
             }
           >
-           {(displayType == "single" && "double") || 'single'}
+           {/* {(displayType == "single" && <span>double</span>) || <span>single</span>} */}
+           {(displayType == "single" && <img src="/svg/grid.svg"/>) || <img src="/svg/square.svg"/>}
           </div>
         </div>
 

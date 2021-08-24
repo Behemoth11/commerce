@@ -2,18 +2,18 @@
 :root {
   --border: 2px;
   --thin-border: 1.5px;
-  --border-radius: 15px;
+  --border-radius: 2px;
   --margin: 5px;
   --large-margin: 8px;
   --larger-margin: 50px;
   --padding: 5px;
   --large-padding: 15px;
-  --media-query: 750px;
   --text-color-dark: rgb(0, 0, 0);
   --text-color-light: rgb(255, 255, 255);
   --theme-color: #0f0f13;
+  --secondary-theme-color: #0f0f1380;
   --accent-color: #bb245c;
-  --secondary-accent-color: #bb245bb1;
+  --secondary-accent-color: #bb245bef;
   --body-background: #ffffff;
   --body-neutral-dark: #000000;
   --body-neutral-light: #ffffff;
@@ -34,7 +34,12 @@
   padding: 0;
 }
 
+:root {
+  font-size: 100%;
+}
+
 html {
+  font-size: 100%;
   height: 100vh;
   width: 100vw;
 }

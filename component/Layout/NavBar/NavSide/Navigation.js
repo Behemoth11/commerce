@@ -84,7 +84,7 @@ const Navigation = ({
           <div className={styles.footer}>
             <ul>
               {littleLinkList.map((element) => (
-                <Link key={element} href="">
+                <Link key={element} href={`/${element}`}>
                   <li>
                     <a>{element}</a>
                   </li>

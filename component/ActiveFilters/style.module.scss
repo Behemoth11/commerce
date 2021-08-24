@@ -39,6 +39,20 @@
     height: 110%;
   }
 }
+
+.displayType{
+  height: 20px;
+  font-weight: 100;
+  margin-right: var(--margin);
+  justify-self: center; align-self: center;
+  display: flex;justify-content: center; align-items: center;
+}
+
+@media (min-width: 390px) {
+  .displayType{
+    display: none;
+  }
+}
 /********************************************filter styles***********************************/
 
 .filter {

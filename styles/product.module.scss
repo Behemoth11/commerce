@@ -1,0 +1,33 @@
+.productPage {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 70% 1fr;
+  margin-top: var(--large-margin);
+
+  & > div:nth-child(1) {
+    grid-column: 1/2;
+  }
+  & > div:nth-child(2) {
+    grid-column: span 1;
+  }
+  & > div:nth-child(3) {
+    grid-column: span 2;
+  }
+}
+
+
+@media (max-width: 900px) {
+  .productPage {
+    grid-template-columns: 1fr;
+    & > div:nth-child(2) {
+      grid-row: 2/3;
+      background-color: green;
+    }
+  }
+}
+
+@media (max-width: 570px) {
+  .productPage {
+    grid-template-columns: 1fr;
+  }
+}

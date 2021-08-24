@@ -82,6 +82,7 @@
 }
 
 .rightSection {
+  height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -96,8 +97,51 @@
           justify-content: space-between;
 }
 
-.rightSection > div {
-  margin: 0 20px;
+.navLink {
+  padding: 0 20px;
+  position: relative;
+  display: -ms-grid;
+  display: grid;
+  height: 100%;
+  max-height: 100%;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  place-items: center;
+}
+
+.content {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  z-index: -1;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  pointer-events: none;
+  color: var(--text-color-light);
+  background-color: #525252;
+  -webkit-transform: translateY(100%) translateX(-20px);
+          transform: translateY(100%) translateX(-20px);
+  -webkit-transition: -webkit-transform var(--fast-animation-duration) ease-in-out;
+  transition: -webkit-transform var(--fast-animation-duration) ease-in-out;
+  transition: transform var(--fast-animation-duration) ease-in-out;
+  transition: transform var(--fast-animation-duration) ease-in-out, -webkit-transform var(--fast-animation-duration) ease-in-out;
+}
+
+.headerGroup {
+  margin: 10px;
+}
+
+.headerGroup > li {
+  list-style: none;
+}
+
+.navLink:hover .content {
+  -webkit-transform: translateY(100%) translateX(0px);
+          transform: translateY(100%) translateX(0px);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media (max-width: 750px) {

@@ -1,37 +1,9 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import { useState, useEffect, memo } from "react";
+import { useState, useEffect, memo, useMemo } from "react";
 import Navigation from "./Navigation";
 import { useNavBarState } from "../NavBarContext";
-import { useTransition, animated } from "react-spring";
-
-//Make sure everythin matches the routes
-const sideBarSections = {
-  categories: {
-    title: "Menu",
-    content: ["Women", "Men", "Kids", "Utilities"],
-    Women: {
-      title: "Women",
-      content: ["Love", "Bags", "watches", "jewelries"]
-    },
-    Men: {
-      title: "Men",
-      content: ["Suit", "Pant", "Short", "Cap"],
-    },
-    Kids: {
-      title: "Kids",
-      content: ["Short", "Underwear", "children", "leverages"],
-    },
-    Utilities: {
-      title: "Utilities",
-      content: ["Pot", "Plates", "Ustensils"],
-      Ustensils: {
-        title: "Ustensils",
-        content: ["Spoons", "Fork", "Knifes"],
-      },
-    },
-  },
-};
+import { navBarSections } from "../navBarSections";
 
 const END_POINT = "END_POINT";
 
@@ -42,7 +14,6 @@ const formatLocation = (object, index) => {
       hasDescendant: object[element] ? true : false,
     };
   });
-
   return { title: object.title, content, index };
 };
 
@@ -50,7 +21,7 @@ const getHeaders = (navContentTodDisplay, _location) => {
   const location = _location;
 
   let result =
-    navContentTodDisplay[location[0]] || navContentTodDisplay["categories"];
+    navContentTodDisplay[location[0]] || navContentTodDisplay["Menu"];
 
   let side_pages = [formatLocation(result, 0)];
 
@@ -61,14 +32,13 @@ const getHeaders = (navContentTodDisplay, _location) => {
       side_pages.push(formatLocation(result, i));
     } else break;
   }
-
   return side_pages;
 };
 
 const index = () => {
   const [positionIndex, setPositionIndex] = useState(0);
   const { sideBarIsOpen, toggleNavBar } = useNavBarState();
-  const [sideBarLocation, setSideBarLocation] = useState(["categories"]);
+  const [sideBarLocation, setSideBarLocation] = useState(["Menu"]);
 
   const updateSideBar = (update, index) => {
     setSideBarLocation((prevState) => {
@@ -85,7 +55,10 @@ const index = () => {
     });
   };
 
-  const sideBarPages = getHeaders(sideBarSections, sideBarLocation);
+  const sideBarPages = useMemo(
+    () => getHeaders(navBarSections, sideBarLocation),
+    [sideBarLocation]
+  );
 
   return (
     <>

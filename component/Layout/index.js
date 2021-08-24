@@ -5,7 +5,10 @@ function index({ children }) {
   return (
     <>
       <NavBar />
-      <div className="flex center-children" style={{position: 'relative'}}>{children}</div>
+      <div className="flex center-children" style={{ position: "relative" }}>
+        {" "}
+        <div className="big-container">{children}</div>
+      </div>
       <Footer />
     </>
   );

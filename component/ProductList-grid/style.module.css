@@ -1,6 +1,6 @@
 .container {
-  -ms-grid-columns: (minmax(250px, 1fr))[auto-fill];
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  -ms-grid-columns: (minmax(200px, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   background-color: white;
   display: -ms-grid;
   display: grid;
@@ -15,5 +15,6 @@
         grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));
     padding: 0px;
     gap: 2px;
+    font-size: 0.9em;
   }
 }

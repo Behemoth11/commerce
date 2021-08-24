@@ -1,10 +1,8 @@
-
-
 .cardsContainer {
   width: 100%;
 }
 
-.cardsContainer.no-parent-restiction{
+.cardsContainer.no-parent-restiction {
   width: unquote("min(100%,360px)");
   scroll-snap-align: start;
   padding: var(--margin);
@@ -14,15 +12,19 @@
   position: relative;
   z-index: 0;
   width: 100%;
+  overflow: hidden;
   margin-top: var(--margin);
+  border-radius: var(--border-radius);
   // max-width: unquote("calc(50px + var(--max-card-height) * 100 / var(--aspect-ratio))"); //Uncommenting this property will force the card to maintain it's aspect ratio even if more
-  padding-top: unquote("min(var(--max-card-height), calc(var(--aspect-ratio))*1%)");
+  padding-top: unquote(
+    "min(var(--max-card-height), calc(var(--aspect-ratio))*1%)"
+  );
 }
 
 .container {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
 }
@@ -31,7 +33,7 @@
   height: var(--image-percentage);
   position: relative;
   overflow: hidden;
-  & > div:nth-child(2) {
+  & > div:nth-child(1) {
     //this target the Image Div container
     position: absolute;
     top: 50%;
@@ -40,15 +42,51 @@
     transition: transform var(--fast-animation-duration) ease-in-out;
   }
 }
+/***********************productInfo **************************************/
+.moreInfo {
+  --dimension: 15;
+  --opened-dimension: 160;
 
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.878);
+  color: var(--theme-color);
+  clip-path: ellipse(0% 0% at 100% 0%);
+  transition: clip-path var(--animation-duration) ease-in-out;
+  &.open {
+    clip-path: ellipse(165% 132% at 100% 0%);
+  }
+}
+
+.toggleInfoIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 2%;
+  height: 8%;
+  box-sizing: content-box;
+}
+
+.informations {
+  overflow: auto;
+  text-align: center;
+}
 /****************************description**************************************/
 .description {
   height: calc(100% - var(--image-percentage));
-  margin-left: calc(var(--margin)/2);
+  margin-left: calc(var(--margin) / 2);
   width: 100%;
 }
 
-.description.no-parent-restiction{
+.description.no-parent-restiction {
   margin: 0px;
 }
 
@@ -57,11 +95,11 @@
   padding: 0.3em 1px;
 
   font-size: var(--small-font-size);
-  p{
+  p {
     margin: 0px;
     line-height: 1em;
   }
-  &.no-parent-restiction{
+  &.no-parent-restiction {
     display: none;
   }
 }
@@ -71,10 +109,9 @@
   color: var(--text-color-light);
   margin-bottom: var(--margin);
   height: 1.8em;
+  border-radius: var(--border-radius);
 }
 
-.buy.no-parent-restiction{
-  margin-top: var(--margin)
-
+.buy.no-parent-restiction {
+  margin-top: var(--margin);
 }
-
