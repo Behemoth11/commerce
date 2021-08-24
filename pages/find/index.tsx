@@ -30,11 +30,11 @@ function Find() {
           />
         </div>
 
-        <FilterOverlay />
+        {/* <FilterOverlay />
         <ActiveFilter
           displayType={displayType}
           setDisplayType={setDisplayType}
-        />
+        /> */}
 
         <main className="container">
           <ProductListGrid displayType={displayType} />
