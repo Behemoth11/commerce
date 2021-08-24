@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import FindContext from "../../Contexts/FindContext";
+// import FindContext from "../../Contexts/FindContext";
 // import ActiveFilter from "../../component/ActiveFilters";
 // import FilterOverlay from "../../component/FilterOverlay";
 import ProductListGrid from "../../component/ProductList-grid";
@@ -23,7 +23,7 @@ function Find() {
         <link rel="icon" href="/favicon.ico" />
         <title>Discover goods in gabon</title>
       </Head>
-      <FindContext>
+      {/* <FindContext> */}
         <div className="container">
           <Explore_SectionTitle
             categories={categories}
@@ -39,7 +39,7 @@ function Find() {
         <main className="container">
           <ProductListGrid displayType={displayType} />
         </main>
-      </FindContext>
+      {/* </FindContext> */}
     </div>
   );
 }
