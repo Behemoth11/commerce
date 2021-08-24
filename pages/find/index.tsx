@@ -2,8 +2,8 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import FindContext from "../../Contexts/FindContext";
-import ActiveFilter from "../../component/ActiveFilters";
-import FilterOverlay from "../../component/FilterOverlay";
+// import ActiveFilter from "../../component/ActiveFilters";
+// import FilterOverlay from "../../component/FilterOverlay";
 import ProductListGrid from "../../component/ProductList-grid";
 import Explore_SectionTitle from "../../component/Explore_SectionTitle";
 
