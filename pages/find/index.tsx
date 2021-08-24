@@ -23,7 +23,7 @@ function Find() {
         <title>Discover goods in gabon</title>
       </Head>
       <FindContext>
-        
+
         <div className="container">
           <Explore_SectionTitle categories={categories} />
         </div>
@@ -35,7 +35,7 @@ function Find() {
         />
 
         <main className="container">
-          <ProductListGrid displayType={displayType} />
+          {/* <ProductListGrid displayType={displayType} /> */}
         </main>
       </FindContext>
     </div>
