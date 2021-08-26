@@ -4,14 +4,24 @@ import Image from "next/image";
 import useFitText from "use-fit-text";
 import { useRouter } from "next/router";
 import styles from "./style.module.css";
-import { memo, useRef, useState } from "react";
+import { memo } from "react";
 import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { getRandomInteger } from "../../shared/UtilityFunctions";
 
-const ASPECT_RATIO = 120;//you may want to change the global css aspect-ratio after changing this
+const ASPECT_RATIO = 120 ; //you may want to change the global css aspect-ratio after changing this
 
-const index = ({ type, imageLink, price }) => {
-  const cardRef = useRef();
-  const [infoFieldIsOpen, setInfoFieldIsOpen] = useState(false);
+interface Props{
+  type?: string,
+  imageLink?: string,
+  price?: string,
+  infoFieldIsOpen?: boolean,
+  setActiveOpenField?: any,
+  index?: number,
+  reference?: any
+
+}
+
+const index: React.FC<Props>= ({ type, imageLink, price,infoFieldIsOpen,setActiveOpenField, index, reference }) => {
   const {setActiveProductData} = useGlobalContext();
   const { fontSize, ref } = useFitText();
 
@@ -26,15 +36,15 @@ const index = ({ type, imageLink, price }) => {
   return (
     <div
       className={`${styles.cardsContainer} ${styles[type]} no-shrink`}
-      ref={cardRef}
+      ref={reference}
     >
       <div className={`${styles.cards}`}>
         <div className={`${styles.container}`}>
-          {price && (
+          {true && (
             <img
               src={"/svg/info.svg"}
               className={styles.toggleInfoIcon}
-              onClick={() => setInfoFieldIsOpen((prevState) => !prevState)}
+              onClick={() => setActiveOpenField(prevState => prevState == index ? undefined : index)}
             />
           )}
 
@@ -55,12 +65,12 @@ const index = ({ type, imageLink, price }) => {
 
           <div className={`${styles.imageSection} `}>
             <Image
-              // loader={() =>
-              //   `https://source.unsplash.com/random/${getRandomInteger(
-              //     500,
-              //     500
-              //   )}x${getRandomInteger(416, 416)}`
-              // }
+              loader={() =>
+                `https://source.unsplash.com/random/${getRandomInteger(
+                  900,
+                  1100
+                )}x${getRandomInteger(1000, 1200)}`
+              }
               src={imageLink || "/images/image1.jpg"}
               alt="There will soon be an alt"
               width={100}
@@ -73,10 +83,11 @@ const index = ({ type, imageLink, price }) => {
 
       {price && (
         <div className={`${styles.description} ${styles[type]} max-width`}>
+         
           <div className={`${styles.price} ${styles[type]}`}>
-            <p>{price}</p>
-            <p>new</p>
+            <p>{price} FCFA | <span style={{color: "blue"}}>New!</span></p>
           </div>
+
           <Link href={`/product/${"15223654"}`}>
             <button
               className={`${styles.buy} ${styles[type]}`}
@@ -85,8 +96,14 @@ const index = ({ type, imageLink, price }) => {
               <a>buy</a>
             </button>
           </Link>
+        
         </div>
-      )}
+      ) || 
+      <div className={`${styles.description} ${styles[type]} max-width`}>
+          <Link href={`/product/${"15223654"}`}>
+              <a style={{textDecoration: "underline"}}>Lorem Ipsum</a>
+          </Link>
+        </div>}
     </div>
   );
 };

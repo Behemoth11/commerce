@@ -33,7 +33,7 @@ const index = ({ displayType ,setDisplayType }) => {
         </div>
 
         <div className={styles.filterContainer}>
-          {(filter &&
+          {(filter?.length >= 1 &&
             filter
               // @ts-ignore
               .map(({ value, filterIndex, criteriaIndex }) => (
@@ -43,7 +43,7 @@ const index = ({ displayType ,setDisplayType }) => {
                   action={() => removeFilter(filterIndex, criteriaIndex)}
                 />
               ))) || (
-            <Filter content={"loading"} action={() => toggleFilterOverlay()} />
+            <Filter content={"NO Filter"} action={() => toggleFilterOverlay()} />
           )}
         </div>
       </div>

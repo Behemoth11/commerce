@@ -35,7 +35,7 @@ function Find() {
         />
 
         <main className="container">
-          {/* <ProductListGrid displayType={displayType} /> */}
+          <ProductListGrid displayType={displayType} />
         </main>
       </FindContext>
     </div>

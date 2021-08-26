@@ -1,7 +1,8 @@
 .footerContainer {
   border-top: var(--border) solid var(--accent-color);
   background-color: var(--theme-color);
-  color: white;
+  font-size: 0.8em;
+  color: var(--text-color-medium);
 }
 
 .footerHeader {
@@ -25,8 +26,8 @@
 .Icons {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (50px)[4];
-      grid-template-columns: repeat(4, 50px);
+  -ms-grid-columns: (50px)[5];
+      grid-template-columns: repeat(5, 50px);
 }
 
 .Icons img {
@@ -34,34 +35,40 @@
 }
 
 .footerBody {
-  margin-top: var(--larger-margin);
+  margin: var(--margin);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
-.footerBody li {
-  list-style: none;
-}
-
-.footerBody li:nth-child(1) {
-  position: relative;
-  display: inline-block;
+.footerBody ul {
   margin: var(--large-margin);
 }
 
-.footerBody li:nth-child(1):after {
+.footerBody li {
+  text-align: left;
+  list-style: none;
+}
+
+.footerBody li h3 {
+  position: relative;
+  display: inline-block;
+  margin: var(--large-margin) 0;
+}
+
+.footerBody li h3:after {
   position: absolute;
   content: "";
   height: 2px;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: var(--accent-color);
+  background-color: var(--secondary-accent-color);
 }
 
 .footerLink {
@@ -71,8 +78,21 @@
 }
 
 .footerBottom {
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  border-top: 1px solid var(--secondary-theme-color);
+  font-size: 0.8em;
+}
+
+.footerBottom div:nth-child(1) {
+  padding: var(--large-margin);
+}
+
+.footerBottom div:nth-child(1) span {
+  padding: 1px var(--margin);
+  margin: 1px;
+  display: inline-block;
+  border-left: 1px solid var(--secondary-theme-color);
+}
+
+.footerBottom div:nth-child(2) {
   padding: var(--large-margin);
 }

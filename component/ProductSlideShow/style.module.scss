@@ -1,6 +1,7 @@
 .container{
     position: relative;
     overflow: hidden;
+    margin-bottom: var(--margin);
     --inner-virtual-padding: 10px;
 }
 
@@ -9,8 +10,9 @@
     height: 100%;
     width: 100%;
     display: flex;
-    overflow: hidden;
-    scroll-behavior: smooth;
+    // overflow: scroll;
+    // scroll-behavior: smooth;
+
     justify-content: flex-start;
     background-color: rgb(25, 25, 29);
     & > div{
@@ -18,11 +20,16 @@
         flex-shrink: 0;
         overflow: hidden;
     }
+    &::-webkit-scrollbar{
+        height: 0px;
+    }
 }
 
 @media (max-width: 570px) and (max-aspect-ratio: 9/9) {
     .slider > div{
         width: 100%;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
     }
     .slider{
         max-width: calc((90vh - 50px)* 100/130 );
@@ -73,23 +80,23 @@
 /************************tracker***************************/
 
 .tracker{
-    background-color: #c0c0c0;
+    // background-color: #c0c0c0;
     height: 2px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     position: absolute;
-    bottom: var(--inner-virtual-padding);
+    bottom: 10px;
 }
 
 .circle{
-    padding: 7px;
+    padding: 3px;
     margin: 2px;
-    border-radius: 100%;
+    border-radius: 1%;
     // transition: background-color var(--fast-animation-duration) ease-in-out;
-    background-color: #838181;
+    background-color: #0f0f13c6;
     &.active{
-        background-color: blue;
+        background-color: #bb245c;;
     }
 }
 

@@ -1,6 +1,7 @@
 .container {
   position: relative;
   overflow: hidden;
+  margin-bottom: var(--margin);
   --inner-virtual-padding: 10px;
 }
 
@@ -11,8 +12,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  overflow: hidden;
-  scroll-behavior: smooth;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
@@ -26,9 +25,15 @@
   overflow: hidden;
 }
 
+.slider::-webkit-scrollbar {
+  height: 0px;
+}
+
 @media (max-width: 570px) and (max-aspect-ratio: 9 / 9) {
   .slider > div {
     width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
   .slider {
     max-width: calc((90vh - 50px)* 100/130);
@@ -88,7 +93,6 @@
 
 /************************tracker***************************/
 .tracker {
-  background-color: #c0c0c0;
   height: 2px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -100,16 +104,16 @@
       -ms-flex-align: center;
           align-items: center;
   position: absolute;
-  bottom: var(--inner-virtual-padding);
+  bottom: 10px;
 }
 
 .circle {
-  padding: 7px;
+  padding: 3px;
   margin: 2px;
-  border-radius: 100%;
-  background-color: #838181;
+  border-radius: 1%;
+  background-color: #0f0f13c6;
 }
 
 .circle.active {
-  background-color: blue;
+  background-color: #bb245c;
 }

@@ -57,6 +57,11 @@
           transform: translate(0);
 }
 
+.brandIcon {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .bagIcon {
   height: 40px;
   -webkit-transition: height 0.5s ease;

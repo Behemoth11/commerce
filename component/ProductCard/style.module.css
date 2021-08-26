@@ -3,8 +3,7 @@
 }
 
 .cardsContainer.no-parent-restiction {
-  width: min(100%,360px);
-  scroll-snap-align: start;
+  width: min(var(--fCP),270px);
   padding: var(--margin);
 }
 
@@ -106,7 +105,6 @@
 .price {
   color: var(--text-color-dark);
   padding: 0.3em 1px;
-  font-size: var(--small-font-size);
 }
 
 .price p {

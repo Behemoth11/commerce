@@ -9,9 +9,10 @@
   --padding: 5px;
   --large-padding: 15px;
   --text-color-dark: rgb(0, 0, 0);
+  --text-color-medium: rgb(240, 240, 240);
   --text-color-light: rgb(255, 255, 255);
   --theme-color: #0f0f13;
-  --secondary-theme-color: #0f0f1380;
+  --secondary-theme-color: #4f4f6880;
   --accent-color: #bb245c;
   --secondary-accent-color: #bb245bef;
   --body-background: #ffffff;
@@ -27,6 +28,7 @@
   --box-gap: 10px;
   --max-card-height: 70vh;
   --aspect-ratio: 120;
+  --fCP:60%;
 }
 
 * {
@@ -63,11 +65,17 @@ h1 {
 }
 
 h2 {
-  font-size: 1em;
+  font-size: 1.5em;
   font-weight: 100;
 }
 
-h3,
+h3 {
+  font-size: 1.1em;
+  font-weight: normal;
+  -webkit-animation: MoreProduct 5s infinite;
+          animation: MoreProduct 5s infinite;
+}
+
 h4,
 h5,
 h6 {

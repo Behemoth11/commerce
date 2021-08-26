@@ -8,9 +8,10 @@
   --padding: 5px;
   --large-padding: 15px;
   --text-color-dark: rgb(0, 0, 0);
+  --text-color-medium: rgb(240, 240, 240);
   --text-color-light: rgb(255, 255, 255);
   --theme-color: #0f0f13;
-  --secondary-theme-color: #0f0f1380;
+  --secondary-theme-color: #4f4f6880;
   --accent-color: #bb245c;
   --secondary-accent-color: #bb245bef;
   --body-background: #ffffff;
@@ -28,6 +29,7 @@
   --box-gap: 10px;
   --max-card-height: 70vh;
   --aspect-ratio: 120;
+  --fCP:60%;
 }
 
 * {
@@ -37,7 +39,7 @@
   padding: 0;
 }
 
-:root{
+:root {
   font-size: 100%;
 }
 
@@ -52,20 +54,26 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  & > div{
+  & > div {
     overflow: auto;
   }
 }
 
-h1{
+h1 {
   font-size: var(--larger-font-size);
   font-weight: 100;
 }
-h2{
-  font-size: 1em;
+h2 {
+  font-size: 1.5em;
   font-weight: 100;
 }
-h3,
+h3 {
+  font-size: 1.1em;
+  font-weight: normal;
+  animation: MoreProduct 5s infinite;
+}
+
+
 h4,
 h5,
 h6 {
@@ -76,16 +84,15 @@ a {
   color: inherit;
   text-decoration: none;
 }
-button{
+button {
   border: none;
   background-color: transparent;
   font-family: inherit;
   padding: 0;
   cursor: pointer;
-
 }
 
-img{
+img {
   max-height: 100%;
 }
 
@@ -156,26 +163,26 @@ img{
   overflow: hidden;
 }
 
-.pointer{
-  cursor: pointer
+.pointer {
+  cursor: pointer;
 }
 
-.no-shrink{
+.no-shrink {
   width: 100%;
   flex-shrink: 0;
 }
 
-@media (hover: none){
-  .pointer{
-    cursor:default;
+@media (hover: none) {
+  .pointer {
+    cursor: default;
   }
 }
 
-.find_overflow{
+.find_overflow {
   overflow: hidden;
 }
 
-.navBar_overflow{
+.navBar_overflow {
   overflow: hidden;
 }
 ///////////////////////////////////////////////////////////////////////////

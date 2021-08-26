@@ -22,7 +22,7 @@ const index = () => {
           </div>
         </div>
 
-        <div className={`${styles.brandIcon} flex-center`}>
+        <div className={`${styles.brandIcon}`}>
           <Link href="/">
             <a>MOMENT</a>
           </Link>

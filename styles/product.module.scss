@@ -2,7 +2,6 @@
   width: 100%;
   display: grid;
   grid-template-columns: 70% 1fr;
-  margin-top: var(--large-margin);
 
   & > div:nth-child(1) {
     grid-column: 1/2;
@@ -21,7 +20,6 @@
     grid-template-columns: 1fr;
     & > div:nth-child(2) {
       grid-row: 2/3;
-      background-color: green;
     }
   }
 }
@@ -30,4 +28,56 @@
   .productPage {
     grid-template-columns: 1fr;
   }
+}
+
+.buyPrompt {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 7px;
+  width: 95%;
+  border-radius: var(--border-radius);
+}
+.addToCartPrompt{
+  border: 1px solid var(--theme-color);
+  width: 70%;
+  margin-top: var(--margin);
+  border-radius: var(--border-radius);
+  padding: 5px;
+}
+
+
+/*************Sectionsof under the buttons******************/
+
+.informations{
+  height: 500px;//
+  margin: var(--margin);
+
+}
+
+
+/*********************product Proposition********************/
+
+.moreProduct{
+  h3{
+   
+    animation: MoreProduct 5s infinite;
+    padding-left: var(--margin);
+    margin-left: var(--margin);
+    span{
+      font-size: 1em;
+    }
+  }
+}
+
+@keyframes MoreProduct {
+  0%{
+    border-left: var(--border) solid var(--accent-color);
+  }
+  50%{
+    border-left: var(--border) solid var(--theme-color);
+  }
+  100%{
+    border-left: var(--border) solid var(--accent-color);
+  }
+  
 }

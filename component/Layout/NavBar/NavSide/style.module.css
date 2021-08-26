@@ -117,7 +117,6 @@
   --arrow-size: 5px;
   --arrow-thickness: 1px;
   padding: var(--padding);
-  background-color: #0f0f13;
   margin-top: var(--large-padding);
 }
 

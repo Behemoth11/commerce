@@ -19,17 +19,15 @@ const useScrollDirectionToBottom = (sensibility:number, sampling:number, element
     
         return;
       }
-
       previousScroll = element.scrollTop;
       setTimeout(() => {
         getScrollSpeed(e, false, previousScroll);
       }, sampling);
     };
-
     element.addEventListener("scroll", getScrollSpeed);
     return () => element.removeEventListener("scroll", getScrollSpeed);
   }, []);
-
+  
   return toBottom;
 }
 
