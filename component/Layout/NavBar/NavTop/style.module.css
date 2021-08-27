@@ -76,6 +76,15 @@
   height: calc( var(--burger-height) + 15px);
 }
 
+@media (min-width: 750px) {
+  .navTop {
+    font-size: 1.2em;
+  }
+  .bagIcon {
+    height: 60px;
+  }
+}
+
 .ItemsInCart {
   left: calc( 100%);
   position: absolute;

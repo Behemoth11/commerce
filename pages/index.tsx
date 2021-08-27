@@ -18,15 +18,9 @@ export default function Home() {
 
       <div className={styles.imageContainer}>
         <div className={styles.landingImages}>
-          <div>
-            <MyImage imageLink={"500x650"} ASPECT_RATIO={130} />
-          </div>
-          <div>
-            <MyImage imageLink={"1000x500"} ASPECT_RATIO={50} />
-          </div>
-          <div>
-            <MyImage imageLink={"1000x400"} ASPECT_RATIO={40} />
-          </div>
+          <MyImage imageLink={"500x650"} ASPECT_RATIO={130} isVisible={true} />
+          <MyImage imageLink={"1000x500"} ASPECT_RATIO={50} isVisible={true} />
+          <MyImage imageLink={"1000x400"} ASPECT_RATIO={40} isVisible={true} />
         </div>
         <button>Shop Women</button>
         <button>Shop Men</button>

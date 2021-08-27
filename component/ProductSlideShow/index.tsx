@@ -3,6 +3,7 @@ import styles from "./style.module.css";
 import MyImage from "../MyImage";
 import { useSpring, animated } from "react-spring";
 import React, { memo, useState, useRef, useEffect } from "react";
+import { useIntersectionObserver } from "../../shared/CustomHooks";
 
 //function for setting temporary states
 const setTemporaryState = (
@@ -24,26 +25,27 @@ const getNumberOfTracker: (
   const result = [];
   let number = Math.ceil(
     element.current.scrollWidth / element.current.clientWidth
-  );
-
-  while (number > 0) {
-    result.push("");
-    number--;
-  }
-
-  return result;
-};
-
-const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
-  const [index, _setIndex] = useState<number>(0);
-  const indexRef = useRef(0);
-
-  const setIndex = (payload) => {
-    _setIndex(payload);
-    indexRef.current = payload;
+    );
+    
+    while (number > 0) {
+      result.push("");
+      number--;
+    }
+    
+    return result;
   };
-
-  const [hasReachedTheLimit, setHasReachTheLimit] = useState<boolean | string>(
+  
+  const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
+    const [index, _setIndex] = useState<number>(0);
+    const indexRef = useRef(0);
+    
+    const setIndex = (payload) => {
+      _setIndex(payload);
+      indexRef.current = payload;
+    };
+    
+    const [visibilityIndex, observer, observerRef] = useIntersectionObserver("0px 500px 0px");
+    const [hasReachedTheLimit, setHasReachTheLimit] = useState<boolean | string>(
     false
   );
 
@@ -88,6 +90,8 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
       sliderRef.current.scrollLeft = props.x;
     },
   }));
+    
+    /*****************useEffect statement */
 
   useEffect(() => {
     const resizingUpdate = () => {
@@ -107,6 +111,9 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
     _setCoordinate(payload);
   };
 
+    useEffect(() => {
+      document.getElementById("__next").scrollTo(0,0)
+  },[])
   const touchStart = ({ changedTouches: _ }) => {
     console.log(_);
     setCoordinate({
@@ -133,7 +140,9 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
     });
     console.log(sliderRef.current.clientWidth * indexRef.current + vtDirection);
   };
-  useEffect(() => {}, []);
+  
+  
+
 
   return (
     <div
@@ -142,14 +151,21 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
       onTouchStart={touchStart}
       onTouchEnd={touchEnd_and_Action}
       onTouchMove={touchMove_and_Action}
+      // onMouseDown={touchStart}
+      // onMouseUp={touchEnd_and_Action}
+      // onDrag={touchMove_and_Action}
+      // ref={}
     >
       <animated.div
         className={`${styles.slider}`}
-        ref={sliderRef}
+        ref={el => {
+          sliderRef.current = el;
+          observerRef.current= el}}
         style={{ ...scrollAnimate, ...animateSpring }}
       >
-        {imageUrls.map((imageLink) => (
-          <MyImage key={imageLink} imageLink={imageLink} ASPECT_RATIO={130} />
+        {imageUrls.map((imageLink, index) => (
+          <MyImage key={imageLink} imageLink={imageLink} ASPECT_RATIO={130} isVisible={index < visibilityIndex}
+          observer={observer}/>
         ))}
       </animated.div>
 

@@ -14,7 +14,7 @@ const Explore_SectionTitle: React.FC<Props> = ({ categories }) => {
 
   return (
     <div className={`${styles.sectionTitle} vertical-flex`}>
-      {Categories && (
+      {categories && (
         <>
           <h1 className={`${styles.header} flex-left`}>
             {Categories[0] && Categories[0].toUpperCase()}
@@ -26,13 +26,12 @@ const Explore_SectionTitle: React.FC<Props> = ({ categories }) => {
             <div className={`${styles.rubriqueLink}`}>
               <Link href={`/`}>
                 <a>Home</a>
-              </Link>{" "}
-              /
+              </Link>
               {Categories.slice(0, -1).map(
-                (element) =>
+                (element,index) =>
                   element && (
                     <span key={element}>
-                      <Link href={`/find?categories=${element}`}>
+                      <Link href={{pathname: "/find", query:{categories: categories.slice(0,index+1) }}}>
                         <a>{element.toLowerCase()}</a>
                       </Link>{" "}
                       /
@@ -45,7 +44,18 @@ const Explore_SectionTitle: React.FC<Props> = ({ categories }) => {
             </div>
           </h2>
         </>
-      )}
+      ) ||
+      <>
+        <h1 className={`${styles.header} flex-left`}>
+         Loading...
+      </h1>
+      <h2 className={`${styles.subHeader}`}>
+        <div className={`${styles.backLink}`}>
+          <a> loading.. </a>
+        </div>
+      </h2>
+    </>
+      }
     </div>
   );
 };

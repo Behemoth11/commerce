@@ -29,3 +29,11 @@
         text-decoration: none;
     }
 }
+
+.empty{
+    position: relative;
+    border-radius: var(--border-radius);
+    background-color:#d9d9d9;
+    color: transparent;
+    max-width: 70%;
+}

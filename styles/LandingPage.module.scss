@@ -27,7 +27,7 @@
 
 .landingImages {
   width: 100%;
-  & > div {
+  & > div{
     display: none;
   }
 }
@@ -46,12 +46,6 @@
   .landingImages > div:nth-child(3) {
     display: block;
   }
-}
-
-@media (max-width: 570px) and (max-aspect-ratio: 9/9) {
-  // .imageContainer{
-  //     max-width: calc((90vh - 50px)* 100/140);
-  // }
 }
 
 .landingPage {

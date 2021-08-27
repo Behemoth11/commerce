@@ -43,7 +43,7 @@ const index: React.FC<Props> = ({
         <div className={`${styles.description} max-width`}>
           <div className={`${styles.description2} ${styles[type]}`}>
             p
-            <div className={`${styles.after} ${styles.animatd}`} />
+            <div className={`${styles.after}`} />
           </div>
 
           <button className={`${styles.buy} animated`}></button>
