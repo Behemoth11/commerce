@@ -18,7 +18,7 @@ const Product: React.FC = () => {
     <div className="big-container">
       <main className={`${styles.productPage}`}>
         <div>
-          <div className="images-section">
+          <div className="images-section" style={{padding: 0}}>
             <ProductSlideShow
               imageUrls={[
                 "/images/image1.jpg",

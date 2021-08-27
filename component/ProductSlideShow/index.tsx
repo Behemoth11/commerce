@@ -46,7 +46,7 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
   const [hasReachedTheLimit, setHasReachTheLimit] = useState<boolean | string>(
     false
   );
-  
+
   const sliderRef = useRef<HTMLDivElement>();
   const [tracker, setTracker] = useState<string[]>(undefined);
 
@@ -116,7 +116,7 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
   };
 
   const touchEnd_and_Action = ({ changedTouches: _ }) => {
-    const STRENGHT = 80;
+    const STRENGHT = 60;
 
     const vtDirection = _[0].screenX - coordinateRef.current.x;
     if (vtDirection == 0) return;

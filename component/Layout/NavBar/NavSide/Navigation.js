@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import Link from "next/link";
 import { memo } from "react";
 import { useNavBarState } from "../NavBarContext";
-import { useTransition, animated } from "react-spring";
+import { useTransition, animated, config } from "react-spring";
 
 const littleLinkList = "about us// contact us// feedback".split("//");
 
@@ -25,7 +25,7 @@ const Navigation = ({
     },
     enter: { transform: "translateX(0%)" },
     leave: { transform: "translateX(100%)" },
-    config: { },
+    config: config.fast,
   });
   
   return animate(

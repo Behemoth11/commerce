@@ -12,7 +12,7 @@ function Find() {
     query: { categories },
   } = useRouter();
 
-  const [displayType, setDisplayType] = useState("single" || "double");
+  const [displayType, setDisplayType] = useState<"single"|"double">("double" || "single");
 
   return (
     <div>

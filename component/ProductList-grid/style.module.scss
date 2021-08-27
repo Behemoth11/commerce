@@ -1,4 +1,6 @@
 .container {
+  --left: 50%;
+  --transform: translate(-50%,-70%);
   text-align: center;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   background-color: rgb(255, 255, 255);
@@ -12,6 +14,8 @@
 
 @media (max-width: 570px) {
   .container.double{
+    --left: 0;
+    --transform: translateY(-50%);
     grid-template-columns: unquote("repeat(auto-fill, minmax(48%, 1fr))");
     text-align: left;
     padding: 0px;

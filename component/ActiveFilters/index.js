@@ -1,6 +1,5 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import ProductCard from "../ProductCard";
 import Filter from "./Filter.js";
 import { memo, useState, useEffect } from "react";
 import { useFindContext } from "../../Contexts/FindContext";
@@ -35,7 +34,6 @@ const index = ({ displayType ,setDisplayType }) => {
         <div className={styles.filterContainer}>
           {(filter?.length >= 1 &&
             filter
-              // @ts-ignore
               .map(({ value, filterIndex, criteriaIndex }) => (
                 <Filter
                   key={value}

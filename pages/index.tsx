@@ -7,7 +7,6 @@ import ProductListFlex from "../component/ProductList-flex";
 
 export default function Home() {
   const screenSize = useScreenSize();
-  console.log(screenSize);
 
   return (
     <div className={`${styles.landingPage} big-container`}>
@@ -16,19 +15,25 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         <title>buy goods in Gabons</title>
       </Head>
-      
+
       <div className={styles.imageContainer}>
         <div className={styles.landingImages}>
-          <MyImage imageLink={"500x650"} ASPECT_RATIO={130} />
-          <MyImage imageLink={"1000x500"} ASPECT_RATIO={50} />
-          <MyImage imageLink={"1000x400"} ASPECT_RATIO={40} />
+          <div>
+            <MyImage imageLink={"500x650"} ASPECT_RATIO={130} />
+          </div>
+          <div>
+            <MyImage imageLink={"1000x500"} ASPECT_RATIO={50} />
+          </div>
+          <div>
+            <MyImage imageLink={"1000x400"} ASPECT_RATIO={40} />
+          </div>
         </div>
         <button>Shop Women</button>
         <button>Shop Men</button>
         <button>Shop Kid</button>
       </div>
 
-      <div className={styles.discover} >
+      <div className={styles.discover}>
         <h3>Our Products</h3>
         <ProductListFlex />
       </div>

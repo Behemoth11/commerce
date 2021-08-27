@@ -1,5 +1,6 @@
 .cardsContainer {
   width: 100%;
+  position: relative;
 }
 
 .cardsContainer.no-parent-restiction {
@@ -17,6 +18,10 @@
   padding-top: min(var(--max-card-height), calc(var(--aspect-ratio))*1%);
 }
 
+.loading {
+  opacity: 0;
+}
+
 .container {
   position: absolute;
   top: 0;
@@ -29,6 +34,7 @@
   height: 100%;
   position: relative;
   overflow: hidden;
+  background-color: #d9d9d9;
 }
 
 .imageSection > div:nth-child(1) {

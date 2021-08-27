@@ -216,3 +216,43 @@ img {
 .purple {
   background-color: purple;
 }
+
+.animated {
+  overflow: hidden;
+}
+
+.animated::after {
+  content: "";
+  z-index: 0;
+  background: -webkit-gradient(linear, right top, left top, from(#d9d9d9), color-stop(#e6e5e5), to(#d9d9d9));
+  background: linear-gradient(to left, #d9d9d9, #e6e5e5, #d9d9d9);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 10px;
+  top: 0;
+  -webkit-animation: loading 0.9s linear infinite;
+          animation: loading 0.9s linear infinite;
+}
+
+@-webkit-keyframes loading {
+  0% {
+    -webkit-transform: translate(-100%);
+            transform: translate(-100%);
+  }
+  100% {
+    -webkit-transform: translate(100%);
+            transform: translate(100%);
+  }
+}
+
+@keyframes loading {
+  0% {
+    -webkit-transform: translate(-100%);
+            transform: translate(-100%);
+  }
+  100% {
+    -webkit-transform: translate(100%);
+            transform: translate(100%);
+  }
+}

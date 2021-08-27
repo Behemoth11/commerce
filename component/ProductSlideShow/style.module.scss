@@ -10,8 +10,7 @@
     height: 100%;
     width: 100%;
     display: flex;
-    // overflow: scroll;
-    // scroll-behavior: smooth;
+    overflow: visible;
 
     justify-content: flex-start;
     background-color: rgb(25, 25, 29);

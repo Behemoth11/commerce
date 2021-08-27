@@ -84,6 +84,8 @@
   -ms-flex-item-align: start;
       align-self: flex-start;
   border-radius: var(--border-radius);
+  -webkit-transition: all 2s ease-in-out;
+  transition: all 2s ease-in-out;
   color: var(--text-color-light);
   margin: calc(var(--margin) / 2);
   font-size: var(--small-font-size);

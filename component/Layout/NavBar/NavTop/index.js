@@ -46,7 +46,7 @@ const index = () => {
 export default memo(index);
 
 const Links = ({ title, elementData }) => {
-  // console.log(elementData);
+  // 
 
   return (
     <div className={`${styles.navLink}`}>
