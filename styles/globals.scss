@@ -1,0 +1,279 @@
+:root {
+  --border: 2px;
+  --thin-border: 1.5px;
+  --border-radius: 2px;
+  --margin: 5px;
+  --large-margin: 8px;
+  --larger-margin: 50px;
+  --padding: 5px;
+  --large-padding: 15px;
+  --text-color-dark: rgb(0, 0, 0);
+  --text-color-medium: rgb(240, 240, 240);
+  --text-color-light: rgb(255, 255, 255);
+  --theme-color: #0f0f13;
+  --theme-color-1: #0f0f13;
+  --theme-color-2: #0f0f13d7;
+  --theme-color-3: #505057de;
+  --theme-color-4: #c9c9d0;
+  --theme-color-5: #ebebf2;
+  --accent-color: #f0387c;
+  --accent-color-1: #ed3277;
+  --accent-color-2: #eb4884;
+  --accent-color-3: #f580ab;
+  --accent-color-4: #f3c2d4;
+  --accent-color-5: #fff8fa;
+  --body-background: #ffffff;
+  --body-neutral-dark: #000000;
+  --body-neutral-light: #ffffff;
+  --page-max-width: 1300px;
+  --larger-font-size: 1.7em;
+  --large-font-size: 1.2em;
+  --small-font-size: 0.8em;
+  --medium-font-size: 0.8em;
+  --animation-duration: 0.4s;
+  --fast-animation-duration: 0.2s;
+
+  /////////cards///////////////
+  --box-gap: 10px;
+  --max-card-height: 70vh;
+  // --aspect-ratio: 120;
+  --fCP: 60%;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-size: 100%;
+}
+
+html {
+  font-size: 100%;
+  height: 100vh;
+  width: 100vw;
+}
+
+body {
+  font-size: 100%;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  & > div {
+    overflow: auto;
+  }
+}
+
+h1 {
+  font-size: var(--larger-font-size);
+  font-weight: 100;
+}
+h2 {
+  font-size: 1.5em;
+  font-weight: 100;
+}
+h3 {
+  font-size: 1.1em;
+  font-weight: normal;
+  animation: MoreProduct 5s infinite;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1em;
+  font-weight: normal;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+button {
+  border: none;
+  background-color: transparent;
+  font-family: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+img {
+  max-height: 100%;
+}
+
+#__next {
+  height: 100%;
+  width: 100%;
+  font-size: 1em;
+  // overflow-y: auto;
+  overflow-x: hidden;
+  color: var(--text-color-dark);
+  font-family: "Manrope", sans-serif;
+  background-color: var(--body-background);
+}
+
+.max-width {
+  width: 100%;
+}
+
+.button {
+  background-color: var(--accent-color-2);
+  border: 1px solid var(--accent-color-2);
+
+  margin: 10px 0;
+  display: block;
+  width: fit-content;
+  border-radius: 5px;
+  color: white;
+  padding: var(--padding) var(--large-padding);
+  &:active {
+    background-color: white;
+    color: black;
+  }
+}
+.max-height {
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+}
+
+.c-at{
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+.c-th-5{
+  color: var(--theme-color-3);
+}
+
+.big-container {
+  width: 100%;
+  max-width: var(--page-max-width);
+}
+
+.flex {
+  display: flex;
+}
+
+.vertical-flex {
+  display: flex;
+  flex-direction: column;
+}
+.center-children {
+  align-items: center;
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.flex-left {
+  margin-right: auto;
+}
+
+.flex-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.flex-right {
+  margin-left: auto;
+}
+
+.hidden-overflow {
+  overflow: hidden;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.no-shrink {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 570px) {
+  .big {
+    display: none;
+  }
+}
+@media (min-width: 570px) {
+  .sm {
+    display: none;
+  }
+}
+
+@media (hover: none) {
+  .pointer {
+    cursor: default;
+  }
+}
+
+.find_overflow {
+  overflow: hidden;
+}
+
+.navBar_overflow {
+  overflow: hidden;
+}
+
+.red-b {
+  border: 1px solid red;
+}
+
+///////////////////////////////////////////////////////////////////////////
+
+.blue {
+  background-color: blue;
+}
+.green {
+  background-color: green;
+}
+
+.purple {
+  background-color: purple;
+}
+
+.animated {
+  overflow: hidden;
+  position: relative;
+  color: transparent;
+  border-radius: 3px;
+  background-color: hsl(0, 0%, 85%);
+  &::after {
+    content: "";
+    z-index: 0;
+    background: linear-gradient(
+      to left,
+      hsl(0, 0%, 85%),
+      hsl(0, 0%, 90%),
+      hsl(0, 0%, 85%)
+    );
+    background-repeat: no-repeat;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 10px;
+    top: 0;
+    animation: loading 2s linear infinite;
+  }
+}
+
+@keyframes loading {
+  0% {
+    transform: translate(-530%);
+  }
+  100% {
+    transform: translate(130%);
+  }
+}

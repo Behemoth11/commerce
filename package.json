@@ -1,0 +1,36 @@
+{
+  "name": "commerce",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@cloudinary/base": "^1.0.0-beta.4",
+    "@next/bundle-analyzer": "^11.1.0",
+    "axios": "^0.21.4",
+    "bcrypt": "^5.0.1",
+    "cloudinary": "^1.27.0",
+    "cloudinary-core": "^2.11.4",
+    "cookies": "^0.8.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
+    "mongoose": "^6.0.8",
+    "next": "^11.1.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-spring": "^9.2.4",
+    "swr": "^1.0.0"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+    "@types/react": "^17.0.19",
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.0.1",
+    "postcss-preset-env": "^6.7.0",
+    "typescript": "^4.3.5"
+  }
+}

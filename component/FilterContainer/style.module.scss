@@ -1,0 +1,72 @@
+.container {
+  min-height: 0;
+  flex: 1;
+}
+.filterRubriqueContainer {
+  flex: 1;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.apply {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  color: white;
+  width: 70%;
+  height: 2.2em;
+  margin: 25px auto;
+  flex-shrink: 0;
+  &::after,
+  &::before {
+    content: "";
+    background-color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 4px;
+    left: 4px;
+    transition: top var(--fast-animation-duration) ease-in-out,
+      left var(--fast-animation-duration) ease-in-out;
+  }
+  &::before {
+    border: 1px solid var(--theme-color);
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: transparent;
+    transition: border-color var(--fast-animation-duration) ease-in-out;
+  }
+  &:active::after {
+    top: 0;
+    left: 0;
+  }
+  &:active::before {
+    top: 0;
+    left: 0;
+    border: 1px solid var(--accent-color);
+  }
+  p {
+    width: fit-content;
+  }
+}
+
+.priceFilter {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  place-items: center;
+  padding: 0 var(--large-padding);
+  h6{
+    padding-right: 10px;
+    text-decoration: underline;
+  }
+  &>div{
+    display: flex;
+    input{
+      width: 5em;
+    }
+  }
+}

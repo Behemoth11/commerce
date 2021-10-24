@@ -1,0 +1,254 @@
+.productPage {
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 70% 1fr;
+      grid-template-columns: 70% 1fr;
+}
+
+.productPage > div:nth-child(1) {
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1/2;
+}
+
+.productPage > div:nth-child(2) {
+  grid-column: span 1;
+}
+
+.productPage > div:nth-child(3) {
+  grid-column: span 2;
+}
+
+@media (max-width: 900px) {
+  .productPage {
+    -ms-grid-columns: 100%;
+        grid-template-columns: 100%;
+  }
+  .productPage > div:nth-child(2) {
+    -ms-grid-row: 2;
+    -ms-grid-row-span: 1;
+    grid-row: 2/3;
+  }
+  .productPage > div:nth-child(3) {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 570px) {
+  .productPage {
+    -ms-grid-columns: 100%;
+        grid-template-columns: 100%;
+  }
+}
+
+.buyPrompt {
+  background-color: var(--accent-color);
+  color: white;
+  width: 95%;
+  border-radius: var(--border-radius);
+}
+
+.buyPrompt a {
+  width: 100%;
+  height: 100%;
+  padding: 7px;
+  display: block;
+}
+
+.addToCartPrompt {
+  border: 1px solid var(--theme-color);
+  width: 70%;
+  margin-top: var(--margin);
+  border-radius: var(--border-radius);
+  position: relative;
+}
+
+.addToCartPrompt > button {
+  padding: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+/*************Sectionsof under the buttons******************/
+.informations {
+  background-color: var(--accent-color-5);
+  max-width: 100%;
+  overflow: hidden;
+  min-height: 200px;
+  margin: 40px 0;
+  padding: 0 var(--large-margin) var(--large-margin) var(--large-margin);
+}
+
+.informations * {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.informations div:nth-child(1) {
+  margin: 1em auto;
+  text-transform: uppercase;
+}
+
+.informations h2 {
+  font-weight: 200;
+}
+
+.informations div {
+  padding: 0.2em 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.informations .arrays {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 100%;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.informations .arrays p {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  font-weight: lighter;
+  text-transform: capitalize;
+}
+
+.informations .arrays span {
+  margin: 4px;
+  color: white;
+  font-size: 0.8em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: lowercase;
+  background-color: var(--theme-color);
+}
+
+.informations .arrays span:active {
+  background-color: var(--theme-color-1);
+}
+
+.description {
+  width: 100%;
+  padding: 10px;
+  color: white;
+  font-size: 0.95em;
+  margin-top: var(--large-margin);
+  border-radius: var(--border-radius);
+  background-color: var(--accent-color-3);
+}
+
+.description ~ p {
+  font-size: 0.8em;
+  margin-top: 0.5em;
+}
+
+.description ~ p span {
+  color: var(--accent-color);
+  text-decoration: underline;
+}
+
+.underline {
+  position: relative;
+  margin-right: 0.5em;
+  text-transform: capitalize;
+}
+
+.underline::after {
+  position: absolute;
+  height: 0.1em;
+  content: "";
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+}
+
+.normal {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 0.2em !important;
+}
+
+.normal p {
+  text-transform: capitalize;
+  text-decoration: underline;
+}
+
+.normal span {
+  text-transform: capitalize;
+}
+
+/*********************product Proposition********************/
+.moreProduct {
+  margin: var(--large-margin) 0;
+  max-width: 100%;
+}
+
+.moreProduct:nth-child(2) {
+  margin-bottom: var(--margin);
+}
+
+.name_price {
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  width: 100%;
+}
+
+.name_price * {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-align: center;
+  margin: auto;
+}
+
+.name_price h2 {
+  color: black;
+}
+
+.name_price h3 {
+  text-decoration: underline;
+}
+
+.addedNotification {
+  position: absolute;
+  padding: 0.5em;
+  width: 110%;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  background-color: white;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.addedNotification button {
+  background-color: #e8e5e5;
+  border-radius: 4px;
+  padding: 2px 5px;
+  right: 10px;
+  top: 50%;
+  width: 5.8em;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  color: rgba(0, 0, 0, 0.715);
+  margin: 0 10px;
+  margin-top: 0.5em;
+}
+
+.addedNotification .dangerous {
+  background-color: #ef2828;
+  color: white;
+}

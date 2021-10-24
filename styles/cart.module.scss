@@ -1,0 +1,28 @@
+.itemContainer {
+  flex-shrink: 0;
+  overflow: hidden;
+  & > div {
+    padding: 3px 0;
+  }
+}
+
+.cardsContainer {
+  min-height: 80vh;
+  display: flex;
+  max-width: 500px;
+  text-align: center;
+  flex-direction: column;
+  h3 {
+    text-decoration: underline;
+    margin: var(--large-margin) 0;
+  }
+}
+.buyPrompt {
+  background-color: var(--accent-color-2);
+  color: white;
+  width: 100%;
+  padding: 2.5px;
+  font-size: 1.1em;
+  margin: var(--padding) 0px;
+  margin-top: auto;
+}

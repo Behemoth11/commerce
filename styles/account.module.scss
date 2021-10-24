@@ -1,0 +1,46 @@
+.header {
+  gap: 1em;
+  display: flex;
+  padding: 15px var(--padding) ;
+  background-color: var(--theme-color-5);
+  box-shadow: inset 0px -3px 4px rgba(0, 0, 0, 0.083);
+  & > div:nth-child(1) {
+    width: 30%;
+    max-width: 4em;;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.426);
+
+  }
+  & > div:nth-child(2) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.body{
+    padding: var(--padding);
+    &>div{
+        padding: var(--margin) 0px;
+    }
+}
+
+
+.imageReplacement{
+    width: 100%;
+    padding-top: 100%;
+    display: flex;
+    position: relative;
+    background-color: var(--theme-color-2);
+    span{
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 2.5em;
+    }
+}

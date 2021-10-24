@@ -1,0 +1,126 @@
+.container {
+  background-color: var(--theme-color-2);
+  position: fixed;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  transition: background-color var(--animation-duration) ease-in-out,
+    opacity var(--animation-duration) ease-in-out,
+    z-index var(--animation-duration) ease-in-out;
+
+  &.closed {
+    background-color: transparent;
+    z-index: 0;
+    opacity: 0;
+  }
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+}
+
+.prompt {
+  transform: translate(-50%, -60%);
+  width: unquote("min(500px, 90%)");
+  position: absolute;
+  overflow: hidden;
+  left: 50%;
+  top: 50%;
+  h3 {
+    margin-bottom: 1.2em;
+    text-align: center;
+    text-decoration: underline;
+  }
+  & > div {
+    background-color: var(--accent-color-1);
+  }
+}
+
+.loginForm {
+  gap: 0.7em;
+  display: flex;
+  flex-direction: column;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5em;
+}
+
+.validate {
+  background-color: var(--accent-color-1);
+  justify-content: center;
+  margin-top: 1em;
+  color: white;
+  padding: 0.9em;
+  display: flex;
+  width: 100%;
+}
+
+.else {
+  text-align: center;
+  margin-top: 1em;
+  p {
+    display: inline-block;
+  }
+  span {
+    font-family: "Gill Sans" sans-serif;
+    font-weight: bold;
+  }
+}
+
+.formContainer {
+  width: 100%;
+  position: absolute;
+  border-radius: var(--border-radius);
+  background-color: white;
+}
+
+._formContainer {
+  padding: 1em 8px;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  padding-top: 0.7em;
+  padding-bottom: 0.4em;
+  input {
+    display: inline-block;
+    margin-right: 0.3em;
+    margin-left: 3px;
+  }
+  span {
+    color: var(--accent-color);
+  }
+  font-size: 0.83em;
+}
+
+.spinner {
+  border: 1px solid black;
+  border-left: none;
+  margin-left: 0%;
+  padding: 0px;
+  border-radius: 100%;
+  transition: padding var(--animation-duration) ease-in-out,
+    margin var(--animation-duration) ease-in-out;
+  .spin {
+    padding: 15px;
+    margin-left: 25%;
+    animation: spin 0.5s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}

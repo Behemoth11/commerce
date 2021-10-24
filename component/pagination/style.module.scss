@@ -1,0 +1,17 @@
+.container {
+    margin: auto;
+    justify-content:center;
+    display: flex;
+    margin: var(--larger-margin) auto;
+}
+
+.button{
+    background-color: var(--theme-color);
+    color: white;
+    padding: 5px ;
+    margin: 5px;
+    width: 7em;
+    &:nth-of-type(2){
+        background-color: var(--accent-color-1);
+    }
+}

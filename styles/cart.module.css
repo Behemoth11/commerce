@@ -1,0 +1,37 @@
+.itemContainer {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  overflow: hidden;
+}
+
+.itemContainer > div {
+  padding: 3px 0;
+}
+
+.cardsContainer {
+  min-height: 80vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  max-width: 500px;
+  text-align: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.cardsContainer h3 {
+  text-decoration: underline;
+  margin: var(--large-margin) 0;
+}
+
+.buyPrompt {
+  background-color: var(--accent-color-2);
+  color: white;
+  width: 100%;
+  padding: 2.5px;
+  font-size: 1.1em;
+  margin: var(--padding) 0px;
+  margin-top: auto;
+}

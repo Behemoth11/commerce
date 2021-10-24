@@ -1,0 +1,56 @@
+.navTop {
+  --nav-bottom-line: 2px;
+  border-bottom: var(--nav-bottom-line) solid var(--theme-color);
+}
+
+.navTop > div {
+  padding: 0 calc(var(--padding)*5);
+}
+
+.burgerDiv {
+  width: var(--burger-width);
+  height: var(--burger-height);
+  margin: var(--burger-margin);
+  -webkit-transform: translateX(calc(-1 * var(--burger-margin)));
+          transform: translateX(calc(-1 * var(--burger-margin)));
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+  cursor: pointer;
+}
+
+.burgerDiv::before, .burgerDiv::after, .burgerDiv .middle {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: var(--bar-height);
+  background-color: var(--burger-color);
+  -webkit-transition: -webkit-transform var(animation-duration) ease-in-out;
+  transition: -webkit-transform var(animation-duration) ease-in-out;
+  transition: transform var(animation-duration) ease-in-out;
+  transition: transform var(animation-duration) ease-in-out, -webkit-transform var(animation-duration) ease-in-out;
+}
+
+.burgerDiv::before {
+  top: 0;
+}
+
+.burgerDiv::after {
+  bottom: 0;
+}
+
+.burgerDiv .middle {
+  top: calc(50% - var(--bar-height)/2);
+  -webkit-transform: translateX(calc(-1 * var(--burger-width)/5));
+          transform: translateX(calc(-1 * var(--burger-width)/5));
+  -webkit-transition: -webkit-transform calc(var(--animation-duration)/3) ease-in-out;
+  transition: -webkit-transform calc(var(--animation-duration)/3) ease-in-out;
+  transition: transform calc(var(--animation-duration)/3) ease-in-out;
+  transition: transform calc(var(--animation-duration)/3) ease-in-out, -webkit-transform calc(var(--animation-duration)/3) ease-in-out;
+}
+
+.burgerDiv:active .middle {
+  -webkit-transform: translate(0);
+          transform: translate(0);
+}

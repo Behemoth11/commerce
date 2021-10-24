@@ -1,0 +1,27 @@
+.container {
+  --left: 50%;
+  --transform: translate(-50%,-50%);
+  --children-margin:  auto;
+  text-align: center;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  background-color: rgb(255, 255, 255);
+  display: grid;
+  overflow: hidden;
+  gap: var(--box-gap);
+  padding: calc(var(--box-gap)/2);
+  font-size: 0.9em;
+}
+
+
+@media (max-width: 570px) {
+  .container.double{
+    --left: 0;
+    --transform: translateY(-50%);
+    --children-margin:  none;
+    grid-template-columns: unquote("repeat(auto-fill, minmax(48%, 1fr))");
+    text-align: left;
+    padding: 0px;
+    gap: 2px;
+    font-size: 0.7em;
+  }
+}

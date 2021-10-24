@@ -1,0 +1,91 @@
+.imageContainer {
+  --variable: 70px;
+  position: relative;
+  padding-top: 125%;
+  overflow: hidden;
+  width: 100%;
+}
+
+.imageContainer button {
+  background-color: #141014;
+  border-radius: 1px;
+  color: var(--text-color-light);
+  padding: min(var(--large-padding), 3%);
+  left: var(--large-padding);
+  position: absolute;
+  font-size: 1em;
+  z-index: 2;
+}
+
+.imageContainer button:nth-of-type(1) {
+  bottom: calc(10px);
+}
+
+.imageContainer button:nth-of-type(2) {
+  bottom: calc(1 * var(--variable) + 10px);
+}
+
+.imageContainer button:nth-of-type(3) {
+  bottom: calc(2 * var(--variable) + 10px);
+}
+
+.imageContainer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1325;
+  z-index: 1;
+}
+
+@media (min-width: 470px) {
+  .imageContainer {
+    padding-top: 70%;
+  }
+}
+
+@media (min-width: 700px) {
+  .imageContainer {
+    padding-top: 50%;
+  }
+}
+
+@media (min-width: 900px) {
+  .imageContainer {
+    padding-top: 40%;
+  }
+}
+
+.landingImages {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.landingImages img {
+  width: 100%;
+}
+
+.landingPage {
+  --fCP: 50%;
+}
+
+.landingPage h3 {
+  display: inline-block;
+  border-bottom: 2px solid var(--theme-color);
+}
+
+.discover {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.proposition {
+  margin: 0 40px;
+  text-align: center;
+}

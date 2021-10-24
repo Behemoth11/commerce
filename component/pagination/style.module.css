@@ -1,0 +1,22 @@
+.container {
+  margin: auto;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: var(--larger-margin) auto;
+}
+
+.button {
+  background-color: var(--theme-color);
+  color: white;
+  padding: 5px;
+  margin: 5px;
+  width: 7em;
+}
+
+.button:nth-of-type(2) {
+  background-color: var(--accent-color-1);
+}

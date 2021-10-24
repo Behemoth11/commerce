@@ -1,0 +1,119 @@
+.cardsContainer {
+  width: 100%;
+  font-size: 1em;
+  position: relative;
+}
+
+.cardsContainer.h-display {
+  width: unquote("min(var(--fCP),270px)");
+  padding: var(--margin);
+}
+
+.cards {
+  position: relative;
+  z-index: 0;
+  width: 100%;
+  overflow: hidden;
+  margin-top: var(--margin);
+  border-radius: var(--border-radius);
+  // max-width: unquote("calc(50px + var(--max-card-height) * 100 / var(--aspect-ratio))"); //Uncommenting this property will force the card to maintain it's aspect ratio even if more
+  padding-top: unquote(
+    "min(var(--max-card-height), calc(100)*1%)"
+  );
+}
+
+.loading{
+  opacity:0;
+  pointer-events: none;
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.imageSection {
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #d9d9d9;
+}
+/***********************productInfo **************************************/
+.moreInfo {
+  --dimension: 15;
+  --opened-dimension: 160;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 0.878);
+  color: var(--theme-color);
+  clip-path: ellipse(0% 0% at 100% 0%);
+  transition: clip-path var(--animation-duration) ease-in-out;
+  &.open {
+    clip-path: ellipse(165% 132% at 100% 0%);
+  }
+}
+
+.toggleInfoIcon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  padding: 2% 2% 10% 10% ;
+  height: 8%;
+  box-sizing: content-box;
+}
+
+.informations {
+  overflow: auto;
+  text-align: center;
+}
+/****************************description**************************************/
+.description {
+  font-size: 1em;
+  margin-left: calc(var(--margin) / 2);
+  width: 100%;
+}
+
+.description.h-display {
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  color: var(--text-color-dark);
+  p {
+    margin: var(--margin);
+    line-height: 1em;
+    font-size: 1.1em;
+  }
+  &.h-display {
+    // font-size: 0.8em;
+    // display: none;
+  }
+}
+.buy {
+  background-color: var(--accent-color);
+  width: unquote("min(100px, 35%)");
+  color: var(--text-color-light);
+  margin-bottom: var(--margin);
+  height: 1.8em;
+  border-radius: var(--border-radius);
+
+}
+
+.buy.h-display {
+  margin-left: auto; margin-right: auto;
+  // margin-top: var(--margin);
+}
