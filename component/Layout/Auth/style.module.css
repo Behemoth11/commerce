@@ -43,7 +43,7 @@
 }
 
 .loginForm {
-  gap: 0.7em;
+  gap: 0.4em;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -58,7 +58,7 @@
   display: grid;
   -ms-grid-columns: 1fr 1fr;
       grid-template-columns: 1fr 1fr;
-  grid-gap: 0.5em;
+  grid-gap: 0.2em;
 }
 
 .validate {
@@ -159,4 +159,65 @@
     -webkit-transform: rotateZ(360deg);
             transform: rotateZ(360deg);
   }
+}
+
+.TPContainer .TPheader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  margin-bottom: 0.2em;
+}
+
+.TPContainer .TPheader span {
+  position: relative;
+  margin: auto;
+  z-index: 1;
+  padding: 0 1em;
+  background-color: white;
+}
+
+.TPContainer .TPheader::after {
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  background-color: black;
+  position: absolute;
+  content: "";
+  height: 1px;
+  width: 100%;
+  left: 50%;
+  top: 58%;
+}
+
+.TPContainer .TPcontent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.TPContainer .alternative {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 2px 5px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 2px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0.1em;
+  color: #3c3939;
+  background-color: var(--theme-color-5);
+}
+
+.TPContainer .alternative img {
+  height: 1.6em;
+  margin-right: 1em;
 }

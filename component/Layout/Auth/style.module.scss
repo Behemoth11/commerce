@@ -41,7 +41,7 @@
 }
 
 .loginForm {
-  gap: 0.7em;
+  gap: 0.4em;
   display: flex;
   flex-direction: column;
 }
@@ -49,7 +49,7 @@
 .two {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 0.5em;
+  grid-gap: 0.2em;
 }
 
 .validate {
@@ -122,5 +122,54 @@
   }
   100% {
     transform: rotateZ(360deg);
+  }
+}
+
+//third parties login
+
+.TPContainer{
+  .TPheader{
+    display: flex;
+    position: relative;
+    margin-bottom: 0.2em;
+    span{
+      position: relative;
+      margin: auto;
+      z-index: 1;
+      padding: 0 1em;
+      background-color: white;
+    }
+    &::after{
+      transform: translate(-50%,-50%);
+      background-color: black;
+      position: absolute;
+      content: "";
+      height: 1px;
+      width: 100%;
+      left: 50%;
+      top: 58%;
+
+    }
+  }
+
+  .TPcontent{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .alternative{
+    display: flex;
+    padding: 2px 5px;
+    width: fit-content;
+    border-radius: 2px;
+    align-items: center;
+    margin: 0.1em;
+    color: rgb(60, 57, 57);
+    background-color: var(--theme-color-5);
+    img{
+      height: 1.6em;
+      margin-right: 1em;
+    }
   }
 }

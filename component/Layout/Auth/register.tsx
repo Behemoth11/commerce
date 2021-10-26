@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useGlobalContext } from "../../../Contexts/GlobalContext";
 import { validatePassword, validateUsername } from "./validator";
 import { useTransition, animated, config } from "react-spring";
+import TPLogin from "./TPLogin";
 
 const Register = ({ inputValue, setInputValue, setHeight }) => {
   const [error, setError] = useState({});
@@ -18,18 +19,18 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
       lastName: inputValue["Last Name"],
       firstName: inputValue["First Name"],
     };
-    setError({})
+    setError({});
     const error_password = validatePassword(data.password);
     const error_username = validateUsername(data.username);
 
-    if (error_password.length > 0 || error_username.length  >0 ) {
+    if (error_password.length > 0 || error_username.length > 0) {
       return setError({ password: error_password, username: error_username });
     }
     setEditState("loading");
 
     const registerResponse = await axios
       .post("/api/auth/register", data)
-      .catch((err) => setError({username: [err.response.data.message]}));
+      .catch((err) => setError({ username: [err.response.data.message] }));
 
     if (registerResponse && registerResponse.data.userData) {
       const { token, userData, expiresAt } = registerResponse.data;
@@ -37,7 +38,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      myWindow.setIsShown("closed")
+      myWindow.setIsShown("closed");
     } else setEditState("failure");
   };
 
@@ -45,7 +46,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
-    config: config.stiff
+    config: config.stiff,
   });
 
   const myRef = useRef();
@@ -55,7 +56,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
-  }, [myWindow.isShown,error,myWindow.size]);
+  }, [myWindow.isShown, error, myWindow.size]);
 
   return transition(
     (style, condition) =>
@@ -76,7 +77,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
-                  />
+                />
                 <Input
                   error={error}
                   name="Last Name"
@@ -84,7 +85,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
-                  />
+                />
               </div>
               <Input
                 error={error}
@@ -92,7 +93,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                 required={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
-                />
+              />
 
               <Input
                 error={error}
@@ -104,20 +105,28 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                 setInputValue={setInputValue}
               />
               <div className={styles.terms}>
-                  <p>By registering, you agree with our <span>The term of utilisations</span></p>
+                <p>
+                  By registering, you agree with our{" "}
+                  <span>The term of utilisations</span>
+                </p>
               </div>
             </form>
             <button className={styles.validate} onClick={handleSubmit}>
               register
-            <div className={`${styles.spinner} ${editState == "loading" && styles.spin}`}></div>
+              <div
+                className={`${styles.spinner} ${
+                  editState == "loading" && styles.spin
+                }`}
+              ></div>
             </button>
             <div
               className={styles.else}
               onClick={() => myWindow.setIsShown("login")}
-            >
+              >
               <p>Already have an accout?</p>
               <span>Login into you acout</span>
             </div>
+              <TPLogin/>
           </div>
         </animated.div>
       )

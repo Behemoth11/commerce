@@ -4,7 +4,8 @@ import Input from "../../Inputs/NormalInput";
 import React, { useEffect, useRef, useState } from "react";
 import { useGlobalContext } from "../../../Contexts/GlobalContext";
 import { validatePassword, validateUsername } from "./validator";
-import { animated, useTransition,config } from "react-spring";
+import { animated, useTransition, config } from "react-spring";
+import TPLogin from "./TPLogin";
 
 const Login = ({ inputValue, setInputValue, setHeight }) => {
   const [error, setError] = useState({});
@@ -36,7 +37,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      myWindow.setIsShown("closed")
+      myWindow.setIsShown("closed");
     } else setEditState("failure");
   };
 
@@ -44,7 +45,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
-    config: config.stiff
+    config: config.stiff,
   });
 
   const myRef = useRef();
@@ -80,12 +81,15 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
                 allowCapitalCase={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
-                />
+              />
             </form>
-                {
-                  //@ts-ignore
-                  error.global && <div className={styles.error}>*{error.global}</div>
-                }
+            {
+               //@ts-ignore
+              error.global && (
+                //@ts-ignore
+                <div className={styles.error}>*{error.global}</div>
+              )
+            }
             <button className={styles.validate} onClick={handleSubmit}>
               Login
               <div
@@ -102,6 +106,8 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
               <p>Don't yet have an Accout?</p>
               <span>create an account.</span>
             </div>
+
+            <TPLogin />
           </div>
         </animated.div>
       )
