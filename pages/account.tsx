@@ -30,7 +30,7 @@ function Login() {
             />
           )) || (
             <div className={styles.imageReplacement}>
-              <span>{User.data?.lastName?.slice(0, 1)}{User.data?.firstName.slice(0, 1)}</span>
+              <span>{User.data?.lastName?.slice(0, 1)}{User.data?.firstName?.slice(0, 1)}</span>
             </div>
           )}
         </div>
