@@ -20,7 +20,7 @@ const handle_get = async (req, res) => {
       },
     });
   } catch (err) {
-    res.json({ message: "something went wrong" });
+    res.status(501).json({ message: "something went wrong" });
   }
 };
 

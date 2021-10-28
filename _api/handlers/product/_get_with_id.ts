@@ -13,6 +13,7 @@ const handle_get = async (req, res) => {
 
   const productIds = req.query.product_id
     .split(",")
+    .filter(Id => Id)
     .map((Id) => new Types.ObjectId(Id));
 
   const products = await Product.find({ _id: { $in: productIds } }).catch(err => error.push(err));

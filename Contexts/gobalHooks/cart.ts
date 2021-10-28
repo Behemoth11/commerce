@@ -55,14 +55,13 @@ const useCart = (auth) => {
 
   useEffect(() => {
     (async () => {
+      if (!savedProduct_id || savedProduct_id.length == 0) return setSavedProduct([]);
       let products;
       products = await axios
         .get(`/api/product/withId/${savedProduct_id.join(",")}`)
         .catch((err) => (products = err.response));
-      
-      console.log("the cart products send",products)
 
-      setSavedProduct(products.data?.products || []);
+      setSavedProduct(products.data?.products);
     })();
   }, [savedProduct_id]);
 

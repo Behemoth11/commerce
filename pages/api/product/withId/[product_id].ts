@@ -11,7 +11,7 @@ const handler = async (req, res) => {
       GET_WITH_ID_handler(req, res);
       break;
       
-      case "PUT":
+    case "PUT":
       PUT_handler(req, res);
       break;
 

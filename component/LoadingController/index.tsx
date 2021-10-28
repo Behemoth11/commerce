@@ -1,6 +1,7 @@
 // @ts-ignore
 import styles from "./style.module.css";
 import { useSpring, animated, useTransition } from "react-spring";
+import Loading from "./loading";
 import {
   memo,
   useState,
@@ -74,12 +75,7 @@ const LoadingController: React.FC<Props> = ({
           visible && (
             <animated.div className={`${styles.states}`} style={_style}>
               <div>
-                <div className={styles.ldsEllipsis}>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
-                </div>
+                <Loading width="80px" />
               </div>
             </animated.div>
           )

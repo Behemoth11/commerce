@@ -40,6 +40,17 @@ const user = new mongoose.Schema({
   },
   pr_pic: {
     type: String,
+  },
+  email:{
+    type: String
+  },
+  Oauth: {
+    method:{
+      type: String
+    },
+    id:{
+      type: String
+    }
   }
 });
 

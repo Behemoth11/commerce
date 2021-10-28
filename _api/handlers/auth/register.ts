@@ -6,7 +6,6 @@ import { createToken, createRefreshToken, hashPassword } from "../../utils/jwt";
 const handle_register = async (req, res) => {
   try {
     const { username, firstName, lastName } = req.body;
-    //console.log(req.body)
 
     const hashedPassword = await hashPassword(req.body.password);
 

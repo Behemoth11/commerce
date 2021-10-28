@@ -6,6 +6,7 @@ import { useGlobalContext } from "../../../Contexts/GlobalContext";
 import { validatePassword, validateUsername } from "./validator";
 import { useTransition, animated, config } from "react-spring";
 import TPLogin from "./TPLogin";
+import Loading from "../../LoadingController/loading";
 
 const Register = ({ inputValue, setInputValue, setHeight }) => {
   const [error, setError] = useState({});
@@ -112,12 +113,8 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
               </div>
             </form>
             <button className={styles.validate} onClick={handleSubmit}>
-              register
-              <div
-                className={`${styles.spinner} ${
-                  editState == "loading" && styles.spin
-                }`}
-              ></div>
+            <span>Register</span>
+              <Loading width={editState == "loading" ? "4em" : "0"} />
             </button>
             <div
               className={styles.else}
@@ -126,7 +123,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
               <p>Already have an accout?</p>
               <span>Login into you acout</span>
             </div>
-              <TPLogin/>
+              <TPLogin setEditState={setEditState} />
           </div>
         </animated.div>
       )

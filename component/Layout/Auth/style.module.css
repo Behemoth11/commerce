@@ -75,6 +75,10 @@
   width: 100%;
 }
 
+.validate span {
+  margin: 0 2em;
+}
+
 .else {
   text-align: center;
   margin-top: 1em;

@@ -43,7 +43,7 @@ export const useIntersectionObserver: (
     setObserver(
       new IntersectionObserver(
         (entry) => {
-          console.log("The intersection observer fired")
+          console.log("The intersection observer fired");
           entry.forEach((entry) => {
             if (entry.isIntersecting) {
               setVisibilityIndex((prevIndex) => prevIndex + 1);
@@ -59,21 +59,24 @@ export const useIntersectionObserver: (
   }, []);
 
   return [visibilityIndex, observer, observerRef];
-  };
+};
 
 type token = {
   value: string;
   expiresAt: string;
-  }
+};
 
 export const useAuthAxios = () => {
-  const [token, _setToken] = useState<token | undefined>();
+  const [token, _setToken] = useState<token | undefined>({
+    value: "loading",
+    expiresAt: "loading",
+  });
   const tokenRef = useRef<token | undefined>();
 
   const setToken: (payload: token) => void = (payload) => {
     _setToken(payload);
     tokenRef.current = payload;
-  }
+  };
 
   const authAxios = axios.create({
     withCredentials: true,
@@ -103,53 +106,60 @@ export const useAuthAxios = () => {
   );
 
   const getNewToken = async () => {
-    const axiosResponse = await authAxios.get("/api/auth/token");
-    console.log(axiosResponse);
-    if (axiosResponse) {
+    let axiosResponse;
+    axiosResponse = await authAxios
+      .get("/api/auth/token")
+      .catch((err) => axiosResponse = err.response);
+
+      console.log(axiosResponse)
+    if (axiosResponse.status == 200) {
+      
       const { token, expiresAt } = axiosResponse.data;
-      setToken({value: token, expiresAt});
+      setToken({ value: token, expiresAt });
+    } else {
+      setToken(undefined);
     }
-  }
+  };
 
   useEffect(() => {
-
     const tokenChecker = setInterval(() => {
       if (!tokenRef.current) return;
-      const timeLeft = parseInt(tokenRef.current.expiresAt) * 1000 - new Date().getTime() - 1000*60*7
+      const timeLeft =
+        parseInt(tokenRef.current.expiresAt) * 1000 -
+        new Date().getTime() -
+        1000 * 60 * 7;
       if (timeLeft <= 0) {
         //console.log("I will refresh because it is time")
-        getNewToken()
+        getNewToken();
       }
-    }, 1000 * 60 * 5)
+    }, 1000 * 60 * 5);
 
     return () => clearInterval(tokenChecker);
   }, []);
 
-
   useEffect(() => {
-    getNewToken()
-  },[])
+    getNewToken();
+  }, []);
 
-  return { axios: authAxios , token , setToken };
+  return { axios: authAxios, token, setToken };
 };
 
 export const useRequire = (userState) => {
   let should_be_redirected = false;
 
-  const firstTimeLoading = useFirstTimeLoading()
-  if (firstTimeLoading) return;
-  
-  const router = useRouter()
+  const router = useRouter();
   const { User } = useGlobalContext();
-  
-  switch (userState) {
-    case "login":
-      if (!User.data?.username) {
-        should_be_redirected = true;
-      }
-      break;
-  }
-  
-  if (should_be_redirected) router.push("/");
-  
-}
+
+  useEffect(() => {
+    console.log(User.data);
+    switch (userState) {
+      case "login":
+        if (!User.data?.username) {
+          should_be_redirected = true;
+        }
+        break;
+    }
+
+    if (should_be_redirected) router.push("/");
+  }, [User.data]);
+};

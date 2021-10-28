@@ -15,9 +15,10 @@ const Popup = ({ children, isVisible, closePopup, duration, type }) => {
 
   useEffect(() => {
     if (isVisible) {
-      setTimeout(() => {
+      const timeOut = setTimeout(() => {
         closePopup();
       }, duration);
+      return () => clearTimeout(timeOut)
     }
   }, [isVisible]);
 

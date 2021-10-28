@@ -8,7 +8,7 @@ import Input from "../Inputs/NormalInput";
 
 interface Props {
   maxOpened?: 3;
-  defaultOpened?: [];
+  defaultOpened?: String[];
   showApplyFilter?: boolean;
   applyFilterSideEffect?: () => void;
 }

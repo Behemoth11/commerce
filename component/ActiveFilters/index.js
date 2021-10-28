@@ -15,12 +15,19 @@ const ActiveFilters = ({ displayType, setDisplayType }) => {
       <div className={`${styles.container}`}>
         <div className={`${styles.filterHeader} `}>
           <div
-            className={`${styles.filterSetter} flex align-center`}
+            className={`${styles.filterSetter} flex align-center sm`}
             onClick={() => toggleFilterOverlay()}
           >
             <p>Filter</p>
             <img src="/svg/filter.svg" alt="More Information"></img>
           </div>
+          <div
+            className={`${styles.filterSetter} flex align-center big`}
+          >
+            <p>Filter</p>
+            <img src="/svg/filter.svg" alt="More Information"></img>
+          </div>
+          
           <div
             className={`${styles.displayType} `}
             onClick={() =>

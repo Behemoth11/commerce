@@ -4,6 +4,7 @@
   & > div {
     &:nth-child(1) {
       width: 20%;
+      min-width: 20ch;
     }
     &:nth-child(2) {
       flex:1;

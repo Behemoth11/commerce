@@ -24,9 +24,12 @@ export default function Home() {
   useRequire("login");
 
   const animatedProduct = useTransition(savedProduct, {
-    enter: { opacity: 1, maxHeight: "250px", x: 0 },
-    from: { opacity: 0, maxHeight: "0px", x: -200 },
-    leave: { opacity: 0, maxHeight: "0px", x: -200 },
+    enter: { z_of: 10},
+    from: { z_of: 0},
+    leave: { z_of: 0},
+    config: {
+      duration: 30000
+    }
   });
 
   const getMessage = (savedProduct) => {
@@ -55,10 +58,11 @@ export default function Home() {
       <div className={styles.cardsContainer}>
         <h3>What's in your Cart </h3>
         {animatedProduct((style, product) => (
-          <animated.div style={style} className={styles.itemContainer}>
-            <div>
-              <CartProduct product={product} />
-            </div>
+          <animated.div className={styles.itemContainer}>
+            <CartProduct
+              product={product}
+              visible={savedProduct.includes(product)}
+            />
           </animated.div>
         ))}
 

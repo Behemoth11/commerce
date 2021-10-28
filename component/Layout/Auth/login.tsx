@@ -6,6 +6,7 @@ import { useGlobalContext } from "../../../Contexts/GlobalContext";
 import { validatePassword, validateUsername } from "./validator";
 import { animated, useTransition, config } from "react-spring";
 import TPLogin from "./TPLogin";
+import Loading from "../../LoadingController/loading";
 
 const Login = ({ inputValue, setInputValue, setHeight }) => {
   const [error, setError] = useState({});
@@ -84,19 +85,15 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
               />
             </form>
             {
-               //@ts-ignore
+              //@ts-ignore
               error.global && (
                 //@ts-ignore
                 <div className={styles.error}>*{error.global}</div>
               )
             }
             <button className={styles.validate} onClick={handleSubmit}>
-              Login
-              <div
-                className={`${styles.spinner} ${
-                  editState == "loading" && styles.spin
-                }`}
-              ></div>
+             <span>Login</span>
+              <Loading width={editState == "loading" ? "4em" : "0"} />
             </button>
 
             <div
@@ -107,7 +104,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
               <span>create an account.</span>
             </div>
 
-            <TPLogin />
+            <TPLogin setEditState={setEditState} />
           </div>
         </animated.div>
       )

@@ -4,10 +4,6 @@
   overflow: hidden;
 }
 
-.itemContainer > div {
-  padding: 3px 0;
-}
-
 .cardsContainer {
   min-height: 80vh;
   display: -webkit-box;

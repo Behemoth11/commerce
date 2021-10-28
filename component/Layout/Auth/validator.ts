@@ -8,6 +8,7 @@ export const validatePassword = (password: string) => {
 
     return error;
 }
+
 export const validateUsername = (username: string) => {
     let error = [];
     if (!username || username.length < 5) {

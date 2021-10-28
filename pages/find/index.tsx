@@ -104,14 +104,14 @@ function Find() {
       <div className="container">
         <Explore_SectionTitle categories={categories} />
       </div>
-      <div className="sm">
+      <div className="sm" >
         <FilterOverlay />
       </div>
       <ActiveFilter displayType={displayType} setDisplayType={setDisplayType} />
 
       <main className={styles.container}>
         <div className="big">
-          <FilterContainer />
+          <FilterContainer defaultOpened={["color", "brand","location"]}/>
         </div>
         <div>
           <ProductListGrid

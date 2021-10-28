@@ -45,6 +45,8 @@ export const createRefreshToken = async user => {
     token: _jwt,
     userId: user._id
   }).catch(err => console.log(err))
+  console.log(refreshTokencreated)
+  console.log(_jwt, "the jwt")
   
   return refreshTokencreated?.token;
 }

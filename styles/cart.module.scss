@@ -1,9 +1,6 @@
 .itemContainer {
   flex-shrink: 0;
   overflow: hidden;
-  & > div {
-    padding: 3px 0;
-  }
 }
 
 .cardsContainer {

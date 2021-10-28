@@ -11,6 +11,8 @@ module.exports = {
     CLOUDINARY_NAME: "dkoatnxem",
     CLOUDINARY_API_KEY: "813679482114119",
     CLOUDINARY_API_SECRET: "mXKi3EF8C5TSKNebfmAhrYLHXfM",
+    GOOGLE_CLIENT_ID: "799043813636-6752mpc2el076am9cckotrocrs0b814d.apps.googleusercontent.com",
+    GOOGLE_CLIENT_SECRET: "SN-NgD5ga_dcS7T48EJhEyct"
   },
   api: {
     bodyParser: {
