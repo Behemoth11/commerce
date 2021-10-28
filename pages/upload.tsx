@@ -125,10 +125,12 @@ function Upload() {
     } else if (editRef.current == "upload") {
       res = await auth.axios
         .post("/api/product", inputValue)
-        .catch((err) => err.response);
+        .catch((err) => res = err.response);
     }
 
+
     if (res) {
+      console.log(res, "the response is")
       if (res.status === 200) {
         setEditState("success");
         setSubmitCount(0);
@@ -143,7 +145,7 @@ function Upload() {
 
       } else {
         setEditState("failure");
-        setErrMsg([res.data.message]);
+        setErrMsg([res.data.message||res.data]);
       }
     } else setEditState("failure");
   };

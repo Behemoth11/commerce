@@ -19,3 +19,11 @@ const handler = async (req, res) => {
 };
 
 export default connectDB(handler);
+
+// export const config = {
+//   api: {
+//     bodyParser: {
+//       sizeLimit: '10mb',
+//     },
+//   },
+// }
