@@ -39,8 +39,67 @@
   padding: var(--padding);
 }
 
-.body > div {
+.body .optionWrapper {
+  position: relative;
   padding: var(--margin) 0px;
+  margin: var(--margin) 0px;
+  background-color: rgba(191, 184, 184, 0.097);
+}
+
+.body .optionWrapper > p {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.body .optionWrapper > p::before {
+  content: "";
+  display: inline-block;
+  padding: 0.3em;
+  margin-right: 0.5em;
+  border-top: 2px solid var(--theme-color-1);
+  border-right: 1px solid var(--accent-color-1);
+  -webkit-transform: rotateZ(45deg);
+          transform: rotateZ(45deg);
+}
+
+.body .optionWrapper img {
+  width: 1em;
+  margin-left: 0.2em;
+}
+
+.message {
+  position: absolute;
+  padding: 0.5em;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  background-color: white;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.message h3 {
+  color: red;
+}
+
+.message p {
+  font-size: small;
+  color: gray;
+}
+
+.message a {
+  display: block;
+  padding: 0.2em;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 2px;
 }
 
 .imageReplacement {
@@ -61,4 +120,16 @@
           transform: translate(-50%, -50%);
   color: white;
   font-size: 2.5em;
+}
+
+.editProfile {
+  width: 90vw;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+  background-color: white;
+}
+
+.editProfile h3 {
+  text-align: center;
+  text-transform: capitalize;
 }

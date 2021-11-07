@@ -1,0 +1,93 @@
+.container {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: var(--theme-color-2);
+  border-radius: 5px;
+  padding: 8px 2px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+  -webkit-transition: all var(--fast-animation-duration) ease;
+  transition: all var(--fast-animation-duration) ease;
+}
+
+.wrapper > div {
+  padding: 4px;
+  -webkit-box-flex: 0;
+      -ms-flex-positive: 0;
+          flex-grow: 0;
+  background-color: var(--accent-color-5);
+  border-radius: 50%;
+  margin: 2px;
+}
+
+.wrapper.open {
+  opacity: 0;
+  -webkit-transform: scale(1.4);
+          transform: scale(1.4);
+}
+
+.optionsContainer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  background-color: var(--theme-color-2);
+  padding: var(--large-padding);
+  border-radius: var(--border-radius);
+  -webkit-transform: scale(0);
+          transform: scale(0);
+  -webkit-transform-origin: top right;
+          transform-origin: top right;
+  -webkit-transition: all var(--fast-animation-duration) ease;
+  transition: all var(--fast-animation-duration) ease;
+}
+
+.optionsContainer a, .optionsContainer button {
+  white-space: nowrap;
+  color: white;
+  background-color: var(--theme-color-3);
+  padding: 3px;
+  margin: 3px 0;
+  border-radius: var(--border-radius);
+  -webkit-transition: background-color var(--fast-animation-duration) ease;
+  transition: background-color var(--fast-animation-duration) ease;
+}
+
+.optionsContainer a:active, .optionsContainer button:active {
+  background-color: var(--theme-color-2);
+}
+
+.optionsContainer label {
+  color: rgba(255, 255, 255, 0.747);
+  width: 100%;
+  display: block;
+  padding-bottom: var(--padding);
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--accent-color-2);
+}
+
+.optionsContainer.open {
+  opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+}

@@ -6,7 +6,7 @@ export const enforceRole = (role) => (req, res, cb) => {
   } else if (role_dic[req.user.role] >= role_dic[role]) {
     cb(req, res)
   } else {
-    console.log("third one one")
+    // console.log("third one one")
     res.status(400).send({message: "insufficiant authorization"})
   }
 }

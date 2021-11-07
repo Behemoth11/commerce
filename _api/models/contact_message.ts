@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 var Schema = mongoose.Schema;
 
-var contactMessage = new Schema({
+export const contactMessage = new Schema({
   msg:{
     type: String,
     required: true,

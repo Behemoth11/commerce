@@ -1,4 +1,4 @@
-import Feedback from "../../models/feedback";
+import {Feedback} from "../../models";
 
 const handle_post = async (req, res) => {
         
@@ -7,7 +7,7 @@ const handle_post = async (req, res) => {
   const mongo_response = await Feedback.create({
     msg,
     focus
-  }).catch(err => error.push(err))
+  }).catch(err => error.push(err.message))
   res.send({
     message: "feedback successfuly added",
     mongo_response,

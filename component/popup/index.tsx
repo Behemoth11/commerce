@@ -30,12 +30,6 @@ const Popup = ({ children, isVisible, closePopup, duration, type }) => {
             !nonAnimatedVisibility && styles.notVisible
           }`}
         >
-          {/* <animated.div
-            style={{ opacity: _style.opacity }}
-            onClick={closePopup}
-            className={styles.overlay}
-          ></animated.div> */}
-
           <animated.div className={styles.popupContainer}>
             <animated.div
               style={_style}

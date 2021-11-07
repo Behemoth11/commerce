@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
+import {User} from "../../models";
 import jwtDecode from "jwt-decode";
-import User, { userType } from "../../models/user";
+import {userType} from "../../models/user";
+
 import { createToken, createRefreshToken, hashPassword } from "../../utils/jwt";
 
 const handle_register = async (req, res) => {

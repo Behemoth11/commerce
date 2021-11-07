@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 var Schema = mongoose.Schema;
 
-var feedback = new Schema({
+export const feedback = new Schema({
   msg:{
     type: String,
     required: true,
@@ -14,5 +14,5 @@ var feedback = new Schema({
 
 // @ts-ignore
 mongoose.models = {};
-var Feedback = mongoose.model('feedback', feedback);
+var Feedback = mongoose.model('Feedback', feedback);
 export default Feedback;

@@ -1,5 +1,5 @@
 import { string_and_array_to_array } from "../../../shared/UtilityFunctions";
-import Product from "../../models/Product";
+import { Product } from "../../models";
 import cloudinary from "../../utils/cloudinary";
 
 const handle_get = async (req, res) => {
@@ -13,7 +13,7 @@ const handle_get = async (req, res) => {
     if (query.page) page = parseInt(query.page) - 1;
     if (query.limit) limit = parseInt(query.limit);
   } catch (err) {
-    error.push(err);
+    error.push(err.message);
   }
 
   delete query.page;
@@ -33,21 +33,24 @@ const handle_get = async (req, res) => {
           //infinity var rely only on var in frontend
           searchQuery["price"] = { $gt: range[0], $lt: range[1] };
         } else {
-          searchQuery["price"] = { $gt: range[0]};
+          searchQuery["price"] = { $gt: range[0] };
         }
+        break;
+      case "categories":
+        searchQuery[key] = { $all: string_and_array_to_array(query[key]) };
         break;
       default:
         searchQuery[key] = { $in: string_and_array_to_array(query[key]) };
     }
   }
 
-  console.log(searchQuery);
+  // console.log(searchQuery);
 
   let products = await Product.find(searchQuery, field)
     .skip(page * limit)
     .limit(limit + 1)
     .lean()
-    .catch((err) => error.push(err));
+    .catch((err) => error.push(err.message));
 
   //@ts-ignore
   const more = products.length > limit;

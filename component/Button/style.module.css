@@ -1,0 +1,12 @@
+.container {
+  color: white;
+  margin: var(--margin);
+  border-radius: var(--border-radius);
+  background-color: var(--accent-color-1);
+  padding: var(--padding) calc(var(--padding)*2);
+}
+
+.container.type1 {
+  background-color: var(--theme-color-5);
+  color: var(--accent-color-2);
+}

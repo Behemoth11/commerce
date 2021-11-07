@@ -1,7 +1,10 @@
-import { useEffect, useState, useRef, MutableRefObject } from "react";
+import { useEffect, useState, useRef, MutableRefObject, useLayoutEffect } from "react";
 import axios from "axios";
 import { useGlobalContext } from "../Contexts/GlobalContext";
 import { useRouter } from "next/router";
+
+export const useIsomorphicLayoutEffect =
+typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export const useFirstTimeLoading = () => {
   const load = useRef(true);
@@ -111,7 +114,6 @@ export const useAuthAxios = () => {
       .get("/api/auth/token")
       .catch((err) => axiosResponse = err.response);
 
-      console.log(axiosResponse)
     if (axiosResponse.status == 200) {
       
       const { token, expiresAt } = axiosResponse.data;
@@ -141,7 +143,7 @@ export const useAuthAxios = () => {
     getNewToken();
   }, []);
 
-  return { axios: authAxios, token, setToken };
+  return { axios: authAxios, token, setToken, getNewToken };
 };
 
 export const useRequire = (userState) => {

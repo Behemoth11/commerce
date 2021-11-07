@@ -38,6 +38,12 @@ const useCart = (auth) => {
         _id: product._id,
       })
       .catch((err) => (response = err.response));
+
+      if (response.status == 200){
+        return "success"
+      }else{
+        return "failure"
+      }
   };
   const removeFromCart = async (_id) => {
     setSavedProduct((prevState) => {

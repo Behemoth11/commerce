@@ -1,4 +1,4 @@
-import RefreshToken from "../../models/refreshToken";
+import {RefreshToken} from "../../models";
 import { createToken, createRefreshToken } from "../../utils/jwt";
 import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";

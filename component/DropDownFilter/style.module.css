@@ -129,13 +129,41 @@
 
 .colorItem {
   padding-top: 100%;
+  position: relative;
   border: 2px solid black;
+  overflow: hidden;
   -webkit-transition: border-radius var(--animation-duration) ease-in-out;
   transition: border-radius var(--animation-duration) ease-in-out;
 }
 
+.colorItem::after, .colorItem::before {
+  content: "";
+  width: 150%;
+  position: absolute;
+  height: 2px;
+  background-color: var(--theme-color);
+  top: 50%;
+  -webkit-transform: translate(0%, -50%);
+          transform: translate(0%, -50%);
+  left: 50%;
+  -webkit-transition: -webkit-transform var(--fast-animation-duration) ease-in-out;
+  transition: -webkit-transform var(--fast-animation-duration) ease-in-out;
+  transition: transform var(--fast-animation-duration) ease-in-out;
+  transition: transform var(--fast-animation-duration) ease-in-out, -webkit-transform var(--fast-animation-duration) ease-in-out;
+}
+
 .colorItem.checked {
-  border-radius: 10px;
+  border-radius: 5px;
+}
+
+.colorItem.checked::after {
+  -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+          transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.colorItem.checked::before {
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+          transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .mobile .contentContainer {

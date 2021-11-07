@@ -1,10 +1,25 @@
 import axios from "axios";
 import { google } from "googleapis";
 
+const getUrl = () => {
+  let ssl;
+
+  if (process.env.VERCEL_ENV == "development"){
+    ssl = "http://"
+  }else  if (process.env.VERCEL_ENV == "production"){
+    ssl = "https://"
+  } else if (process.env.VERCEL_ENV == "preview"){
+    ssl = "https://"
+    return `https://commerce-behemoth11.vercel.app/api/auth/google`
+  }
+  const url = ssl + process.env.VERCEL_URL + "/api/auth/google";
+  return url;
+}
+
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  process.env.HOST_NAME + "/api/auth/google"
+  getUrl()
 );
 
 export function getGoogleAuthURL() {

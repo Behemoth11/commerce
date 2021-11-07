@@ -8,19 +8,20 @@
 }
 .popupContainer{
     position: absolute;
-    top: -2.8em;
+    top: -2em;
     z-index: 10;
     width: 100%;
     left: 50%;
     display: flex;
-    height: clamp(30%, 500px,40%);
-    transform: translateX(-50%);
+    // height: clamp(30%, 500px,40%);
+    transform: translate(-50%,-100%);
     flex-direction: column;
 }
 .content{
-    background-color: white;
+    background-color: red;
     border-radius: 3px;
     position: relative;
+    height: auto;
 }
 
 .overlay{

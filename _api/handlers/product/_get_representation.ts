@@ -1,5 +1,5 @@
 import { string_and_array_to_array } from "../../../shared/UtilityFunctions";
-import Product from "../../models/Product";
+import {Product} from "../../models";
 import cloudinary from "../../utils/cloudinary";
 
 const handle_get = async (req, res) => {
@@ -13,9 +13,9 @@ const handle_get = async (req, res) => {
     )
       .limit(query.limit)
       .lean()
-      .catch((err) => error.push(err));
+      .catch((err) => error.push(err.message));
 
-    console.log("the products to come are ", products);
+    // console.log("the products to come are ", products);
     return res.json({
       products,
       error,
@@ -26,7 +26,7 @@ const handle_get = async (req, res) => {
   const _promises = representation.map(async (rpr) => {
     return await Product.findOne({ representation: rpr }, query.field)
       .lean()
-      .catch((err) => error.push(err));
+      .catch((err) => error.push(err.message));
   });
 
   const products = await Promise.all(_promises);
@@ -45,20 +45,25 @@ const handle_get = async (req, res) => {
       return await Product.findOne(
         { categories: { $all: rpr.split(" ") } },
         query.field
-      ).catch((err) => error.push(err));
+      ).catch((err) => error.push(err.message));
     });
 
     let missingProducts = await Promise.all(_newPromises);
-    missingProducts = [...missingProducts]
-      .filter((e) => e) //filters the product that are not defined;
+    console.log(missingProducts)
+    missingProducts = missingProducts
       //@ts-ignore
-      .map(({ _doc: product }, index) => {
-        if (!product) return;
-        return { ...product, representation: missingRepresentation[index] };
-      });
+      .map((mongoObj, index) => {
+        if (!mongoObj) return;
+        //@ts-ignore
+        return { ...mongoObj._doc, representation: missingRepresentation[index] };
+      })
+      .filter((e) => e) //filters the product that are not defined;;
     //console.log(missingProducts)
     finalProducts.push(...missingProducts);
+
+  console.log(missingProducts)
   }
+
 
   res.json({
     products: finalProducts,

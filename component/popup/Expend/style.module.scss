@@ -1,0 +1,29 @@
+.container {
+  z-index: 3;
+  display: flex;
+  position: fixed;
+  overflow: hidden;
+  place-items: center;
+  pointer-events: none;
+  justify-content: center;
+  background-color: inherit;
+  &.visible {
+    pointer-events: all;
+  }
+}
+
+.childrenContainer {
+  width: fit-content;
+  max-height: 80vh;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+
+  background-color: var(--theme-color-2);
+}

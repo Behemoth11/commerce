@@ -1,4 +1,4 @@
-import ContactMessage from "../../models/contact_message";
+import {ContactMessage} from "../../models";
 
 const handle_post = async (req, res) => {
         
@@ -7,7 +7,7 @@ const handle_post = async (req, res) => {
   const mongo_response = await ContactMessage.create({
     msg,
     focus
-  }).catch(err => error.push(err))
+  }).catch(err => error.push(err.message))
   res.send({
     message: "contact message successfuly added",
     mongo_response,

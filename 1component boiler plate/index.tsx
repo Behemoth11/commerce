@@ -6,7 +6,7 @@ import {memo} from 'react'
 const index = () => {
     return (
         <div className={styles.loop}>
-
+            daniel
        </div>
     )
 }

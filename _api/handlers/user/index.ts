@@ -6,9 +6,9 @@ import { createHandler } from "../../middleware/helpers";
 import { enforceRole } from "../../middleware/enforceRole";
 
 // export const PUT_handler = PUT;
+
 export const GET_handler = createHandler(
   addUser,
-  enforceRole("user"),
   GET_user
 );
 export const PUT_handler = createHandler(

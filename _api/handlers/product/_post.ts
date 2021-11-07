@@ -1,4 +1,4 @@
-import Product from "../../models/Product";
+import {Product} from "../../models";
 import cloudinary, { uploadMany } from "../../utils/cloudinary";
 
 const handle_post = async (req, res) => {
@@ -6,8 +6,8 @@ const handle_post = async (req, res) => {
   const error = [];
 
   const [pr_image_url, all_pr_image_url] = await Promise.all([
-    await uploadMany(data["presentationImage"],error,{}).catch((err) => error.push(err)),
-    await uploadMany(data["images"], error,{}).catch((err) => error.push(err)),
+    await uploadMany(data["presentationImage"],error,{}).catch((err) => error.push(err.message)),
+    await uploadMany(data["images"], error,{}).catch((err) => error.push(err.message)),
   ]);
 
   /************mongoDb upload***************/
@@ -19,15 +19,16 @@ const handle_post = async (req, res) => {
       all_pr_image_url, //array
       price: data.price, //number
       color: data.color, //array
-      origin: data.origin, //string
-      owner: req.user.username,
+      owner: req.user._id,
+      location: data.location, //string
       materials: data.materials, //array
       categories: data.categories, //array
       description: data.description,
+      addedAt: new Date().getTime(),
       productName: data.productName, //string
       representation: data.representation || "none",
     },
-  ]).catch((err) => error.push(err));
+  ]).catch((err) => error.push(err.message));
 
   if (error.length > 0) {
     res.status(406).json({ message: "Something Went wrong", error });

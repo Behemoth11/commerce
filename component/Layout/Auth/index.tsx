@@ -12,6 +12,8 @@ const index = () => {
   const [height, setHeight] = useState(400);
   const { myWindow } = useGlobalContext();
 
+  const [visible , setVisible] = useState(false)
+
   const [animateHeight, animateApi] = useSpring(() => ({
     height: 400,
   }));
@@ -20,25 +22,37 @@ const index = () => {
     animateApi.start({ height: height });
   }, [height]);
 
-  return  <div
-          className={`${styles.container} ${styles[myWindow.isShown]}`}
-          onClick={() => myWindow.setIsShown("closed")}
-        >
-          <div className={styles.prompt} onClick={(e) => e.stopPropagation()}>
-            <animated.div style={{ ...animateHeight }}>
-              <Register
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                setHeight={setHeight}
-              />
-              <Login
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                setHeight={setHeight}
-              />
-            </animated.div>
-          </div>
-        </div>
+  useEffect(() => {
+    if (myWindow.isShown === "closed"){
+      setTimeout(() => setVisible(false), 200)
+    } else {
+      setVisible(true)
+    }
+  }, [myWindow.isShown])
+
+
+  return(
+    <div
+      className={`${styles.prompt} ${
+        myWindow.isShown === "closed" && styles.closed
+      }`}
+      style={{zIndex: visible ? 3:-8}}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <animated.div style={{ ...animateHeight }}>
+        <Register
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          setHeight={setHeight}
+        />
+        <Login
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          setHeight={setHeight}
+        />
+      </animated.div>
+    </div>
+  );
 };
 
 export default memo(index);

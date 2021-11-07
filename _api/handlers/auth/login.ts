@@ -1,7 +1,7 @@
 import Cookies from "cookies";
 import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
-import User from "../../models/user";
+import {User} from "../../models";
 import {
   createToken,
   createRefreshToken,
@@ -9,7 +9,6 @@ import {
 } from "../../utils/jwt";
 
 const handle_login = async (req, res) => {
-  console.log();
   try {
     const { username, password } = req.body;
 
@@ -20,7 +19,7 @@ const handle_login = async (req, res) => {
     }).lean();
 
     if (!user) {
-      res.status(403).json({
+      return res.status(403).json({
         message: "Wrong email or password.",
       });
     }

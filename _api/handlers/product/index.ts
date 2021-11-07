@@ -9,7 +9,7 @@ import { enforceRole } from "../../middleware/enforceRole";
 import { addUser } from "../../middleware/addUser";
 
 export const PUT_handler = createHandler(addUser, enforceRole("seller"), PUT);
-export const POST_handler = createHandler(addUser, POST);
+export const POST_handler = createHandler(addUser, enforceRole("seller") ,POST);
 export const DELETE_handler = createHandler(
   addUser,
   enforceRole("seller"),

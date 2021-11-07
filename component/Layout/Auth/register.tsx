@@ -39,6 +39,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
+      myWindow.overlay.close()
       myWindow.setIsShown("closed");
     } else setEditState("failure");
   };
@@ -47,7 +48,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
-    config: config.stiff,
+    // config: config.stiff,
   });
 
   const myRef = useRef();
@@ -78,6 +79,8 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
+                  defaultValue={inputValue["First Name"]}
+
                 />
                 <Input
                   error={error}
@@ -86,6 +89,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
+                  defaultValue={inputValue["Last Name"]}
                 />
               </div>
               <Input
@@ -94,6 +98,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                 required={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
+                defaultValue={inputValue["username"]}
               />
 
               <Input
@@ -104,6 +109,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                 allowCapitalCase={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
+                defaultValue={inputValue["password"]}
               />
               <div className={styles.terms}>
                 <p>

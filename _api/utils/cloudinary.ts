@@ -12,7 +12,7 @@ export const upload = async (image, error) => {
   const productLocation = "KdShop/" + new Date().getTime();
   const _response = await cloudinary.uploader
     .upload(image, { public_id: productLocation })
-    .catch((err) => error.push(err));
+    .catch((err) => error.push(err.message));
 
   return _response;
 };
@@ -33,13 +33,13 @@ export const uploadMany = async (data, error, not_uploaded) => {
       _imagePromise[i] = {public_id: image_url};
     } else {
       _imagePromise[i] = await upload(data[i], error).catch((err) =>
-        error.push(err)
+        error.push(err.message)
       );
     }
   }
 
   const _response = await Promise.all(_imagePromise).catch((err) =>
-    error.push(err)
+    error.push(err.message)
   );
 
   //@ts-ignore
@@ -50,6 +50,6 @@ export const eraseImages = async (images, error) => {
   const promises = images.map(
     async (image) => await cloudinary.uploader.destroy(image)
   );
-  const result = await Promise.all(promises).catch((err) => error.push(err));
+  const result = await Promise.all(promises).catch((err) => error.push(err.message));
   return result;
 };

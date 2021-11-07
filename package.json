@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "cypress": "cypress open",
     "lint": "next lint"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^4.0.3",
     "@types/react": "^17.0.19",
+    "cypress": "^8.7.0",
     "eslint": "7.32.0",
     "eslint-config-next": "11.0.1",
     "postcss-preset-env": "^6.7.0",

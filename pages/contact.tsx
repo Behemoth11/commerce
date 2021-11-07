@@ -4,11 +4,23 @@ import Input from "../component/Inputs/NormalInput";
 import TextArea from "../component/Inputs/TextArea";
 import React, { useState, useEffect } from "react";
 import Errors from "../component/Inputs/Errors";
+import { useRouter } from "next/router";
 import axios from "axios";
+import { preview } from "@cloudinary/base/actions/videoEdit";
 
 function Contact() {
+  const {
+    query: { focus },
+  } = useRouter();
+
+  useEffect(() => {
+    setInputValue({ focus: focus?.toString() || "", message: "" , contact:""});
+  }, [focus]);
+
   const [inputValue, setInputValue] = useState({
-    focus: [],
+    
+    focus: "",
+    contact:"",
     message: "",
   });
 
@@ -30,13 +42,11 @@ function Contact() {
 
     setInputState("loading");
 
-    const response = await axios.post(
-      "/api/contact_message",
-      {
-        focus: inputValue.focus,
-        msg: inputValue.message,
-      }
-    );
+    const response = await axios.post("/api/contact_message", {
+      contact: inputValue.contact,
+      focus: inputValue.focus,
+      msg: inputValue.message,
+    });
 
     if (response) {
       const responseData = response.data?.error;
@@ -90,6 +100,7 @@ function Contact() {
               inputValue={inputValue}
               submitCount={submitCount}
               setInputValue={setInputValue}
+              defaultValue={inputValue.focus}
             />
             <TextArea
               name={"message"}

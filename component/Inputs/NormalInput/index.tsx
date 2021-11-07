@@ -10,6 +10,7 @@ interface InputProps {
   inputValue: object;
   proposition?: object;
   submitCount?: number;
+  defaultValue?: string;
   allowCapitalCase?: boolean;
   type?: "text" | "number" | "password";
   setInputValue: React.Dispatch<React.SetStateAction<{}>>;
@@ -23,14 +24,14 @@ const Input: React.FC<InputProps> = ({
   inputValue,
   submitCount,
   proposition,
+  defaultValue,
   setInputValue,
   allowCapitalCase,
 }) => {
   const inputRef = useRef<HTMLInputElement>();
-
   useEffect(() => {
-    setInputValue((prevState) => ({ ...prevState, [name]: "" }));
-  }, []);
+    setInputValue((prevState) => ({ ...prevState, [name]: defaultValue || "" }));
+  }, [defaultValue]);
 
   const handleChange = (_payload) => {
     const payload = (allowCapitalCase && _payload) || _payload.toLowerCase();
@@ -86,7 +87,9 @@ const Input: React.FC<InputProps> = ({
           </div>
         )}
       </div>
-      {error && error[name] && error[name].map(err => <div className={styles.error}>{err}</div>)}
+      {error &&
+        error[name] &&
+        error[name].map((err) => <div className={styles.error}>{err}</div>)}
       <div className={inputStyles.inputArrayChoices}></div>
     </div>
   );

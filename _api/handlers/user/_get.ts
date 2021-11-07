@@ -1,9 +1,31 @@
-import User from "../../models/user";
+import {User} from "../../models";
 
 const handle_get = async (req, res) => {
   //console.log(" I could reach here")
-    try {
-      // @ts-ignore
+  const query = req.query;
+  const user_id = query.user_id;
+
+  if (user_id) {
+    // @ts-ignore
+    const { username, lastname, phoneNumber } = await User.findById({
+      _id: req.user._id,
+    });
+    return res.json({
+      userData: {
+        username,
+        lastname,
+        phoneNumber,
+      },
+    });
+  }
+
+  if (!req.user)
+    return res.status(501).json({
+      message: "not enough power",
+    });
+    
+  try {
+    // @ts-ignore
     const { username, firstName, _id, lastName, cart, role } =
       await User.findById({
         _id: req.user._id,

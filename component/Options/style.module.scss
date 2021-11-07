@@ -1,0 +1,71 @@
+.container{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.wrapper{
+    display: flex;
+    background-color: var(--theme-color-2);
+    border-radius: 5px;
+    padding: 8px 2px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: top right;
+    transition: all var(--fast-animation-duration) ease;
+    &>div{
+        padding: 4px;
+        flex-grow: 0;
+        background-color: var(--accent-color-5);
+        border-radius: 50%;
+        margin: 2px;
+    }
+    &.open{
+        opacity: 0;
+        transform: scale(1.4);
+    }
+}
+
+.optionsContainer{
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    background-color: var(--theme-color-2);
+    padding: var(--large-padding);
+    border-radius: var(--border-radius);
+    transform: scale(0);
+    transform-origin: top right;
+    
+    // transform: translate(-100%);
+
+    a, button{
+        white-space: nowrap;
+        color:white;
+        background-color: var(--theme-color-3);
+        padding: 3px;
+        margin: 3px 0;
+        border-radius: var(--border-radius);
+        transition: background-color var(--fast-animation-duration) ease;
+        &:active{
+            background-color: var(--theme-color-2);
+        }
+    }
+    label{
+        color: rgba(255, 255, 255, 0.747);
+        width: 100%;
+        display: block;
+        padding-bottom: var(--padding);
+        margin-bottom: 10px;
+        border-bottom: 1px solid var(--accent-color-2);
+    }
+
+    &.open{
+        opacity: 1;
+        transform: scale(1);
+    }
+    transition: all var(--fast-animation-duration) ease;
+}
