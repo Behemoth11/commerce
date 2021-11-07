@@ -4,9 +4,26 @@ import { useRouter } from "next/router";
 import styles from "./style.module.css";
 import { getGoogleAuthURL } from "../../../_api/utils/google_auth";
 import { useEffect, useState } from "react";
+import { useGlobalContext } from "../../../Contexts/GlobalContext";
 
 function TPLogin({setEditState}) {
   const [google_url, setGoogle_url] = useState();
+
+  const {User, auth, myWindow} = useGlobalContext()
+
+  const handleGoogleClick = () => {
+    localStorage.setItem("meta_64", "0");
+
+    const checker = setInterval( async () => {
+      if (localStorage.getItem("meta_64") == "1"){
+        await auth.getNewToken()
+        myWindow.setIsShown("closed")
+        User.refresh()
+        clearInterval(checker)
+      }
+    }, 1000)
+  };
+
 
   useEffect(() => {
     (async () => {
@@ -22,7 +39,7 @@ function TPLogin({setEditState}) {
       </div>
       <div className={styles.TPcontent}>
         <a href={google_url} target={"blank"}>
-          <div className={styles.alternative}>
+          <div className={styles.alternative} onClick={handleGoogleClick}>
             <img
               src="/svg/google_icon.svg"
               id="google_icon"

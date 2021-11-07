@@ -12,7 +12,13 @@
   height: 100%;
   width: 100%;
   border: 1px solid var(--theme-color);
-  transform: scale(0.2) translateY(-500px);
+  opacity: 0;
+  transform: translateX(100%);
+  transition: all var(--fast-animation-duration) ease-in-out;
+  &.open{
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @media (min-width: 570px) {

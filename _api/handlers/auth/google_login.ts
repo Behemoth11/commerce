@@ -1,7 +1,7 @@
 import Cookies from "cookies";
 import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
-import User from "../../models/user";
+import {User} from "../../models";
 import { getGoogleAuthURL, getGoogleUser } from "../../utils/google_auth";
 import {
   createToken,
@@ -64,11 +64,12 @@ const handle_google_login = async (req, res) => {
       cart,
       _id,
     };
-
+    
     res.send(`
         <!DOCTYPE html>
         <html>
             <script>
+            localStorage.setItem("meta_64","1")
             window.close()
             </script>
         </html>`);

@@ -1,13 +1,19 @@
 import styles from "./style.module.css";
+import {FC} from "react";
+interface Props{
+  width: string,
+  background?: string,
+  style?: {}
+} 
 
-function Loading({width}) {
+const Loading:FC<Props> = ({width, background, style}) => {
   return (
-    <div style={{width: width, transition: "width var(--animation-duration)"}} >
+    <div style={{width: width, transition: "width var(--animation-duration)" , ...style}} >
       <div className={styles.ldsEllipsis}>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div style={{ backgroundColor: background}}></div>
+        <div style={{ backgroundColor: background}}></div>
+        <div style={{ backgroundColor: background}}></div>
+        <div style={{ backgroundColor: background}}></div>
       </div>
     </div>
   );

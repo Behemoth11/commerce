@@ -20,7 +20,7 @@
   grid-column: span 2;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1000px) {
   .productPage {
     -ms-grid-columns: 100%;
         grid-template-columns: 100%;

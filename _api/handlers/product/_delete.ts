@@ -1,7 +1,7 @@
 
 
 import { Types } from "mongoose";
-import Product from "../../models/Product";
+import {Product} from "../../models";
 import { eraseImages } from "../../utils/cloudinary";
 
 const handle_delete = async (req, res) => {
@@ -9,9 +9,17 @@ const handle_delete = async (req, res) => {
   const Id = req.query.product_id;
   console.log("the request reached me")
 
+  const mongo_product = await Product.findOne({
+    _id: new Types.ObjectId(Id),
+  }).lean();
+  //@ts-ignore
+  if (mongo_product.owner != req.user._id) {
+    return res.status(401).json({ message: "could not process the operation" });
+  }
+  
   const erasedProduct = await Product.findOneAndDelete({
     _id: new Types.ObjectId(Id),
-  }).catch((err) => error.push(err));
+  }).catch((err) => error.push(err.message));
 
   //@ts-ignore
   if (erasedProduct && erasedProduct.deletedCount == 0) {
@@ -30,7 +38,7 @@ const handle_delete = async (req, res) => {
       error
     );
   } catch (err) {
-    error.push(err);
+    error.push(err.message);
   }
 
   res.json({

@@ -23,7 +23,7 @@ const useUserData = (auth, cart) => {
 
   useEffect(() => {
     if (_refresh == 0) return;
-    // fetchUserData();
+    fetchUserData();
   }, [_refresh]);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ const useUserData = (auth, cart) => {
   }, [auth.token]);
 
   useEffect(() => {
-    console.log("the new user data", userData)
+    // console.log("the new user data", userData)
     if (userData) cart.setSavedProduct_id(userData.cart);
   }, [userData]);
 
@@ -46,7 +46,10 @@ const useUserData = (auth, cart) => {
     );
   };
 
-  return { data: userData, setUserData, refresh, hasAuthorization };
+  const Owns = (product) => {
+    return product?.owner?._id == userData?._id
+  }
+  return { data: userData, setUserData, refresh, hasAuthorization , Owns};
 };
 
 export default useUserData;

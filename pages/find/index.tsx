@@ -15,7 +15,7 @@ import Explore_SectionTitle from "../../component/Explore_SectionTitle";
 import { getRelated } from "../../component/Layout/NavBar/navBarSections";
 import { string_and_array_to_array } from "../../shared/UtilityFunctions";
 import FilterContainer from "../../component/FilterContainer";
-import {fetchNavigation } from "../../shared/shared_functions";
+import { fetchNavigation } from "../../shared/shared_functions";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -60,16 +60,18 @@ function Find() {
     Array.from({ length: 10 }).map((e) => ({ price: 100 }))
   );
 
-  const [relatedItems, setRelatedItems] = useState([{representation: "x"},{representation: "x"}]);
+  const [relatedItems, setRelatedItems] = useState([
+    { representation: "x" },
+    { representation: "x" },
+  ]);
   // console.log("the categories are ", categories)
   useEffect(() => {
     (async () => {
       if (!categories) return;
 
-      await fetchNavigation(categories, setRelatedItems)
-    })()
-  }, [categories])
-
+      await fetchNavigation(categories, setRelatedItems);
+    })();
+  }, [categories]);
 
   useEffect(() => {
     (async () => {
@@ -104,14 +106,22 @@ function Find() {
       <div className="container">
         <Explore_SectionTitle categories={categories} />
       </div>
-      <div className="sm" >
+
+      <div className="sm">
         <FilterOverlay />
       </div>
+
       <ActiveFilter displayType={displayType} setDisplayType={setDisplayType} />
 
       <main className={styles.container}>
-        <div className="big">
-          <FilterContainer defaultOpened={["color", "brand","location"]}/>
+        <div className="big" style={{marginLeft: "var(--margin)"}}>
+          <FilterContainer
+            key="45"
+            showApplyFilter={false}
+            applyFilterSideEffect={() => console.log(4)}
+            defaultOpened={["color"]}
+            maxOpened={3}
+          />
         </div>
         <div>
           <ProductListGrid

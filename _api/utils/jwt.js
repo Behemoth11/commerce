@@ -1,7 +1,7 @@
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import RefreshToken from "../models/refreshToken";
+import {RefreshToken} from "../models";
 
 export const createToken = user => {
   // Sign the JWT
@@ -12,7 +12,6 @@ export const createToken = user => {
   const _jwt =  jwt.sign(
     {
       _id: user._id,
-      username: user.username,
       role: user.role,
       iss: 'KdShop.danielkodoh.repl.co',
       aud: 'KdShop.danielkodoh.repl.co'
@@ -45,8 +44,8 @@ export const createRefreshToken = async user => {
     token: _jwt,
     userId: user._id
   }).catch(err => console.log(err))
-  console.log(refreshTokencreated)
-  console.log(_jwt, "the jwt")
+  // console.log(refreshTokencreated)
+  // console.log(_jwt, "the jwt")
   
   return refreshTokencreated?.token;
 }

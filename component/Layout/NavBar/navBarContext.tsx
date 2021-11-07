@@ -26,6 +26,7 @@ const NavBarProvider = ({ children }) => {
     _setToBottom(payload);
   };
 
+
   return (
     <SideBarContext.Provider
       value={{ sideBarIsOpen, toggleNavBar, toBottom, setToBottom }}

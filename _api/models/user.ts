@@ -12,7 +12,7 @@ export type userType = {
   lastName: string;
 };
 
-const user = new mongoose.Schema({
+export const user = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -55,6 +55,7 @@ const user = new mongoose.Schema({
 });
 
 // @ts-ignore
-mongoose.models = {};
-const User = mongoose.model("User", user);
-export default User;
+// mongoose.models = {};
+// const User = mongoose.model("User", user);
+
+// export default User;

@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 var Schema = mongoose.Schema;
 
-var refreshToken = new Schema({
+export const refreshToken = new Schema({
   token:{
     type: String,
     required: true,
@@ -17,6 +17,6 @@ var refreshToken = new Schema({
 });
 
 // @ts-ignore
-mongoose.models = {};
-var RefreshToken = mongoose.model('refreshToken', refreshToken);
-export default RefreshToken;
+// mongoose.models = {};
+// var RefreshToken = mongoose.model('refreshToken', refreshToken);
+// export default RefreshToken;

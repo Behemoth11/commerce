@@ -39,6 +39,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
 
       setEditState("success");
       myWindow.setIsShown("closed");
+      myWindow.overlay.close()
     } else setEditState("failure");
   };
 
@@ -46,7 +47,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
-    config: config.stiff,
+    // config: config.stiff,
   });
 
   const myRef = useRef();
@@ -74,6 +75,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
                 required={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
+                defaultValue={inputValue["user name"]}
               />
               <Input
                 type="password"
@@ -82,6 +84,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
                 allowCapitalCase={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
+                defaultValue={inputValue["password"]}
               />
             </form>
             {

@@ -17,9 +17,6 @@ const REPRESENTATIONS = [
   "ustensils",
 ];
 
-
-
-
 const getUrl = (array) => {
   const query = array.map((element) => `representation=${element}`);
   return query.join("&");
@@ -32,7 +29,7 @@ type responseData = {
 };
 
 export default function Home() {
-  console.log(process.env)
+  console.log(process.env);
   const [discoverData, setDiscoverData] = useState(
     Array.from({ length: 10 }).map((e) => ({ representation: "nothing" }))
   );
@@ -41,45 +38,62 @@ export default function Home() {
   );
 
   useEffect(() => {
-    (async () => {
+    const getRepresentation = async () => {
       // @ts-ignore
-      const [response1, response2] = await Promise.all([
-        await axios
-          .get(
-            `/api/product/representation?${getUrl(
-              REPRESENTATIONS
-            )}&field=pr_image_url&field=description&field=productName&field=representation`
-          )
-          .catch((err) => console.log(err)),
+      const response_representation = await axios
+        .get(
+          `/api/product/representation?representation=all&field=pr_image_url&field=description&field=productName&field=representation&limit=4`
+        )
+        .catch((err) => console.log(err));
 
-        await axios
-          .get(
-            `/api/product?representation=hot deals`
-          )
-          .catch((err) => console.log(err)),
-      ]);
+      let representations : responseData = {
+        products: [],
+        error: [],
+        more: false,
+      };
 
-      let _discoverData: responseData = {
-          products: [],
-          error: [],
-          more: false,
-        },
-        _gridData: responseData = {
-          products: [],
-          error: [],
-          more: false,
-        };
+      let products_representations= [];
 
-      if (response1) {
-        _discoverData = response1.data;
+      if (response_representation) {
+        representations = response_representation.data;
+        products_representations = representations.products
+        if (products_representations.length < 3) {
+          const more_representations = await axios
+            .get(
+              `/api/product/representation?${getUrl(
+                REPRESENTATIONS
+              )}&field=pr_image_url&field=description&field=productName&field=representation`
+            )
+            .catch((err) => console.log(err));
+          if (more_representations){
+            console.log("the more ", more_representations.data.products)
+            products_representations = products_representations.concat(more_representations.data.products)
+          }
+        }
       }
-      if (response2) {
-        _gridData = response2.data;
-      }
-      setGridData(_gridData.products);
 
-      setDiscoverData(_discoverData.products);
-    })();
+      console.log(products_representations)
+      setDiscoverData(products_representations);
+    };
+
+    const getHotDeals = async () => {
+      let hot_deals: responseData = {
+        products: [],
+        error: [],
+        more: false,
+      };
+      const response_hotdeals = await axios
+        .get(`/api/product?representation=hot deals`)
+        .catch((err) => console.log(err));
+
+      if (response_hotdeals) {
+        const hot_deals = response_hotdeals.data;
+      }
+      setGridData(hot_deals.products);
+    };
+
+    getHotDeals();
+    getRepresentation()
   }, []);
 
   return (
@@ -98,19 +112,22 @@ export default function Home() {
           <picture>
             <source
               media="(min-width: 700px)"
-              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_1000/v1630634875/chris-ainsworth-tIUXSj2iFVY-unsplash_qvqtwi.jpg"
+              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_1000/v1634645262/chris-ainsworth-tIUXSj2iFVY-unsplash_zlgadf.jpg"
             />
             <source
               media="(min-width: 470px)"
-              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_1.4,c_crop/c_scale,w_300/v1630368802/content-pixie-ZB4eQcNqVUs-unsplash_xdlyul.jpg 600w"
+              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_1.4,c_crop/c_scale,w_300/v1635785732/istockphoto-1254508881-170667a_imegeh.jpg 600w"
             />
-            <source srcSet="https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80 600w" />
-            <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1400&q=80" alt="" />
+            <source srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg 600w" />
+            <img
+              src="https://res.cloudinary.com/dkoatnxem/image/upload/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg "
+              alt=""
+            />
           </picture>
         </div>
         <button>
           <Link href={"/find?categories=women"}>
-            <a>Shop Women</a>
+            <a>Shop Women # This is dep 2</a>
           </Link>
         </button>
         <button>
@@ -127,12 +144,16 @@ export default function Home() {
 
       <div className={styles.discover}>
         <h3>Our Products</h3>
-        <ProductListFlex items={discoverData}  />
+        <ProductListFlex items={discoverData} />
       </div>
 
       <div className={styles.proposition}>
         <h3>HOT DEALS</h3>
-        <ProductListGrid displayType="single" aspect_ratio={120} items={gridData}  />
+        <ProductListGrid
+          displayType="single"
+          aspect_ratio={120}
+          items={gridData}
+        />
       </div>
     </div>
   );

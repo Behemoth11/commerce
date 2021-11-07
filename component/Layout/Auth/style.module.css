@@ -1,35 +1,25 @@
-.container {
-  background-color: var(--theme-color-2);
-  position: fixed;
-  z-index: 10;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  opacity: 1;
-  -webkit-transition: background-color var(--animation-duration) ease-in-out, opacity var(--animation-duration) ease-in-out, z-index var(--animation-duration) ease-in-out;
-  transition: background-color var(--animation-duration) ease-in-out, opacity var(--animation-duration) ease-in-out, z-index var(--animation-duration) ease-in-out;
-}
-
-.container.closed {
-  background-color: transparent;
-  z-index: 0;
-  opacity: 0;
-}
-
 .error {
   color: red;
   font-size: 0.9em;
 }
 
 .prompt {
+  width: min(500px, 90%);
   -webkit-transform: translate(-50%, -60%);
           transform: translate(-50%, -60%);
-  width: min(500px, 90%);
-  position: absolute;
+  position: fixed;
   overflow: hidden;
+  z-index: 3;
   left: 50%;
   top: 50%;
+  -webkit-transition-property: -webkit-transform opacity;
+  transition-property: -webkit-transform opacity;
+  transition-property: transform opacity;
+  transition-property: transform opacity, -webkit-transform opacity;
+  -webkit-transition-duration: var(--animation-duration);
+          transition-duration: var(--animation-duration);
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
 }
 
 .prompt h3 {
@@ -40,6 +30,10 @@
 
 .prompt > div {
   background-color: var(--accent-color-1);
+}
+
+.prompt.closed {
+  opacity: 0;
 }
 
 .loginForm {

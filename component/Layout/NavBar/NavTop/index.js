@@ -6,6 +6,7 @@ import { useSpring, animated, config } from "react-spring";
 import { navBarSections } from "../navBarSections";
 import { useNavBarContext } from "../navBarContext";
 import { useGlobalContext } from "../../../../Contexts/GlobalContext";
+import Loading from "../../../LoadingController/loading";
 
 const { menu } = navBarSections;
 
@@ -44,8 +45,18 @@ const NavTop = () => {
         </div>
 
         <div className={`${styles.rightSection}`}>
-          <Account />
-          {User.data?._id && <Icon />}
+          {(User.data?.username == "loading" && (
+            <Loading
+              width="50px"
+              background={"var(--theme-color)"}
+              style={{ margin: "7px" }}
+            />
+          )) || (
+            <>
+              <Account />
+              {User.data?._id && <Icon />}
+            </>
+          )}
         </div>
       </div>
     </nav>
@@ -164,7 +175,7 @@ const Account = () => {
   const handleLogout = async () => {
     let response;
     response = await auth.axios
-      .get("/api/auth/logout")
+      .post("/api/auth/logout")
       .catch((err) => (response = err));
 
     if (response.status === 200) {
@@ -210,7 +221,10 @@ const Account = () => {
           <div className={styles.loginContainer}>
             <button
               className={styles.register}
-              onClick={() => myWindow.setIsShown("login")}
+              onClick={() => {
+                myWindow.setIsShown("login");
+                myWindow.overlay.open(() => myWindow.setIsShown("closed"));
+              }}
             >
               <p>Register</p>
             </button>

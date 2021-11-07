@@ -1,8 +1,8 @@
-import User from "../../models/user";
+import {User} from "../../models";
 
 const handle_delete = async (req, res) => {
   const query = req.query;
-  console.log(query)
+  // console.log(query)
 
   const updatedUser = await User.updateOne(
     { _id: req.user._id },
@@ -13,7 +13,7 @@ const handle_delete = async (req, res) => {
     }
     );
     
-  console.log(updatedUser);
+  // console.log(updatedUser);
   res.status(200).json({ message: "success full update" });
 };
 

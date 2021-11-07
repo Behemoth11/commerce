@@ -23,11 +23,11 @@ export const getCategories = (object, keys) => {
 export const categories = {
   women: {
     title: "women",
-    content: ["bags", "watches", "jewelries"],
+    content: ["bags", "watches", "jewelries", "shoes"],
   },
   men: {
     title: "men",
-    content: ["suit", "pant", "short", "cap"],
+    content: ["suit", "pant", "short", "cap", "shoes"],
   },
   kids: {
     title: "kids",
@@ -93,6 +93,8 @@ export const getRelated = (_categories) => {
       return new RegExp(categorie, "i").test(representation);
     });
   });
+
+  console.log("the navigation query", navigationQuery)
 
 
   return navigationQuery.map((e) => `representation=${e.slice(1)}`).join("&"); //we slice here because there is a space at the beginning of the string

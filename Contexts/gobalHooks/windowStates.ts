@@ -4,6 +4,11 @@ const useFocus = () => {
   //focus entities
   const [focusedEntity, setFocusedEntity] = useState("init");
   const focus_controller = { focusedEntity, setFocusedEntity };
+  const [overlay_state, setOverlay] = useState({
+    open: false,
+    callbacks: [],
+  });
+
   useEffect(() => {
     const unfocus = () => {
       setFocusedEntity("undefined");
@@ -25,11 +30,38 @@ const useFocus = () => {
 
   const [isShown, setIsShown] = useState("closed");
 
-  useEffect(() => {
-    //console.log(focusedEntity);
-  }, [focusedEntity])
+  //overlay
 
-  return { focusedEntity, setFocusedEntity, size: resize, isShown, setIsShown };
+  const open_overlay = (cb?: () => void) => {
+    setOverlay((prevState) => ({
+      open: true,
+      callbacks: prevState.callbacks.concat(cb),
+    }));
+  };
+
+  const close_overlay = (cb?: () => void) => {
+    const callbacks = overlay_state.callbacks;
+    setOverlay({ open: false, callbacks: [] });
+
+    for (let i = 0; i < callbacks.length; i++) {
+      callbacks[i]();
+    }
+  };
+
+  const overlay = {
+    close: close_overlay,
+    open: open_overlay,
+    isOpen: overlay_state.open,
+  };
+
+  return {
+    focusedEntity,
+    setFocusedEntity,
+    size: resize,
+    isShown,
+    setIsShown,
+    overlay,
+  };
 };
 
 export default useFocus;

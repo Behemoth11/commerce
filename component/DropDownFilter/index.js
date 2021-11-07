@@ -48,6 +48,7 @@ function index({
 
   const myState = filter[filterName] || {};
 
+  const marker = (mobile && "m") || "d";
 
   return (
     <div
@@ -69,10 +70,13 @@ function index({
         <div className={`${styles.contentContainer} ${styles[filterName]}`}>
           {(filterName != "color" &&
             content.map((name) => (
-              <div key={name} className={`${styles.content} flex align-center`}>
+              <div
+                key={name + marker}
+                className={`${styles.content} flex align-center`}
+              >
                 <input
                   type="checkbox"
-                  id={filterName + name}
+                  id={filterName + name + marker}
                   name={name}
                   value={name}
                   checked={(myState && myState[name]) || false}
@@ -80,7 +84,10 @@ function index({
                     toggleChecked(filterName, name, stateFunction)
                   }
                 />
-                <label htmlFor={filterName + name} className={styles.radio}>
+                <label
+                  htmlFor={filterName + name + marker}
+                  className={styles.radio}
+                >
                   <span></span>
                   {name}
                 </label>
@@ -90,19 +97,21 @@ function index({
               <>
                 <input
                   type="checkbox"
-                  id={filterName + name}
+                  id={filterName + name + marker}
                   name={name}
                   value={name}
                   className={styles.colorInput}
-                  checked={(myState[name]) || false}
+                  checked={myState[name] || false}
                   onChange={() =>
                     toggleChecked(filterName, name, stateFunction)
                   }
                 />
                 <label
                   key={name}
-                  htmlFor={filterName + name}
-                  className={`${styles.colorItem} ${(myState[name] && styles.checked) || ""}`}
+                  htmlFor={filterName + name + marker}
+                  className={`${styles.colorItem} ${
+                    (myState[name] && styles.checked) || ""
+                  }`}
                   style={{ backgroundColor: name }}
                 ></label>
               </>

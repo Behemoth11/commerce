@@ -29,10 +29,12 @@ const GlobalContext = createContext({
       expiresAt: "",
     },
     setToken: (payload) => console.log(0),
+    getNewToken: async () => console.log(0),
   },
   User: {
     data: undefined,
     refresh: () => console.log(0),
+    Owns: (product) => Math.random() == 1,
     setUserData: (payload) => console.log(0),
     hasAuthorization: (requiredRole: string) => bn,
   },
@@ -45,22 +47,28 @@ const GlobalContext = createContext({
   myWindow: {
     focusedEntity: "",
     setFocusedEntity: undefined,
-
     isShown: "closed",
     setIsShown: undefined,
-
     size: 0,
+    overlay: {
+      open: (onClick: () => void) => console.log(5),
+      close: () => console.log(5),
+      isOpen: Math.random() == 1
+    },
   },
 });
 
 function GlobalContextProvider({ children }) {
-  
   const auth = useAuthAxios();
 
   const cart = useCart(auth);
   const filters = useFilter();
   const myWindow = useFocus();
   const User = useUserData(auth, cart);
+
+  useEffect(() => {
+    localStorage.setItem("meta_64", "0");
+  }, []);
 
   return (
     <GlobalContext.Provider
