@@ -111,7 +111,9 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
 
   useEffect(() => {
     setIndex(0);
+    // console.log(imageUrls, "the urls")
   },[imageUrls])
+
   const [coordinate, _setCoordinate] = useState({ x: 0, y: 0 });
   const coordinateRef = useRef({ x: 0, y: 0, scroll: 0 });
 

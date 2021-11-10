@@ -29,7 +29,7 @@ const Expend = ({ visible, children, top_prop , closePopup }) => {
         opacity: 0,
       },
       reset: true,
-      // config: config.stiff
+      config: config.stiff
     });
   }, []);
 

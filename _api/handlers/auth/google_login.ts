@@ -1,7 +1,7 @@
 import Cookies from "cookies";
 import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
-import {User} from "../../models";
+import { User } from "../../models";
 import { getGoogleAuthURL, getGoogleUser } from "../../utils/google_auth";
 import {
   createToken,
@@ -32,10 +32,10 @@ const handle_google_login = async (req, res) => {
 
     const mongo_response = await User.findOneAndUpdate(
       { "Oauth.method": "google", "Oauth.id": id },
-      myUser,
+      { $setOnInsert: myUser },
       {
         upsert: true,
-        returnOriginal: false,
+        returnNewDocument: true,
       }
     );
 
@@ -64,7 +64,7 @@ const handle_google_login = async (req, res) => {
       cart,
       _id,
     };
-    
+
     res.send(`
         <!DOCTYPE html>
         <html>
@@ -75,6 +75,7 @@ const handle_google_login = async (req, res) => {
         </html>`);
     return;
   }
+  console.log("The end point")
   res.send({
     url: google_url,
   });

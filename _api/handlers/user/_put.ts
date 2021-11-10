@@ -34,9 +34,9 @@ const handle_put = async (req, res) => {
     const use = await User.findOne({
       _id: req.user._id
     })
-console.log(use)
-console.log(body.firstName)
-    console.log(updatedUser)
+// console.log(use)
+// console.log(body.firstName)
+//     console.log(updatedUser)
   }
 };
 

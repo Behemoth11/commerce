@@ -9,17 +9,10 @@
           transform: translate(-50%, -60%);
   position: fixed;
   overflow: hidden;
-  z-index: 3;
   left: 50%;
   top: 50%;
-  -webkit-transition-property: -webkit-transform opacity;
-  transition-property: -webkit-transform opacity;
-  transition-property: transform opacity;
-  transition-property: transform opacity, -webkit-transform opacity;
-  -webkit-transition-duration: var(--animation-duration);
-          transition-duration: var(--animation-duration);
-  -webkit-transition-timing-function: ease-in-out;
-          transition-timing-function: ease-in-out;
+  -webkit-transition: opacity var(--fast-animation-duration) ease-in-out;
+  transition: opacity var(--fast-animation-duration) ease-in-out;
 }
 
 .prompt h3 {

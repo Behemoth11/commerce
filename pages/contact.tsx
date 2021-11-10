@@ -24,6 +24,7 @@ function Contact() {
     message: "",
   });
 
+
   const [inputState, setInputState] = useState<
     "idle" | "loading" | "success" | "failure"
   >("idle");

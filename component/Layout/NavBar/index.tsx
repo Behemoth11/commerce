@@ -4,6 +4,7 @@ import NavSide from "./NavSide";
 import styles from "./style.module.css";
 import NavBarContext, { useNavBarContext } from "./navBarContext";
 import { memo, useState, useEffect } from "react";
+import SearchBar from "./SearchBar";
 
 
 const useScrollDirectionToBottom = (
@@ -51,6 +52,7 @@ const R_NavBar = () => {
         <h3 className={styles.annoncement}>This is something cool</h3>
         <NavTop />
         <NavSide />
+        <SearchBar />
       </div>
     </>
   );

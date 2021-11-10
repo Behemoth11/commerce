@@ -80,10 +80,6 @@ const index = () => {
     [sideBarLocation]
   );
 
-  useEffect(() => {
-    if (sideBarIsOpen) return myWindow.overlay.open(() => toggleNavBar())
-    myWindow.overlay.close()
-  }, [sideBarIsOpen])
 
   return (
     <>

@@ -1,5 +1,5 @@
 .container {
-    margin: auto;
+    align-items: center;
     justify-content:center;
     display: flex;
     margin: var(--larger-margin) auto;
@@ -7,11 +7,33 @@
 
 .button{
     background-color: var(--theme-color);
+    position: relative;
+    font-size: 0.8em;
     color: white;
-    padding: 5px ;
+    padding: 2px ;
     margin: 5px;
-    width: 7em;
+    width: 5em;
     &:nth-of-type(2){
         background-color: var(--accent-color-1);
+    }
+    &.done{
+        background-color: var(--theme-color-4);
+        // display: none;
+    }
+}
+
+.number{
+    background-color: var(--theme-color);
+    width: 2em;
+    height: 2em;
+    margin: 0.2em;
+    border-radius: 2px;
+    position: relative;
+    p{
+        top: 50%;
+        left: 50%;
+        color:white;
+        position: absolute;
+        transform: translate(-50%, -50%);
     }
 }

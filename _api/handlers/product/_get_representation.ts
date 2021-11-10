@@ -49,7 +49,7 @@ const handle_get = async (req, res) => {
     });
 
     let missingProducts = await Promise.all(_newPromises);
-    console.log(missingProducts)
+    // console.log(missingProducts)
     missingProducts = missingProducts
       //@ts-ignore
       .map((mongoObj, index) => {

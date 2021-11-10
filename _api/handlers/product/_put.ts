@@ -15,7 +15,7 @@ const handle_put = async (req, res) => {
     _id: new Types.ObjectId(_id),
   }).lean();
   //@ts-ignore
-  if (mongo_product.owner != req.user._id) {
+  if (mongo_product.owner != req.user._id && req.user.role != "admin") {
     return res.status(401).json({ message: "could not process the operation" });
   }
 

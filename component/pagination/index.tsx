@@ -1,30 +1,39 @@
-
 // @ts-ignore
-import styles from './style.module.css';
-import {memo} from 'react'
+import styles from "./style.module.css";
+import { memo } from "react";
 
-const PageIndex = ({ activePage, setPage, totalPages }) => {
-    const increase = () => {
-        setPage(prevPage => {
-            if (prevPage >= totalPages) return prevPage;
-            return prevPage+1
-        })
-    }
-    const reduce = () => {
-        setPage(prevPage => {
-            if (prevPage <= 1) return prevPage;
-            return prevPage-1
-        })
-    }
-    return (
-        <div className={styles.container}>
-            <button className={styles.button} onClick={reduce}>previous</button>
-            <div className={`flex center-children`}>
-                <p>{ activePage }</p>
-            </div>
-            <button className={styles.button} onClick={increase}>more</button>
-       </div>
-    )
-}
+const PageIndex = ({ activePage, setPage, more }) => {
+  const increase = () => {
+    if (!more) return;
+    setPage(parseInt(activePage) + 1);
+  };
+  const reduce = () => {
+    if (activePage <= 1) return;
+    setPage(parseInt(activePage) - 1);
+  };
+
+//   console.log(ac/tivePage, "active Page")
+
+  return (
+    <div className={styles.container}>
+      <button
+        className={`${styles.button} ${activePage === "1" && styles.done}`}
+        onClick={reduce}
+      >
+        previous
+      </button>
+      <div className={`flex center-children ${styles.number}`}>
+        <p>{activePage}</p>
+      </div>
+
+      <button
+        className={`${styles.button} ${!more && styles.done}`}
+        onClick={increase}
+      >
+        more
+      </button>
+    </div>
+  );
+};
 
 export default PageIndex;

@@ -9,6 +9,8 @@ const handle_get = async (req, res) => {
     limit = 50;
   let field = query.field;
 
+  // console.log(query, 444444444444444444444);
+
   try {
     if (query.page) page = parseInt(query.page) - 1;
     if (query.limit) limit = parseInt(query.limit);
@@ -37,14 +39,17 @@ const handle_get = async (req, res) => {
         }
         break;
       case "categories":
+        const categories = string_and_array_to_array(query.categories)
+        if (categories[0] === "search"){
+          searchQuery["$text"] = {$search: categories[1]}
+          break;
+        }
         searchQuery[key] = { $all: string_and_array_to_array(query[key]) };
         break;
       default:
         searchQuery[key] = { $in: string_and_array_to_array(query[key]) };
     }
   }
-
-  // console.log(searchQuery);
 
   let products = await Product.find(searchQuery, field)
     .skip(page * limit)
@@ -59,6 +64,8 @@ const handle_get = async (req, res) => {
     //@ts-ignore
     products.pop();
   }
+
+  // console.log(products, error)
 
   res.json({
     products,

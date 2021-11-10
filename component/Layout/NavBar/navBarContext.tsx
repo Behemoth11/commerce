@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useGlobalContext } from "../../../Contexts/GlobalContext";
 
 const SideBarContext = React.createContext({
   toBottom: false,
@@ -9,6 +10,7 @@ const SideBarContext = React.createContext({
 
 const NavBarProvider = ({ children }) => {
   const [sideBarIsOpen, setSideBarIsOpen] = useState(false); //remeber to change this to true
+  const { myWindow } = useGlobalContext();
   const [toBottom, _setToBottom] = useState(false);
 
   useEffect(() => {
@@ -19,13 +21,20 @@ const NavBarProvider = ({ children }) => {
   }, [sideBarIsOpen]);
 
   const toggleNavBar = () => {
-    setSideBarIsOpen((prevState) => !prevState);
+    setSideBarIsOpen((prevState) => {
+      if (prevState === false){
+        myWindow.overlay.open(() => setSideBarIsOpen(false))
+        return true;
+      }else {
+        myWindow.overlay.close()
+        return false;
+      }
+    });
   };
 
   const setToBottom = (payload) => {
     _setToBottom(payload);
   };
-
 
   return (
     <SideBarContext.Provider

@@ -66,13 +66,13 @@ export default function Home() {
             )
             .catch((err) => console.log(err));
           if (more_representations){
-            console.log("the more ", more_representations.data.products)
+            // console.log("the more ", more_representations.data.products)
             products_representations = products_representations.concat(more_representations.data.products)
           }
         }
       }
 
-      console.log(products_representations)
+      // console.log(products_representations)
       setDiscoverData(products_representations);
     };
 
@@ -88,8 +88,9 @@ export default function Home() {
 
       if (response_hotdeals) {
         const hot_deals = response_hotdeals.data;
+        setGridData(hot_deals.products);
       }
-      setGridData(hot_deals.products);
+      
     };
 
     getHotDeals();
@@ -116,7 +117,7 @@ export default function Home() {
             />
             <source
               media="(min-width: 470px)"
-              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_1.4,c_crop/c_scale,w_300/v1635785732/istockphoto-1254508881-170667a_imegeh.jpg 600w"
+              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_1.4,c_crop/c_scale,w_800/v1635785732/istockphoto-1254508881-170667a_imegeh.jpg 600w"
             />
             <source srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg 600w" />
             <img

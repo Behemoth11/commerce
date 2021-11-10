@@ -12,7 +12,7 @@ const index = () => {
   const [height, setHeight] = useState(400);
   const { myWindow } = useGlobalContext();
 
-  const [visible , setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   const [animateHeight, animateApi] = useSpring(() => ({
     height: 400,
@@ -23,20 +23,19 @@ const index = () => {
   }, [height]);
 
   useEffect(() => {
-    if (myWindow.isShown === "closed"){
-      setTimeout(() => setVisible(false), 200)
+    if (myWindow.isFocused === "login" || myWindow.isFocused === "register") {
+      setVisible(true);
     } else {
-      setVisible(true)
+      setTimeout(() => setVisible(false), 200);
     }
-  }, [myWindow.isShown])
+  }, [myWindow.isFocused]);
 
-
-  return(
+  return (
     <div
       className={`${styles.prompt} ${
-        myWindow.isShown === "closed" && styles.closed
+        myWindow.isFocused === "closed" && styles.closed
       }`}
-      style={{zIndex: visible ? 3:-8}}
+      style={{ zIndex: visible ? 3 : -5 }}
       onClick={(e) => e.stopPropagation()}
     >
       <animated.div style={{ ...animateHeight }}>

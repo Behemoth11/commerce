@@ -1,10 +1,16 @@
-import { useEffect, useState, useRef, MutableRefObject, useLayoutEffect } from "react";
+import {
+  useEffect,
+  useState,
+  useRef,
+  MutableRefObject,
+  useLayoutEffect,
+} from "react";
 import axios from "axios";
 import { useGlobalContext } from "../Contexts/GlobalContext";
 import { useRouter } from "next/router";
 
 export const useIsomorphicLayoutEffect =
-typeof window !== 'undefined' ? useLayoutEffect : useEffect;
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 export const useFirstTimeLoading = () => {
   const load = useRef(true);
@@ -112,10 +118,9 @@ export const useAuthAxios = () => {
     let axiosResponse;
     axiosResponse = await authAxios
       .get("/api/auth/token")
-      .catch((err) => axiosResponse = err.response);
+      .catch((err) => (axiosResponse = err.response));
 
     if (axiosResponse.status == 200) {
-      
       const { token, expiresAt } = axiosResponse.data;
       setToken({ value: token, expiresAt });
     } else {
@@ -152,16 +157,13 @@ export const useRequire = (userState) => {
   const router = useRouter();
   const { User } = useGlobalContext();
 
-  useEffect(() => {
-    console.log(User.data);
-    switch (userState) {
-      case "login":
-        if (!User.data?.username) {
-          should_be_redirected = true;
-        }
-        break;
-    }
+  switch (userState) {
+    case "login":
+      if (!User.data?.username) {
+        should_be_redirected = true;
+      }
+      break;
+  }
 
-    if (should_be_redirected) router.push("/");
-  }, [User.data]);
+  if (should_be_redirected) router.push("/");
 };

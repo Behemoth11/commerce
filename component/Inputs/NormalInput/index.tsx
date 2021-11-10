@@ -8,6 +8,7 @@ interface InputProps {
   name: string;
   required: boolean;
   inputValue: object;
+  placeholder?: string;
   proposition?: object;
   submitCount?: number;
   defaultValue?: string;
@@ -22,6 +23,7 @@ const Input: React.FC<InputProps> = ({
   error,
   required,
   inputValue,
+  placeholder,
   submitCount,
   proposition,
   defaultValue,
@@ -30,7 +32,10 @@ const Input: React.FC<InputProps> = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>();
   useEffect(() => {
-    setInputValue((prevState) => ({ ...prevState, [name]: defaultValue || "" }));
+    setInputValue((prevState) => ({
+      ...prevState,
+      [name]: defaultValue || "",
+    }));
   }, [defaultValue]);
 
   const handleChange = (_payload) => {
@@ -54,6 +59,7 @@ const Input: React.FC<InputProps> = ({
         <input
           value={inputValue[name] || ""}
           name={inputValue[name]}
+          placeholder={placeholder}
           id={name}
           onChange={(e) => handleChange(e.target.value)}
           className={`flex-center ${
@@ -67,8 +73,10 @@ const Input: React.FC<InputProps> = ({
           ref={inputRef}
           type={type || "text"}
           autoComplete="off"
+
         />
-        <label htmlFor={name}>{name}</label>
+
+        {!placeholder && <label htmlFor={name}>{name}</label>}
         {myProposition?.length > 0 && (
           <div className={inputStyles.proposition}>
             {myProposition.map((proposition) => (
