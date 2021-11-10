@@ -77,6 +77,7 @@ function Login() {
             closePopup={() => setPopupIsOpen(false)}
             duration={5000}
             type={"aga"}
+            name={"no_availabe"}
           >
             <div className={styles.message}>
               <h3>!!! Not Yet available</h3>

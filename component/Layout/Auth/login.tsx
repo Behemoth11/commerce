@@ -38,26 +38,28 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      myWindow.setIsShown("closed");
+      myWindow.setFocusOn("closed");
       myWindow.overlay.close()
     } else setEditState("failure");
   };
 
-  const transition = useTransition(myWindow.isShown == "login", {
+  const transition = useTransition(myWindow.isFocused == "login", {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
     // config: config.stiff,
   });
 
+  console.log(myWindow.isFocused, "what is showing on the window")
+
   const myRef = useRef();
 
   useEffect(() => {
-    if (myWindow.isShown == "login") {
+    if (myWindow.isFocused == "login") {
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
-  }, [myWindow.isShown, error, myWindow.size]);
+  }, [myWindow.isFocused, error, myWindow.size]);
 
   return transition(
     (style, condition) =>
@@ -66,6 +68,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
           style={style}
           className={styles.formContainer}
           ref={myRef}
+          id="#login"
         >
           <div className={styles._formContainer}>
             <h3> Login KdShop</h3>
@@ -101,7 +104,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
 
             <div
               className={styles.else}
-              onClick={() => myWindow.setIsShown("register")}
+              onClick={() => myWindow.setFocusOn("register")}
             >
               <p>Don't yet have an Accout?</p>
               <span>create an account.</span>

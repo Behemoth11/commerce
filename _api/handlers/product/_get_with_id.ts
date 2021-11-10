@@ -9,8 +9,8 @@ const handle_get = async (req, res) => {
   const query = req.query;
   const error = [];
 
-  console.log(req.query);
-  console.log("I was hit");
+  // console.log(req.query);
+  // console.log("I was hit");
 
   const productIds = req.query.product_id
     .split(",")

@@ -165,6 +165,7 @@
   color: var(--accent-color);
   font-size: var(--medium-font-size);
   margin-top: var(--larger-margin);
+  margin-bottom: var(--margin);
 }
 
 .footer ul {

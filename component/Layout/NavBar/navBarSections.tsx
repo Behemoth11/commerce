@@ -94,7 +94,7 @@ export const getRelated = (_categories) => {
     });
   });
 
-  console.log("the navigation query", navigationQuery)
+  // console.log("the navigation query", navigationQuery)
 
 
   return navigationQuery.map((e) => `representation=${e.slice(1)}`).join("&"); //we slice here because there is a space at the beginning of the string

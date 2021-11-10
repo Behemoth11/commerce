@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Popup from "../../component/popup";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import styles from "../../styles/product.module.css";
 import ProductSlideShow from "../../component/ProductSlideShow";
 import MoreProduct from "../../component/ProductList-flex/preset";
@@ -61,7 +61,14 @@ const Product: React.FC = () => {
       .catch((err) => console.log(err));
   };
 
-
+  const SLIDER_URL = useMemo(
+    () =>
+      (mainProduct &&
+        mainProduct?.pr_image_url?.concat(mainProduct?.all_pr_image_url)) || [
+        undefined,
+      ],
+    [mainProduct]
+  );
 
   return (
     <div className="big-container">
@@ -71,7 +78,7 @@ const Product: React.FC = () => {
             className="images-section no-shrink"
             style={{ padding: 0, position: "relative" }}
           >
-            <ProductSlideShow imageUrls={mainProduct && mainProduct?.pr_image_url?.concat(mainProduct?.all_pr_image_url) || [undefined]} />
+            <ProductSlideShow imageUrls={SLIDER_URL} />
             {((User.hasAuthorization("seller") && User.Owns(mainProduct)) ||
               User.hasAuthorization("admin")) && (
               <Options name="otions">
@@ -134,6 +141,7 @@ interface productInformation {
     owner: {
       _id: String;
       username: String;
+      phoneNumber: String;
     };
     location: string;
     description: { head: string; info: string };
@@ -164,9 +172,11 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
     <div className="container vertical-flex">
       <button className={`${styles.buyPrompt} sm flex-center`}>
         <a
-          href={`https://api.whatsapp.com/send?phone=15312256403&text=${message.current}`}
+          href={`https://api.whatsapp.com/send?phone=${
+            product.owner?.phoneNumber || "+15312256403"
+          }&text=${message.current}`}
         >
-          Buy
+          Contact Seller
         </a>
       </button>
       <div className={`${styles.addToCartPrompt} sm flex-center `}>
@@ -175,6 +185,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
           isVisible={popupIsOpen}
           closePopup={() => setPopupIsOpen(false)}
           duration={3000}
+          name={"add to cart"}
         >
           <div
             className={styles.addedNotification}
@@ -268,10 +279,11 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
           isVisible={popupIsOpen}
           closePopup={() => setPopupIsOpen(false)}
           duration={3000}
+          name={"add to cart"}
         >
           <div
             className={styles.addedNotification}
-            onClick={(e) => e.stopPropagation()}
+            // onClick={(e) => e.stopPropagation()}
           >
             Producy successfully added !
             <Link href={"/cart"} passHref>

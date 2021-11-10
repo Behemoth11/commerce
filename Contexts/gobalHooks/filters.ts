@@ -39,13 +39,3 @@ const useFilter = () => {
 };
 
 export default useFilter;
-
-const daniel = {
-  firstName: "daniel",
-  middleName: "komlan",
-  lastName: "Kodoh",
-  walk: () => {
-    console.log("daniel is wolking");
-    setTimeout(() => console.log("daniel is tired"), 5000);
-  },
-};

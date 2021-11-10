@@ -45,10 +45,8 @@ const GlobalContext = createContext({
     setFilter: (payload: {}) => console.log(0),
   },
   myWindow: {
-    focusedEntity: "",
-    setFocusedEntity: undefined,
-    isShown: "closed",
-    setIsShown: undefined,
+    isFocused : "",
+    setFocusOn: (id:string) => console.log(0),
     size: 0,
     overlay: {
       open: (onClick: () => void) => console.log(5),

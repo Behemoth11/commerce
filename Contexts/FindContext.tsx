@@ -5,7 +5,6 @@ import {useGlobalContext} from "./GlobalContext"
 export const FilterOverlayContext = React.createContext({
   toggleFilterOverlay: undefined,
   filterOverlayIsOpen: false,
-
 });
 
 

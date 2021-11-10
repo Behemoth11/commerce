@@ -9,7 +9,7 @@ const handler = async (req, res) => {
       break;
 
     case "POST":
-      console.log('tHE POST REQUEST IS BEING THREATED')
+      // console.log('tHE POST REQUEST IS BEING THREATED')
       POST_handler(req, res)
       break;
     

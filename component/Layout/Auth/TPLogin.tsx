@@ -17,7 +17,8 @@ function TPLogin({setEditState}) {
     const checker = setInterval( async () => {
       if (localStorage.getItem("meta_64") == "1"){
         await auth.getNewToken()
-        myWindow.setIsShown("closed")
+        myWindow.setFocusOn("closed")
+        myWindow.overlay.close()
         User.refresh()
         clearInterval(checker)
       }

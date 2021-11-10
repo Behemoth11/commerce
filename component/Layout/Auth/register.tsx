@@ -40,11 +40,11 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
 
       setEditState("success");
       myWindow.overlay.close()
-      myWindow.setIsShown("closed");
+      myWindow.setFocusOn("closed");
     } else setEditState("failure");
   };
 
-  const transition = useTransition(myWindow.isShown == "register", {
+  const transition = useTransition(myWindow.isFocused == "register", {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
@@ -54,11 +54,11 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
   const myRef = useRef();
 
   useEffect(() => {
-    if (myWindow.isShown == "register") {
+    if (myWindow.isFocused == "register") {
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
-  }, [myWindow.isShown, error, myWindow.size]);
+  }, [myWindow.isFocused, error, myWindow.size]);
 
   return transition(
     (style, condition) =>
@@ -124,7 +124,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
             </button>
             <div
               className={styles.else}
-              onClick={() => myWindow.setIsShown("login")}
+              onClick={() => myWindow.setFocusOn("login")}
               >
               <p>Already have an accout?</p>
               <span>Login into you acout</span>

@@ -1,21 +1,47 @@
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "../../shared/CustomHooks";
 
 const useFocus = () => {
+  const router = useRouter();
   //focus entities
-  const [focusedEntity, setFocusedEntity] = useState("init");
-  const focus_controller = { focusedEntity, setFocusedEntity };
+
   const [overlay_state, setOverlay] = useState({
     open: false,
     callbacks: [],
   });
 
+  const pathnameRef = useRef();
+
+  const isFocused = router.query.focus;
+
+  const setFocusOn = (id, e?: any) => {
+    if (e) e.stopPropagation();
+    const url = new URL(window.location.href)
+    console.log(url.search)
+    let query;
+    if (url.search.length > 0){
+     query =  url.search.split("focus")[0] + "&"
+    } else {
+      query = "?"
+    }
+
+    router.push(
+      url.pathname+ query +`focus=${id}`,
+      undefined,
+      { shallow: true }
+    );
+  };
+
   useEffect(() => {
+    if (!router.isReady) return;
     const unfocus = () => {
-      setFocusedEntity("undefined");
+      console.log("The unfoc thing just ran");
+      setFocusOn("none");
     };
     window.addEventListener("click", unfocus);
     return () => window.removeEventListener("click", unfocus);
-  }, []);
+  }, [router.isReady]);
 
   //resize
   const [resize, setResize] = useState<number>(1);
@@ -26,12 +52,7 @@ const useFocus = () => {
     return () => window.removeEventListener("resize", resizeEvent);
   }, []);
 
-  //FilterOverlayContext
-
-  const [isShown, setIsShown] = useState("closed");
-
   //overlay
-
   const open_overlay = (cb?: () => void) => {
     setOverlay((prevState) => ({
       open: true,
@@ -55,12 +76,10 @@ const useFocus = () => {
   };
 
   return {
-    focusedEntity,
-    setFocusedEntity,
     size: resize,
-    isShown,
-    setIsShown,
     overlay,
+    isFocused,
+    setFocusOn,
   };
 };
 

@@ -12,11 +12,11 @@ const useUserData = (auth, cart) => {
     serverResponse = await auth.axios
       .get("/api/user/userData")
       .catch(err => serverResponse = err.response);
-      console.log("the request resolve")
+      // console.log("the request resolve")
     if (serverResponse.status == 200) {
       setUserData(serverResponse.data.userData);
     }else{
-      console.log("The else par ran")
+      // console.log("The else par ran")
       setUserData(undefined);
     }
   };

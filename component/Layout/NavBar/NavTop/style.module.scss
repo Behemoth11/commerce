@@ -12,7 +12,7 @@
 }
 
 @media (min-width: 570px) {
-  .navTop{
+  .navTop {
     height: 50px;
   }
 }
@@ -62,7 +62,7 @@
 
 .bagIcon {
   height: 40px;
-  
+
   & > img {
     transform: scale(0.8) translateY(-3px);
     margin-top: 4px;
@@ -96,13 +96,31 @@
 
 .rightSection {
   height: 100%;
-  
+
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   margin-left: auto;
   position: relative;
   justify-content: space-between;
+}
+
+.textSearch {
+  height: 80%;
+  padding: 0.2em;
+  // background-color: blue;
+  margin-right: 0.5em;
+  border-radius: var(--border-radius);
+  svg {
+    height: 100%;
+  }
+  path {
+    fill: none;
+    stroke-width: 1;
+    stroke-dasharray: 400;
+    stroke: var(--theme-color-1);
+    transition: stroke-dashoffset var(--animation-duration) ease-in;
+  }
 }
 
 .navLink {
@@ -173,11 +191,11 @@
   .navLink {
     display: none;
   }
-  .rightSection {
-    & > div {
-      margin: 0;
-    }
-  }
+  // .rightSection {
+  //   & > div {
+  //     margin: 0;
+  //   }
+  // }
   .brandIcon {
     top: 53%;
     left: 50%;
@@ -207,7 +225,7 @@
   }
 }
 
-.rg_menu{
+.rg_menu {
   backdrop-filter: blur(2px);
   position: absolute;
   right: 0;
@@ -224,7 +242,7 @@
   color: white;
 }
 
-.login{
+.login {
   background-color: var(--theme-color-2);
   color: white;
   border-radius: var(--border-radius);
@@ -233,15 +251,15 @@
   width: fit-content;
 }
 
-.register{
+.register {
   @extend .login;
   font-size: 0.9em;
   background: var(--accent-color);
 }
 
-.user{
+.user {
   position: relative;
-  &::after{
+  &::after {
     content: "";
     position: absolute;
     right: 0.5em;
@@ -254,27 +272,27 @@
   }
 }
 
-.signOut{
+.signOut {
   margin-top: 0.5em;
   width: fit-content;
   padding: 0.05em 0.4em;
   border-radius: var(--border-radius);
-  background-color: var(--accent-color-1)
+  background-color: var(--accent-color-1);
 }
 
-.userImage{
+.userImage {
   padding: 12px;
   font-size: 1.2em;
   background-color: var(--accent-color-2);
   border-radius: 100%;
   position: relative;
   border: 1px solid var(--theme-color-3);
-  span{
+  span {
     display: block;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-52%);
+    transform: translate(-50%, -52%);
     color: white;
   }
 }

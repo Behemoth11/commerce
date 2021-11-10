@@ -124,6 +124,26 @@
           justify-content: space-between;
 }
 
+.textSearch {
+  height: 80%;
+  padding: 0.2em;
+  margin-right: 0.5em;
+  border-radius: var(--border-radius);
+}
+
+.textSearch svg {
+  height: 100%;
+}
+
+.textSearch path {
+  fill: none;
+  stroke-width: 1;
+  stroke-dasharray: 400;
+  stroke: var(--theme-color-1);
+  -webkit-transition: stroke-dashoffset var(--animation-duration) ease-in;
+  transition: stroke-dashoffset var(--animation-duration) ease-in;
+}
+
 .navLink {
   padding: 0 20px;
   position: relative;
@@ -206,9 +226,6 @@
 @media (max-width: 750px) {
   .navLink {
     display: none;
-  }
-  .rightSection > div {
-    margin: 0;
   }
   .brandIcon {
     top: 53%;

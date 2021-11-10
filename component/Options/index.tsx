@@ -7,13 +7,14 @@ import { useSpring } from "react-spring";
 const Options = ({children, name}) => {
   const {myWindow} = useGlobalContext()
 
-  console.log(myWindow.focusedEntity )
-  const isOpen = myWindow.focusedEntity ==name;
+  // console.log(myWindow.isFocused )
+  const isOpen = myWindow.isFocused ==name;
 
   const handleClick  = (e) => {
     e.stopPropagation()
-    myWindow.setFocusedEntity(name)
+    myWindow.setFocusOn(name)
   }
+  
   return (
     <div
       className={styles.container}

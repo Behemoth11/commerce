@@ -16,6 +16,7 @@ import { getRelated } from "../../component/Layout/NavBar/navBarSections";
 import { string_and_array_to_array } from "../../shared/UtilityFunctions";
 import FilterContainer from "../../component/FilterContainer";
 import { fetchNavigation } from "../../shared/shared_functions";
+import { TextAlignment } from "@cloudinary/base/qualifiers/textAlignment";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -45,16 +46,17 @@ const createUrl = (_categories, filters) => {
   return categoriesQuery + "&" + filterQuery;
 };
 
-function Find() {
-  const {
-    query: { categories },
-  } = useRouter();
+function FindContent() {
+  const router = useRouter();
+  const categories = router.query.categories;
+  const page = router.query.page;
+
   const [displayType, setDisplayType] = useState<"single" | "double">(
     "double" || "single"
   );
 
   const { filters } = useGlobalContext();
-  const [page, setPage] = useState<number>(1);
+  // const [page, setPage] = useState<number>(1);
   const [areMoreProduct, setAreMoreProduct] = useState(false);
   const [products, setProducts] = useState(
     Array.from({ length: 10 }).map((e) => ({ price: 100 }))
@@ -78,22 +80,40 @@ function Find() {
       if (!categories || !filters.value) return;
 
       const query = createUrl(categories, filters.value);
+
+      const beginningTime = new Date().getTime();
       // @ts-ignore
       const { data } = await axios
-
         .get(
-          `/api/product?${query}&page=${page}&limit=20&field=_id&field=productName&field=price&field=description&field=pr_image_url`
+          `/api/product?${query}&page=${
+            page || "1"
+          }&limit=20&field=_id&field=productName&field=price&field=description&field=pr_image_url`
         )
         .catch((err) => console.log(err));
+
+      const timeSpanned = new Date().getTime() - beginningTime;
+
+      if (timeSpanned <= 200) {
+        await new Promise((resolve, eject) => {
+          setTimeout(() => resolve("nothing"), timeSpanned);
+        });
+      }
 
       setProducts(data.products);
       setAreMoreProduct(data.more);
     })();
   }, [filters.value, categories, page]);
 
-  useEffect(() => {
-    document.getElementById("__next").scroll(0, 0);
-  }, [categories, page]);
+  const setPage = (newPage) => {
+    router.push(
+      {
+        pathname: "/find",
+        query: { ...router.query, page: newPage },
+      },
+      undefined,
+      { shallow: true }
+    );
+  };
   return (
     <div>
       <Head>
@@ -114,7 +134,7 @@ function Find() {
       <ActiveFilter displayType={displayType} setDisplayType={setDisplayType} />
 
       <main className={styles.container}>
-        <div className="big" style={{marginLeft: "var(--margin)"}}>
+        <div className="big" style={{ marginLeft: "var(--margin)" }}>
           <FilterContainer
             key="45"
             showApplyFilter={false}
@@ -124,6 +144,13 @@ function Find() {
           />
         </div>
         <div>
+          {products.length === 0 && (
+            <div
+              style={{ textAlign: "center", marginTop: "var(--larger-margin)" }}
+            >
+              No Item Found
+            </div>
+          )}
           <ProductListGrid
             displayType={displayType}
             aspect_ratio={undefined}
@@ -133,7 +160,11 @@ function Find() {
       </main>
 
       <div className="flex">
-        <PageIndex activePage={page} setPage={setPage} totalPages={10} />
+        <PageIndex
+          activePage={page || 1}
+          setPage={setPage}
+          more={areMoreProduct}
+        />
       </div>
 
       <MoreProduct title={"related"} items={relatedItems} />
@@ -141,12 +172,12 @@ function Find() {
   );
 }
 
-const Wrapper = () => {
+const Find = () => {
   return (
     <FindContext>
-      <Find />
+      <FindContent />
     </FindContext>
   );
 };
 
-export default Wrapper;
+export default Find;

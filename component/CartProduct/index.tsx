@@ -11,7 +11,7 @@ const CartProduct = ({ product, visible }) => {
   if (!product.productName) return <></>;
 
   let productName = product.productName.slice(0, 15);
-  if (product.productName.length >= 10) productName += "...";
+  if (product.productName.length > 15) productName += "...";
   const [showFullName, setShowFullName] = useState<boolean>(false);
 
   const { cart } = useGlobalContext();

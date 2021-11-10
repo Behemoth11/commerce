@@ -44,9 +44,12 @@ const nonRequired = {
 
 function Upload() {
   const { query } = useRouter();
+
+
   const { auth } = useGlobalContext();
   const [editState, _setEditState] = useState<edit>("upload");
   const editRef = useRef<edit>("upload");
+
 
   const setEditState = (payload) => {
     _setEditState(payload);
@@ -130,7 +133,7 @@ function Upload() {
 
 
     if (res) {
-      console.log(res, "the response is")
+      // console.log(res, "the response is")
       if (res.status === 200) {
         setEditState("success");
         setSubmitCount(0);

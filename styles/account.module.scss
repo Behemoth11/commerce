@@ -24,8 +24,8 @@
   padding: var(--padding);
   .optionWrapper {
     position: relative;
-    padding: var(--margin) 0px;
-    margin: var(--margin) 0px;
+    padding: var(--large-margin) 0px;
+    margin: var(--large-margin) 0px;
     background-color: rgba(191, 184, 184, 0.097);
     &>p {
       display: flex;

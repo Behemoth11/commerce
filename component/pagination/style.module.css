@@ -1,5 +1,7 @@
 .container {
-  margin: auto;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -11,12 +13,36 @@
 
 .button {
   background-color: var(--theme-color);
+  position: relative;
+  font-size: 0.8em;
   color: white;
-  padding: 5px;
+  padding: 2px;
   margin: 5px;
-  width: 7em;
+  width: 5em;
 }
 
 .button:nth-of-type(2) {
   background-color: var(--accent-color-1);
+}
+
+.button.done {
+  background-color: var(--theme-color-4);
+}
+
+.number {
+  background-color: var(--theme-color);
+  width: 2em;
+  height: 2em;
+  margin: 0.2em;
+  border-radius: 2px;
+  position: relative;
+}
+
+.number p {
+  top: 50%;
+  left: 50%;
+  color: white;
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }

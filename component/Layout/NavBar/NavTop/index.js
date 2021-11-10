@@ -12,7 +12,7 @@ const { menu } = navBarSections;
 
 const NavTop = () => {
   const { toggleNavBar } = useNavBarContext();
-  const { User } = useGlobalContext();
+  const { User, myWindow } = useGlobalContext();
 
   return (
     <nav className={`${styles.navTop} container flex`}>
@@ -26,8 +26,8 @@ const NavTop = () => {
           </div>
         </div>
 
-        <div className={`${styles.brandIcon}`}>
-          <Link href="/">
+        <div className={`${styles.brandIcon}`} onClick={(e) => e.stopPropagation()}>
+          <Link href="/" >
             <a>
               <img src="/svg/BrandLogo.svg" />
             </a>
@@ -45,6 +45,25 @@ const NavTop = () => {
         </div>
 
         <div className={`${styles.rightSection}`}>
+          <div
+            className={styles.textSearch}
+            onClick={(e) => {
+              e.stopPropagation()
+              myWindow.setFocusOn("searchBar");
+            }}
+          >
+            <svg fill="#000000" viewBox="0 0 50 50">
+              <path
+                id="svg"
+                style={{
+                  strokeDashoffset:
+                    myWindow.isFocused === "searchBar" ? 400 : 0,
+                }}
+                d="M24.9105 27.7542L44.4856 42.2346L45.2356 41.2196L25.7646 26.8163L26.4219 25.8178C27.7312 23.8286 28.4932 21.4477 28.4932 18.885C28.4932 11.9137 22.8449 6.26227 15.8774 6.26227C8.90986 6.26227 3.26158 11.9137 3.26158 18.885C3.26158 25.8563 8.90986 31.5077 15.8774 31.5077C19.0419 31.5077 21.9316 30.3435 24.1467 28.4181L24.9105 27.7542ZM47 40.955L44.75 44L24.9741 29.3711C22.5382 31.4883 19.3574 32.77 15.8774 32.77C8.21311 32.77 2 26.5534 2 18.885C2 11.2165 8.21311 5 15.8774 5C23.5416 5 29.7547 11.2165 29.7547 18.885C29.7547 21.702 28.9163 24.3231 27.4755 26.512L47 40.955ZM27.2316 18.885C27.2316 25.1592 22.1481 30.2454 15.8774 30.2454C9.60661 30.2454 4.52316 25.1592 4.52316 18.885C4.52316 12.6108 9.60661 7.52454 15.8774 7.52454C22.1481 7.52454 27.2316 12.6108 27.2316 18.885ZM15.8774 28.9832C21.4514 28.9832 25.7646 24.462 25.7646 18.885C25.7646 13.3079 21.4514 8.78681 15.8774 8.78681C10.3034 8.78681 5.78474 13.3079 5.78474 18.885C5.78474 24.462 10.3034 28.9832 15.8774 28.9832Z"
+              />
+            </svg>
+          </div>
+
           {(User.data?.username == "loading" && (
             <Loading
               width="50px"
@@ -145,7 +164,7 @@ const Account = () => {
   const { toBottom } = useNavBarContext();
 
   const { myWindow, User, auth } = useGlobalContext();
-  const isFocused = myWindow.focusedEntity == "account";
+  const isFocused = myWindow.isFocused == "account";
 
   const spring = useSpring({
     transform: isFocused ? "translate(0%, 105%)" : "translate(100%, 105%)",
@@ -161,13 +180,16 @@ const Account = () => {
   });
 
   useEffect(() => {
-    myWindow.setFocusedEntity("not account"); // the name here has no importance to the
+    if (myWindow.isFocused == "account"){
+
+      myWindow.setFocusOn("none"); // the name here has no importance to the
+    }
   }, [toBottom]);
 
   const handleClick = (e) => {
     e.stopPropagation();
-    //console.log("I was responsible of it")
-    myWindow.setFocusedEntity(
+    // console.log("I was responsible of it")
+    myWindow.setFocusOn(
       (p) => (p == "account" && "undefined") || "account"
     );
   };
@@ -194,7 +216,10 @@ const Account = () => {
             <div className={styles.userImage}>
               <span>{User.data.username.slice(0, 1)}</span>
             </div>
-            <animated.div style={spring} className={styles.rg_menu}>
+            <animated.div
+              style={{ ...spring, pointerEvents: isFocused ? "all" : "none" }}
+              className={styles.rg_menu}
+            >
               <Link href={"/account"}>
                 <a>
                   <div className={styles.user}>
@@ -221,9 +246,9 @@ const Account = () => {
           <div className={styles.loginContainer}>
             <button
               className={styles.register}
-              onClick={() => {
-                myWindow.setIsShown("login");
-                myWindow.overlay.open(() => myWindow.setIsShown("closed"));
+              onClick={(e) => {
+                myWindow.setFocusOn("login",e);
+                myWindow.overlay.open(() => myWindow.setFocusOn("none"));
               }}
             >
               <p>Register</p>
