@@ -5,34 +5,39 @@ import { useRouter } from "next/router";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 import Auth from "./Auth";
+import { useMyWindow } from "../../Contexts/GlobalContext";
+
+const compare = (obj1, obj2) => {
+  obj1.focus = "";
+  obj2.focus = "";
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length != keys2.length) return false;
+
+  for (const key of keys1) {
+    if (obj1[key] != obj2[key]) return false;
+  }
+  return true;
+};
 
 function index({ children }) {
   const router = useRouter();
-  const [activeChildren, setActiveChildren] = useState(children);
-  const [transitionStage, setTransitionStage] = useState("fadeIn");
-  const pathRef = useRef(router.asPath);
+  const myWindow = useMyWindow();
+  const old_url = useRef({ query: {}, pathname: "" });
 
-  const [that,setthat] = useState(0)
-
-  useIsomorphicLayoutEffect(() => {
-    const style_tag = document.head.getElementsByTagName("style");
-    for (let i = 0; i < style_tag.length; i++) {
-      style_tag[i].setAttribute("media", "all");
+  useEffect(() => {
+    if (
+      router.pathname != old_url.current.pathname ||
+      !compare(router.query, old_url.current.query)
+    ) {
+      // console.log("The path changed");
+      document.getElementById("__next").scroll(0, 0);
+      old_url.current = { query: router.query, pathname: router.pathname };
     }
-    if (router.asPath.split("focus=")[0] != pathRef.current.split("focus=")[0]) {
-      pathRef.current = router.asPath;
-      setTransitionStage("fadeOut");
-      setTimeout(() => {
-        setTransitionStage("fadeIn");
-      }, 500);
-    }
+    myWindow.setPhase("fadeIn");
   }, [children]);
-
-  useIsomorphicLayoutEffect(() => {
-    if (!router.isReady || activeChildren.props.statusCode === 404) return;
-    console.log("The router is uselessly reloading the page-- I decided so");
-    router.push(router.asPath);
-  }, [router.isReady]);
 
   return (
     <>
@@ -40,22 +45,16 @@ function index({ children }) {
       <Auth />
       <div className="flex center-children" style={{ position: "relative" }}>
         <div
-          className={`${styles[transitionStage]} ${styles.bigContainer} big-container`}
-          onTransitionEnd={() => {
-            if (transitionStage === "fadeOut") {
-              setActiveChildren(children);
-              document.getElementById("__next").scroll(0, 0);
-              setTransitionStage("fadeIn");
-            }
-          }}
+          className={`${styles[myWindow.phase]} ${
+            styles.bigContainer
+          } big-container`}
         >
-          {activeChildren}
+          {children}
         </div>
       </div>
-      <div>
-        <a href="#login" onClick={() => setthat(prev => prev+1)}>Thi is the anchor link</a>
+      <div className={styles[myWindow.phase]}>
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 }

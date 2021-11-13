@@ -1,4 +1,3 @@
-import useSWR from "swr";
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -8,7 +7,6 @@ import PageIndex from "../../component/pagination";
 import ActiveFilter from "../../component/ActiveFilters";
 import FilterOverlay from "../../component/FilterOverlay";
 import ProductListGrid from "../../component/ProductList-grid";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
 import MoreProduct from "../../component/ProductList-flex/preset";
 import FindContext, { useFindContext } from "../../Contexts/FindContext";
 import Explore_SectionTitle from "../../component/Explore_SectionTitle";
@@ -17,6 +15,7 @@ import { string_and_array_to_array } from "../../shared/UtilityFunctions";
 import FilterContainer from "../../component/FilterContainer";
 import { fetchNavigation } from "../../shared/shared_functions";
 import { TextAlignment } from "@cloudinary/base/qualifiers/textAlignment";
+import { useFilterContext } from "../../Contexts/GlobalContext";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -55,7 +54,7 @@ function FindContent() {
     "double" || "single"
   );
 
-  const { filters } = useGlobalContext();
+  const filters = useFilterContext();
   // const [page, setPage] = useState<number>(1);
   const [areMoreProduct, setAreMoreProduct] = useState(false);
   const [products, setProducts] = useState(
@@ -77,7 +76,17 @@ function FindContent() {
 
   useEffect(() => {
     (async () => {
-      if (!categories || !filters.value) return;
+      if (!categories) {
+        router.push(
+          {
+            pathname: router.pathname,
+            query: { ...router.query, categories: "all" },
+          },
+          undefined,
+          { shallow: true }
+        );
+      }
+      // if (!filters.value) return;
 
       const query = createUrl(categories, filters.value);
 
@@ -161,7 +170,7 @@ function FindContent() {
 
       <div className="flex">
         <PageIndex
-          activePage={page || 1}
+          activePage={page || "1"}
           setPage={setPage}
           more={areMoreProduct}
         />

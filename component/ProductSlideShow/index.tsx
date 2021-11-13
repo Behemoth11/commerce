@@ -4,7 +4,7 @@ import MyImage from "../MyImage";
 import { useSpring, animated } from "react-spring";
 import React, { memo, useState, useRef, useEffect } from "react";
 import { useIntersectionObserver } from "../../shared/CustomHooks";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useMyWindow } from "../../Contexts/GlobalContext";
 
 //function for setting temporary states
 const setTemporaryState = (
@@ -41,7 +41,7 @@ const getNumberOfTracker: (
 const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
   const [tracker, setTracker] = useState<string[]>(undefined);
   const [index, _setIndex] = useState<number>(0);
-  const { myWindow } = useGlobalContext();
+  const myWindow = useMyWindow()
   const indexRef = useRef(0);
 
   const setIndex = (payload) => {

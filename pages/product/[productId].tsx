@@ -1,27 +1,23 @@
-import useSWR from "swr";
 import axios from "axios";
-import Link from "next/link";
+import MyLink from "../../component/MyLink";
 import { useRouter } from "next/router";
 import Popup from "../../component/popup";
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import styles from "../../styles/product.module.css";
 import ProductSlideShow from "../../component/ProductSlideShow";
 import MoreProduct from "../../component/ProductList-flex/preset";
-import { getRelated } from "../../component/Layout/NavBar/navBarSections";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
-// import Explore_SectionTitle from "../../component/Explore_SectionTitle";
 import { formatPrice } from "../../shared/UtilityFunctions";
-import { role_dic } from "../../GLOBALVARIABLE";
-import product from "../api/product";
 import Loading from "../../component/LoadingController/loading";
 import Options from "../../component/Options";
 import { fecthRelated, fetchNavigation } from "../../shared/shared_functions";
-
-const fetcher = (productId) => {
-  if (productId) {
-    return fetch(`/api/product/withId/${productId}`).then((res) => res.json());
-  }
-};
+import {
+  useAuthcontext,
+  useCartContext,
+  useFilterContext,
+  useMyWindow,
+  useUser,
+} from "../../Contexts/GlobalContext";
+import Alert from "../../component/popup/Alert";
 
 const getUrl = (array) => {
   const query = array.map(
@@ -35,8 +31,22 @@ const Product: React.FC = () => {
     query: { productId },
   } = useRouter();
 
-  const { User, auth } = useGlobalContext();
-  const { data, error } = useSWR(productId, fetcher);
+  const User = useUser();
+  const myWindow = useMyWindow();
+  const [data, setData] = useState<any>();
+  const auth = useAuthcontext();
+
+  useEffect(() => {
+    const getProduct = async () => {
+      if (!productId) return;
+      const data = await fetch(`/api/product/withId/${productId}`).then((res) =>
+        res.json()
+      );
+      setData(data);
+    };
+
+    getProduct();
+  }, [productId]);
 
   const [navigationItems, setNavigatioinItems] = useState(
     Array.from({ length: 10 }).map((e) => ({ representation: "nothing" }))
@@ -81,22 +91,40 @@ const Product: React.FC = () => {
             <ProductSlideShow imageUrls={SLIDER_URL} />
             {((User.hasAuthorization("seller") && User.Owns(mainProduct)) ||
               User.hasAuthorization("admin")) && (
-              <Options name="otions">
+              <Options name="options">
                 <>
                   <button
-                    onClick={deleteProduct}
-                    className={"button"}
+                    onClick={(e) => {
+                      myWindow.setFocusOn("delete_product_alert", e);
+                      myWindow.overlay.open(() => myWindow.setFocusOn("none"));
+                    }}
+                    className={styles.delete}
                     style={{ marginBottom: "10px" }}
                   >
                     delete item
                   </button>
 
-                  <Link href={`/upload?_id=${productId}`}>
-                    <a className={"button"}>update item</a>
-                  </Link>
+                  <MyLink
+                    href={`/upload?_id=${productId}`}
+                    className={styles.update}
+                  >
+                    update item
+                  </MyLink>
                 </>
               </Options>
             )}
+            <Alert name="delete_product_alert" width="100%" type="top">
+              <div className={styles.deletePopup}>
+                <p>Are you sure you want to delete this item?</p>
+                <br />
+                <div>
+                  <button className={styles.cancel}>Cancel</button>
+                  <button className={styles.dangerous} onClick={deleteProduct}>
+                    yes, delete
+                  </button>
+                </div>
+              </div>
+            </Alert>
           </div>
         </div>
 
@@ -150,13 +178,14 @@ interface productInformation {
 }
 
 const ProductInformation: React.FC<productInformation> = ({ product }) => {
-  const { cart, filters } = useGlobalContext();
+  const cart = useCartContext();
+  const filters = useFilterContext();
+  const myWindow = useMyWindow();
 
   const [myState, setMyState] = useState("");
 
-  const saveToCart_message = useRef("");
+  const saveToCart_message = useRef({ status: "string", message: "" });
 
-  const [popupIsOpen, setPopupIsOpen] = useState(false);
   const message = useRef<string>();
 
   const getMessage = (product) => {
@@ -167,6 +196,73 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
   useEffect(() => {
     message.current = getMessage(product);
   }, [product]);
+
+  const items_is_in_cart = useMemo(
+    () => cart.savedProduct.some((_product) => _product._id == product._id),
+    [product._id, cart.savedProduct]
+  );
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    if (items_is_in_cart) {
+      saveToCart_message.current = {
+        status: "present_in_cart",
+        message: "Click Remove to remove this items from your cart.",
+      };
+      myWindow.setFocusOn("add_to_cart");
+      return;
+    }
+
+    setMyState("loading");
+    const attempt_to_save = await cart.saveToCart(product);
+    setMyState("");
+
+    //@ts-ignore
+    if (attempt_to_save == "success") {
+      saveToCart_message.current = attempt_to_save;
+    } else {
+      //@ts-ignore
+      saveToCart_message.current = attempt_to_save;
+    }
+    myWindow.setFocusOn("add_to_cart");
+  };
+
+  const AddPopup = () => (
+    <div
+      className={styles.addedNotification}
+      onClick={(e) => {
+        e.stopPropagation();
+        myWindow.setFocusOn("none");
+      }}
+    >
+      {saveToCart_message.current.message}
+      <br />
+
+      {(saveToCart_message.current.status === "present_in_cart" && (
+        <>
+          <button>cancel</button>
+          <button
+            className={styles.dangerous}
+            onClick={() => cart.removeFromCart(product._id)}
+          >
+            Remove
+          </button>
+        </>
+      )) || (
+        <>
+          <button>
+            <MyLink href={"/cart"}>show cart?</MyLink>
+          </button>
+          <button
+            className={styles.dangerous}
+            onClick={() => cart.removeFromCart(product._id)}
+          >
+            undo
+          </button>
+        </>
+      )}
+    </div>
+  );
 
   return (
     <div className="container vertical-flex">
@@ -180,48 +276,14 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         </a>
       </button>
       <div className={`${styles.addToCartPrompt} sm flex-center `}>
-        <Popup
-          type={"theme-color"}
-          isVisible={popupIsOpen}
-          closePopup={() => setPopupIsOpen(false)}
-          duration={3000}
-          name={"add to cart"}
-        >
-          <div
-            className={styles.addedNotification}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {saveToCart_message.current}
-            <Link href={"/cart"} passHref>
-              <button>show cart?</button>
-            </Link>
-            <button
-              className={styles.dangerous}
-              onClick={() => cart.removeFromCart(product._id)}
-            >
-              undo
-            </button>
-          </div>
-        </Popup>
-        <button
-          onClick={async (e) => {
-            e.preventDefault();
-            setMyState("loading");
-            const attempt_to_save = await cart.saveToCart(product);
-            setMyState("");
+        <button onClick={handleClick}>
+          <Popup duration={300000} type={"theme-color"} name={"add_to_cart"}>
+            <AddPopup />
+          </Popup>
+          <span>
+            {(items_is_in_cart && "Remove from Cart") || "Add to Cart"}
+          </span>
 
-            //@ts-ignore
-            if (attempt_to_save == "success") {
-              saveToCart_message.current = "Product successfully added";
-              setPopupIsOpen((prevState) => !prevState);
-            } else {
-              //@ts-ignore
-              saveToCart_message.current = attempt_to_save;
-              setPopupIsOpen((prevState) => !prevState);
-            }
-          }}
-        >
-          <span>Add to Cart</span>
           <Loading
             width={(myState == "loading" && "50px") || "0px"}
             background="var(--theme-color)"
@@ -240,7 +302,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
           <div className={styles.arrays} key={detail}>
             <p>{detail} :</p>
             {product[detail]?.map((tag, index) => (
-              <Link href={"/find?categories=all"} key={tag + index}>
+              <MyLink href={"/find?categories=all"} key={tag + index}>
                 <span
                   onClick={() =>
                     filters.setFilter({ [detail]: { [tag]: true } })
@@ -248,7 +310,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
                 >
                   <a>{tag}</a>
                 </span>
-              </Link>
+              </MyLink>
             ))}
           </div>
         ))}
@@ -274,37 +336,19 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         className={`${styles.addToCartPrompt} big flex-center `}
         style={{ marginBottom: "var(--margin)" }}
       >
-        <Popup
-          type={"theme-color"}
-          isVisible={popupIsOpen}
-          closePopup={() => setPopupIsOpen(false)}
-          duration={3000}
-          name={"add to cart"}
-        >
-          <div
-            className={styles.addedNotification}
-            // onClick={(e) => e.stopPropagation()}
-          >
-            Producy successfully added !
-            <Link href={"/cart"} passHref>
-              <button>show cart?</button>
-            </Link>
-            <button
-              className={styles.dangerous}
-              onClick={() => cart.removeFromCart(product._id)}
-            >
-              undo
-            </button>
-          </div>
-        </Popup>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            cart.saveToCart(product);
-            setPopupIsOpen((prevState) => !prevState);
-          }}
-        >
-          Add to Cart
+        <button onClick={handleClick}>
+          <Popup duration={300000} type={"theme-color"} name={"add_to_cart"}>
+            <AddPopup />
+          </Popup>
+          <span>
+            {(items_is_in_cart && "Remove from Cart") || "Add to Cart"}
+          </span>
+
+          <Loading
+            width={(myState == "loading" && "50px") || "0px"}
+            background="var(--theme-color)"
+            style={{ display: "inline-block", marginLeft: "var(--margin)" }}
+          />
         </button>
       </div>
 
@@ -312,7 +356,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         <a
           href={`https://api.whatsapp.com/send?phone=15312256403&text=${message.current}`}
         >
-          Buy
+          Contact Seller
         </a>
       </button>
     </div>

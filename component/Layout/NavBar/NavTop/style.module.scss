@@ -108,11 +108,19 @@
 .textSearch {
   height: 80%;
   padding: 0.2em;
-  // background-color: blue;
+  position: relative;
   margin-right: 0.5em;
   border-radius: var(--border-radius);
-  svg {
+  form{
     height: 100%;
+  }
+  button{
+    height: 100%;
+  }
+  svg {
+    z-index: 2;
+    height: 100%;
+    position: relative;
   }
   path {
     fill: none;
@@ -120,6 +128,25 @@
     stroke-dasharray: 400;
     stroke: var(--theme-color-1);
     transition: stroke-dashoffset var(--animation-duration) ease-in;
+  }
+  .inputWrapper {
+    background-color: blue;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    transition-property: width opacity;
+    transition-timing-function: ease-in-out;
+    transition-duration: var(--fast-animation-duration);
+    * {
+      margin: 0;
+    }
+    &.focus {
+      width: 50ch;
+      opacity: 1;
+    }
   }
 }
 
@@ -236,7 +263,6 @@
   font-size: 0.9em;
   padding: var(--padding);
   transform-origin: bottom;
-  color: var(--theme-color-1);
   border-radius: 1px;
   background-color: var(--theme-color-2);
   color: white;

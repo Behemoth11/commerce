@@ -1,6 +1,6 @@
 .container {
   --left: 50%;
-  --transform: translate(-50%,-50%);
+  --transform: translate(-50%,-50%) translateZ(0);
   --children-margin:  auto;
   text-align: center;
   -ms-grid-columns: (minmax(200px, 1fr))[auto-fill];
@@ -17,7 +17,7 @@
 @media (max-width: 570px) {
   .container.double {
     --left: 0;
-    --transform: translateY(-50%);
+    --transform: translateY(-50%) translateZ(0);
     --children-margin:  none;
     -ms-grid-columns: (minmax(48%, 1fr))[auto-fill];
         grid-template-columns: repeat(auto-fill, minmax(48%, 1fr));

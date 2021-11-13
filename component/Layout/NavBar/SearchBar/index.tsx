@@ -1,15 +1,17 @@
 // @ts-ignore
 import styles from "./style.module.css";
 import { memo, useEffect, useState } from "react";
-import { useGlobalContext } from "../../../../Contexts/GlobalContext";
+import { useMyWindow } from "../../../../Contexts/GlobalContext";
 import NormalInput from "../../../Inputs/NormalInput";
 import { useSpring, animated } from "react-spring";
 import { useRouter } from "next/router";
+import { useNavBarContext } from "../navBarContext";
 
 const SearchBar = () => {
   const router = useRouter();
-  const { myWindow } = useGlobalContext();
-  const visible = myWindow.isFocused === "searchBar";
+  const myWindow = useMyWindow()
+  const {toBottom} = useNavBarContext()
+  const visible = myWindow.isFocused === "searchBar" && !toBottom;
   const [inputValue, setInputValue] = useState({ search_query: "" });
   const [isCompletelyVisible, setIsCompleteVisible] = useState(false);
 
@@ -22,6 +24,7 @@ const SearchBar = () => {
   });
 
   const handleClick = (e) => {
+    if (inputValue.search_query.length === 0) return;
     router.push(
       `/find?categories=search&&categories=${inputValue.search_query}`
     );
@@ -32,14 +35,16 @@ const SearchBar = () => {
   }, [visible]);
 
   return (
+    <>
+   
     <animated.div
       style={springAnimate}
-      className={`big-container ${styles.wrapper}`}
+      className={` big-container sm ${styles.wrapper}`}
       onClick={(e) => e.stopPropagation()}
     >
       <div
         className={styles.inputContainer}
-        onKeyDown={(e) => e.code === "Enter" && handleClick(e)}
+        onKeyDown={(e) => e.key === "Enter" && handleClick(e)}
       >
         <NormalInput
           required={false}
@@ -59,6 +64,7 @@ const SearchBar = () => {
         </svg>
       </div>
     </animated.div>
+    </>
   );
 };
 

@@ -19,6 +19,10 @@ export const product = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    quantity: {
+      type: Number,
+      default: 0,
+    },
     tags: {
       type: Array,
       required: true,

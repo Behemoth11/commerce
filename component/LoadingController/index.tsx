@@ -75,14 +75,14 @@ const LoadingController: React.FC<Props> = ({
           visible && (
             <animated.div className={`${styles.states}`} style={_style}>
               <div>
-                <Loading width="80px" />
+                <Loading width="80px" background="var(--accent-color-1)" />
               </div>
             </animated.div>
           )
       )}
       <animated.div className={`${styles.states}`} style={afterSubmitSpring}>
         <div>
-          <p className={`${styles[state]}`}>
+          <p className={`${styles[state]} ${styles.message}`}>
             {customMessage && customMessage[state]}
           </p>
         </div>

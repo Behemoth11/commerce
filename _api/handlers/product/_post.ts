@@ -10,6 +10,9 @@ const handle_post = async (req, res) => {
     await uploadMany(data["images"], error,{}).catch((err) => error.push(err.message)),
   ]);
 
+
+  if (req.user.role != "admin") data.representation = "none";
+  
   /************mongoDb upload***************/
 
   const mongo_response = await Product.insertMany([

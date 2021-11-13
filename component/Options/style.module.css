@@ -62,21 +62,6 @@
   transition: all var(--fast-animation-duration) ease;
 }
 
-.optionsContainer a, .optionsContainer button {
-  white-space: nowrap;
-  color: white;
-  background-color: var(--theme-color-3);
-  padding: 3px;
-  margin: 3px 0;
-  border-radius: var(--border-radius);
-  -webkit-transition: background-color var(--fast-animation-duration) ease;
-  transition: background-color var(--fast-animation-duration) ease;
-}
-
-.optionsContainer a:active, .optionsContainer button:active {
-  background-color: var(--theme-color-2);
-}
-
 .optionsContainer label {
   color: rgba(255, 255, 255, 0.747);
   width: 100%;

@@ -227,15 +227,26 @@ img {
       flex-shrink: 0;
 }
 
+.show {
+  position: fixed;
+  background-color: black;
+  color: white;
+  font-size: 25px;
+  padding: 50px;
+  z-index: 100;
+  top: 40%;
+  left: 40%;
+}
+
 @media (max-width: 650px) {
   .big {
-    display: none;
+    display: none !important;
   }
 }
 
 @media (min-width: 650px) {
   .sm {
-    display: none;
+    display: none !important;
   }
 }
 

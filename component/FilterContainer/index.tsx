@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import { memo, useState } from "react";
 import DropDownFilter from "../DropDownFilter";
 import { animated, useTransition } from "react-spring";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useFilterContext } from "../../Contexts/GlobalContext";
 import Input from "../Inputs/NormalInput";
 
 interface Props {
@@ -19,7 +19,7 @@ const FilterContainer: React.FC<Props> = ({
   showApplyFilter,
   applyFilterSideEffect,
 }) => {
-  const { filters } = useGlobalContext();
+  const filters = useFilterContext();
 
   const [_filter, __setFilter] = useState({ ...filters.value });
   const [wasClicked, setWasClicked] = useState(false);

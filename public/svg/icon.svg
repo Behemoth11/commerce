@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="1500"
+   height="502.51965"
+   viewBox="0 0 396.87499 132.95833"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="BrandLogo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="true"
+     units="px"
+     inkscape:snap-bbox="true"
+     inkscape:lockguides="false"
+     inkscape:zoom="0.17637989"
+     inkscape:cx="790.90649"
+     inkscape:cy="575.46243"
+     inkscape:window-width="1366"
+     inkscape:window-height="745"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="-215.44406"
+       y="907.13289"
+       width="1712.2133"
+       height="839.09793"
+       id="rect2713" />
+    <rect
+       x="328.73792"
+       y="192.43195"
+       width="649.45782"
+       height="172.38695"
+       id="rect21890" />
+    <rect
+       x="813.82678"
+       y="412.92688"
+       width="108.24297"
+       height="40.089989"
+       id="rect10846" />
+    <rect
+       x="440.98987"
+       y="432.97189"
+       width="805.80878"
+       height="248.55794"
+       id="rect2762" />
+    <rect
+       x="440.98987"
+       y="432.97189"
+       width="805.80878"
+       height="248.55794"
+       id="rect9120" />
+    <rect
+       x="440.98987"
+       y="432.97189"
+       width="805.80878"
+       height="248.55794"
+       id="rect11888" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text10844"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect10846);fill:#000000;fill-opacity:1;stroke:none"><tspan
+         x="813.82617"
+         y="489.51079"
+         id="tspan1889"><tspan
+           dx="0 20.839844"
+           id="tspan1887">ss</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.66986426,0,0,0.76080672,-273.86907,-323.17729)"
+       id="text11886"
+       style="font-style:normal;font-weight:normal;font-size:133.333px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect11888);fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.370622"><tspan
+         x="440.99023"
+         y="554.61639"
+         id="tspan1893"><tspan
+           style="stroke-width:0.246363"
+           id="tspan1891">Kd
+</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text21888"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect21890);fill:#000000;fill-opacity:1;stroke:none" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:89.3227px;line-height:1.25;font-family:sans-serif;fill:#f0387c;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="137.57852"
+       y="92.267761"
+       id="text22072"
+       transform="scale(0.99412759,1.0059071)"><tspan
+         sodipodi:role="line"
+         id="tspan22070"
+         style="font-size:89.3227px;fill:#f0387c;fill-opacity:1;stroke-width:0.264583"
+         x="137.57852"
+         y="92.267761">Shop</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text2711"
+       style="fill:black;fill-opacity:1;line-height:1.25;stroke:none;font-family:sans-serif;font-style:normal;font-weight:normal;font-size:40px;white-space:pre;shape-inside:url(#rect2713)" />
+  </g>
+</svg>

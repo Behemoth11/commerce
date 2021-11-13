@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { role_dic } from "../../GLOBALVARIABLE";
 
-const useUserData = (auth, cart) => {
+const useUserData = (auth) => {
   const [userData, setUserData] = useState<any>({ username: "loading" });
   const [_refresh, setRefresh] = useState(0);
 
@@ -34,11 +34,6 @@ const useUserData = (auth, cart) => {
       setUserData(undefined)
     }
   }, [auth.token]);
-
-  useEffect(() => {
-    // console.log("the new user data", userData)
-    if (userData) cart.setSavedProduct_id(userData.cart);
-  }, [userData]);
 
   const hasAuthorization = (requiredRole: string) => {
     return (

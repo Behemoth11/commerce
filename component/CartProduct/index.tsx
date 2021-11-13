@@ -1,10 +1,10 @@
 // @ts-ignore
 import styles from "./style.module.css";
 import MyImage from "../MyImage";
-import Link from "next/link";
+import MyLink from "../MyLink";
 import { memo, useState, useEffect, useRef } from "react";
 import { formatPrice } from "../../shared/UtilityFunctions";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useCartContext } from "../../Contexts/GlobalContext";
 import { animated, useSpring, config } from "react-spring";
 
 const CartProduct = ({ product, visible }) => {
@@ -14,7 +14,7 @@ const CartProduct = ({ product, visible }) => {
   if (product.productName.length > 15) productName += "...";
   const [showFullName, setShowFullName] = useState<boolean>(false);
 
-  const { cart } = useGlobalContext();
+  const cart = useCartContext();
 
   const getMessage = (product) => {
     return `I am interested in buying the ${product?.productName}.\n
@@ -25,7 +25,7 @@ const CartProduct = ({ product, visible }) => {
     <animated.div className={`${styles.container} max-width ${visible && styles.visible}`}>
       <div className={styles.wrapper}>
         <div className={`${styles.imageContainer}`}>
-          <Link href={`/product/${product._id}`} passHref>
+          <MyLink href={`/product/${product._id}`}>
             <a>
               <MyImage
                 imageLink={product.pr_image_url}
@@ -34,7 +34,7 @@ const CartProduct = ({ product, visible }) => {
                 observer={undefined}
               />
             </a>
-          </Link>
+          </MyLink>
         </div>
         <div className={styles.middleSection}>
           <p

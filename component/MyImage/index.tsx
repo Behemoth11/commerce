@@ -2,7 +2,7 @@
 import styles from "./style.module.css";
 import React, { SyntheticEvent } from "react";
 import { memo, useState, useEffect, useRef } from "react";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useMyWindow } from "../../Contexts/GlobalContext";
 
 const MyImage: React.FC<{
   observer?: IntersectionObserver;
@@ -24,13 +24,14 @@ const MyImage: React.FC<{
   const applyTransformation = (link: string, width: number) =>
     `https://res.cloudinary.com/dkoatnxem/image/upload/ar_${
       100 / ASPECT_RATIO
-    },c_crop/c_scale,w_${width+100}/${link}`;
+    },c_crop/c_scale,w_${350}/${link}`;  
+    //   },c_crop/c_scale,w_${width+100}/${link}`;
 
   const imageRef = useRef<HTMLDivElement>();
   const [_imageLink, setImageLink] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { myWindow } = useGlobalContext();
+  const myWindow = useMyWindow();
 
   useEffect(() => {
     if (no_optimization) return;

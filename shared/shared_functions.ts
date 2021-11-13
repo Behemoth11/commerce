@@ -1,3 +1,4 @@
+import { categories } from './../component/Layout/NavBar/navBarSections';
 import axios from "axios";
 import { getRelated } from "../component/Layout/NavBar/navBarSections";
 
@@ -27,7 +28,7 @@ export const fecthRelated = async (product, cb) => {
   let response;
   if (product.related.length > 0) {
     response = await axios.get(
-      `/api/product/withId/${product.related.join(",")}`
+      `/api/product?categories=search&&categories=${product.categories.join(" ")}&ne=${product._id}`
     );
   }
   if (response) {

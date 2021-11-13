@@ -2,23 +2,24 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import styles from "./style.module.css";
-import { getGoogleAuthURL } from "../../../_api/utils/google_auth";
 import { useEffect, useState } from "react";
-import { useGlobalContext } from "../../../Contexts/GlobalContext";
+import { getGoogleAuthURL } from "../../../_api/utils/google_auth";
+import { useUser, useAuthcontext, useMyWindow } from "../../../Contexts/GlobalContext";
 
 function TPLogin({setEditState}) {
   const [google_url, setGoogle_url] = useState();
 
-  const {User, auth, myWindow} = useGlobalContext()
-
+  const User = useUser()  
+  const auth = useAuthcontext()
+  const myWindow = useMyWindow();
   const handleGoogleClick = () => {
     localStorage.setItem("meta_64", "0");
 
     const checker = setInterval( async () => {
       if (localStorage.getItem("meta_64") == "1"){
+        User.setUserData({username: "loading"})
         await auth.getNewToken()
-        myWindow.setFocusOn("closed")
-        myWindow.overlay.close()
+        myWindow.setHashLocation("")
         User.refresh()
         clearInterval(checker)
       }
@@ -34,7 +35,7 @@ function TPLogin({setEditState}) {
   }, []);
 
   return (
-    <div className={styles.TPContainer} onClick={() => setEditState("loading")} >
+    <div className={styles.TPContainer}>
       <div className={styles.TPheader}>
         <span>or</span>
       </div>

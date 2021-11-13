@@ -1,12 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import Link from "next/link";
+import MyLink from "../component/MyLink";
 import Head from "next/head";
 import { useTransition, animated, config } from "react-spring";
 import { useEffect, useRef, useState } from "react";
 import CartProduct from "../component/CartProduct";
-import MyImage from "../component/MyImage";
 import styles from "../styles/cart.module.css";
-import { useGlobalContext } from "../Contexts/GlobalContext";
+import { useCartContext } from "../Contexts/GlobalContext";
 import { useRequire } from "../shared/CustomHooks";
 
 type responseData = {
@@ -16,12 +15,10 @@ type responseData = {
 };
 
 export default function Home() {
-  const {
-    cart: { savedProduct },
-  } = useGlobalContext();
+  const { savedProduct } = useCartContext();
   const message = useRef<string>();
 
-  useRequire("login");
+  // useRequire("login");
 
   const animatedProduct = useTransition(savedProduct, {
     enter: { z_of: 10},

@@ -3,11 +3,11 @@ import styles from "./style.module.css";
 import Filter from "./Filter.js";
 import { memo, useState, useEffect } from "react";
 import { useFindContext } from "../../Contexts/FindContext";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useFilterContext } from "../../Contexts/GlobalContext";
 
 const ActiveFilters = ({ displayType, setDisplayType }) => {
   const { toggleFilterOverlay } = useFindContext();
-  const { filters } = useGlobalContext();
+  const filters = useFilterContext();
 
   const filterNames = filters.value && Object.keys(filters.value);
   return (
@@ -21,13 +21,11 @@ const ActiveFilters = ({ displayType, setDisplayType }) => {
             <p>Filter</p>
             <img src="/svg/filter.svg" alt="More Information"></img>
           </div>
-          <div
-            className={`${styles.filterSetter} flex align-center big`}
-          >
+          <div className={`${styles.filterSetter} flex align-center big`}>
             <p>Filter</p>
             <img src="/svg/filter.svg" alt="More Information"></img>
           </div>
-          
+
           <div
             className={`${styles.displayType} `}
             onClick={() =>
@@ -46,12 +44,13 @@ const ActiveFilters = ({ displayType, setDisplayType }) => {
         <div className={styles.filterContainer}>
           {filterNames.map(
             (filterName) =>
-              (filterName == "price" &&
+              (filterName == "price" && (
                 <Filter
                   content={filters.value[filterName]}
                   key={filterName}
                   action={() => filters.toggleFilter(filterName, name)}
-                />) ||
+                />
+              )) ||
               Object.keys(filters.value[filterName]).map((name) => (
                 <Filter
                   content={name}
@@ -61,10 +60,20 @@ const ActiveFilters = ({ displayType, setDisplayType }) => {
               ))
           )}
           {filterNames.length == 0 && (
-            <Filter
-              content={"No Filter"}
-              action={() => toggleFilterOverlay()}
-            />
+            <>
+              <div className="sm">
+                <Filter
+                  content={"No Filter"}
+                  action={() => toggleFilterOverlay()}
+                />
+              </div>
+              <div className="big">
+                <Filter
+                  content={"No Filter"}
+                  action={() => 2}
+                />
+              </div>
+            </>
           )}
         </div>
       </div>

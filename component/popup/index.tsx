@@ -2,14 +2,14 @@
 import styles from "./style.module.css";
 import { memo, useEffect, useRef } from "react";
 import { useTransition, animated, config } from "react-spring";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useMyWindow } from "../../Contexts/GlobalContext";
 
-const Popup = ({ children, isVisible, closePopup, duration, type, name }) => {
-  const { myWindow } = useGlobalContext();
+const Popup = ({ children, duration, type, name }) => {
+  const myWindow = useMyWindow()
   const popupId = useRef(0);
 
-  const nonAnimatedVisibility = isVisible && myWindow.isFocused === name;
-  const animate = useTransition(nonAnimatedVisibility, {
+  const visibility = myWindow.isFocused === name;
+  const animate = useTransition(visibility, {
     from: { opacity: 0, x: -100 },
     enter: { opacity: 1, x: 0 },
     leave: { opacity: 0, x: 100 },
@@ -17,13 +17,14 @@ const Popup = ({ children, isVisible, closePopup, duration, type, name }) => {
   });
 
   useEffect(() => {
+    // console.log("visibility accoridng to parent : ", isVisible)
 
-    if (isVisible) {
+    if (visibility) {
       myWindow.setFocusOn(name);
       const myPopupId = popupId.current;
       const timeOut = setTimeout(() => {
         if (myPopupId === popupId.current) {
-          closePopup();
+          myWindow.setFocusOn("none")
         }
       }, duration);
       // console.log(isVisible && "open" || "close", myWindow.isFocused, nonAnimatedVisibility)
@@ -31,26 +32,26 @@ const Popup = ({ children, isVisible, closePopup, duration, type, name }) => {
     }
 
     // console.log(isVisible && "open" || "close", myWindow.isFocused, nonAnimatedVisibility)
-  }, [isVisible]);
+  }, [visibility]);
 
   useEffect(() => {
     // console.log(nonAnimatedVisibility)
-    if (nonAnimatedVisibility) return;
+    if (visibility) return;
     popupId.current++;
-  }, [nonAnimatedVisibility]);
+  }, [visibility]);
 
   return animate(
     (_style, _isVisible) =>
       _isVisible && (
         <div
           className={`${styles.container} ${styles[type]} ${
-            !nonAnimatedVisibility && styles.notVisible
+            !visibility && styles.notVisible
           }`}
         >
           <animated.div className={styles.popupContainer}>
             <animated.div
               style={_style}
-              className={`${styles[type]} ${styles.content}`}
+              className={`${styles[type]} ${styles.content}z`}
             >
               {children}
             </animated.div>

@@ -1,12 +1,11 @@
 // @ts-ignore
-import Link from "next/link";
+import MyLink from "../MyLink";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "./style.module.css";
 import { memo, useState, useEffect, useRef } from "react";
 import LoadingProductCard from "../LoadingProductCard";
 import { formatPrice } from "../../shared/UtilityFunctions";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
 import { getRandomInteger } from "../../shared/UtilityFunctions";
 import MyImage from "../../component/MyImage";
 
@@ -80,7 +79,7 @@ const index: React.FC<Props> = ({
               }
             />
 
-            <Link href={`/product/${_id}`}>
+            <MyLink href={`/product/${_id}`}>
               <a>
                 <div
                   className={`${styles.moreInfo}  ${
@@ -93,9 +92,9 @@ const index: React.FC<Props> = ({
                   </div>
                 </div>
               </a>
-            </Link>
+            </MyLink>
 
-            <Link href={`/product/${_id}`}>
+            <MyLink href={`/product/${_id}`}>
               <a>
                 <div className={`${styles.imageSection}`}>
                   <MyImage
@@ -107,7 +106,7 @@ const index: React.FC<Props> = ({
                   />
                 </div>
               </a>
-            </Link>
+            </MyLink>
           </div>
         </div>
 
@@ -120,23 +119,23 @@ const index: React.FC<Props> = ({
               </p>
             </div>
 
-            <Link href={`/product/${_id}`}>
+            <MyLink href={`/product/${_id}`}>
               <button className={`${styles.buy} ${styles[type]}`}>
                 <a>buy</a>
               </button>
-            </Link>
+            </MyLink>
           </div>
         )) ||
           (footer && (
             <div className={`${styles.description} ${styles[type]} max-width`}>
-              <Link
+              <MyLink
                 href={{
                   pathname: "/find",
                   query: { categories: footer.split(" ") },
                 }}
               >
                 <a style={{ textDecoration: "underline" }}>{footer}</a>
-              </Link>
+              </MyLink>
             </div>
           ))}
       </div>

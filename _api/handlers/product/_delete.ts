@@ -17,9 +17,9 @@ const handle_delete = async (req, res) => {
     return res.status(401).json({ message: "could not process the operation" });
   }
   
-  const erasedProduct = await Product.findOneAndDelete({
+  const erasedProduct = await Product.findOneAndUpdate({
     _id: new Types.ObjectId(Id),
-  }).catch((err) => error.push(err.message));
+  }, {$set: {quantity: 0}}).catch((err) => error.push(err.message));
 
   //@ts-ignore
   if (erasedProduct && erasedProduct.deletedCount == 0) {
