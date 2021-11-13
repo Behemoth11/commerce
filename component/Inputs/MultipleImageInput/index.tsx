@@ -38,7 +38,7 @@ const MultipleImageInput = ({
     e.preventDefault();
     setInputValue((prevInput) => {
       const inputContent = prevInput[name];
-      if (!inputContent || inputContent.length < 3) return prevInput;
+      if (!inputContent || inputContent.length <= 0) return prevInput;
       return {
         ...prevInput,
         [name]: [

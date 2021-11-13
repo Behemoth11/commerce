@@ -1,17 +1,23 @@
 import axios from "axios";
+import TPLogin from "./TPLogin";
 import styles from "./style.module.css";
 import Input from "../../Inputs/NormalInput";
-import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "../../../Contexts/GlobalContext";
-import { validatePassword, validateUsername } from "./validator";
-import { animated, useTransition, config } from "react-spring";
-import TPLogin from "./TPLogin";
 import Loading from "../../LoadingController/loading";
+import React, { useEffect, useRef, useState } from "react";
+import { animated, useTransition, config } from "react-spring";
+import { validatePassword, validateUsername } from "./validator";
+import {
+  useUser,
+  useAuthcontext,
+  useMyWindow,
+} from "../../../Contexts/GlobalContext";
 
 const Login = ({ inputValue, setInputValue, setHeight }) => {
   const [error, setError] = useState({});
   const [editState, setEditState] = useState("login");
-  const { User, auth, myWindow } = useGlobalContext();
+  const User = useUser();
+  const auth = useAuthcontext();
+  const myWindow = useMyWindow();
 
   const handleSubmit = async () => {
     const data = {
@@ -38,28 +44,27 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      myWindow.setFocusOn("closed");
-      myWindow.overlay.close()
+      myWindow.setHashLocation("");
     } else setEditState("failure");
   };
 
-  const transition = useTransition(myWindow.isFocused == "login", {
+  const transition = useTransition(myWindow.hashLocation == "#login", {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
     // config: config.stiff,
   });
 
-  console.log(myWindow.isFocused, "what is showing on the window")
+  // console.log(myWindow.isFocused, "what is showing on the window")
 
   const myRef = useRef();
 
   useEffect(() => {
-    if (myWindow.isFocused == "login") {
+    if (myWindow.hashLocation == "#login") {
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
-  }, [myWindow.isFocused, error, myWindow.size]);
+  }, [myWindow.hashLocation, error, myWindow.size]);
 
   return transition(
     (style, condition) =>
@@ -98,13 +103,13 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
               )
             }
             <button className={styles.validate} onClick={handleSubmit}>
-             <span>Login</span>
+              <span>Login</span>
               <Loading width={editState == "loading" ? "4em" : "0"} />
             </button>
 
             <div
               className={styles.else}
-              onClick={() => myWindow.setFocusOn("register")}
+              onClick={() => myWindow.setHashLocation("#register")}
             >
               <p>Don't yet have an Accout?</p>
               <span>create an account.</span>

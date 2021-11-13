@@ -50,7 +50,7 @@
   margin-top: var(--margin);
   border-radius: var(--border-radius);
   position: relative;
-  & > button{
+  & > button {
     padding: 5px;
     width: 100%;
     text-align: center;
@@ -102,8 +102,8 @@
       border-radius: 4px;
       text-transform: lowercase;
       background-color: var(--theme-color);
-      &:active{
-        background-color: var(--theme-color-1)
+      &:active {
+        background-color: var(--theme-color-1);
       }
     }
   }
@@ -117,10 +117,10 @@
   margin-top: var(--large-margin);
   border-radius: var(--border-radius);
   background-color: var(--accent-color-3);
-  &~p{
+  & ~ p {
     font-size: 0.8em;
     margin-top: 0.5em;
-    span{
+    span {
       color: var(--accent-color);
       text-decoration: underline;
     }
@@ -161,7 +161,7 @@
 .moreProduct {
   margin: var(--large-margin) 0;
   max-width: 100%;
-  &:nth-child(2){
+  &:nth-child(2) {
     margin-bottom: var(--margin);
   }
 }
@@ -178,35 +178,80 @@
   h2 {
     color: hsl(0, 0%, 0%);
   }
-  h3{
+  h3 {
     text-decoration: underline;
   }
 }
 
 .addedNotification {
-  position:absolute;
+  position: absolute;
   padding: 0.5em;
   width: 110%;
-  top: 50%;
+  top: 0;
   left: 50%;
   text-align: center;
   background-color: white;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -100%);
 
-  button {
-    background-color: rgb(232, 229, 229);
-    border-radius: 4px;
-    padding: 2px 5px;
-    right: 10px;
-    top: 50%;
-    width: 5.8em;
-    flex-shrink: 0;
-    color: rgba(0, 0, 0, 0.715);
-    margin: 0 10px;
-    margin-top: 0.5em;
+  button{
+    padding: 0.2em;
+    margin: 1em 0.2em;
+    width: 10ch;
+    border-radius: var(--border-radius);
+    background-color: var(--theme-color-5);
   }
+
+
   .dangerous{
     background-color: rgb(239, 40, 40);
       color: white;
+  }
+
+}
+
+
+.delete,
+.update {
+  background-color: var(--accent-color);
+  border-radius: var(--border-radius);
+  padding: var(--padding);
+  white-space: nowrap;
+  color: white;
+}
+
+.delete {
+  border: 1px var(--accent-color) solid;
+  background-color: var(--theme-color-3);
+}
+
+.deletePopup {
+  width: 70%;
+  max-width: 30ch;
+  margin: auto;
+  color: white;
+  padding: var(--large-padding);
+  border-radius: var(--border-radius);
+  background-color: var(--theme-color-2);
+  font-size: small;
+  &>p{
+    text-align: center;
+  }
+  button{
+    width: 10ch;
+    padding: 0.2em 0.4em;
+    
+  }
+  .dangerous{
+    border-radius: var(--border-radius);
+    background-color: red;
+    
+    color: white;
+    float: right;
+  }
+  .cancel{
+    background-color: var(--theme-color-5);
+    border-radius: var(--border-radius);
+    color: black;
+
   }
 }

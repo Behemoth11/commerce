@@ -5,7 +5,7 @@ import Navigation from "./Navigation";
 
 import { navBarSections } from "../navBarSections";
 import { useNavBarContext } from "../navBarContext";
-import { useGlobalContext } from "../../../../Contexts/GlobalContext";
+import { useMyWindow } from "../../../../Contexts/GlobalContext";
 
 
 const END_POINT = "END_POINT";
@@ -42,7 +42,7 @@ const index = () => {
   const [positionIndex, setPositionIndex] = useState(0);
   const { sideBarIsOpen, toggleNavBar } = useNavBarContext();
   const [sideBarLocation, setSideBarLocation] = useState(["menu"]);
-  const {myWindow} = useGlobalContext()
+  const myWindow = useMyWindow()
 
   const updateSideBar = (update, index) => {
     setSideBarLocation((prevState) => {
@@ -85,7 +85,7 @@ const index = () => {
     <>
       <div
         className={`${styles.overlay} ${myWindow.overlay.isOpen && styles.open}`}
-        onClick={myWindow.overlay.close}
+        onClick={() => myWindow.overlay.close()}
       ></div>
 
       <div

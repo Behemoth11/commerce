@@ -2,8 +2,6 @@
 import styles from "./style.module.css";
 import { memo, useEffect, useState } from "react";
 import { useFindContext } from "../../Contexts/FindContext";
-import { useFirstTimeLoading } from "../../shared/CustomHooks";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
 import { useTransition, animated, config } from "react-spring";
 import DropDownFilter from "../DropDownFilter";
 import FilterContainer from "../FilterContainer";

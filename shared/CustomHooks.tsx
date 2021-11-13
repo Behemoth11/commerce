@@ -6,7 +6,7 @@ import {
   useLayoutEffect,
 } from "react";
 import axios from "axios";
-import { useGlobalContext } from "../Contexts/GlobalContext";
+import { useUser } from "../Contexts/GlobalContext";
 import { useRouter } from "next/router";
 
 export const useIsomorphicLayoutEffect =
@@ -155,7 +155,7 @@ export const useRequire = (userState) => {
   let should_be_redirected = false;
 
   const router = useRouter();
-  const { User } = useGlobalContext();
+  const User = useUser();
 
   switch (userState) {
     case "login":

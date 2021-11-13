@@ -1,11 +1,11 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useMyWindow } from "../../Contexts/GlobalContext";
 import { memo, useEffect, useState } from "react";
 import { useSpring } from "react-spring";
 
 const Options = ({children, name}) => {
-  const {myWindow} = useGlobalContext()
+  const myWindow = useMyWindow()
 
   // console.log(myWindow.isFocused )
   const isOpen = myWindow.isFocused ==name;

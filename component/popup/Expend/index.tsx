@@ -2,10 +2,10 @@
 import styles from "./style.module.css";
 import { memo, useRef, useState, useEffect } from "react";
 import { animated, useSpring, config, useTransition } from "react-spring";
-import { useGlobalContext } from "../../../Contexts/GlobalContext";
+import { useMyWindow } from "../../../Contexts/GlobalContext";
 
-const Expend = ({ visible, children, top_prop , closePopup }) => {
-  const {myWindow} = useGlobalContext()
+const Expend = ({ visible, children, top_prop, closePopup }) => {
+  const myWindow = useMyWindow();
   const popupRef = useRef();
   const childRef = useRef();
 
@@ -18,20 +18,23 @@ const Expend = ({ visible, children, top_prop , closePopup }) => {
   }));
 
   useEffect(() => {
-    //@ts-ignore
-    const position = popupRef?.current?.parentElement?.getBoundingClientRect();
-    api({
-      from: {
-        top: position.top + "px",
-        left: position.left + "px",
-        width: position.width + "px",
-        height: position.height + "px",
-        opacity: 0,
-      },
-      reset: true,
-      config: config.stiff
-    });
-  }, []);
+    if (visible) {
+      const position =
+      //@ts-ignore
+        popupRef?.current?.parentElement?.getBoundingClientRect();
+      api({
+        from: {
+          top: position.top + "px",
+          left: position.left + "px",
+          width: position.width + "px",
+          height: position.height + "px",
+          opacity: 0,
+        },
+        reset: true,
+        config: config.stiff,
+      });
+    }
+  }, [visible]);
 
   useEffect(() => {
     //@ts-ignore
@@ -41,7 +44,6 @@ const Expend = ({ visible, children, top_prop , closePopup }) => {
     const __next = document.getElementById("__next");
 
     if (visible) {
-      myWindow.overlay.open(closePopup)
       api.start({
         opacity: 10,
         width: childDimensions.width + "px",
@@ -52,7 +54,6 @@ const Expend = ({ visible, children, top_prop , closePopup }) => {
           "px",
       });
     } else {
-      myWindow.overlay.close()
       api.start({
         opacity: 0,
         top: position.top + "px",
@@ -62,23 +63,23 @@ const Expend = ({ visible, children, top_prop , closePopup }) => {
       });
     }
   }, [visible]);
-  const transition = useTransition(visible, {
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-  });
+  // const transition = useTransition(visible, {
+  //   from: { opacity: 0 },
+  //   enter: { opacity: 1 },
+  //   leave: { opacity: 0 },
+  // });
 
   return (
-      <animated.div
-        className={`${styles.container} ${visible && styles.visible}`}
-        onClick={(e) => e.stopPropagation()}
-        style={styles_animated}
-        ref={popupRef}
-      >
-        <div ref={childRef} className={`${styles.childrenContainer}`}>
-          {children}
-        </div>
-      </animated.div>
+    <animated.div
+      className={`${styles.container} ${visible && styles.visible}`}
+      onClick={(e) => e.stopPropagation()}
+      style={styles_animated}
+      ref={popupRef}
+    >
+      <div ref={childRef} className={`${styles.childrenContainer}`}>
+        {children}
+      </div>
+    </animated.div>
   );
 };
 

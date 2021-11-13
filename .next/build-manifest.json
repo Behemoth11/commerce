@@ -1,43 +1,82 @@
 {
   "polyfillFiles": [
-    "static/chunks/polyfills.js"
+    "static/chunks/polyfills-a40ef1678bae11e696dba45124eadd70.js"
   ],
-  "devFiles": [
-    "static/chunks/react-refresh.js"
-  ],
-  "ampDevFiles": [
-    "static/chunks/webpack.js",
-    "static/chunks/amp.js"
-  ],
+  "devFiles": [],
+  "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
+    "static/IGwVYq2bEsYZi6-76FRBu/_buildManifest.js",
+    "static/IGwVYq2bEsYZi6-76FRBu/_ssgManifest.js"
   ],
   "pages": {
     "/": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/index.js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/7aeeb3d57ced2c988ddd.css",
+      "static/chunks/pages/index-015036f6b38598de263e.js"
     ],
     "/_app": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_app.js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/6250d65673d5f21914fc.css",
+      "static/chunks/pages/_app-164decebcd7d213ea549.js"
     ],
     "/_error": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_error.js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/chunks/pages/_error-737a04e9a0da63c9d162.js"
+    ],
+    "/account": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/9668a7e93842b1fe35dd.css",
+      "static/chunks/pages/account-55f2e1c75c21f4b37c01.js"
+    ],
+    "/cart": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/b6235a95fcf57cd3e94f.css",
+      "static/chunks/pages/cart-f7aa98577f4f4836b7be.js"
+    ],
+    "/contact": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/be95b923986ef70d75fd.css",
+      "static/chunks/pages/contact-84f3e3c90a71118d71b7.js"
+    ],
+    "/feedback": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/be95b923986ef70d75fd.css",
+      "static/chunks/pages/feedback-393015b4f3a6623ff6d8.js"
     ],
     "/find": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/find.js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/ec288ffe9ccda885ba5a.css",
+      "static/chunks/pages/find-032af474ff9aac179633.js"
     ],
     "/product/[productId]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/product/[productId].js"
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/d7540472e8cbf84b0ef4.css",
+      "static/chunks/pages/product/[productId]-a61a97f0710baf0e9a8b.js"
+    ],
+    "/upload": [
+      "static/chunks/webpack-fb76148cfcfb42ca18eb.js",
+      "static/chunks/framework-895f067827ebe11ffe45.js",
+      "static/chunks/main-534eb85d7ee68e4b3c74.js",
+      "static/css/d531c358eef803fc6521.css",
+      "static/chunks/pages/upload-25c4dfba843435ea3a09.js"
     ]
   },
   "ampFirstPages": []

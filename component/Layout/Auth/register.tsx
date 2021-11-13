@@ -2,16 +2,19 @@ import axios from "axios";
 import styles from "./style.module.css";
 import Input from "../../Inputs/NormalInput";
 import React, { useEffect, useRef, useState } from "react";
-import { useGlobalContext } from "../../../Contexts/GlobalContext";
 import { validatePassword, validateUsername } from "./validator";
 import { useTransition, animated, config } from "react-spring";
 import TPLogin from "./TPLogin";
 import Loading from "../../LoadingController/loading";
+import { useUser, useAuthcontext, useMyWindow } from "../../../Contexts/GlobalContext";
 
 const Register = ({ inputValue, setInputValue, setHeight }) => {
   const [error, setError] = useState({});
   const [editState, setEditState] = useState("register");
-  const { User, auth, myWindow } = useGlobalContext();
+
+  const User = useUser()  
+  const auth = useAuthcontext()
+  const myWindow = useMyWindow();
 
   const handleSubmit = async () => {
     const data = {
@@ -39,12 +42,11 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      myWindow.overlay.close()
-      myWindow.setFocusOn("closed");
+      myWindow.setHashLocation("");
     } else setEditState("failure");
   };
 
-  const transition = useTransition(myWindow.isFocused == "register", {
+  const transition = useTransition(myWindow.hashLocation == "#register", {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
@@ -54,11 +56,12 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
   const myRef = useRef();
 
   useEffect(() => {
-    if (myWindow.isFocused == "register") {
+    if (myWindow.hashLocation == "#register") {
+
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
-  }, [myWindow.isFocused, error, myWindow.size]);
+  }, [myWindow.hashLocation, error, myWindow.size]);
 
   return transition(
     (style, condition) =>
@@ -124,7 +127,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
             </button>
             <div
               className={styles.else}
-              onClick={() => myWindow.setFocusOn("login")}
+              onClick={() => myWindow.setHashLocation("#login")}
               >
               <p>Already have an accout?</p>
               <span>Login into you acout</span>

@@ -127,12 +127,23 @@
 .textSearch {
   height: 80%;
   padding: 0.2em;
+  position: relative;
   margin-right: 0.5em;
   border-radius: var(--border-radius);
 }
 
-.textSearch svg {
+.textSearch form {
   height: 100%;
+}
+
+.textSearch button {
+  height: 100%;
+}
+
+.textSearch svg {
+  z-index: 2;
+  height: 100%;
+  position: relative;
 }
 
 .textSearch path {
@@ -142,6 +153,31 @@
   stroke: var(--theme-color-1);
   -webkit-transition: stroke-dashoffset var(--animation-duration) ease-in;
   transition: stroke-dashoffset var(--animation-duration) ease-in;
+}
+
+.textSearch .inputWrapper {
+  background-color: blue;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  -webkit-transition-property: width opacity;
+  transition-property: width opacity;
+  -webkit-transition-timing-function: ease-in-out;
+          transition-timing-function: ease-in-out;
+  -webkit-transition-duration: var(--fast-animation-duration);
+          transition-duration: var(--fast-animation-duration);
+}
+
+.textSearch .inputWrapper * {
+  margin: 0;
+}
+
+.textSearch .inputWrapper.focus {
+  width: 50ch;
+  opacity: 1;
 }
 
 .navLink {
@@ -269,7 +305,6 @@
   padding: var(--padding);
   -webkit-transform-origin: bottom;
           transform-origin: bottom;
-  color: var(--theme-color-1);
   border-radius: 1px;
   background-color: var(--theme-color-2);
   color: white;

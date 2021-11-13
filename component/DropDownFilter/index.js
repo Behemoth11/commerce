@@ -1,7 +1,7 @@
 // @ts-ignore
 import styles from "./style.module.css";
 import { useState, useEffect, useRef } from "react";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
+import { useMyWindow } from "../../Contexts/GlobalContext";
 
 const setProperty = (object, property, value) => {
   object.current.style.setProperty(property, value);
@@ -34,7 +34,7 @@ function index({
 }) {
   const containerRef = useRef();
   const subContainerRef = useRef();
-  const { myWindow } = useGlobalContext();
+  const myWindow = useMyWindow();
   const size = myWindow.size;
 
   useEffect(() => {

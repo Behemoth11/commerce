@@ -29,6 +29,8 @@ const handle_put = async (req, res) => {
     error
   );
 
+  if (req.user.role != "admin") data.representation = "none";
+
   // console.log("the old images are :", old_images)
   // console.log("we erased :", erase)
   // console.log("the one on the server are :" , not_changed)

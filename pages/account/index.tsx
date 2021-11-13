@@ -1,24 +1,25 @@
-import axios from "axios";
-import { useRouter } from "next/router";
 import MyImage from "../../component/MyImage";
 import styles from "../../styles/account.module.css";
 import React, { useState, useEffect } from "react";
-import Input from "../../component/Inputs/NormalInput";
-import { useGlobalContext } from "../../Contexts/GlobalContext";
-import Link from "next/link";
+import MyLink from "../../component/MyLink";
 import { useRequire } from "../../shared/CustomHooks";
 import Popup from "../../component/popup";
 import Expend from "../../component/popup/Expend";
 import NormalInput from "../../component/Inputs/NormalInput";
 import Button from "../../component/Button";
+import {
+  useAuthcontext,
+  useUser,
+  useMyWindow,
+} from "../../Contexts/GlobalContext";
 
-function Login() {
-  const { User, auth } = useGlobalContext();
-  // useRequire("login");
+function Account() {
 
-  const [popupIsOpen, setPopupIsOpen] = useState(false);
+  useRequire("login")
+  const User = useUser();
+  const auth = useAuthcontext();
+  const myWindow = useMyWindow();
   const [inputValue, setInputValue] = useState({});
-  const [editProfileIsOpen, setEditProfileIsOpen] = useState(false);
 
   useEffect(() => {
     document.getElementById("__next").scroll(0, 0);
@@ -26,7 +27,7 @@ function Login() {
 
   const handleSave = async () => {
     await auth.axios.put("/api/user/userData", inputValue);
-  }
+  };
   return (
     <div className="big-container">
       <div className={styles.header}>
@@ -59,7 +60,7 @@ function Login() {
       </div>
 
       <div className={styles.body}>
-        <Link href={"/cart"}>
+        <MyLink href={"/cart"}>
           <a>
             <div className={styles.optionWrapper}>
               <p>
@@ -67,17 +68,15 @@ function Login() {
               </p>
             </div>
           </a>
-        </Link>
+        </MyLink>
         <div
           className={styles.optionWrapper}
-          onClick={() => setPopupIsOpen(true)}
+          onClick={() => myWindow.setFocusOn("no_availabe_user_upgrade")}
         >
           <Popup
-            isVisible={popupIsOpen}
-            closePopup={() => setPopupIsOpen(false)}
             duration={5000}
             type={"aga"}
-            name={"no_availabe"}
+            name={"no_availabe_user_upgrade"}
           >
             <div className={styles.message}>
               <h3>!!! Not Yet available</h3>
@@ -85,9 +84,9 @@ function Login() {
                 Options not currently available, contact administarter for more
                 informations
               </p>
-              <Link href="/contact?focus=become a seller">
+              <MyLink href="/contact?focus=become a seller">
                 <a>to contact page</a>
-              </Link>
+              </MyLink>
             </div>
           </Popup>
           <p>
@@ -96,9 +95,13 @@ function Login() {
         </div>
         <div
           className={styles.optionWrapper}
-          onClick={() => setEditProfileIsOpen((prev) => !prev)}
+          onClick={() => myWindow.setHashLocation("#profile")}
         >
-          <Expend visible={editProfileIsOpen} top_prop={"75"} closePopup={() => setEditProfileIsOpen(false)}>
+          <Expend
+            visible={myWindow.hashLocation == "#profile"}
+            top_prop={"75"}
+            closePopup={() => myWindow.setHashLocation("")}
+          >
             <form className={styles.editProfile}>
               <h3>edit profile</h3>
               <NormalInput
@@ -109,6 +112,7 @@ function Login() {
                 defaultValue={User.data?.username}
               />
               <NormalInput
+              label="First Name"
                 name="firstName"
                 required={true}
                 inputValue={inputValue}
@@ -116,21 +120,57 @@ function Login() {
                 defaultValue={User.data?.firstName}
               />
               <NormalInput
+              label="Last Name"
                 name="lastName"
                 required={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 defaultValue={User.data?.lastName}
               />
-              <Button label={"Cancel"} type="type1" onClick={() => setEditProfileIsOpen(false)}/>
-              <Button label={"Save"} onClick={handleSave}/>
+              <NormalInput
+                label="Phone Number"
+                name="phoneNumber"
+                required={true}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                defaultValue={User.data?.phoneNumber}
+              />
+              <NormalInput
+                name="email"
+                required={true}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                defaultValue={User.data?.email}
+              />
+              <Button
+                label={"Cancel"}
+                type="type1"
+                onClick={() => myWindow.setHashLocation("")}
+              />
+              <Button label={"Save"} onClick={handleSave} />
             </form>
           </Expend>
           <p>
             Edit Profile <img src="/svg/edit_pencil.svg" alt="profile icon" />
           </p>
         </div>
-        <div className={styles.optionWrapper}>
+        <div className={styles.optionWrapper} onClick={() => myWindow.setFocusOn("no_availabe_setting")}>
+          <Popup
+            duration={5000}
+            type={"aga"}
+            name={"no_availabe_setting"}
+          >
+            <div className={styles.message}>
+              <h3>!!! Not Yet available</h3>
+              <p>
+                Options not currently available, contact administarter for more
+                informations
+              </p>
+              <MyLink href="/contact?focus=become a seller">
+                <a>to contact page</a>
+              </MyLink>
+            </div>
+          </Popup>
           <p>
             Setting <img src="/svg/setting.svg" alt="setting wheel" />{" "}
           </p>
@@ -140,4 +180,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Account;

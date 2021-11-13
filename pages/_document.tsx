@@ -10,6 +10,8 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Manrope&display=swap"
             rel="stylesheet"
           />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/logo-96x96.png" />
         </Head>
 
         <body>

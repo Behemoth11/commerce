@@ -1,5 +1,5 @@
 import axios from "axios";
-import Link from "next/link";
+import MyLink from "../component/MyLink";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import styles from "../styles/LandingPage.module.css";
@@ -37,26 +37,30 @@ export default function Home() {
     Array.from({ length: 10 }).map((e) => ({ price: 100 }))
   );
 
+  const [recentProductData, setRecentProductData] = useState(
+    Array.from({ length: 10 }).map((e) => ({ price: 100 }))
+  );
+
   useEffect(() => {
+    const FIELD =
+      "field=pr_image_url&field=description&field=productName&field=representation";
     const getRepresentation = async () => {
       // @ts-ignore
       const response_representation = await axios
-        .get(
-          `/api/product/representation?representation=all&field=pr_image_url&field=description&field=productName&field=representation&limit=4`
-        )
+        .get(`/api/product/representation?representation=all&${FIELD}&limit=4`)
         .catch((err) => console.log(err));
 
-      let representations : responseData = {
+      let representations: responseData = {
         products: [],
         error: [],
         more: false,
       };
 
-      let products_representations= [];
+      let products_representations = [];
 
       if (response_representation) {
         representations = response_representation.data;
-        products_representations = representations.products
+        products_representations = representations.products;
         if (products_representations.length < 3) {
           const more_representations = await axios
             .get(
@@ -65,9 +69,11 @@ export default function Home() {
               )}&field=pr_image_url&field=description&field=productName&field=representation`
             )
             .catch((err) => console.log(err));
-          if (more_representations){
+          if (more_representations) {
             // console.log("the more ", more_representations.data.products)
-            products_representations = products_representations.concat(more_representations.data.products)
+            products_representations = products_representations.concat(
+              more_representations.data.products
+            );
           }
         }
       }
@@ -83,18 +89,41 @@ export default function Home() {
         more: false,
       };
       const response_hotdeals = await axios
-        .get(`/api/product?representation=hot deals`)
+        .get(`/api/product?representation=hot deals&${FIELD}`)
         .catch((err) => console.log(err));
 
       if (response_hotdeals) {
         const hot_deals = response_hotdeals.data;
-        setGridData(hot_deals.products);
+        if (hot_deals.products.length === 0) {
+          setGridData(null);
+        } else {
+          setGridData(hot_deals.products);
+        }
       }
-      
     };
 
+    const getRecent = async () => {
+      let recentData: responseData = {
+        products: [],
+        error: [],
+        more: false,
+      };
+      const response_recentData = await axios
+        .get(`/api/product?${FIELD}&field=price&limit=20`)
+        .catch((err) => console.log(err));
+
+      if (response_recentData) {
+        const recentData = response_recentData.data;
+        if (recentData.products.length === 0) {
+          setRecentProductData(null);
+        } else {
+          setRecentProductData(recentData.products);
+        }
+      }
+    };
+    getRecent();
     getHotDeals();
-    getRepresentation()
+    getRepresentation();
   }, []);
 
   return (
@@ -127,19 +156,15 @@ export default function Home() {
           </picture>
         </div>
         <button>
-          <Link href={"/find?categories=women"}>
-            <a>Shop Women # This is dep 2</a>
-          </Link>
+          <MyLink href={"/find?categories=women"}>
+            Shop Women # This is dep 2
+          </MyLink>
         </button>
         <button>
-          <Link href={"/find?categories=men"}>
-            <a>Shop Men</a>
-          </Link>
+          <MyLink href={"/find?categories=men"}>Shop Men</MyLink>
         </button>
         <button>
-          <Link href={"/find?categories=kids"}>
-            <a>Shop Kid</a>
-          </Link>
+          <MyLink href={"/find?categories=kids"}>Shop Kid</MyLink>
         </button>
       </div>
 
@@ -148,14 +173,27 @@ export default function Home() {
         <ProductListFlex items={discoverData} />
       </div>
 
-      <div className={styles.proposition}>
-        <h3>HOT DEALS</h3>
-        <ProductListGrid
-          displayType="single"
-          aspect_ratio={120}
-          items={gridData}
-        />
-      </div>
+      {gridData && (
+        <div className={styles.proposition}>
+          <h3>HOT DEALS</h3>
+          <ProductListGrid
+            displayType="single"
+            aspect_ratio={120}
+            items={gridData}
+          />
+        </div>
+      )}
+
+      {recentProductData && (
+        <div className={styles.new}>
+          <h3>Recent arrival</h3>
+          <ProductListGrid
+            displayType="double"
+            aspect_ratio={120}
+            items={recentProductData}
+          />
+        </div>
+      )}
     </div>
   );
 }

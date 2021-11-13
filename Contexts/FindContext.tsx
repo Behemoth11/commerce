@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useFirstTimeLoading } from "../shared/CustomHooks";
-import {useGlobalContext} from "./GlobalContext"
 
 export const FilterOverlayContext = React.createContext({
   toggleFilterOverlay: undefined,

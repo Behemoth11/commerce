@@ -5,8 +5,8 @@ import cloudinary from "../../utils/cloudinary";
 const handle_get = async (req, res) => {
   const query = req.query;
   const error = [];
-  let page = 0,
-    limit = 50;
+  let page = 0;
+  let limit = 50;
   let field = query.field;
 
   // console.log(query, 444444444444444444444);
@@ -25,6 +25,12 @@ const handle_get = async (req, res) => {
   const keys = Object.keys(query);
   const searchQuery: { [key: string]: {} } = {};
 
+
+  if (query.ne) {
+    searchQuery._id = { $ne: query.ne };
+    delete query.ne
+  }
+
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
 
@@ -39,9 +45,9 @@ const handle_get = async (req, res) => {
         }
         break;
       case "categories":
-        const categories = string_and_array_to_array(query.categories)
-        if (categories[0] === "search"){
-          searchQuery["$text"] = {$search: categories[1]}
+        const categories = string_and_array_to_array(query.categories);
+        if (categories[0] === "search") {
+          searchQuery["$text"] = { $search: categories[1] };
           break;
         }
         searchQuery[key] = { $all: string_and_array_to_array(query[key]) };
@@ -52,6 +58,7 @@ const handle_get = async (req, res) => {
   }
 
   let products = await Product.find(searchQuery, field)
+    .sort({addedAt: 1})
     .skip(page * limit)
     .limit(limit + 1)
     .lean()

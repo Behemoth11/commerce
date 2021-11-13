@@ -6,6 +6,7 @@ import { memo, useEffect, useRef } from "react";
 interface InputProps {
   error?: {};
   name: string;
+  label?: string;
   required: boolean;
   inputValue: object;
   placeholder?: string;
@@ -21,6 +22,7 @@ const Input: React.FC<InputProps> = ({
   name,
   type,
   error,
+  label,
   required,
   inputValue,
   placeholder,
@@ -61,6 +63,7 @@ const Input: React.FC<InputProps> = ({
           name={inputValue[name]}
           placeholder={placeholder}
           id={name}
+          required={required}
           onChange={(e) => handleChange(e.target.value)}
           className={`flex-center ${
             `${inputValue[name]}`?.length && inputStyles.filled
@@ -76,7 +79,7 @@ const Input: React.FC<InputProps> = ({
 
         />
 
-        {!placeholder && <label htmlFor={name}>{name}</label>}
+        {!placeholder && <label htmlFor={name}>{label||name}</label>}
         {myProposition?.length > 0 && (
           <div className={inputStyles.proposition}>
             {myProposition.map((proposition) => (

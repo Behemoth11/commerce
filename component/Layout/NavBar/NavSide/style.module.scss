@@ -158,12 +158,13 @@
   color: var(--accent-color);
   font-size: var(--medium-font-size);
   margin-top: var(--larger-margin);
-  margin-bottom: var(--margin);
+  padding-bottom: 4em;
 }
 
 .footer ul{
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 2em;
 }
 
 .footer li{

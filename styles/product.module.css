@@ -226,29 +226,70 @@
   position: absolute;
   padding: 0.5em;
   width: 110%;
-  top: 50%;
+  top: 0;
   left: 50%;
   text-align: center;
   background-color: white;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -100%);
+          transform: translate(-50%, -100%);
 }
 
 .addedNotification button {
-  background-color: #e8e5e5;
-  border-radius: 4px;
-  padding: 2px 5px;
-  right: 10px;
-  top: 50%;
-  width: 5.8em;
-  -ms-flex-negative: 0;
-      flex-shrink: 0;
-  color: rgba(0, 0, 0, 0.715);
-  margin: 0 10px;
-  margin-top: 0.5em;
+  padding: 0.2em;
+  margin: 1em 0.2em;
+  width: 10ch;
+  border-radius: var(--border-radius);
+  background-color: var(--theme-color-5);
 }
 
 .addedNotification .dangerous {
   background-color: #ef2828;
   color: white;
+}
+
+.delete,
+.update {
+  background-color: var(--accent-color);
+  border-radius: var(--border-radius);
+  padding: var(--padding);
+  white-space: nowrap;
+  color: white;
+}
+
+.delete {
+  border: 1px var(--accent-color) solid;
+  background-color: var(--theme-color-3);
+}
+
+.deletePopup {
+  width: 70%;
+  max-width: 30ch;
+  margin: auto;
+  color: white;
+  padding: var(--large-padding);
+  border-radius: var(--border-radius);
+  background-color: var(--theme-color-2);
+  font-size: small;
+}
+
+.deletePopup > p {
+  text-align: center;
+}
+
+.deletePopup button {
+  width: 10ch;
+  padding: 0.2em 0.4em;
+}
+
+.deletePopup .dangerous {
+  border-radius: var(--border-radius);
+  background-color: red;
+  color: white;
+  float: right;
+}
+
+.deletePopup .cancel {
+  background-color: var(--theme-color-5);
+  border-radius: var(--border-radius);
+  color: black;
 }

@@ -1,6 +1,6 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import Link from "next/link";
+import MyLink from "../MyLink";
 
 import React, { memo } from "react";
 import { string_and_array_to_array } from "../../shared/UtilityFunctions";
@@ -25,23 +25,23 @@ const Explore_SectionTitle: React.FC<Props> = ({ categories }) => {
               <a> back </a>
             </div>
             <div className={`${styles.rubriqueLink}`}>
-              <Link href={`/`}>
-                <a>Home</a>
-              </Link>
+              <MyLink href={`/`}>
+                Home
+              </MyLink>
               /{Categories.slice(0, -1).map(
                 (element,index) =>
                   element && (
                     <span key={element}>
-                      <Link href={{pathname: "/find", query:{categories: categories.slice(0,index+1) }}}>
-                        <a>{element.toLowerCase()}</a>
-                      </Link>{" "}
+                      <MyLink href={{pathname: "/find", query:{categories: categories.slice(0,index+1) }}}>
+                        {element.toLowerCase()}
+                      </MyLink>{" "}
                       /
                     </span>
                   )
               )}
-              <Link href={`/`}>
+              <MyLink href={`/`}>
                 <a>{Categories[Categories.length - 1]}</a>
-              </Link>
+              </MyLink>
             </div>
           </h2>
         </>

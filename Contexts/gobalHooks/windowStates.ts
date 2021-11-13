@@ -1,53 +1,35 @@
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "../../shared/CustomHooks";
+import { string_and_array_to_array } from "../../shared/UtilityFunctions";
 
 const useFocus = () => {
-  const router = useRouter();
-  //focus entities
-
   const [overlay_state, setOverlay] = useState({
     open: false,
     callbacks: [],
   });
 
-  const pathnameRef = useRef();
+  const [phase, setPhase] = useState("fadeIn");
 
-  const isFocused = router.query.focus;
+  const [isFocused, _setFocusOn] = useState("none")
 
-  const setFocusOn = (id, e?: any) => {
-    if (e) e.stopPropagation();
-    const url = new URL(window.location.href)
-    console.log(url.search)
-    let query;
-    if (url.search.length > 0){
-     query =  url.search.split("focus")[0] + "&"
-    } else {
-      query = "?"
-    }
+  const setFocusOn = (payload, e?:any) => {
+    if (e) e.stopPropagation()
+    _setFocusOn(payload)
+  }
 
-    router.push(
-      url.pathname+ query +`focus=${id}`,
-      undefined,
-      { shallow: true }
-    );
-  };
 
   useEffect(() => {
-    if (!router.isReady) return;
     const unfocus = () => {
-      console.log("The unfoc thing just ran");
       setFocusOn("none");
     };
     window.addEventListener("click", unfocus);
     return () => window.removeEventListener("click", unfocus);
-  }, [router.isReady]);
+  }, []);
 
-  //resize
   const [resize, setResize] = useState<number>(1);
   useEffect(() => {
     const resizeEvent = () => setResize((prevState) => prevState + 1);
-
     window.addEventListener("resize", resizeEvent);
     return () => window.removeEventListener("resize", resizeEvent);
   }, []);
@@ -56,15 +38,16 @@ const useFocus = () => {
   const open_overlay = (cb?: () => void) => {
     setOverlay((prevState) => ({
       open: true,
-      callbacks: prevState.callbacks.concat(cb),
+      callbacks: cb && prevState.callbacks.concat(cb) || prevState.callbacks,
     }));
   };
 
   const close_overlay = (cb?: () => void) => {
-    const callbacks = overlay_state.callbacks;
+    const callbacks = overlay_state.callbacks.concat(cb);
     setOverlay({ open: false, callbacks: [] });
 
     for (let i = 0; i < callbacks.length; i++) {
+      if (!callbacks[i]) continue;
       callbacks[i]();
     }
   };
@@ -75,11 +58,44 @@ const useFocus = () => {
     isOpen: overlay_state.open,
   };
 
+  //inpage navigation
+
+  const [hashLocation, setHashLocation] = useState("");
+
+  const open = (id: string) => {
+    window.location.hash = id;
+    setHashLocation(id)
+  }
+
+  useEffect(() => {
+    const handler = (e) => {
+      setHashLocation(window.location.hash);
+    }
+    window.addEventListener("hashchange", handler)
+    return () => window.removeEventListener("hashchange", handler);
+  },[])
+
+  useEffect(() => {
+    if(hashLocation === "" || hashLocation ===""){
+      close_overlay()
+    }else{
+      open_overlay(() => open(""))
+    }
+  }, [hashLocation])
+
+  console.log("The focus is on ", isFocused)
+
+
+
   return {
     size: resize,
     overlay,
     isFocused,
     setFocusOn,
+    phase,
+    setPhase,
+    hashLocation,
+    setHashLocation: open
   };
 };
 

@@ -1,6 +1,6 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import Link from "next/link";
+import MyLink from "../../../MyLink";
 import { memo } from "react";
 import { useNavBarContext } from "../navBarContext";
 import { useTransition, animated, config } from "react-spring";
@@ -79,7 +79,7 @@ const Navigation = ({
                   onClick={() => updateSideBar(label, index)}
                   className={`max-width flex pointer align-center ${styles.linkContainer} `}
                 >
-                  <Link
+                  <MyLink
                     href={{
                       pathname: "/find",
                       query: {
@@ -93,10 +93,10 @@ const Navigation = ({
                     <div onClick={() => toggleNavBar()} className={`flex align-center`}>
                       <a>{label}</a>
                     </div>
-                  </Link>
+                  </MyLink>
                 </div>
               ) : (
-                <Link
+                <MyLink
                   key={label}
                   href={{
                     pathname: "/find",
@@ -114,7 +114,7 @@ const Navigation = ({
                   >
                     <a>{label}</a>
                   </div>
-                </Link>
+                </MyLink>
               )
             )}
           </div>
@@ -122,11 +122,11 @@ const Navigation = ({
           <div className={styles.footer}>
             <ul>
               {littleLinkList.map(({text, to}) => (
-                <Link key={text} href={`/${to}`}>
+                <MyLink key={text} href={`/${to}`}>
                   <li onClick={() => toggleNavBar()}>
                     <a>{text}</a>
                   </li>
-                </Link>
+                </MyLink>
               ))}
             </ul>
           </div>

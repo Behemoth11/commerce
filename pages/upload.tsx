@@ -21,7 +21,7 @@ import { checkForm, formatUrl } from "../shared/UtilityFunctions";
 import ImageInput from "../component/Inputs/ImageInput";
 import LoadingController from "../component/LoadingController";
 import MultipleImageInput from "../component/Inputs/MultipleImageInput";
-import { useGlobalContext } from "../Contexts/GlobalContext";
+import { useAuthcontext } from "../Contexts/GlobalContext";
 
 type edit = "upload" | "update" | "loading" | "success" | "error";
 
@@ -37,16 +37,18 @@ export const useUploadContext = () => {
 };
 
 const nonRequired = {
-  // productName: true,
-  representation: true,
+  tags: true,
+  color: true,
   related: true,
+  materials: true,
+  representation: true,
 }; // also change the requied field present on input component
 
 function Upload() {
   const { query } = useRouter();
 
 
-  const { auth } = useGlobalContext();
+  const auth = useAuthcontext();
   const [editState, _setEditState] = useState<edit>("upload");
   const editRef = useRef<edit>("upload");
 
@@ -207,21 +209,23 @@ function Upload() {
               setInputValue={setInputValue}
             />
 
-            <Input
-              name="nature"
-              required={false}
-              inputValue={inputValue}
-              submitCount={submitCount}
-              proposition={proposition}
-              setInputValue={setInputValue}
-            />
-
             {/* array should be inputed as string with a separator that can either be determined here or on the server */}
-            {"color/materials/tags/categories".split("/").map((element) => (
+            {"categories".split("/").map((element) => (
               <InputArray
                 key={element}
                 name={element}
                 required={true}
+                inputValue={inputValue}
+                submitCount={submitCount}
+                proposition={proposition}
+                setInputValue={setInputValue}
+              />
+            ))}
+            {"color/materials/tags".split("/").map((element) => (
+              <InputArray
+                key={element}
+                name={element}
+                required={false}
                 inputValue={inputValue}
                 submitCount={submitCount}
                 proposition={proposition}
@@ -247,6 +251,7 @@ function Upload() {
               proposition={proposition}
               setInputValue={setInputValue}
             />
+
 
             <Input
               required={false}

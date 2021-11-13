@@ -28,6 +28,8 @@ const handle_put = async (req, res) => {
         firstName: body.firstName,
         username: body.username,
         lastName: body.lastName,
+        phoneNumber: body.phoneNumber,
+        email: body.email,
       } }
     ).catch(err => console.log(err));
 
