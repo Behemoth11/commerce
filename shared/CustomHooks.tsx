@@ -130,11 +130,10 @@ export const useAuthAxios = () => {
 
   useEffect(() => {
     const tokenChecker = setInterval(() => {
+      console.log(tokenRef, "the interval is running to get the tokesn")
       if (!tokenRef.current) return;
       const timeLeft =
-        parseInt(tokenRef.current.expiresAt) * 1000 -
-        new Date().getTime() -
-        1000 * 60 * 7;
+        parseInt(tokenRef.current.expiresAt) * 1000 - new Date().getTime() - 1000 * 60 * 7;
       if (timeLeft <= 0) {
         //console.log("I will refresh because it is time")
         getNewToken();

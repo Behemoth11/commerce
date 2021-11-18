@@ -39,7 +39,8 @@ export const useUploadContext = () => {
 const nonRequired = {
   tags: true,
   color: true,
-  related: true,
+  images: true,
+  location: true,
   materials: true,
   representation: true,
 }; // also change the requied field present on input component
@@ -47,16 +48,15 @@ const nonRequired = {
 function Upload() {
   const { query } = useRouter();
 
-
   const auth = useAuthcontext();
   const [editState, _setEditState] = useState<edit>("upload");
   const editRef = useRef<edit>("upload");
 
-
   const setEditState = (payload) => {
+    if (payload == "update" || payload == "upload") {
+      editRef.current = payload;
+    }
     _setEditState(payload);
-    if (payload != "update" && payload != "upload") return;
-    editRef.current = payload;
   };
 
   useEffect(() => {
@@ -64,13 +64,30 @@ function Upload() {
   }, [query._id]);
 
   useEffect(() => {
-    document.getElementById("__next")?.scroll(0, 0);
+    document.getElementById("__next")?.scrollTo({ top: 0, behavior: "smooth" });
   }, [editRef.current]);
 
   useEffect(() => {
     const fetch = async (_id) => {
       const axiosResponse = await axios
-        .get(`/api/product/withId/${query._id}`)
+        .get(
+          `/api/product/withId/${query._id}?${[
+            "productName",
+            "color",
+            "materials",
+            "tags",
+            "categories",
+            "description",
+            "price",
+            "quatity",
+            "location",
+            "pr_image_url",
+            "all_pr_image_url",
+            "representation",
+          ]
+            .map((field) => `field=${field}`)
+            .join("&")}`
+        )
         .catch((err) => console.log(err));
       let productData;
       if (axiosResponse) {
@@ -109,7 +126,7 @@ function Upload() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitCount((prevState) => prevState + 1);
-    document.getElementById("__next").scroll(0,0)
+    document.getElementById("__next")?.scrollTo({ top: 0, behavior: "smooth" });
     const errors = [];
 
     checkForm(inputValue, nonRequired, errors);
@@ -130,12 +147,10 @@ function Upload() {
     } else if (editRef.current == "upload") {
       res = await auth.axios
         .post("/api/product", inputValue)
-        .catch((err) => res = err.response);
+        .catch((err) => (res = err.response));
     }
 
-
     if (res) {
-      // console.log(res, "the response is")
       if (res.status === 200) {
         setEditState("success");
         setSubmitCount(0);
@@ -147,10 +162,9 @@ function Upload() {
         setTimeout(() => {
           setEditState("upload");
         }, 1000);
-
       } else {
         setEditState("failure");
-        setErrMsg([res.data.message||res.data]);
+        setErrMsg([res.data.message || res.data]);
       }
     } else setEditState("failure");
   };
@@ -183,13 +197,13 @@ function Upload() {
                     editRef.current == representedState && styles.active
                   }`}
                   onClick={() => setEditState(representedState)}
-                  >
+                >
                   {representedState}
                 </p>
               ))}
             </div>
 
-              <Errors errMsg={errMsg} />
+            <Errors errMsg={errMsg} />
             <Input
               required={true}
               name={"productName"}
@@ -221,6 +235,24 @@ function Upload() {
                 setInputValue={setInputValue}
               />
             ))}
+
+            <Input
+              name={"price"}
+              required={true}
+              type={"number"}
+              inputValue={inputValue}
+              submitCount={submitCount}
+              proposition={proposition}
+              setInputValue={setInputValue}
+            />
+            <TextArea
+              required={true}
+              name={"description"}
+              inputValue={inputValue}
+              submitCount={submitCount}
+              setInputValue={setInputValue}
+            />
+
             {"color/materials/tags".split("/").map((element) => (
               <InputArray
                 key={element}
@@ -234,16 +266,6 @@ function Upload() {
             ))}
 
             <Input
-              name={"price"}
-              required={true}
-              type={"number"}
-              inputValue={inputValue}
-              submitCount={submitCount}
-              proposition={proposition}
-              setInputValue={setInputValue}
-            />
-
-            <Input
               name="location"
               required={false}
               inputValue={inputValue}
@@ -251,7 +273,6 @@ function Upload() {
               proposition={proposition}
               setInputValue={setInputValue}
             />
-
 
             <Input
               required={false}
@@ -262,13 +283,6 @@ function Upload() {
               setInputValue={setInputValue}
             />
 
-            <TextArea
-              required={true}
-              name={"description"}
-              inputValue={inputValue}
-              submitCount={submitCount}
-              setInputValue={setInputValue}
-            />
             <MultipleImageInput
               name={"images"}
               inputValue={inputValue}
@@ -280,7 +294,6 @@ function Upload() {
                 <span>Submit</span>
               </button>
             </div>
-
           </div>
         </LoadingController>
       </uploadContext.Provider>

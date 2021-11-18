@@ -12,7 +12,7 @@ import {
   useMyWindow,
 } from "../../../Contexts/GlobalContext";
 
-const Login = ({ inputValue, setInputValue, setHeight }) => {
+const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
   const [error, setError] = useState({});
   const [editState, setEditState] = useState("login");
   const User = useUser();
@@ -44,11 +44,11 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      myWindow.setHashLocation("");
+      window.history.go(-1)
     } else setEditState("failure");
   };
 
-  const transition = useTransition(myWindow.hashLocation == "#login", {
+  const transition = useTransition(active, {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
@@ -60,11 +60,11 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
   const myRef = useRef();
 
   useEffect(() => {
-    if (myWindow.hashLocation == "#login") {
+    if (active) {
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
-  }, [myWindow.hashLocation, error, myWindow.size]);
+  }, [active, error, myWindow.size]);
 
   return transition(
     (style, condition) =>
@@ -76,7 +76,7 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
           id="#login"
         >
           <div className={styles._formContainer}>
-            <h3> Login KdShop</h3>
+            <h3> Se connecter a KdShop</h3>
             <form className={styles.loginForm}>
               <Input
                 name="user name"
@@ -109,10 +109,10 @@ const Login = ({ inputValue, setInputValue, setHeight }) => {
 
             <div
               className={styles.else}
-              onClick={() => myWindow.setHashLocation("#register")}
+              onClick={() => setActive("register")}
             >
-              <p>Don't yet have an Accout?</p>
-              <span>create an account.</span>
+              <p>Vous n'avez pas encore de compte?</p>
+              <span>creer un compte graduit.</span>
             </div>
 
             <TPLogin setEditState={setEditState} />

@@ -10,8 +10,6 @@
   z-index: 3;
   top: 0;
   left: 0;
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  background-color: var(--body-background);
 }
 .annoncement {
   background-color: var(--theme-color);
@@ -21,7 +19,3 @@
   margin:0;
 }
 
-.hidden {
-  transform: translateY(-150%);
-  // opacity: 0;
-}

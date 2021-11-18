@@ -285,14 +285,14 @@ img {
   position: relative;
   color: transparent;
   border-radius: 3px;
-  background-color: #d9d9d9;
+  background-color: #f7f7f7;
 }
 
 .animated::after {
   content: "";
   z-index: 0;
-  background: -webkit-gradient(linear, right top, left top, from(#d9d9d9), color-stop(#e6e6e6), to(#d9d9d9));
-  background: linear-gradient(to left, #d9d9d9, #e6e6e6, #d9d9d9);
+  background: -webkit-gradient(linear, right top, left top, from(#f7f7f7), color-stop(white), to(#f7f7f7));
+  background: linear-gradient(to left, #f7f7f7, white, #f7f7f7);
   background-repeat: no-repeat;
   position: absolute;
   height: 100%;

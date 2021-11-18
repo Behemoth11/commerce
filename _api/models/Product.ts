@@ -25,7 +25,7 @@ export const product = new mongoose.Schema(
     },
     tags: {
       type: Array,
-      required: true,
+      required: false,
     },
     rating: {
       type: Number,
@@ -37,28 +37,29 @@ export const product = new mongoose.Schema(
     related: {
       type: Array,
     },
-    owner: { 
-      type: Schema.Types.ObjectId, 
-      ref: "User" },
+    owner: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     pr_image_url: {
       type: Array,
+      minlength: 1,
       required: true,
     },
     all_pr_image_url: {
       type: Array,
-      required: true,
-      minlength: 2,
     },
     representation: {
       type: String,
       default: "none",
     },
-    addedAt:{
+    addedAt: {
       type: Number,
       required: true,
-    }
+    },
   },
-  { strict: false }
+  { strict: true }
 );
 
 // @ts-ignore

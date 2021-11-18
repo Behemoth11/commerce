@@ -43,21 +43,17 @@ function Contact() {
 
     setInputState("loading");
 
-    const response = await axios.post("/api/contact_message", {
+    let response;
+
+    response = await axios.post("/api/contact_message", {
       contact: inputValue.contact,
       focus: inputValue.focus,
       msg: inputValue.message,
-    });
+    }).catch(err => response = err.response);
 
-    if (response) {
-      const responseData = response.data?.error;
-
-      if (responseData.length == 0) {
+    if (response.status === 200) {
         setInputState("success");
         setSubmitCount(0);
-      } else {
-        setInputState("failure");
-      }
     } else setInputState("failure");
   };
 

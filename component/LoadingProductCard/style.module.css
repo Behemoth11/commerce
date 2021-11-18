@@ -17,7 +17,6 @@
   width: 100%;
   overflow: hidden;
   border-radius: var(--border-radius);
-  background-color: #d9d9d9;
 }
 
 .container {
@@ -52,7 +51,7 @@
   -webkit-transform: var(--transform);
           transform: var(--transform);
   position: absolute;
-  background-color: #d9d9d9;
+  background-color: #f7f7f7;
 }
 
 .description2.h-display {
@@ -85,7 +84,7 @@
   width: min(100px, 35%);
   margin: var(--children-margin);
   margin-bottom: var(--margin);
-  background-color: #d9d9d9;
+  background-color: #f7f7f7;
   position: relative;
   height: 1.8em;
   color: transparent;

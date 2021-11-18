@@ -16,7 +16,7 @@ const handle_put = async (req, res) => {
   }).lean();
   //@ts-ignore
   if (mongo_product.owner != req.user._id && req.user.role != "admin") {
-    return res.status(401).json({ message: "could not process the operation" });
+    return res.status(401).json({ message: "you can only modiy items you ownn" });
   }
 
   const [pr_image_url, all_pr_image_url] = await Promise.all([

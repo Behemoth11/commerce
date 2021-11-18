@@ -14,6 +14,8 @@ const index = () => {
   const dummyRef = useRef(0);
 
   const [visible, setVisible] = useState(false);
+  const [active, setActive] = useState<"login"|"register" | "">("")
+
 
   const [animateHeight, animateApi] = useSpring(() => ({
     height: 400,
@@ -25,12 +27,13 @@ const index = () => {
 
   useEffect(() => {
     if (
-      myWindow.hashLocation === "#login" ||
-      myWindow.hashLocation === "#register"
+      myWindow.hashLocation === "#auth"
     ) {
       setVisible(true);
+      setActive("login")
     } else {
       const id = dummyRef.current;
+      setActive("")
       setTimeout(() => {
         if (id == dummyRef.current) {
           setVisible(false);
@@ -43,7 +46,7 @@ const index = () => {
     <>
       <div
         className={`${styles.prompt} ${
-          myWindow.hashLocation === "#" && styles.closed
+          myWindow.hashLocation === "" && styles.closed
         }`}
         style={{ zIndex: visible ? 3 : -5 }}
         onClick={(e) => e.stopPropagation()}
@@ -53,11 +56,15 @@ const index = () => {
             inputValue={inputValue}
             setInputValue={setInputValue}
             setHeight={setHeight}
+            active={active === "register"}
+            setActive={setActive}
           />
           <Login
             inputValue={inputValue}
             setInputValue={setInputValue}
             setHeight={setHeight}
+            active={active === "login"}
+            setActive={setActive}
           />
         </animated.div>
       </div>

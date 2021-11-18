@@ -14,20 +14,14 @@ import {
 } from "../../Contexts/GlobalContext";
 
 function Account() {
-
-  useRequire("login")
+  // useRequire("login");
   const User = useUser();
-  const auth = useAuthcontext();
   const myWindow = useMyWindow();
-  const [inputValue, setInputValue] = useState({});
 
   useEffect(() => {
     document.getElementById("__next").scroll(0, 0);
   }, []);
 
-  const handleSave = async () => {
-    await auth.axios.put("/api/user/userData", inputValue);
-  };
   return (
     <div className="big-container">
       <div className={styles.header}>
@@ -73,11 +67,7 @@ function Account() {
           className={styles.optionWrapper}
           onClick={() => myWindow.setFocusOn("no_availabe_user_upgrade")}
         >
-          <Popup
-            duration={5000}
-            type={"aga"}
-            name={"no_availabe_user_upgrade"}
-          >
+          <Popup duration={5000} type={"aga"} name={"no_availabe_user_upgrade"}>
             <div className={styles.message}>
               <h3>!!! Not Yet available</h3>
               <p>
@@ -100,66 +90,19 @@ function Account() {
           <Expend
             visible={myWindow.hashLocation == "#profile"}
             top_prop={"75"}
-            closePopup={() => myWindow.setHashLocation("")}
+            closePopup={() => window.history.go(-1)}
           >
-            <form className={styles.editProfile}>
-              <h3>edit profile</h3>
-              <NormalInput
-                name="username"
-                required={true}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                defaultValue={User.data?.username}
-              />
-              <NormalInput
-              label="First Name"
-                name="firstName"
-                required={true}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                defaultValue={User.data?.firstName}
-              />
-              <NormalInput
-              label="Last Name"
-                name="lastName"
-                required={true}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                defaultValue={User.data?.lastName}
-              />
-              <NormalInput
-                label="Phone Number"
-                name="phoneNumber"
-                required={true}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                defaultValue={User.data?.phoneNumber}
-              />
-              <NormalInput
-                name="email"
-                required={true}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                defaultValue={User.data?.email}
-              />
-              <Button
-                label={"Cancel"}
-                type="type1"
-                onClick={() => myWindow.setHashLocation("")}
-              />
-              <Button label={"Save"} onClick={handleSave} />
-            </form>
+            <ProfileEdit />
           </Expend>
           <p>
             Edit Profile <img src="/svg/edit_pencil.svg" alt="profile icon" />
           </p>
         </div>
-        <div className={styles.optionWrapper} onClick={() => myWindow.setFocusOn("no_availabe_setting")}>
-          <Popup
-            duration={5000}
-            type={"aga"}
-            name={"no_availabe_setting"}
-          >
+        <div
+          className={styles.optionWrapper}
+          onClick={() => myWindow.setFocusOn("no_availabe_setting")}
+        >
+          <Popup duration={5000} type={"aga"} name={"no_availabe_setting"}>
             <div className={styles.message}>
               <h3>!!! Not Yet available</h3>
               <p>
@@ -181,3 +124,77 @@ function Account() {
 }
 
 export default Account;
+
+const ProfileEdit = () => {
+  const User = useUser();
+  const auth = useAuthcontext();
+  const myWindow = useMyWindow();
+  const [inputValue, setInputValue] = useState({});
+  const [myState, setMyState] = useState("init");
+  
+  const handleSave = async () => {
+    setMyState("loading");
+    let response;
+    response = await auth.axios
+      .put("/api/user/userData", inputValue)
+      .catch((err) => (response = err.response));
+    if (response.status === 200) {
+      setMyState("success");
+    } else {
+      setMyState("failure");
+    }
+    setTimeout(() => {
+      window.history.go(-1)
+    }, 300);
+  };
+
+  return (
+    <form className={styles.editProfile}>
+      <h3>edit profile</h3>
+      <NormalInput
+        name="username"
+        required={true}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        defaultValue={User.data?.username}
+      />
+      <NormalInput
+        label="First Name"
+        name="firstName"
+        required={true}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        defaultValue={User.data?.firstName}
+      />
+      <NormalInput
+        label="Last Name"
+        name="lastName"
+        required={true}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        defaultValue={User.data?.lastName}
+      />
+      <NormalInput
+        label="Phone Number"
+        name="phoneNumber"
+        required={true}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        defaultValue={User.data?.contact?.phoneNumber}
+      />
+      <NormalInput
+        name="email"
+        required={true}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        defaultValue={User.data?.contact?.email}
+      />
+      <Button
+        label={"Cancel"}
+        type="type1"
+        onClick={() => window.history.go(-1)}
+      />
+      <Button label={"Save"} onClick={handleSave} />
+    </form>
+  );
+};

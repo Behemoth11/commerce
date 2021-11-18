@@ -22,7 +22,7 @@ const Explore_SectionTitle: React.FC<Props> = ({ categories }) => {
           </h1>
           <h2 className={`${styles.subHeader}`}>
             <div className={`${styles.backLink}`}>
-              <a> back </a>
+              <a> retour </a>
             </div>
             <div className={`${styles.rubriqueLink}`}>
               <MyLink href={`/`}>

@@ -16,8 +16,8 @@ const SearchBar = () => {
   const [isCompletelyVisible, setIsCompleteVisible] = useState(false);
 
   const springAnimate = useSpring({
-    from: { transform: "translate(-50%,0%)" },
-    transform: (visible && "translate(-50%,100%)") || "translate(-50%,0%)",
+    from: { transform: "translate(-50%,-100%)" },
+    transform: (visible && "translate(-50%, 100%)") || "translate(-50%,-100%)",
     onRest: () => {
       setIsCompleteVisible(visible);
     },
@@ -49,7 +49,7 @@ const SearchBar = () => {
         <NormalInput
           required={false}
           name="search_query"
-          placeholder={"search"}
+          placeholder={"chercher"}
           inputValue={inputValue}
           setInputValue={setInputValue}
         />

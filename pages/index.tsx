@@ -28,18 +28,16 @@ type responseData = {
   error: [];
 };
 
+const INIT = Array.from({ length: 10 }).map((e) => ({ price: 100 }));
+
 export default function Home() {
   console.log(process.env);
   const [discoverData, setDiscoverData] = useState(
     Array.from({ length: 10 }).map((e) => ({ representation: "nothing" }))
   );
-  const [gridData, setGridData] = useState(
-    Array.from({ length: 10 }).map((e) => ({ price: 100 }))
-  );
+  const [gridData, setGridData] = useState(INIT);
 
-  const [recentProductData, setRecentProductData] = useState(
-    Array.from({ length: 10 }).map((e) => ({ price: 100 }))
-  );
+  const [recentProductData, setRecentProductData] = useState(INIT);
 
   useEffect(() => {
     const FIELD =
@@ -156,26 +154,24 @@ export default function Home() {
           </picture>
         </div>
         <button>
-          <MyLink href={"/find?categories=women"}>
-            Shop Women # This is dep 2
-          </MyLink>
+          <MyLink href={"/find?categories=women"}>Pour Homme</MyLink>
         </button>
         <button>
-          <MyLink href={"/find?categories=men"}>Shop Men</MyLink>
+          <MyLink href={"/find?categories=men"}>Pour Femme</MyLink>
         </button>
         <button>
-          <MyLink href={"/find?categories=kids"}>Shop Kid</MyLink>
+          <MyLink href={"/find?categories=kids"}>Pour Enfant</MyLink>
         </button>
       </div>
 
       <div className={styles.discover}>
-        <h3>Our Products</h3>
+        <h3>Nos produits</h3>
         <ProductListFlex items={discoverData} />
       </div>
 
       {gridData && (
         <div className={styles.proposition}>
-          <h3>HOT DEALS</h3>
+          <h3>Nos deals</h3>
           <ProductListGrid
             displayType="single"
             aspect_ratio={120}
@@ -186,7 +182,7 @@ export default function Home() {
 
       {recentProductData && (
         <div className={styles.new}>
-          <h3>Recent arrival</h3>
+          <h3>Nouveaux articles</h3>
           <ProductListGrid
             displayType="double"
             aspect_ratio={120}

@@ -7,15 +7,15 @@ import { useTransition, animated, config } from "react-spring";
 
 const littleLinkList = [
   {
-    text: "about us",
+    text: "a propos",
     to: "about"
   },
   {
-    text: "contact us",
+    text: "nous contacter",
     to: "contact" 
   },
   {
-    text: "feedback",
+    text: "votre avis",
     to: "feedback"
   }
 ];

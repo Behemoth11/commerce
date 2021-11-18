@@ -17,9 +17,14 @@ export const user = new mongoose.Schema({
     type: String,
     required: true,
   },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
   password: {
     type: String,
-    required: true,
   },
   role: {
     type: String,
@@ -29,20 +34,16 @@ export const user = new mongoose.Schema({
     type: Array,
     default: [],
   },
-  phoneNumber: {
-    type: String,
-  },
-  firstName: {
-    type: String,
-  },
-  lastName: {
-    type: String,
-  },
   pr_pic: {
     type: String,
   },
-  email:{
-    type: String
+  contact:{
+    phoneNumber:{
+      type: String,
+    },
+    email: {
+      type: String,
+    }
   },
   Oauth: {
     method:{

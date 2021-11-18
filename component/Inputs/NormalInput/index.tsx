@@ -79,7 +79,7 @@ const Input: React.FC<InputProps> = ({
 
         />
 
-        {!placeholder && <label htmlFor={name}>{label||name}</label>}
+        {!placeholder && <label htmlFor={name}>{label||name} {!required && "(optional)"}</label>}
         {myProposition?.length > 0 && (
           <div className={inputStyles.proposition}>
             {myProposition.map((proposition) => (

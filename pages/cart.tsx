@@ -62,14 +62,6 @@ export default function Home() {
             />
           </animated.div>
         ))}
-
-        <button className={`${styles.buyPrompt} flex-center`}>
-          <a
-            href={`https://api.whatsapp.com/send?phone=15312256403&text=${message.current}`}
-          >
-            Buy All
-          </a>
-        </button>
       </div>
     </div>
   );

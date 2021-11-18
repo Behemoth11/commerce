@@ -8,7 +8,6 @@
   font-size: 0.1em;
   text-align: center;
   --transform: translate(-50%, -70%) translateZ(0);
-
 }
 
 @media (hover: none) { // uncomment this to make the scroll bar invisible on touch screens
@@ -39,9 +38,7 @@
   }
 
   &.preset1 {
-    h3 {
-      // margin-bottom: 1em;
-    }
+
     & > .container {
       & > div {
         background-color: var(--accent-color-5);

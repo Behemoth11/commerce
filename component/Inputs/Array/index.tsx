@@ -86,7 +86,7 @@ const InputArray: React.FC<InputProps> = ({
           type={type || "text"}
           autoComplete="off"
         />
-        <label htmlFor={name}>{name}</label>
+        <label htmlFor={name}>{name} {!required && "(optional)"}</label>
         {(myProposition?.length > 0|| !proposition && (
             <button
               className={inputStyles.addButtonArray}

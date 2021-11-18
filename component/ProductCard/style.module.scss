@@ -2,13 +2,8 @@
   width: 100%;
   font-size: 1em;
   position: relative;
-  animation: fadeIn var(--animation-duration) forwards;
 }
 
-@keyframes fadeIn {
-  0%{opacity: 0}
-  100%{opacity: 1}
-}
 
 .cardsContainer.h-display {
   width: unquote("min(var(--fCP),270px)");
@@ -31,6 +26,7 @@
 .loading{
   opacity:0;
   pointer-events: none;
+  transition: opacity var(--fast-animation-duration) ease-out;
 }
 
 .container {

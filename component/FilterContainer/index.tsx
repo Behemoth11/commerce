@@ -142,6 +142,7 @@ const FilterContainer: React.FC<Props> = ({
               style={_style}
               onClick={async() => {
                 applyFilterSideEffect();
+                setWasClicked(false)
                 filters.setFilter(_filter);
               }}
             >
