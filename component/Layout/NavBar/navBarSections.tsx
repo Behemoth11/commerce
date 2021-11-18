@@ -21,7 +21,7 @@ export const getCategories = (object, keys) => {
 };
 
 export const categories = {
-  women: {
+  femme: {
     title: "femme",
     content: ["pagne", "robe", "jupe", "bijoux"],
     bijou: {
@@ -29,7 +29,7 @@ export const categories = {
       content: ["bracelet", "chainette"],
     },
   },
-  men: {
+  homme: {
     title: "homme",
     content: [
       "veste",
@@ -40,11 +40,11 @@ export const categories = {
       "chaussures",
     ],
   },
-  kids: {
+  enfant: {
     title: "enfant",
     content: ["sac", "chemise", "pantalons", "t-shirts"],
   },
-  utilities: {
+  ustensils: {
     title: "ustensils",
     content: ["cuisine"],
   },
@@ -64,10 +64,10 @@ export const navBarSections = {
   menu: {
     ...categories,
     title: "menu",
-    content: ["women", "men", "kids", "utilities", "all"],
+    content: ["femme", "homme", "enfant", "ustensils", "tout les articles"],
     all: {
-      title: "all products",
-      content: getCategories(categories, ["women", "men", "kids", "utilities"]),
+      title: "tout les articles",
+      content: getCategories(categories, ["femme", "homme", "enfant", "ustensils"]),
     },
   },
 };
