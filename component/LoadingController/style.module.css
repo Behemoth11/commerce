@@ -28,7 +28,11 @@
 }
 
 .message {
+  width: 40ch;
   padding: 0.2em 2em;
+  text-align: center;
+  max-width: 95%;
+  border: 2px solid black;
 }
 
 .ldsEllipsis {

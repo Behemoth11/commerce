@@ -11,13 +11,12 @@ const useFocus = () => {
 
   const [phase, setPhase] = useState("fadeIn");
 
-  const [isFocused, _setFocusOn] = useState("none")
+  const [isFocused, _setFocusOn] = useState("none");
 
-  const setFocusOn = (payload, e?:any) => {
-    if (e) e.stopPropagation()
-    _setFocusOn(payload)
-  }
-
+  const setFocusOn = (payload, e?: any) => {
+    if (e) e.stopPropagation();
+    _setFocusOn(payload);
+  };
 
   useEffect(() => {
     const unfocus = () => {
@@ -38,7 +37,7 @@ const useFocus = () => {
   const open_overlay = (cb?: () => void) => {
     setOverlay((prevState) => ({
       open: true,
-      callbacks: cb && prevState.callbacks.concat(cb) || prevState.callbacks,
+      callbacks: (cb && prevState.callbacks.concat(cb)) || prevState.callbacks,
     }));
   };
 
@@ -63,29 +62,21 @@ const useFocus = () => {
   const [hashLocation, setHashLocation] = useState("");
 
   const open = (id: string) => {
+    open_overlay(() => window.history.go(-1));
     window.location.hash = id;
-    setHashLocation(id)
-  }
+    setHashLocation(id);
+  };
 
   useEffect(() => {
     const handler = (e) => {
       setHashLocation(window.location.hash);
-    }
-    window.addEventListener("hashchange", handler)
+      if (window.location.hash == "") {
+        setOverlay({ open: false, callbacks: [] });
+      }
+    };
+    window.addEventListener("hashchange", handler);
     return () => window.removeEventListener("hashchange", handler);
-  },[])
-
-  useEffect(() => {
-    if(hashLocation === "" || hashLocation ===""){
-      close_overlay()
-    }else{
-      open_overlay(() => open(""))
-    }
-  }, [hashLocation])
-
-  console.log("The focus is on ", isFocused)
-
-
+  }, []);
 
   return {
     size: resize,
@@ -95,7 +86,7 @@ const useFocus = () => {
     phase,
     setPhase,
     hashLocation,
-    setHashLocation: open
+    setHashLocation: open,
   };
 };
 

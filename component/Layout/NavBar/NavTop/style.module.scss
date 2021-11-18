@@ -5,11 +5,16 @@
   height: 40px;
   background-color: var(--body-background);
   border-bottom: var(--nav-bottom-line) solid var(--theme-color);
+  transition: transform var(--animation-duration) ease-in-out;
   & > div {
     position: relative;
     padding: 0 5px 0 15px;
   }
+  &.hidden {
+    transform: translateY(-150%) translateZ(0) !important;
+  }
 }
+
 
 @media (min-width: 570px) {
   .navTop {

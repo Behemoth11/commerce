@@ -32,7 +32,7 @@ export const checkForm = (formData, nonRequired, errors) => {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
 
-    if (nonRequired[key]) continue;
+    if (nonRequired[key] || formData[key] ) continue;
 
     if (Array.isArray(formData[key])) {
       let errorOnKey = 0;
@@ -42,16 +42,9 @@ export const checkForm = (formData, nonRequired, errors) => {
           errors.push(`${key} should be entirely field`);
         }
       });
-    } else if (typeof formData[key] === "object") {
-      const subStateObjectKeys = Object.keys(formData[key]);
-      subStateObjectKeys.forEach((subKey) => {
-        if (formData[key][subKey]?.length <= 0) {
-          errors.push(`${key} / ${subKey} should be field`);
-        }
-      });
-    }
+    } 
 
-    if (formData[key].length <= 0) errors.push(`${key} should be field`);
+    if (!formData[key]) errors.push(`${key} should be field`);
   }
 }
 

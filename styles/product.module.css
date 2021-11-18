@@ -139,8 +139,9 @@
 .description {
   width: 100%;
   padding: 10px;
-  color: white;
   font-size: 0.95em;
+  white-space: pre-wrap;
+  color: white;
   margin-top: var(--large-margin);
   border-radius: var(--border-radius);
   background-color: var(--accent-color-3);
@@ -149,11 +150,9 @@
 .description ~ p {
   font-size: 0.8em;
   margin-top: 0.5em;
-}
-
-.description ~ p span {
-  color: var(--accent-color);
-  text-decoration: underline;
+  white-space: pre-wrap span;
+  white-space-color: var(--accent-color);
+  white-space-text-decoration: underline;
 }
 
 .underline {

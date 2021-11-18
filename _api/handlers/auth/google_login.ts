@@ -17,17 +17,19 @@ const handle_google_login = async (req, res) => {
     const user = await getGoogleUser({ code });
     const { id, given_name, name, email, family_name } = user;
     const myUser = {
+      firstName: "",
       username: email,
       password: "google",
-      email: email,
       role: "user",
       lastName: family_name,
       Oauth: {
         method: "google",
         id,
       },
+      contact: {
+        email: email
+      },
       cart: [],
-      firstName: "",
     };
 
     const mongo_response = await User.findOneAndUpdate(
@@ -35,7 +37,7 @@ const handle_google_login = async (req, res) => {
       { $setOnInsert: myUser },
       {
         upsert: true,
-        returnNewDocument: true,
+        new: true,
       }
     );
 
@@ -43,7 +45,6 @@ const handle_google_login = async (req, res) => {
     const decodedToken = jwtDecode(token);
     // @ts-ignore
     const expiresAt = decodedToken.exp;
-
     const refreshToken = await createRefreshToken(mongo_response);
 
     res.setHeader(
@@ -52,18 +53,6 @@ const handle_google_login = async (req, res) => {
         365 * 24 * 60 * 60
       }`
     );
-
-    // @ts-ignore
-    const { firstName, lastName, username, role, cart, _id } = myUser;
-
-    const userData = {
-      firstName,
-      lastName,
-      username,
-      role,
-      cart,
-      _id,
-    };
 
     res.send(`
         <!DOCTYPE html>

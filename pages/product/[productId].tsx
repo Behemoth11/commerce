@@ -19,12 +19,16 @@ import {
 } from "../../Contexts/GlobalContext";
 import Alert from "../../component/popup/Alert";
 
-const getUrl = (array) => {
-  const query = array.map(
-    (element) => `representation=${element.split("menu ")[1]}`
-  );
-  return query.join("&");
-};
+// const getUrl = (array) => {
+//   const query = array.map(
+//     (element) => `representation=${element.split("menu ")[1]}`
+//   );
+//   return query.join("&");
+// };
+
+const INIT = Array.from({ length: 10 }).map((e) => ({
+  representation: "nothing",
+}));
 
 const Product: React.FC = () => {
   const {
@@ -32,11 +36,16 @@ const Product: React.FC = () => {
   } = useRouter();
 
   const User = useUser();
+  const auth = useAuthcontext();
   const myWindow = useMyWindow();
   const [data, setData] = useState<any>();
-  const auth = useAuthcontext();
+  const [relatedProducts, setRelatedProducts] = useState(INIT);
+  const [navigationItems, setNavigatioinItems] = useState(INIT);
 
   useEffect(() => {
+    setData(null);
+    setRelatedProducts(INIT);
+    setNavigatioinItems(INIT);
     const getProduct = async () => {
       if (!productId) return;
       const data = await fetch(`/api/product/withId/${productId}`).then((res) =>
@@ -47,11 +56,6 @@ const Product: React.FC = () => {
 
     getProduct();
   }, [productId]);
-
-  const [navigationItems, setNavigatioinItems] = useState(
-    Array.from({ length: 10 }).map((e) => ({ representation: "nothing" }))
-  );
-  const [relatedProducts, setRelatedProducts] = useState(undefined);
 
   useEffect(() => {
     const products = data?.products;
@@ -133,23 +137,25 @@ const Product: React.FC = () => {
         </div>
 
         <div>
-          {relatedProducts && relatedProducts.length > 0 && (
+          {relatedProducts && relatedProducts.length >= 0 && (
             <div className={styles.moreProduct}>
               <MoreProduct
                 items={relatedProducts}
-                title={"Similar"}
+                title={"Similaire a ce produit"}
                 preset="presetnone"
               />
             </div>
           )}
 
-          <div className={styles.moreProduct}>
-            <MoreProduct
-              preset={"preset1"}
-              items={navigationItems}
-              title={"What we offer"}
-            />
-          </div>
+          {navigationItems && navigationItems.length >= 0 && (
+            <div className={styles.moreProduct}>
+              <MoreProduct
+                preset={"preset1"}
+                items={navigationItems}
+                title={"Ce que nous vendons"}
+              />
+            </div>
+          )}
         </div>
       </main>
     </div>
@@ -175,6 +181,12 @@ interface productInformation {
     description: { head: string; info: string };
   };
   // addToCartAction: () => void;
+}
+
+const FR = {
+  tags: "tague",
+  color: "couleur disponiples",
+  materials: "materiaux",
 }
 
 const ProductInformation: React.FC<productInformation> = ({ product }) => {
@@ -281,7 +293,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
             <AddPopup />
           </Popup>
           <span>
-            {(items_is_in_cart && "Remove from Cart") || "Add to Cart"}
+            {(items_is_in_cart && "Remove from Cart") || "Ajouter au panier"}
           </span>
 
           <Loading
@@ -299,20 +311,24 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         </div>
 
         {["tags", "color", "materials"].map((detail) => (
-          <div className={styles.arrays} key={detail}>
-            <p>{detail} :</p>
-            {product[detail]?.map((tag, index) => (
-              <MyLink href={"/find?categories=all"} key={tag + index}>
-                <span
-                  onClick={() =>
-                    filters.setFilter({ [detail]: { [tag]: true } })
-                  }
-                >
-                  <a>{tag}</a>
-                </span>
-              </MyLink>
-            ))}
-          </div>
+          <>
+            {product[detail] && product[detail].length && (
+              <div className={styles.arrays} key={detail}>
+                <p>{FR[detail] } :</p>
+                {product[detail].map((tag, index) => (
+                  <MyLink href={"/find?categories=all"} key={tag + index}>
+                    <span
+                      onClick={() =>
+                        filters.setFilter({ [detail]: { [tag]: true } })
+                      }
+                    >
+                      <a>{tag}</a>
+                    </span>
+                  </MyLink>
+                ))}
+              </div>
+            )}
+          </>
         ))}
 
         <div className={styles.normal}>
@@ -356,7 +372,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         <a
           href={`https://api.whatsapp.com/send?phone=15312256403&text=${message.current}`}
         >
-          Contact Seller
+          Contacter le vendeur
         </a>
       </button>
     </div>

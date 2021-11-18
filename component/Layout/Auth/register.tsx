@@ -6,14 +6,24 @@ import { validatePassword, validateUsername } from "./validator";
 import { useTransition, animated, config } from "react-spring";
 import TPLogin from "./TPLogin";
 import Loading from "../../LoadingController/loading";
-import { useUser, useAuthcontext, useMyWindow } from "../../../Contexts/GlobalContext";
+import {
+  useUser,
+  useAuthcontext,
+  useMyWindow,
+} from "../../../Contexts/GlobalContext";
 
-const Register = ({ inputValue, setInputValue, setHeight }) => {
+const Register = ({
+  inputValue,
+  setInputValue,
+  setHeight,
+  active,
+  setActive,
+}) => {
   const [error, setError] = useState({});
   const [editState, setEditState] = useState("register");
 
-  const User = useUser()  
-  const auth = useAuthcontext()
+  const User = useUser();
+  const auth = useAuthcontext();
   const myWindow = useMyWindow();
 
   const handleSubmit = async () => {
@@ -42,11 +52,11 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      myWindow.setHashLocation("");
+      window.history.go(-1);
     } else setEditState("failure");
   };
 
-  const transition = useTransition(myWindow.hashLocation == "#register", {
+  const transition = useTransition(active, {
     enter: { x: "0%" },
     leave: { x: "100%" },
     from: { x: "100%" },
@@ -56,12 +66,11 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
   const myRef = useRef();
 
   useEffect(() => {
-    if (myWindow.hashLocation == "#register") {
-
+    if (active) {
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
-  }, [myWindow.hashLocation, error, myWindow.size]);
+  }, [active, error, myWindow.size]);
 
   return transition(
     (style, condition) =>
@@ -72,23 +81,24 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
           ref={myRef}
         >
           <div className={styles._formContainer}>
-            <h3> Register your accout</h3>
+            <h3> Creer a compte gratuit !</h3>
             <form className={styles.registerForm}>
               <div className={styles.two}>
                 <Input
                   error={error}
-                  name="First Name"
                   required={true}
+                  label={"prenom"}
+                  name="First Name"
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
                   defaultValue={inputValue["First Name"]}
-
                 />
                 <Input
                   error={error}
-                  name="Last Name"
                   required={true}
+                  label="non de famille"
+                  name="Last Name"
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
@@ -98,6 +108,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
               <Input
                 error={error}
                 name="username"
+                label="nom d'utilisateur"
                 required={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
@@ -109,6 +120,7 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
                 type="password"
                 name="password"
                 required={true}
+                label="mot de passe"
                 allowCapitalCase={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
@@ -116,23 +128,21 @@ const Register = ({ inputValue, setInputValue, setHeight }) => {
               />
               <div className={styles.terms}>
                 <p>
-                  By registering, you agree with our{" "}
-                  <span>The term of utilisations</span>
+                  En creant un compte vous accepter
+                  <span>condition d'utilisations</span> et politique de
+                  confidentialité
                 </p>
               </div>
             </form>
             <button className={styles.validate} onClick={handleSubmit}>
-            <span>Register</span>
+              <span>Creer mon compte</span>
               <Loading width={editState == "loading" ? "4em" : "0"} />
             </button>
-            <div
-              className={styles.else}
-              onClick={() => myWindow.setHashLocation("#login")}
-              >
-              <p>Already have an accout?</p>
-              <span>Login into you acout</span>
+            <div className={styles.else} onClick={() => setActive("login")}>
+              <p>Vous avez deja un compte</p>
+              <span>conectez vous a votre compte</span>
             </div>
-              <TPLogin setEditState={setEditState} />
+            <TPLogin setEditState={setEditState} />
           </div>
         </animated.div>
       )

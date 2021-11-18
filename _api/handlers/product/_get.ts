@@ -1,6 +1,7 @@
 import { string_and_array_to_array } from "../../../shared/UtilityFunctions";
 import { Product } from "../../models";
 import cloudinary from "../../utils/cloudinary";
+import search from "./helper";
 
 const handle_get = async (req, res) => {
   const query = req.query;
@@ -22,13 +23,18 @@ const handle_get = async (req, res) => {
   delete query.limit;
   delete query.field;
 
+  let is_a_text_search = false;
+
   const keys = Object.keys(query);
   const searchQuery: { [key: string]: {} } = {};
 
-
   if (query.ne) {
     searchQuery._id = { $ne: query.ne };
-    delete query.ne
+    delete query.ne;
+  }
+
+  if (query.categories && query.categories[0] === "search") {
+    is_a_text_search = true;
   }
 
   for (let i = 0; i < keys.length; i++) {
@@ -45,11 +51,7 @@ const handle_get = async (req, res) => {
         }
         break;
       case "categories":
-        const categories = string_and_array_to_array(query.categories);
-        if (categories[0] === "search") {
-          searchQuery["$text"] = { $search: categories[1] };
-          break;
-        }
+        if (is_a_text_search) break;
         searchQuery[key] = { $all: string_and_array_to_array(query[key]) };
         break;
       default:
@@ -57,8 +59,20 @@ const handle_get = async (req, res) => {
     }
   }
 
+  if (is_a_text_search) {
+    const { products, more } = await search(query.categories[1], searchQuery, {
+      limit,
+      field,
+      page,
+    });
+    return res.status(200).json({
+      products,
+      more,
+    });
+  }
+
   let products = await Product.find(searchQuery, field)
-    .sort({addedAt: 1})
+    .sort({ addedAt: 1 })
     .skip(page * limit)
     .limit(limit + 1)
     .lean()

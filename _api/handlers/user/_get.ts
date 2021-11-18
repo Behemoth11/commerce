@@ -7,14 +7,15 @@ const handle_get = async (req, res) => {
 
   if (user_id) {
     // @ts-ignore
-    const { username, lastname, phoneNumber } = await User.findById({
+    const { username, firstName, lastName, contact } = await User.findById({
       _id: req.user._id,
     });
     return res.json({
       userData: {
         username,
-        lastname,
-        phoneNumber,
+        lastName,
+        firstName,
+        contact,
       },
     });
   }
@@ -26,7 +27,7 @@ const handle_get = async (req, res) => {
     
   try {
     // @ts-ignore
-    const { username, firstName, _id, lastName, cart, role } =
+    const { username, firstName, _id, lastName, cart, role, contact } =
       await User.findById({
         _id: req.user._id,
       });
@@ -36,6 +37,7 @@ const handle_get = async (req, res) => {
         firstName,
         username,
         lastName,
+        contact,
         role,
         cart,
         _id,

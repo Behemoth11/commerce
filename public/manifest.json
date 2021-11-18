@@ -1,12 +1,12 @@
 {
-    "theme_color": "#0f0f13",
+    "theme_color": "#ed3277",
     "background_color": "#ebebf2",
     "display": "standalone",
     "scope": "/",
     "start_url": "/",
     "name": "KdShop",
     "short_name": "KdShop",
-    "description": "Super cool app",
+    "description": "KdShop official app",
     "icons": [
         {
             "src": "/icon-192x192.png",

@@ -24,21 +24,26 @@ const handle_put = async (req, res) => {
   } else {
     const updatedUser = await User.updateOne(
       { _id: req.user._id },
-      { $set: {
-        firstName: body.firstName,
-        username: body.username,
-        lastName: body.lastName,
-        phoneNumber: body.phoneNumber,
-        email: body.email,
-      } }
-    ).catch(err => console.log(err));
+      {
+        $set: {
+          firstName: body.firstName,
+          username: body.username,
+          lastName: body.lastName,
+          contact: {
+            phoneNumber: body.phoneNumber,
+            email: body.email,
+          },
+        },
+      }
+    );
 
-    const use = await User.findOne({
-      _id: req.user._id
-    })
-// console.log(use)
-// console.log(body.firstName)
-//     console.log(updatedUser)
+    if (updatedUser.modifiedCount >= 1) {
+      res.status(200).json({ message: "success full update" });
+    } else {
+      res.status(501).json({
+        message: "Item already exists",
+      });
+    }
   }
 };
 

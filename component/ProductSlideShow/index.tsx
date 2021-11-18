@@ -41,7 +41,7 @@ const getNumberOfTracker: (
 const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
   const [tracker, setTracker] = useState<string[]>(undefined);
   const [index, _setIndex] = useState<number>(0);
-  const myWindow = useMyWindow()
+  const myWindow = useMyWindow();
   const indexRef = useRef(0);
 
   const setIndex = (payload) => {
@@ -107,12 +107,11 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
   useEffect(() => {
     if (!sliderRef?.current) return;
     setTracker(getNumberOfTracker(sliderRef, childrenImgRef));
-  }, [myWindow.size,imageUrls]);
+  }, [myWindow.size, imageUrls]);
 
   useEffect(() => {
-    setIndex(0);
-    // console.log(imageUrls, "the urls")
-  },[imageUrls])
+    update(0, false);
+  }, [imageUrls]);
 
   const [coordinate, _setCoordinate] = useState({ x: 0, y: 0 });
   const coordinateRef = useRef({ x: 0, y: 0, scroll: 0 });

@@ -6,7 +6,7 @@ module.exports = withPWA({
     dest: "public",
     register: true,
     skipWaiting: true,
-    disable: true,
+    disable: process.env.VERCEL_ENV === "development",
   },
   i18n: {
     locales: ["en"],

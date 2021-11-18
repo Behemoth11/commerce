@@ -9,7 +9,7 @@ const MultipleImageInput = ({
   submitCount,
   setInputValue,
 }) => {
-  const imageData = inputValue[name] || ["", ""];
+  const imageData = inputValue[name] || [];
 
   const loadMyPowerToAddMultipleFiles = (e) => {
     let cleared = false;
@@ -81,7 +81,7 @@ const MultipleImageInput = ({
           required
         />
         <label htmlFor={`${name}-multiple-input`}>
-          Add Multiple ({inputValue[name]?.length})
+          Add Multiple files
         </label>
       </div>
     </>

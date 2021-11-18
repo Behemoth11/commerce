@@ -22,26 +22,43 @@ export const getCategories = (object, keys) => {
 
 export const categories = {
   women: {
-    title: "women",
-    content: ["bags", "watches", "jewelries", "shoes"],
-  },
-  men: {
-    title: "men",
-    content: ["suit", "pant", "short", "cap", "shoes"],
-  },
-  kids: {
-    title: "kids",
-    content: ["short", "underwear", "children", "leverages"],
-  },
-  utilities: {
-    title: "utilities",
-    content: ["pot", "plates", "ustensils"],
-    ustensils: {
-      title: "ustensils",
-      content: ["spoons", "fork", "knifes"],
+    title: "femme",
+    content: ["pagne", "robe", "jupe", "bijoux"],
+    bijou: {
+      title: "bijoux",
+      content: ["bracelet", "chainette"],
     },
   },
+  men: {
+    title: "homme",
+    content: [
+      "veste",
+      "pagne",
+      "pantalons",
+      "chemise",
+      "chapeau",
+      "chaussures",
+    ],
+  },
+  kids: {
+    title: "enfant",
+    content: ["sac", "chemise", "pantalons", "t-shirts"],
+  },
+  utilities: {
+    title: "ustensils",
+    content: ["cuisine"],
+  },
 };
+
+// utilities: {
+//   title: "ustensils",
+//   content: ["pot", "plates", "ustensils"],
+//   ustensils: {
+//     title: "ustensils",
+//     content: ["spoons", "fork", "knifes"],
+//   },
+// },
+// };
 
 export const navBarSections = {
   menu: {
@@ -86,16 +103,13 @@ export const REPRESENTATIONS = getRepresentations(
 export const getRelated = (_categories) => {
   let navigationQuery;
 
-  if (_categories=="all") navigationQuery = [" women", " men", " kids", " utilities"," posts"," cars"," and"," laptop"];
-    
-  else  navigationQuery = REPRESENTATIONS.filter((representation) => {
-    return string_and_array_to_array(_categories)?.some((categorie) => {
-      return new RegExp(categorie, "i").test(representation);
+  if (_categories == "all")
+    navigationQuery = [" femme", " homme", " enfant", " bijoux", " ustensils"];
+  else
+    navigationQuery = REPRESENTATIONS.filter((representation) => {
+      return string_and_array_to_array(_categories)?.some((categorie) => {
+        return new RegExp(categorie, "i").test(representation);
+      });
     });
-  });
-
-  // console.log("the navigation query", navigationQuery)
-
-
   return navigationQuery.map((e) => `representation=${e.slice(1)}`).join("&"); //we slice here because there is a space at the beginning of the string
 };

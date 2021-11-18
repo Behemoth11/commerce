@@ -47,7 +47,7 @@ const TextArea: React.FC<InputProps> = ({
             inputStyles.failure
           }`}
         />
-        <label htmlFor={name}>{name}</label>
+        <label htmlFor={name}>{name} {!required && "(optional)"}</label>
       </div>
     </>
   );
