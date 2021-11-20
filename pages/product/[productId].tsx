@@ -327,7 +327,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
                   </MyLink>
                 ))}
               </div>
-            )}
+            ) || ""}
           </>
         ))}
 

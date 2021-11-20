@@ -56,24 +56,24 @@ const useFocus = () => {
     open: open_overlay,
     isOpen: overlay_state.open,
   };
-
-  //inpage navigation
-
   const [hashLocation, setHashLocation] = useState("");
 
   const open = (id: string) => {
-    open_overlay(() => window.history.go(-1));
     window.location.hash = id;
     setHashLocation(id);
   };
 
   useEffect(() => {
-    const handler = (e) => {
+    const handler = () => {
       setHashLocation(window.location.hash);
       if (window.location.hash == "") {
         setOverlay({ open: false, callbacks: [] });
+      } else {
+        open_overlay(() => window.history.go(-1));
       }
     };
+
+    handler();
     window.addEventListener("hashchange", handler);
     return () => window.removeEventListener("hashchange", handler);
   }, []);

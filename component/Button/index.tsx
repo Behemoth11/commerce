@@ -1,14 +1,16 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import { memo, FC } from "react";
+import { memo, FC, ReactNode } from "react";
 
 interface Props {
   label?: String;
   type?: any;
   onClick?: (e) => void;
+  style?: {};
+  childern?: ReactNode
 }
 
-const Button: FC<Props> = ({ label, onClick, type }) => {
+const Button: FC<Props> = ({ label, onClick, type, style, children }) => {
   return (
     <button
       className={`${styles.container} ${styles[type]}`}
@@ -16,8 +18,10 @@ const Button: FC<Props> = ({ label, onClick, type }) => {
         e.preventDefault();
         onClick(e);
       }}
+
+      style={style||{}}
     >
-      {label || "Button"}
+      {children || label|| "Button"}
     </button>
   );
 };

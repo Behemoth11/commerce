@@ -19,7 +19,6 @@ const handle_google_login = async (req, res) => {
     const myUser = {
       firstName: "",
       username: email,
-      password: "google",
       role: "user",
       lastName: family_name,
       Oauth: {

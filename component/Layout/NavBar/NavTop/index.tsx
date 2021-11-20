@@ -371,7 +371,7 @@ const Account = () => {
                 myWindow.setHashLocation("#auth");
               }}
             >
-              <p>se connecter</p>
+              <p>connect</p>
             </button>
           </div>
         )}

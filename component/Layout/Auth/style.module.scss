@@ -6,14 +6,11 @@
 
 .prompt {
   width: unquote("min(500px, 90%)");
-  transform: translate(-50%, -60%);
+  transform: translateX(-50%);
   position: fixed;
   overflow: hidden;
   left: 50%;
-  top: 50%;
-  // transition-property: opacity;
-  // transition-duration: var(--animation-duration);
-  // transition-timing-function: ease-in-out;
+  top: min(3em,10vh);
   transition: opacity var(--fast-animation-duration) ease-in-out;
   h3 {
     margin-bottom: 1.2em;
@@ -26,7 +23,6 @@
 
   &.closed{
     opacity: 0;
-    // pointer-events: none;
   }
 }
 
@@ -69,6 +65,9 @@
 
 .formContainer {
   width: 100%;
+  overflow: auto;
+  will-change: auto;
+  max-height: 90vh;
   position: absolute;
   border-radius: var(--border-radius);
   background-color: white;

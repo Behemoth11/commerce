@@ -27,7 +27,7 @@
   margin: var(--padding) 0;
   -ms-grid-columns: 20% 60% 20%;
       grid-template-columns: 20% 60% 20%;
-  background-color: var(--accent-color-4);
+  background-color: var(--accent-color-5);
 }
 
 .imageContainer {
@@ -58,7 +58,7 @@
 }
 
 .rm {
-  background-color: var(--accent-color-3);
+  background-color: var(--theme-color-4);
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
@@ -76,7 +76,10 @@
 }
 
 .price {
-  text-shadow: 0.05em 0.05em 0.2em var(--accent-color-2);
+  color: white;
+  padding: 0 var(--padding);
+  border-radius: var(--border-radius);
+  background-color: var(--theme-color-1);
 }
 
 .buyPrompt {

@@ -351,6 +351,25 @@
           transform: translate(0, -50%) rotateZ(-45deg);
 }
 
+.optionContainer {
+  padding: var(--padding);
+  background-color: white;
+  max-width: 50ch;
+  width: 80vw;
+}
+
+.optionContainer h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.3em;
+  color: var(--theme-color-2);
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.optionContainer label {
+  margin-bottom: 1em;
+}
+
 .utilState {
   height: 100vh;
 }

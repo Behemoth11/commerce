@@ -11,6 +11,7 @@ import {
   useAuthcontext,
   useMyWindow,
 } from "../../../Contexts/GlobalContext";
+import { add_captchat_token } from "../../../shared/shared_functions";
 
 const Register = ({
   inputValue,
@@ -42,6 +43,7 @@ const Register = ({
     }
     setEditState("loading");
 
+    await add_captchat_token(data)
     const registerResponse = await axios
       .post("/api/auth/register", data)
       .catch((err) => setError({ username: [err.response.data.message] }));

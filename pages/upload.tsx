@@ -21,7 +21,14 @@ import { checkForm, formatUrl } from "../shared/UtilityFunctions";
 import ImageInput from "../component/Inputs/ImageInput";
 import LoadingController from "../component/LoadingController";
 import MultipleImageInput from "../component/Inputs/MultipleImageInput";
-import { useAuthcontext } from "../Contexts/GlobalContext";
+import { useAuthcontext, useMyWindow } from "../Contexts/GlobalContext";
+import CaptChat from "../component/CaptChat";
+import { add_captchat_token } from "../shared/shared_functions";
+import Expend from "../component/popup/Expend";
+import CheckBoxes from "../component/Inputs/CheckBoxes";
+import Button from "../component/Button";
+import PopupExpendPreset from "../component/popup/Expend/preset";
+import Box from "../component/Inputs/CheckBoxes/box";
 
 type edit = "upload" | "update" | "loading" | "success" | "error";
 
@@ -49,6 +56,7 @@ function Upload() {
   const { query } = useRouter();
 
   const auth = useAuthcontext();
+  const myWindow = useMyWindow();
   const [editState, _setEditState] = useState<edit>("upload");
   const editRef = useRef<edit>("upload");
 
@@ -109,6 +117,10 @@ function Upload() {
 
   const [submitCount, setSubmitCount] = useState<number>(0);
   const [inputValue, setInputValue] = useState<{}>({});
+  const [meta, setMeta] = useState<{}>({});
+  const [defaultMeta, setDefaultMeta] = useState<{}>({
+    upload_options: { upload: true },
+  });
   const [errMsg, setErrMsg] = useState<string[]>([]);
   const handleChange = (value: any, name) => {
     setInputValue((prevInput) => ({ ...prevInput, [name]: value }));
@@ -140,6 +152,8 @@ function Upload() {
     let res;
     _setEditState("loading");
 
+    await add_captchat_token(inputValue);
+
     if (editRef.current == "update") {
       res = await auth.axios
         .put(`/api/product/withId/${query._id}`, inputValue)
@@ -167,6 +181,18 @@ function Upload() {
         setErrMsg([res.data.message || res.data]);
       }
     } else setEditState("failure");
+  };
+
+  const handleOptionChange = (name, label) => {
+    setMeta((prevState) => {
+      let myState = prevState[name] || {};
+      myState = { ...myState };
+      const oldValue = myState[label] || false;
+
+      myState[label] = !oldValue;
+
+      return { ...prevState, [name]: myState };
+    });
   };
 
   return (
@@ -202,7 +228,6 @@ function Upload() {
                 </p>
               ))}
             </div>
-
             <Errors errMsg={errMsg} />
             <Input
               required={true}
@@ -222,7 +247,6 @@ function Upload() {
               submitCount={submitCount}
               setInputValue={setInputValue}
             />
-
             {/* array should be inputed as string with a separator that can either be determined here or on the server */}
             {"categories".split("/").map((element) => (
               <InputArray
@@ -235,7 +259,6 @@ function Upload() {
                 setInputValue={setInputValue}
               />
             ))}
-
             <Input
               name={"price"}
               required={true}
@@ -252,7 +275,6 @@ function Upload() {
               submitCount={submitCount}
               setInputValue={setInputValue}
             />
-
             {"color/materials/tags".split("/").map((element) => (
               <InputArray
                 key={element}
@@ -264,7 +286,6 @@ function Upload() {
                 setInputValue={setInputValue}
               />
             ))}
-
             <Input
               name="location"
               required={false}
@@ -273,7 +294,6 @@ function Upload() {
               proposition={proposition}
               setInputValue={setInputValue}
             />
-
             <Input
               required={false}
               name="representation"
@@ -282,15 +302,109 @@ function Upload() {
               proposition={proposition}
               setInputValue={setInputValue}
             />
-
             <MultipleImageInput
               name={"images"}
               inputValue={inputValue}
               submitCount={submitCount}
               setInputValue={setInputValue}
             />
-            <div className="container flex center-children">
-              <button onClick={handleSubmit} className={styles.submit}>
+
+            <CaptChat />
+
+            <div
+              className="container flex center-children"
+              style={{ position: "relative" }}
+            >
+              <PopupExpendPreset
+                top_prop={20}
+                width="90vw"
+                visible={myWindow.hashLocation == "#single_post_preview"}
+                closePopup={() => window.history.go(-1)}
+                header={"Reviser l'apparence du post"}
+                close={() => window.history.go(-1)}
+                next={(e) => {
+                  window.history.go(-2);
+                  handleSubmit(e);
+                }}
+              >
+                <div>
+                  <TextArea
+                    required={true}
+                    inputValue={meta}
+                    name={"faceboo_post"}
+                    setInputValue={setMeta}
+                  />
+                  <ImageInput
+                    name=""
+                    position={0}
+                    imageLink={
+                      inputValue["presentationImage"] &&
+                      inputValue["presentationImage"][0]
+                    }
+                    submitCount={undefined}
+                    setInputValue={undefined}
+                  />
+
+                </div>
+              </PopupExpendPreset>
+
+              <PopupExpendPreset
+                top_prop={50}
+                width="80vw"
+                visible={myWindow.hashLocation == "#upload_options"}
+                closePopup={() => window.history.go(-1)}
+                header={"Decider de vos customisations."}
+                close={() => window.history.go(-1)}
+                next={(e) => {
+                  window.history.go(-1);
+                  handleSubmit(e);
+                }}
+              >
+                <Box
+                  id={"option_upload_to_facebook"}
+                  name={"upload"}
+                  checked={
+                    (meta["upload_options"] &&
+                      meta["upload_options"]["upload"]) ||
+                    false
+                  }
+                  label={"Ajouter cet article a votre page facebook"}
+                  onChange={() =>
+                    handleOptionChange("upload_options", "upload")
+                  }
+                />
+                <div style={{ display: "inline-block" }}>
+                  <Button
+                    style={{ margin: 0 }}
+                    label="editer le post"
+                    onClick={() =>
+                      myWindow.setHashLocation("#single_post_preview")
+                    }
+                  />
+                </div>
+
+                <Box
+                  id={"add_to_facebook_poste"}
+                  name={"post_with_group"}
+                  checked={
+                    (meta["upload_options"] &&
+                      meta["upload_options"]["post_with_group"]) ||
+                    false
+                  }
+                  label={"Grouper cet article pour un poste de groupe"}
+                  onChange={() =>
+                    handleOptionChange("upload_options", "post_with_group")
+                  }
+                />
+              </PopupExpendPreset>
+
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  myWindow.setHashLocation("#upload_options");
+                }}
+                className={styles.submit}
+              >
                 <span>Submit</span>
               </button>
             </div>

@@ -1,3 +1,4 @@
+import { blockBot } from "./../../middleware/blockBot";
 import PUT from "./_put";
 import GET from "./_get";
 import POST from "./_post";
@@ -8,11 +9,22 @@ import { createHandler } from "../../middleware/helpers";
 import { enforceRole } from "../../middleware/enforceRole";
 import { addUser } from "../../middleware/addUser";
 
-export const PUT_handler = createHandler(addUser, enforceRole("seller"), PUT);
-export const POST_handler = createHandler(addUser, enforceRole("seller") ,POST);
+export const PUT_handler = createHandler(
+  addUser,
+  enforceRole("seller"),
+  blockBot,
+  PUT
+);
+export const POST_handler = createHandler(
+  addUser,
+  enforceRole("seller"),
+  blockBot,
+  POST
+);
 export const DELETE_handler = createHandler(
   addUser,
   enforceRole("seller"),
+  blockBot,
   DELETE
 );
 export const GET_handler = GET;

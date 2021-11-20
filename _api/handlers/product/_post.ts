@@ -4,10 +4,10 @@ import cloudinary, { uploadMany } from "../../utils/cloudinary";
 const handle_post = async (req, res) => {
   const data = req.body;
   const error = [];
-
+  
   const [pr_image_url, all_pr_image_url] = await Promise.all([
     await uploadMany(data["presentationImage"],error,{}).catch((err) => error.push(err.message)),
-    await uploadMany(data["images"], error,{}).catch((err) => error.push(err.message)),
+    await uploadMany(data["images"]||[], error,{}).catch((err) => error.push(err.message)),
   ]);
 
 

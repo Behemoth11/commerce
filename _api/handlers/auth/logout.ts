@@ -11,9 +11,7 @@ const handle_logout = async (req, res) => {
     token: cookies.z_model_23,
   });
 
-  // console.log(erasedToken);
-  // console.log(cookies);
-  // console.log(cookies.z_model_23);
+  
 
   if (erasedToken) {
     res.setHeader(

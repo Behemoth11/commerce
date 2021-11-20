@@ -15,8 +15,3 @@ export const refreshToken = new Schema({
     default:new Date(),
   }
 });
-
-// @ts-ignore
-// mongoose.models = {};
-// var RefreshToken = mongoose.model('refreshToken', refreshToken);
-// export default RefreshToken;

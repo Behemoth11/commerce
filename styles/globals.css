@@ -324,3 +324,7 @@ img {
             transform: translate(130%);
   }
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}

@@ -19,8 +19,3 @@ export const contactMessage = new Schema({
     ref: "User"
   }
 });
-
-// @ts-ignore
-mongoose.models = {};
-var ContactMessage = mongoose.model('ContactMessage', contactMessage);
-export default ContactMessage;

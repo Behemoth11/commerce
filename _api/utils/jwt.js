@@ -13,8 +13,8 @@ export const createToken = user => {
     {
       _id: user._id,
       role: user.role,
-      iss: 'KdShop.danielkodoh.repl.co',
-      aud: 'KdShop.danielkodoh.repl.co'
+      iss: process.env.VERCEL_URL,
+      aud: process.env.VERCEL_URL
     },
     process.env.JWT_SECRET,
     { algorithm: 'HS256', expiresIn: '1h' }
@@ -33,8 +33,8 @@ export const createRefreshToken = async user => {
       _id: user._id,
       username: user.username,
       role: user.role,
-      iss: 'KdShop.danielkodoh.repl.co',
-      aud: 'KdShop.danielkodoh.repl.co'
+      iss: process.env.VERCEL_URL,
+      aud: process.env.VERCEL_URL,
     },
     process.env.JWT_REFRESH_TOKEN_SECRET,
     { algorithm: 'HS256'}

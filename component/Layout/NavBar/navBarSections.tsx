@@ -64,9 +64,9 @@ export const navBarSections = {
   menu: {
     ...categories,
     title: "menu",
-    content: ["femme", "homme", "enfant", "ustensils", "tout les articles"],
-    all: {
-      title: "tout les articles",
+    content: ["femme", "homme", "enfant", "ustensils", "tous"],
+    tous: {
+      tous: "tous",
       content: getCategories(categories, ["femme", "homme", "enfant", "ustensils"]),
     },
   },
@@ -103,7 +103,7 @@ export const REPRESENTATIONS = getRepresentations(
 export const getRelated = (_categories) => {
   let navigationQuery;
 
-  if (_categories == "all")
+  if (_categories == "tous")
     navigationQuery = [" femme", " homme", " enfant", " bijoux", " ustensils"];
   else
     navigationQuery = REPRESENTATIONS.filter((representation) => {

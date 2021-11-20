@@ -38,10 +38,11 @@ const InputArray: React.FC<InputProps> = ({
     if (data.length <= 0) return;
     setPersonalState("");
     setInputValue((prevState) => {
-      if (new RegExp(data, "i").test(prevState[name])) return prevState;
+      const previous_value = prevState[name] || []
+      if (new RegExp(data, "i").test(previous_value)) return prevState;
       return {
         ...prevState,
-        [name]: [...prevState[name], data],
+        [name]: [...previous_value, data],
       };
     });
   };

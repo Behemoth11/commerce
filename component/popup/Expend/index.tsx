@@ -50,24 +50,20 @@ const Expend = ({ visible, children, top_prop, closePopup }) => {
         height: childDimensions.height + "px",
         left: __next.clientWidth / 2 - childDimensions.width / 2 + "px",
         top:
-          (top_prop || __next.clientHeight / 2 - childDimensions.height / 2) +
+          Math.max(0, (top_prop || __next.clientHeight / 2 - childDimensions.height / 2)) +
           "px",
       });
     } else {
       api.start({
         opacity: 0,
-        top: position.top + "px",
+        top: Math.min(__next.clientHeight - 100 , position.top) + "px",
         left: position.left + "px",
         width: position.width + "px",
         height: position.height + "px",
       });
     }
   }, [visible]);
-  // const transition = useTransition(visible, {
-  //   from: { opacity: 0 },
-  //   enter: { opacity: 1 },
-  //   leave: { opacity: 0 },
-  // });
+
 
   return (
     <animated.div

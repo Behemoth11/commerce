@@ -56,3 +56,23 @@ export const compare = (obj1, obj2) => {
   }
   return true;
 };
+
+export const add_captchat_token = async (input) => {
+  if (!input) throw new Error("The input to log the token was empty");
+
+  //@ts-ignore
+  const captchat = window.grecaptcha;
+  const captchat_token = await new Promise((resolve, reject) => {
+    captchat.ready(function () {
+      captchat
+        .execute("6Lc-lUMdAAAAALrqJdMgC82t5NuX9BfPXfk2aGyP", {
+          action: "submit",
+        })
+        .then(function (token) {
+          resolve(token);
+        });
+    });
+  });
+
+  input["captchat_token"] = captchat_token;
+};
