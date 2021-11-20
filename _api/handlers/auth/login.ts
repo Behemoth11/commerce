@@ -1,6 +1,8 @@
 import Cookies from "cookies";
 import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
+import { blockBot } from "../../middleware/blockBot";
+import { createHandler } from "../../middleware/helpers";
 import {User} from "../../models";
 import {
   createToken,
@@ -61,4 +63,6 @@ const handle_login = async (req, res) => {
   }
 };
 
-export default handle_login;
+export default createHandler(blockBot, handle_login);
+
+

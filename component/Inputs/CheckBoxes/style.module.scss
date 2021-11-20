@@ -1,0 +1,44 @@
+.error {
+    width: 70%;
+    color: red;
+    font-size: 0.7em;
+    text-align: right;
+    margin-left: auto;
+}
+
+.inputContainer {
+    width: 100%;
+}
+
+
+
+.c_b {
+    label {
+        display: flex;
+        align-items: center;
+        margin: 1em 0;
+        text-transform: capitalize;
+
+        span {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            margin-right: 0.7em;
+            border: 1.3px solid #0f0f137d;
+            transition: border-radius 0.1s ease-in-out,
+                background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
+        }
+    }
+
+    input {
+        display: none;
+    }
+
+    input:checked~label {
+        span {
+            border-radius: 3px;
+            background-color: var(--accent-color);
+            border: 1.3px solid #6060657d;
+        }
+    }
+}

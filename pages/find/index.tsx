@@ -23,7 +23,7 @@ const createUrl = (_categories, filters) => {
   if (!_categories) return;
 
   const categories = string_and_array_to_array(_categories).filter(
-    (category) => category != "all"
+    (category) => category != "tous"
   );
   const categoriesQuery = categories
     .map((category) => `categories=${category}`)
@@ -80,7 +80,7 @@ function FindContent() {
         router.push(
           {
             pathname: router.pathname,
-            query: { ...router.query, categories: "all" },
+            query: { ...router.query, categories: "tous" },
           },
           undefined,
           { shallow: true }

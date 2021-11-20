@@ -19,6 +19,11 @@ function MyApp({ Component, pageProps }) {
           defer
           src="https://connect.facebook.net/fr_FR/sdk/xfbml.customerchat.js"
         ></Script>
+        <Script
+          async
+          defer
+          src={`https://www.google.com/recaptcha/api.js?render=6Lc-lUMdAAAAALrqJdMgC82t5NuX9BfPXfk2aGyP`}
+        ></Script>
         <Component {...pageProps} />
       </Layout>
     </GlobalContextProvider>

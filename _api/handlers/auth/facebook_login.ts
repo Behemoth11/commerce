@@ -62,7 +62,7 @@ const handle_facebook_login = async (req, res) => {
     _id,
   };
 
-  res.send({ userData, token });
+  res.send({ userData, token: {value: token, expiresAt} });
   return;
 };
 

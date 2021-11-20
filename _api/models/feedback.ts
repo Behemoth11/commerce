@@ -11,8 +11,3 @@ export const feedback = new Schema({
     required: true,
   }
 });
-
-// @ts-ignore
-mongoose.models = {};
-var Feedback = mongoose.model('Feedback', feedback);
-export default Feedback;

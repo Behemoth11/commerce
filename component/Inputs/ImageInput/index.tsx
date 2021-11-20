@@ -85,7 +85,7 @@ const ImageInput = ({
           accept="image/*"
         />
         {formatedImageLink?.length}
-        <label htmlFor={name + position + "0"}>{name}</label>
+        {name.length && <label htmlFor={name + position + "0"}>{name}</label>}
       </div>
     </div>
   );

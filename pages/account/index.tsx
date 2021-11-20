@@ -190,11 +190,11 @@ const ProfileEdit = () => {
         defaultValue={User.data?.contact?.email}
       />
       <Button
-        label={"Cancel"}
+        label={"retour"}
         type="type1"
         onClick={() => window.history.go(-1)}
       />
-      <Button label={"Save"} onClick={handleSave} />
+      <Button label={"sauvegarder"} onClick={handleSave} />
     </form>
   );
 };

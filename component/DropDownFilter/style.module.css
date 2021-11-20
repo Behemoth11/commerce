@@ -31,7 +31,6 @@
 }
 
 .label {
-  font-size: var(--font-size);
   text-transform: capitalize;
   height: var(--height);
   font-style: oblique;

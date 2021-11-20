@@ -64,7 +64,8 @@ body {
   width: 100%;
   color: rgb(213, 9, 9);
   overflow: hidden;
-  & > div {
+
+  &>div {
     overflow: auto;
   }
 }
@@ -73,10 +74,12 @@ h1 {
   font-size: var(--larger-font-size);
   font-weight: 100;
 }
+
 h2 {
   font-size: 1.5em;
   font-weight: 100;
 }
+
 h3 {
   font-size: 1.1em;
   font-weight: normal;
@@ -89,10 +92,12 @@ h6 {
   font-size: 1em;
   font-weight: normal;
 }
+
 a {
   color: inherit;
   text-decoration: none;
 }
+
 button {
   border: none;
   background-color: transparent;
@@ -131,11 +136,13 @@ img {
   border-radius: 5px;
   color: white;
   padding: var(--padding) var(--large-padding);
+
   &:active {
     background-color: white;
     color: black;
   }
 }
+
 .max-height {
   height: 100%;
 }
@@ -145,11 +152,12 @@ img {
   width: 100%;
 }
 
-.c-at{
+.c-at {
   color: var(--accent-color);
   text-decoration: underline;
 }
-.c-th-5{
+
+.c-th-5 {
   color: var(--theme-color-3);
 }
 
@@ -166,6 +174,7 @@ img {
   display: flex;
   flex-direction: column;
 }
+
 .center-children {
   align-items: center;
   justify-content: center;
@@ -205,7 +214,7 @@ img {
   flex-shrink: 0;
 }
 
-.show{
+.show {
   position: fixed;
   background-color: black;
   color: white;
@@ -221,6 +230,7 @@ img {
     display: none !important;
   }
 }
+
 @media (min-width: 650px) {
   .sm {
     display: none !important;
@@ -250,6 +260,7 @@ img {
 .blue {
   background-color: blue;
 }
+
 .green {
   background-color: green;
 }
@@ -264,15 +275,14 @@ img {
   color: transparent;
   border-radius: 3px;
   background-color: hsl(0, 0%, 97%);
+
   &::after {
     content: "";
     z-index: 0;
-    background: linear-gradient(
-      to left,
-      hsl(0, 0%, 97%),
-      hsl(0, 0%, 100%),
-      hsl(0, 0%, 97%)
-    );
+    background: linear-gradient(to left,
+        hsl(0, 0%, 97%),
+        hsl(0, 0%, 100%),
+        hsl(0, 0%, 97%));
     background-repeat: no-repeat;
     position: absolute;
     height: 100%;
@@ -287,7 +297,13 @@ img {
   0% {
     transform: translate(-530%);
   }
+
   100% {
     transform: translate(130%);
   }
+}
+
+
+.grecaptcha-badge {
+  visibility: hidden;
 }

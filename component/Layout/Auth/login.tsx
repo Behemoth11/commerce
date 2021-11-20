@@ -11,6 +11,8 @@ import {
   useAuthcontext,
   useMyWindow,
 } from "../../../Contexts/GlobalContext";
+import { add_captchat_token } from "../../../shared/shared_functions";
+import CaptChat from "../../CaptChat";
 
 const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
   const [error, setError] = useState({});
@@ -32,10 +34,12 @@ const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
     }
     setEditState("loading");
 
+    await add_captchat_token(data);
+    
     const loginResponse = await axios
       .post("/api/auth/login", data)
       .catch((err) => {
-        setError({ global: "wrong User name or password" });
+        setError({ global: err.response.data.message });
       });
 
     if (loginResponse && loginResponse.data.userData) {
@@ -94,6 +98,7 @@ const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
                 setInputValue={setInputValue}
                 defaultValue={inputValue["password"]}
               />
+              <CaptChat/>
             </form>
             {
               //@ts-ignore

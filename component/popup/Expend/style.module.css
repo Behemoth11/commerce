@@ -21,7 +21,6 @@
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  max-height: 80vh;
 }
 
 .overlay {
@@ -32,4 +31,24 @@
   bottom: 0;
   z-index: 3;
   background-color: var(--theme-color-2);
+}
+
+.optionContainer {
+  background-color: white;
+  padding: var(--large-padding);
+  max-width: 50ch;
+  overflow: auto;
+  width: 80vw;
+}
+
+.optionContainer h2 {
+  font-size: 1em;
+  margin-bottom: 1em;
+  padding-bottom: 0.3em;
+  color: var(--theme-color-2);
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.optionContainer label {
+  margin-bottom: 1em;
 }

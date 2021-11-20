@@ -22,7 +22,9 @@ const CartProduct = ({ product, visible }) => {
   };
 
   return (
-    <animated.div className={`${styles.container} max-width ${visible && styles.visible}`}>
+    <animated.div
+      className={`${styles.container} max-width ${visible && styles.visible}`}
+    >
       <div className={styles.wrapper}>
         <div className={`${styles.imageContainer}`}>
           <MyLink href={`/product/${product._id}`}>
@@ -53,16 +55,6 @@ const CartProduct = ({ product, visible }) => {
             onClick={() => cart.removeFromCart(product._id)}
           >
             <img src="/svg/trash.svg"></img>
-          </button>
-
-          <button className={`${styles.buyPrompt} flex-center`}>
-            <a
-              href={`https://api.whatsapp.com/send?phone=15312256403&text=${getMessage(
-                product
-              )}`}
-            >
-              Buy
-            </a>
           </button>
         </div>
       </div>

@@ -1,9 +1,11 @@
 import jwt from "jsonwebtoken";
-import {User} from "../../models";
+import { User } from "../../models";
 import jwtDecode from "jwt-decode";
-import {userType} from "../../models/user";
+import { userType } from "../../models/user";
 
 import { createToken, createRefreshToken, hashPassword } from "../../utils/jwt";
+import { createHandler } from "../../middleware/helpers";
+import { blockBot } from "../../middleware/blockBot";
 
 const handle_register = async (req, res) => {
   try {
@@ -40,7 +42,9 @@ const handle_register = async (req, res) => {
 
       res.setHeader(
         "Set-Cookie",
-        `z_model_23=${refreshToken}; httpOnly ; secure; sameSite; path=/ ; Max-Age=${365 * 24 * 60 * 60}`
+        `z_model_23=${refreshToken}; httpOnly ; secure; sameSite; path=/ ; Max-Age=${
+          365 * 24 * 60 * 60
+        }`
       );
 
       const { firstName, lastName, username, role, cart, _id } = savedUser;
@@ -74,4 +78,4 @@ const handle_register = async (req, res) => {
   }
 };
 
-export default handle_register;
+export default createHandler(blockBot, handle_register);

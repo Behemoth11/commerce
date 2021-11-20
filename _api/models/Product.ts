@@ -34,8 +34,18 @@ export const product = new mongoose.Schema(
       type: String,
       default: "unknown",
     },
-    related: {
-      type: Array,
+    fb: {
+      published: {
+        type: Boolean,
+        default: false,
+      },
+      post_id: {
+        type: String,
+        default: null,
+      },
+      date_published:{
+        type: Number,
+      }
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -59,16 +69,5 @@ export const product = new mongoose.Schema(
       required: true,
     },
   },
-  { strict: true }
+  { strict: false }
 );
-
-// @ts-ignore
-mongoose.models = {
-  owner: "",
-};
-
-var Product = mongoose.model("Product", product);
-
-// Product.watch().
-//     on('change', data => console.log(new Date(), data));
-export default Product;

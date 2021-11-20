@@ -7,7 +7,6 @@ export type userType = {
   role: string;
   cart: [];
   _id: string;
-  phonenumber: string;
   firstName: string;
   lastName: string;
 };
@@ -54,9 +53,3 @@ export const user = new mongoose.Schema({
     }
   }
 });
-
-// @ts-ignore
-// mongoose.models = {};
-// const User = mongoose.model("User", user);
-
-// export default User;
