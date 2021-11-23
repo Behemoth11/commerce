@@ -4,7 +4,7 @@ import connectDB from "../../../_api/middleware/mongodb";
 const handler = async (req, res) => {
   switch (req.method) {
     case "GET":
-      GET_WITH_REPRESENTATION_handler(req, res);
+      await GET_WITH_REPRESENTATION_handler(req, res);
       break;
 
     default:

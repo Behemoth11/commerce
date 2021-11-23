@@ -8,15 +8,15 @@ import connectDB from "../../../_api/middleware/mongodb";
 const handler = async (req, res) => {
   switch (req.method) {
     case "GET":
-      GET_handler(req, res);
+      await GET_handler(req, res);
       break;
 
     case "PUT":
-      PUT_handler(req, res);
+      await PUT_handler(req, res);
       break;
 
     case "DELETE":
-      DELETE_handler(req, res);
+      await DELETE_handler(req, res);
       break;
 
     default:

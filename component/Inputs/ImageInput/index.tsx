@@ -31,7 +31,7 @@ const ImageInput = ({
   };
 
   const handleLoad = (e) => {
-    if (!no_optimize) return;
+    if (!no_optimize || ! setInputValue ) return;
     const canvas = document.createElement("canvas");
     const MAX_WIDTH = 500;
 

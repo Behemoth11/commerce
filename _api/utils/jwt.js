@@ -2,6 +2,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {RefreshToken} from "../models";
+require("dotenv").config()
 
 export const createToken = user => {
   // Sign the JWT
@@ -22,6 +23,8 @@ export const createToken = user => {
   
   return _jwt;
 };
+
+
 
 export const createRefreshToken = async user => {
     if (!user.role) {

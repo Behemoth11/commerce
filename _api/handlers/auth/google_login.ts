@@ -1,5 +1,3 @@
-import Cookies from "cookies";
-import jwt from "jsonwebtoken";
 import jwtDecode from "jwt-decode";
 import { User } from "../../models";
 import { getGoogleAuthURL, getGoogleUser } from "../../utils/google_auth";

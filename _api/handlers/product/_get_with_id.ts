@@ -20,18 +20,18 @@ const handle_get = async (req, res) => {
     .map((Id) => new Types.ObjectId(Id));
 
   if (!field || field.includes("owner")){
-    products = await Product.find({ _id: { $in: productIds } }, field)
+    products = await Product.findOne({ _id: productIds[0]}, field)
     .populate("owner", ["username", "phonenumber", "email"])
     .exec()
     .catch((err) => error.push(err.message));
   } else {
-    products = await Product.find({ _id: { $in: productIds } }, field)
+    products = await Product.findOne({ _id: productIds[0] }, field)
     .exec()
     .catch((err) => error.push(err.message));
   }
 
   res.json({
-    products,
+    products:[products],
     error,
   });
 

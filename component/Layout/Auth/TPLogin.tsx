@@ -9,7 +9,6 @@ import {
   useAuthcontext,
   useMyWindow,
 } from "../../../Contexts/GlobalContext";
-import { resolve } from "cypress/types/bluebird";
 
 function TPLogin({ setEditState }) {
   // const [google_url, setGoogle_url] = useState();

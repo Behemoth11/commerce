@@ -1,4 +1,4 @@
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import {FC} from "react";
 interface Props{
   width: string,

@@ -89,7 +89,7 @@ function Account() {
         >
           <Expend
             visible={myWindow.hashLocation == "#profile"}
-            top_prop={"75"}
+            top_prop={75}
             closePopup={() => window.history.go(-1)}
           >
             <ProfileEdit />

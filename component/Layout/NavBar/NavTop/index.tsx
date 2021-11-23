@@ -197,8 +197,9 @@ const Links = ({ title, elementData }) => {
           pathname: "/find",
           query: { categories: [title] },
         }}
+        className={styles.mainLink}
       >
-        <a className={styles.mainLink}>{title}</a>
+        {title}
       </MyLink>
       <div className={`${styles.content}`}>
         {elementData.content &&

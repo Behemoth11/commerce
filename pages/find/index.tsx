@@ -10,11 +10,9 @@ import ProductListGrid from "../../component/ProductList-grid";
 import MoreProduct from "../../component/ProductList-flex/preset";
 import FindContext, { useFindContext } from "../../Contexts/FindContext";
 import Explore_SectionTitle from "../../component/Explore_SectionTitle";
-import { getRelated } from "../../component/Layout/NavBar/navBarSections";
 import { string_and_array_to_array } from "../../shared/UtilityFunctions";
 import FilterContainer from "../../component/FilterContainer";
 import { fetchNavigation } from "../../shared/shared_functions";
-import { TextAlignment } from "@cloudinary/base/qualifiers/textAlignment";
 import { useFilterContext } from "../../Contexts/GlobalContext";
 
 const fetcher = (url) => fetch(url).then((res) => res.json());

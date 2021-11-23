@@ -1,11 +1,13 @@
 .myImage {
   width: 100%;
   height: 100%;
+  overflow: hidden;
   position: relative;
 }
 
 .myImage img {
   width: 100%;
+  max-height: none;
   position: absolute;
   left: 0;
   top: 50%;

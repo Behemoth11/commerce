@@ -76,3 +76,11 @@ export const add_captchat_token = async (input) => {
 
   input["captchat_token"] = captchat_token;
 };
+
+export const getSelectionArray = (selection) => {
+  const post_to_affect = [];
+  for (const post_id in selection) {
+    if (selection[post_id]) post_to_affect.push(post_id);
+  }
+  return post_to_affect;
+};

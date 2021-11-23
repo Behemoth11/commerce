@@ -10,7 +10,6 @@ import { enforceRole } from "../../middleware/enforceRole";
 // export const PUT_handler = PUT;
 export const GET_handler = createHandler(
   addUser,
-  enforceRole("seller"),
   GET_post
 );
 

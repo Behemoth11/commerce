@@ -1,4 +1,3 @@
-require("dotenv").config();
 import axios from "axios";
 const qs = require("qs");
 
@@ -14,7 +13,7 @@ const post_with_photo_m = async (message, ...urls) => {
               published: false,
             },
           })
-          .catch((err) => console.error(err))) || { data: null }
+          .catch((err) => console.error(err.response.data))) || { data: null }
     )
   );
 
@@ -26,8 +25,6 @@ const post_with_photo_m = async (message, ...urls) => {
         `attached_media[${index}]`
       ] = `{media_fbid:${photo_response.data.id}}`)
   );
-
-  // console.log(request_body);
 
   let post_response;
   post_response = await axios

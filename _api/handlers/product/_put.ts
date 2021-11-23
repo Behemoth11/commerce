@@ -1,8 +1,9 @@
 // import model_name from "../../models/file_name";
 
 import { Types } from "mongoose";
-import { Product } from "../../models";
+import { FacebookPost, Product } from "../../models";
 import { eraseImages, uploadMany } from "../../utils/cloudinary";
+import post_with_photo_m from "../../utils/facebook_fn/post_with_photo_m";
 
 const handle_put = async (req, res) => {
   const data = req.body;
@@ -16,7 +17,9 @@ const handle_put = async (req, res) => {
   }).lean();
   //@ts-ignore
   if (mongo_product.owner != req.user._id && req.user.role != "admin") {
-    return res.status(401).json({ message: "you can only modiy items you ownn" });
+    return res
+      .status(401)
+      .json({ message: "you can only modiy items you ownn" });
   }
 
   const [pr_image_url, all_pr_image_url] = await Promise.all([
@@ -29,11 +32,28 @@ const handle_put = async (req, res) => {
     error
   );
 
+  const meta = data.meta
+
+  if (meta?.create_post) {
+    const message_root =
+      data.meta.message ||
+      `nous avons un nouvel articles. Suivez le lien pour plus de ${data.categories[0]}`;
+    const message_template = `${data.meta.host}/product/${_id}` 
+
+    const message = message_root + "\n" + message_template
+    const response = await post_with_photo_m(message, "https://res.cloudinary.com/dkoatnxem/image/upload/" + pr_image_url[0]);
+  }
+  if (meta?.post_with_group){
+    const mongo_response = await FacebookPost.updateMany(
+      { _id: { $in: meta.group_selection }, owner: new Types.ObjectId(req.user._id) },
+      { $addToSet: {grouping: _id} }
+    );
+
+    console.log(mongo_response);
+  }
+
   if (req.user.role != "admin") data.representation = "none";
 
-  // console.log("the old images are :", old_images)
-  // console.log("we erased :", erase)
-  // console.log("the one on the server are :" , not_changed)
 
   const mongo_response = await Product.updateOne(
     { _id: new Types.ObjectId(_id) },
@@ -55,7 +75,7 @@ const handle_put = async (req, res) => {
   if (error.length > 0) {
     res.status(406).json({ message: "Something Went wrong", error });
   } else {
-    res.status(200).json({ mongo_response, error });
+    res.status(200).json({ mongo_response, _id: mongo_response._id });
   }
 };
 

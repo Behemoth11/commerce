@@ -1,3 +1,5 @@
+import { ModuleResolutionKind } from "typescript";
+
 export const setProperty = (
   object: React.MutableRefObject<HTMLDivElement>,
   property: string,
