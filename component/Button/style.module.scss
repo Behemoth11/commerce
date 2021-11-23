@@ -2,7 +2,7 @@
 
 .container{
     color: white;
-    margin: var(--margin);
+    margin: var(--large-margin);
     border-radius: var(--border-radius);
     background-color: var(--accent-color-1);
     padding: var(--padding) unquote("calc(var(--padding)*2)");

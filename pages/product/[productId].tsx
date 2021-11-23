@@ -289,7 +289,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
       </button>
       <div className={`${styles.addToCartPrompt} sm flex-center `}>
         <button onClick={handleClick}>
-          <Popup duration={300000} type={"theme-color"} name={"add_to_cart"}>
+          <Popup duration={30000} type={"theme-color"} name={"add_to_cart"}>
             <AddPopup />
           </Popup>
           <span>

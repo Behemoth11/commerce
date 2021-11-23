@@ -49,8 +49,6 @@ const MultipleImageInput = ({
     });
   };
 
-
-
   return (
     <>
       <div className={inputStyles.imagesInput}>
@@ -60,8 +58,8 @@ const MultipleImageInput = ({
               name={name}
               position={index}
               imageLink={Image}
-                    submitCount={submitCount}
-                    setInputValue={setInputValue}
+              submitCount={submitCount}
+              setInputValue={setInputValue}
             />
             <button
               className={inputStyles.rm}
@@ -80,9 +78,7 @@ const MultipleImageInput = ({
           onChange={(e) => loadMyPowerToAddMultipleFiles(e)}
           required
         />
-        <label htmlFor={`${name}-multiple-input`}>
-          Add Multiple files
-        </label>
+        <label htmlFor={`${name}-multiple-input`}>Add Multiple files</label>
       </div>
     </>
   );

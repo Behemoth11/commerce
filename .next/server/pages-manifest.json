@@ -2,12 +2,14 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
+  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
   "/upload": "pages/upload.js",
-  "/": "pages/index.js",
+  "/cart": "pages/cart.js",
+  "/product/[productId]": "pages/product/[productId].js",
   "/api/auth/token": "pages/api/auth/token.js",
   "/api/product/withId/[product_id]": "pages/api/product/withId/[product_id].js",
-  "/api/user/userData": "pages/api/user/userData.js",
-  "/product/[productId]": "pages/product/[productId].js",
   "/api/product/representation": "pages/api/product/representation.js",
-  "/api/product": "pages/api/product.js"
+  "/api/product": "pages/api/product.js",
+  "/api/user/userData": "pages/api/user/userData.js",
+  "/find": "pages/find.js"
 }

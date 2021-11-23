@@ -3,7 +3,7 @@ import connectDB from "../../../_api/middleware/mongodb";
 
 const handler = async (req, res) => {
     if (req.method === "POST") {
-        REGISTER_handler(req, res)
+        await REGISTER_handler(req, res)
     } else{
         res.send({message: "I Thing you did something wrong"})
     }

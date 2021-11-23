@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { useSpring, animated, useTransition } from "react-spring";
 import Loading from "./loading";
 import {
@@ -32,6 +32,7 @@ const LoadingController: React.FC<Props> = ({
 }) => {
   const afterSubmitSpring = useSpring({
     x: ((state == "success" || state == "failure") && "0%") || "-100%",
+    opacity: ((state == "success" || state == "failure") && "1") || "0",
     from: {
       x: "-100%",
     },

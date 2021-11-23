@@ -23,12 +23,19 @@ import LoadingController from "../component/LoadingController";
 import MultipleImageInput from "../component/Inputs/MultipleImageInput";
 import { useAuthcontext, useMyWindow } from "../Contexts/GlobalContext";
 import CaptChat from "../component/CaptChat";
-import { add_captchat_token } from "../shared/shared_functions";
+import {
+  add_captchat_token,
+  getSelectionArray,
+} from "../shared/shared_functions";
 import Expend from "../component/popup/Expend";
 import CheckBoxes from "../component/Inputs/CheckBoxes";
 import Button from "../component/Button";
 import PopupExpendPreset from "../component/popup/Expend/preset";
 import Box from "../component/Inputs/CheckBoxes/box";
+import Select from "../component/Select";
+import Loading from "../component/LoadingController/loading";
+import handle_refresh from "../_api/handlers/auth/refreshToken";
+import LoadingCircle from "../component/LoadingController/LoadingCircle";
 
 type edit = "upload" | "update" | "loading" | "success" | "error";
 
@@ -117,31 +124,29 @@ function Upload() {
 
   const [submitCount, setSubmitCount] = useState<number>(0);
   const [inputValue, setInputValue] = useState<{}>({});
-  const [meta, setMeta] = useState<{}>({});
-  const [defaultMeta, setDefaultMeta] = useState<{}>({
-    upload_options: { upload: true },
-  });
+
+  const [tasks, setTask] = useState<{ [task_name: string]: boolean | string }>(
+    {}
+  );
+
   const [errMsg, setErrMsg] = useState<string[]>([]);
-  const handleChange = (value: any, name) => {
-    setInputValue((prevInput) => ({ ...prevInput, [name]: value }));
-  };
 
   const [proposition, setProposition] = useState({
-    color: ["blue", "green", "purple", "brown", "black", "white"],
-    materials: ["inexpensive", "affordable", "good", "bad"],
+    color: ["bleu", "vert", "violet", "marron", "noire", "blanc", "jaune"],
     categories: getCategories(navBarSections, ["menu"]),
     tags: ["inexpensive", "affordable", "good", "bad"],
     representation: ["hot deals", "women", "men", "stuff"],
     nature: ["book"],
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const submitItem = async () => {
+    const _inputValue = { ...inputValue };
+    setTask({});
     setSubmitCount((prevState) => prevState + 1);
     document.getElementById("__next")?.scrollTo({ top: 0, behavior: "smooth" });
     const errors = [];
 
-    checkForm(inputValue, nonRequired, errors);
+    checkForm(_inputValue, nonRequired, errors);
 
     setErrMsg([...errors]);
     if (errors.length > 0) {
@@ -152,15 +157,15 @@ function Upload() {
     let res;
     _setEditState("loading");
 
-    await add_captchat_token(inputValue);
+    await add_captchat_token(_inputValue);
 
     if (editRef.current == "update") {
       res = await auth.axios
-        .put(`/api/product/withId/${query._id}`, inputValue)
+        .put(`/api/product/withId/${query._id}`, _inputValue)
         .catch((err) => (res = err.response));
     } else if (editRef.current == "upload") {
       res = await auth.axios
-        .post("/api/product", inputValue)
+        .post("/api/product", _inputValue)
         .catch((err) => (res = err.response));
     }
 
@@ -173,9 +178,7 @@ function Upload() {
           return { ...prevState, productName: "" };
         });
 
-        setTimeout(() => {
-          setEditState("upload");
-        }, 1000);
+        return res.data._id;
       } else {
         setEditState("failure");
         setErrMsg([res.data.message || res.data]);
@@ -183,15 +186,31 @@ function Upload() {
     } else setEditState("failure");
   };
 
-  const handleOptionChange = (name, label) => {
-    setMeta((prevState) => {
-      let myState = prevState[name] || {};
-      myState = { ...myState };
-      const oldValue = myState[label] || false;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const _id = submitItem();
+    const updateTask = (task_name: string, status: string) => {
+      setTask((prevState) => {
+        return { ...prevState, [task_name]: status };
+      });
+    };
 
-      myState[label] = !oldValue;
+    if (_id) {
+      for (const task in tasks) {
+        if (tasks[task]) {
+          const that = await taskRef.current[task].action(_id, updateTask);
+          console.log(that);
+        }
+      }
+    }
+  };
+  const taskRef = useRef({});
 
-      return { ...prevState, [name]: myState };
+  const handleOptionChange = (label) => {
+    setTask((prevState) => {
+      const oldValue = prevState[label] || false;
+
+      return { ...prevState, [label]: !oldValue };
     });
   };
 
@@ -205,174 +224,134 @@ function Upload() {
           editState: editRef.current,
         }}
       >
-        <LoadingController
-          customMessage={{
-            success: "Operation successfully, completed",
-            failure: "Something went wrong",
-          }}
-          no_scroll={true}
-          state={editState}
-          setState={setEditState}
-        >
-          <div className={`${styles.boss}`}>
-            <div className={styles.editState}>
-              {["upload", "update"].map((representedState) => (
-                <p
-                  key={representedState}
-                  className={`${
-                    editRef.current == representedState && styles.active
-                  }`}
-                  onClick={() => setEditState(representedState)}
-                >
-                  {representedState}
-                </p>
-              ))}
-            </div>
-            <Errors errMsg={errMsg} />
-            <Input
+        <div className={`${styles.boss}`}>
+          <div className={styles.editState}>
+            {["upload", "update"].map((representedState) => (
+              <p
+                key={representedState}
+                className={`${
+                  editRef.current == representedState && styles.active
+                }`}
+                onClick={() => setEditState(representedState)}
+              >
+                {representedState}
+              </p>
+            ))}
+          </div>
+
+          {getSelectionArray(tasks).map((task) => (
+            <p><LoadingCircle />{task}</p>
+          ))}
+
+          <Errors errMsg={errMsg} />
+          <Input
+            required={true}
+            name={"productName"}
+            inputValue={inputValue}
+            submitCount={submitCount}
+            proposition={proposition}
+            setInputValue={setInputValue}
+          />
+          <ImageInput
+            name="presentationImage"
+            position={0}
+            imageLink={
+              inputValue["presentationImage"] &&
+              inputValue["presentationImage"][0]
+            }
+            submitCount={submitCount}
+            setInputValue={setInputValue}
+          />
+          {/* array should be inputed as string with a separator that can either be determined here or on the server */}
+          {"categories".split("/").map((element) => (
+            <InputArray
+              key={element}
+              name={element}
               required={true}
-              name={"productName"}
               inputValue={inputValue}
               submitCount={submitCount}
               proposition={proposition}
               setInputValue={setInputValue}
             />
-            <ImageInput
-              name="presentationImage"
-              position={0}
-              imageLink={
-                inputValue["presentationImage"] &&
-                inputValue["presentationImage"][0]
-              }
-              submitCount={submitCount}
-              setInputValue={setInputValue}
-            />
-            {/* array should be inputed as string with a separator that can either be determined here or on the server */}
-            {"categories".split("/").map((element) => (
-              <InputArray
-                key={element}
-                name={element}
-                required={true}
-                inputValue={inputValue}
-                submitCount={submitCount}
-                proposition={proposition}
-                setInputValue={setInputValue}
-              />
-            ))}
-            <Input
-              name={"price"}
-              required={true}
-              type={"number"}
-              inputValue={inputValue}
-              submitCount={submitCount}
-              proposition={proposition}
-              setInputValue={setInputValue}
-            />
-            <TextArea
-              required={true}
-              name={"description"}
-              inputValue={inputValue}
-              submitCount={submitCount}
-              setInputValue={setInputValue}
-            />
-            {"color/materials/tags".split("/").map((element) => (
-              <InputArray
-                key={element}
-                name={element}
-                required={false}
-                inputValue={inputValue}
-                submitCount={submitCount}
-                proposition={proposition}
-                setInputValue={setInputValue}
-              />
-            ))}
-            <Input
-              name="location"
+          ))}
+          <Input
+            name={"price"}
+            required={true}
+            type={"number"}
+            inputValue={inputValue}
+            submitCount={submitCount}
+            proposition={proposition}
+            setInputValue={setInputValue}
+          />
+          <TextArea
+            required={true}
+            name={"description"}
+            inputValue={inputValue}
+            submitCount={submitCount}
+            setInputValue={setInputValue}
+          />
+          {"materials/color/tags".split("/").map((element) => (
+            <InputArray
+              key={element}
+              name={element}
               required={false}
               inputValue={inputValue}
               submitCount={submitCount}
               proposition={proposition}
               setInputValue={setInputValue}
             />
-            <Input
-              required={false}
-              name="representation"
-              inputValue={inputValue}
-              submitCount={submitCount}
-              proposition={proposition}
-              setInputValue={setInputValue}
-            />
-            <MultipleImageInput
-              name={"images"}
-              inputValue={inputValue}
-              submitCount={submitCount}
-              setInputValue={setInputValue}
-            />
+          ))}
+          <Input
+            name="location"
+            required={false}
+            inputValue={inputValue}
+            submitCount={submitCount}
+            proposition={proposition}
+            setInputValue={setInputValue}
+          />
+          <Input
+            required={false}
+            name="representation"
+            inputValue={inputValue}
+            submitCount={submitCount}
+            proposition={proposition}
+            setInputValue={setInputValue}
+          />
+          <MultipleImageInput
+            name={"images"}
+            inputValue={inputValue}
+            submitCount={submitCount}
+            setInputValue={setInputValue}
+          />
 
-            <CaptChat />
+          <CaptChat />
 
-            <div
-              className="container flex center-children"
-              style={{ position: "relative" }}
+          <div
+            className="container flex center-children"
+            style={{ position: "relative" }}
+          >
+            <PopupExpendPreset
+              top_prop={50}
+              width="80vw"
+              visible={myWindow.hashLocation == "#upload_options"}
+              closePopup={() => window.history.go(-1)}
+              header={"Decider de vos customisations."}
+              close={() => myWindow.setHashLocation("none", -1)}
+              next={(e) => {
+                myWindow.overlay.close();
+                handleSubmit(e);
+              }}
+              dependency={[tasks]}
             >
-              <PopupExpendPreset
-                top_prop={20}
-                width="90vw"
-                visible={myWindow.hashLocation == "#single_post_preview"}
-                closePopup={() => window.history.go(-1)}
-                header={"Reviser l'apparence du post"}
-                close={() => window.history.go(-1)}
-                next={(e) => {
-                  window.history.go(-2);
-                  handleSubmit(e);
-                }}
-              >
-                <div>
-                  <TextArea
-                    required={true}
-                    inputValue={meta}
-                    name={"faceboo_post"}
-                    setInputValue={setMeta}
-                  />
-                  <ImageInput
-                    name=""
-                    position={0}
-                    imageLink={
-                      inputValue["presentationImage"] &&
-                      inputValue["presentationImage"][0]
-                    }
-                    submitCount={undefined}
-                    setInputValue={undefined}
-                  />
+              <Box
+                id={"option_upload_to_facebook"}
+                name={"upload"}
+                checked={(tasks["create_post"] && true) || false}
+                label={"Ajouter cet article a votre page facebook"}
+                onChange={() => handleOptionChange("create_post")}
+              />
 
-                </div>
-              </PopupExpendPreset>
-
-              <PopupExpendPreset
-                top_prop={50}
-                width="80vw"
-                visible={myWindow.hashLocation == "#upload_options"}
-                closePopup={() => window.history.go(-1)}
-                header={"Decider de vos customisations."}
-                close={() => window.history.go(-1)}
-                next={(e) => {
-                  window.history.go(-1);
-                  handleSubmit(e);
-                }}
-              >
-                <Box
-                  id={"option_upload_to_facebook"}
-                  name={"upload"}
-                  checked={
-                    (meta["upload_options"] &&
-                      meta["upload_options"]["upload"]) ||
-                    false
-                  }
-                  label={"Ajouter cet article a votre page facebook"}
-                  onChange={() =>
-                    handleOptionChange("upload_options", "upload")
-                  }
-                />
+              {tasks["create_post"] && (
                 <div style={{ display: "inline-block" }}>
                   <Button
                     style={{ margin: 0 }}
@@ -382,37 +361,223 @@ function Upload() {
                     }
                   />
                 </div>
+              )}
 
-                <Box
-                  id={"add_to_facebook_poste"}
-                  name={"post_with_group"}
-                  checked={
-                    (meta["upload_options"] &&
-                      meta["upload_options"]["post_with_group"]) ||
-                    false
-                  }
-                  label={"Grouper cet article pour un poste de groupe"}
-                  onChange={() =>
-                    handleOptionChange("upload_options", "post_with_group")
-                  }
-                />
-              </PopupExpendPreset>
+              <Box
+                id={"add_to_facebook_poste"}
+                name={"post_with_group"}
+                checked={(tasks["post_with_group"] && true) || false}
+                label={"Grouper cet article pour un poste de groupe"}
+                onChange={() => handleOptionChange("post_with_group")}
+              />
 
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  myWindow.setHashLocation("#upload_options");
-                }}
-                className={styles.submit}
-              >
-                <span>Submit</span>
-              </button>
-            </div>
+              {tasks["post_with_group"] && (
+                <div style={{ display: "inline-block" }}>
+                  <Button
+                    style={{ margin: 0 }}
+                    label="choisir group ou ajouter"
+                    onClick={() => myWindow.setHashLocation("#post_with_group")}
+                  />
+                </div>
+              )}
+            </PopupExpendPreset>
+
+            <PostOnFacebook
+              handleSubmit={handleSubmit}
+              inputValue={inputValue}
+              taskRef={taskRef}
+            />
+
+            <SelectGroup handleSubmit={handleSubmit} taskRef={taskRef} />
+
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                myWindow.setHashLocation("#upload_options");
+              }}
+              className={styles.submit}
+            >
+              <span>Submit</span>
+            </button>
           </div>
-        </LoadingController>
+        </div>
       </uploadContext.Provider>
     </form>
   );
 }
 
 export default Upload;
+
+const SelectGroup = ({ handleSubmit, taskRef }) => {
+  const auth = useAuthcontext();
+  const myWindow = useMyWindow();
+
+  const [selection, setSelection] = useState({});
+  const [groups, setGroups] = useState(undefined);
+  const visible = myWindow.hashLocation == "#post_with_group";
+  useEffect(() => {
+    const getGroups = async () => {
+      let groups_response;
+      groups_response = await auth.axios
+        .get("/api/publish", {
+          params: {
+            which: "mine",
+            limit: "10",
+            field: ["post_name", "message"],
+          },
+        })
+        .catch((err) => (groups_response = err.response));
+      console.log(groups_response, "*********************");
+      if (groups_response.status === 200) {
+        setGroups(groups_response.data.posts);
+      } else {
+        setGroups(null);
+      }
+    };
+
+    if (!visible) return;
+    getGroups();
+  }, [visible]);
+
+  const handleClick = (id) => {
+    setSelection((prevState) => {
+      const previous = { ...prevState };
+      previous[id] = !prevState[id];
+      return previous;
+    });
+  };
+
+  const myAction = async (active_product_id, setTask) => {
+    console.log();
+
+    let response;
+    response = await auth.axios
+      .put(
+        "/api/publish",
+        { update: { grouping: active_product_id } },
+        {
+          params: {
+            post_ids: getSelectionArray(selection),
+            action: "add_to_set",
+          },
+          headers: {
+            authorization: process.env.SELLER_TEST,
+          },
+        }
+      )
+      .catch((err) => (response = err.response));
+
+    return response.data;
+  };
+
+  useEffect(() => {
+    taskRef.current.create_post = { action: myAction };
+  }, [myAction]);
+
+  return (
+    <PopupExpendPreset
+      top_prop={20}
+      width="90vw"
+      visible={myWindow.hashLocation == "#post_with_group"}
+      closePopup={() => window.history.go(-1)}
+      header={"Choississez le groupe auquel ajouter"}
+      close={() => {
+        myWindow.setHashLocation("none", -1);
+      }}
+      next={(e) => {
+        myWindow.overlay.close();
+        handleSubmit(e);
+      }}
+      dependency={[groups]}
+    >
+      <>
+        {groups &&
+          groups.map((group) => (
+            <Select
+              key={group._id}
+              select_id={group._id}
+              message={group.message}
+              label={group.post_name}
+              selected={selection[group._id]}
+              onClick={() => handleClick(group._id)}
+            />
+          ))}
+        <Loading
+          width={groups === undefined ? "20%" : "0%"}
+          style={{ margin: "auto" }}
+          background={"var(--theme-color)"}
+        />
+
+        {groups == null && "You have create no group"}
+      </>
+    </PopupExpendPreset>
+  );
+};
+
+const PostOnFacebook = ({ handleSubmit, inputValue, taskRef }) => {
+  const auth = useAuthcontext();
+  const myWindow = useMyWindow();
+  const [myInput, setMyInput] = useState({});
+
+  const myTask = async (_id, setTask) => {
+    let response;
+
+    response = await auth.axios
+      .post(
+        "/api/publish",
+        {
+          _id: "61840770cd35203c54eaa7f9",
+          message: "Testing the api_automated",
+        },
+        {
+          headers: {
+            authorization: process.env.SELLER_TEST,
+          },
+          params: {
+            target: "single",
+          },
+        }
+      )
+      .catch((err) => (response = err.response));
+
+    return response.data;
+  };
+
+  useEffect(() => {
+    taskRef.current.post_with_group = { action: myTask };
+  }, [myTask]);
+
+  return (
+    <PopupExpendPreset
+      top_prop={20}
+      width="90vw"
+      visible={myWindow.hashLocation == "#single_post_preview"}
+      closePopup={() => window.history.go(-1)}
+      header={"Reviser l'apparence du post"}
+      close={() => myWindow.setHashLocation("none", -1)}
+      next={(e) => {
+        myWindow.overlay.close();
+        handleSubmit(e);
+      }}
+    >
+      <div>
+        <TextArea
+          required={true}
+          name={"message"}
+          inputValue={myInput}
+          setInputValue={setMyInput}
+        />
+        <ImageInput
+          name=""
+          position={0}
+          imageLink={
+            inputValue["presentationImage"] &&
+            inputValue["presentationImage"][0]
+          }
+          submitCount={undefined}
+          setInputValue={undefined}
+        />
+      </div>
+    </PopupExpendPreset>
+  );
+};

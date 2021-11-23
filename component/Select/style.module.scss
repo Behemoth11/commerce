@@ -1,0 +1,36 @@
+
+
+.container{
+    width: 100%;
+    padding: 0.2em;
+    margin: 0.5em 0;
+    font-size: 0.8em;
+    position: relative;
+    color: var(--theme-color-2);
+    border: 1px solid var(--theme-color-1);
+    h3{
+        font-weight: bold;
+    }
+}
+.checkMarker{
+    transition: transform var(--fast-animation-duration) ease-in-out;
+    transform-origin: top right;
+    background-color: black;
+    position: absolute;
+    display: flex;
+    height: 2em;
+    width: 2em;
+    right: 0;
+    top: 0;
+    svg{
+        display: block;
+        width: 70%;
+        height: 70%;
+        margin: auto;
+        path{
+            stroke-width: 0.3em;
+            stroke-dasharray: 60;
+            transition: stroke-dashoffset var(--fast-animation-duration) ease-in;
+        }
+    }
+}

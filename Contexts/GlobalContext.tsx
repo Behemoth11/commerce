@@ -12,7 +12,6 @@ import useCart from "./gobalHooks/cart";
 import useFilter, { stateCallBack } from "./gobalHooks/filters";
 import useFocus from "./gobalHooks/windowStates";
 import useUserData from "./gobalHooks/userData";
-import { car } from "@cloudinary/base/qualifiers/focusOn";
 
 let bn: boolean;
 
@@ -54,7 +53,7 @@ const MyWindowContext = createContext({
     isOpen: Math.random() == 1,
   },
   hashLocation: "",
-  setHashLocation: (id: string) => console.log(0),
+  setHashLocation: (id: string, direction?: number, cb?: () => void) => console.log(0),
 });
 export const useMyWindow = () => {
   return useContext(MyWindowContext);

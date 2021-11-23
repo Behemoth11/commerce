@@ -1,5 +1,4 @@
-import Cookies from "cookies";
-import jwt from "jsonwebtoken";
+
 import jwtDecode from "jwt-decode";
 import { blockBot } from "../../middleware/blockBot";
 import { createHandler } from "../../middleware/helpers";

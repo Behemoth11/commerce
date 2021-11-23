@@ -1,4 +1,4 @@
-import { Overlay } from "@cloudinary/base/actions/overlay";
+
 import React, { useState, useContext, useEffect } from "react";
 import { useMyWindow } from "../../../Contexts/GlobalContext";
 import { useIsomorphicLayoutEffect } from "../../../shared/CustomHooks";
@@ -11,9 +11,10 @@ const SideBarContext = React.createContext({
 });
 
 const NavBarProvider = ({ children }) => {
-  const [sideBarIsOpen, setSideBarIsOpen] = useState(false); //remeber to change this to true
   const myWindow = useMyWindow();
   const [toBottom, _setToBottom] = useState(false);
+
+  const sideBarIsOpen = myWindow.hashLocation === "#side_bar_navigation"
 
   useEffect(() => {
     const { classList } = document.getElementById("__next");
@@ -23,19 +24,12 @@ const NavBarProvider = ({ children }) => {
   }, [sideBarIsOpen]);
 
   const toggleNavBar = () => {
-    setSideBarIsOpen((prevState) => {
-      if (prevState === false) {
-        return true;
-      } else {
-        return false;
-      }
-    });
+    if (sideBarIsOpen){
+      myWindow.setHashLocation("none", -1)
+    }else{
+      myWindow.setHashLocation("#side_bar_navigation")
+    }
   };
-
-  useIsomorphicLayoutEffect(() => {
-    if (sideBarIsOpen) myWindow.overlay.open(() => setSideBarIsOpen(false));
-    else myWindow.overlay.close();
-  }, [sideBarIsOpen]);
 
   const setToBottom = (payload) => {
     _setToBottom(payload);

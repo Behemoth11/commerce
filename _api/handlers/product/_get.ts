@@ -1,6 +1,7 @@
 import { string_and_array_to_array } from "../../../shared/UtilityFunctions";
 import { Product } from "../../models";
 import cloudinary from "../../utils/cloudinary";
+import { createToken } from "../../utils/jwt";
 import search from "./helper";
 
 const handle_get = async (req, res) => {
@@ -9,6 +10,8 @@ const handle_get = async (req, res) => {
   let page = 0;
   let limit = 50;
   let field = query.field;
+
+  console.log("new tokens")
 
   // console.log(query, 444444444444444444444);
 

@@ -1,3 +1,4 @@
+import { detachRefs } from "@react-spring/core/dist/declarations/src/helpers";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
 import { useIsomorphicLayoutEffect } from "../../shared/CustomHooks";
@@ -42,13 +43,11 @@ const useFocus = () => {
   };
 
   const close_overlay = (cb?: () => void) => {
-    const callbacks = overlay_state.callbacks.concat(cb);
-    setOverlay({ open: false, callbacks: [] });
-
-    for (let i = 0; i < callbacks.length; i++) {
-      if (!callbacks[i]) continue;
-      callbacks[i]();
+    if (depth.current ) {
+      window.history.go(-depth.current);
+      depth.current = 0;
     }
+    setOverlay({ open: false, callbacks: [] });
   };
 
   const overlay = {
@@ -57,10 +56,21 @@ const useFocus = () => {
     isOpen: overlay_state.open,
   };
   const [hashLocation, setHashLocation] = useState("");
+  const depth = useRef(0);
 
-  const open = (id: string) => {
-    window.location.hash = id;
-    setHashLocation(id);
+  const open = (id: string, direction?: number, cb?: () => void) => {
+    if (!direction || direction === 1) {
+      window.location.hash = id;
+      depth.current += 1;
+      open_overlay();
+    } else if (direction === 0) {
+      window.location.hash = id;
+      open_overlay();
+    } else if (direction === -1) {
+      window.history.go(-1);
+      depth.current -= 1;
+    }
+    console.log(depth.current);
   };
 
   useEffect(() => {
@@ -68,12 +78,11 @@ const useFocus = () => {
       setHashLocation(window.location.hash);
       if (window.location.hash == "") {
         setOverlay({ open: false, callbacks: [] });
-      } else {
-        open_overlay(() => window.history.go(-1));
+        depth.current = 0;
       }
     };
 
-    handler();
+    window.location.hash = "";
     window.addEventListener("hashchange", handler);
     return () => window.removeEventListener("hashchange", handler);
   }, []);

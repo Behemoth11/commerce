@@ -6,34 +6,31 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "jest",
     "cypress": "cypress open",
     "lint": "next lint"
   },
   "dependencies": {
-    "@cloudinary/base": "^1.0.0-beta.4",
-    "@next/bundle-analyzer": "^11.1.0",
     "axios": "^0.21.4",
     "bcrypt": "^5.0.1",
     "cloudinary": "^1.27.0",
-    "cloudinary-core": "^2.11.4",
-    "cookies": "^0.8.0",
+    "dotenv": "^10.0.0",
     "googleapis": "^89.0.0",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",
     "mongoose": "^6.0.8",
     "next": "^11.1.2",
-    "next-pwa": "^5.4.0",
+    "next-pwa": "^5.2.24",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-spring": "^9.2.4"
+    "react-spring": "^9.2.4",
+    "sass": "^1.43.4"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.16.0",
     "@fullhuman/postcss-purgecss": "^4.0.3",
+    "@types/jest": "^27.0.3",
     "@types/react": "^17.0.19",
-    "cypress": "^8.7.0",
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.0.1",
-    "postcss-preset-env": "^6.7.0",
-    "typescript": "^4.3.5"
+    "jest": "^27.3.1"
   }
 }

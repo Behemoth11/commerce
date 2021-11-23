@@ -1,10 +1,18 @@
 // @ts-ignore
 import styles from "./style.module.css";
-import { memo, useRef, useState, useEffect } from "react";
+import { memo, useRef, useState, useEffect , ReactNode, FC} from "react";
 import { animated, useSpring, config, useTransition } from "react-spring";
 import { useMyWindow } from "../../../Contexts/GlobalContext";
 
-const Expend = ({ visible, children, top_prop, closePopup }) => {
+export interface Props{
+  dependency?: any[];
+  top_prop: number,
+  visible: boolean
+  children: ReactNode,
+  closePopup: () => void;
+}
+
+const Expend:FC<Props> = ({ visible, children, top_prop, dependency }) => {
   const myWindow = useMyWindow();
   const popupRef = useRef();
   const childRef = useRef();
@@ -62,7 +70,7 @@ const Expend = ({ visible, children, top_prop, closePopup }) => {
         height: position.height + "px",
       });
     }
-  }, [visible]);
+  }, [visible].concat(dependency||[]));
 
 
   return (

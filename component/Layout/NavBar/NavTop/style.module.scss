@@ -198,16 +198,18 @@
 }
 .content {
   position: absolute;
+
   display: grid;
   z-index: -1;
   bottom: 0;
   opacity: 0;
   width: 40em;
+  max-width: 40vw;
   font-size: 0.7em;
   pointer-events: none;
   color: var(--text-color-light);
   background-color: var(--theme-color);
-  grid-template-columns: unquote("repeat(auto-fill, minmax(25%, 1fr))");
+  grid-template-columns: unquote("repeat(auto-fill, minmax(20ch, 1fr))");
   transform: unquote("translateY(calc(100% - 5px)) translateX(-20px)");
   transition: transform var(--fast-animation-duration) ease-in-out;
 }

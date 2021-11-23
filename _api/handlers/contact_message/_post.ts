@@ -1,9 +1,9 @@
-import { resetHistory } from "cypress/types/sinon";
+
 import { ContactMessage } from "../../models";
 
 const handle_post = async (req, res) => {
   const { msg, focus, contact } = req.body;
-  const sender_id = req.user.id;
+  const sender_id = req.user._id;
 
   let error;
   const mongo_response = await ContactMessage.create({
