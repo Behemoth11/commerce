@@ -2,7 +2,7 @@ import axios from "axios";
 import MyLink from "../component/MyLink";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import styles from "../styles/LandingPage.module.css";
+import styles from "../styles/LandingPage.module.scss";
 import ProductListGrid from "../component/ProductList-grid";
 import ProductListFlex from "../component/ProductList-flex";
 
@@ -31,7 +31,7 @@ type responseData = {
 const INIT = Array.from({ length: 10 }).map((e) => ({ price: 100 }));
 
 export default function Home() {
-  console.log(process.env);
+  // console.log(process.env);
   const [discoverData, setDiscoverData] = useState(
     Array.from({ length: 10 }).map((e) => ({ representation: "nothing" }))
   );

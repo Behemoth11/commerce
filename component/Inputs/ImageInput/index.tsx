@@ -1,8 +1,8 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import MyImage from "../../MyImage";
 import { memo } from "react";
-import inputStyles from "../style.module.css";
+import inputStyles from "../style.module.scss";
 
 const ImageInput = ({
   name,

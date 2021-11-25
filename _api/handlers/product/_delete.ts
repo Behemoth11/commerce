@@ -7,7 +7,7 @@ import { eraseImages } from "../../utils/cloudinary";
 const handle_delete = async (req, res) => {
   const error = [];
   const Id = req.query.product_id;
-  console.log("the request reached me")
+  // console.log("the request reached me")
 
   const mongo_product = await Product.findOne({
     _id: new Types.ObjectId(Id),

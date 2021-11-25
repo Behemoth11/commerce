@@ -3,13 +3,15 @@ require("dotenv").config()
 
 const connectDB = handler => async (req, res) => {
   if (mongoose.connections[0].readyState) {
-    return handler(req, res);
+     await handler(req, res);
+     return;
   }
   
   await mongoose.connect(process.env.mongodburl, {
   }, () => console.log("I am connnected"));
 
-  return await handler(req, res);
+   await handler(req, res);
+   return;
 };
 
 export default connectDB;

@@ -52,7 +52,7 @@ export const useIntersectionObserver: (
     setObserver(
       new IntersectionObserver(
         (entry) => {
-          console.log("The intersection observer fired");
+          // console.log("The intersection observer fired");
           entry.forEach((entry) => {
             if (entry.isIntersecting) {
               setVisibilityIndex((prevIndex) => prevIndex + 1);
@@ -130,7 +130,7 @@ export const useAuthAxios = () => {
 
   useEffect(() => {
     const tokenChecker = setInterval(() => {
-      console.log(tokenRef, "the interval is running to get the tokesn")
+      // console.log("Verifying if the token is espired")
       if (!tokenRef.current) return;
       const timeLeft =
         parseInt(tokenRef.current.expiresAt) * 1000 - new Date().getTime() - 1000 * 60 * 7;

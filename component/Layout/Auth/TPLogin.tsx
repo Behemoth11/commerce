@@ -1,7 +1,7 @@
 //@ts-ignore
 import axios from "axios";
 import { useRouter } from "next/router";
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { useEffect, useState } from "react";
 import { getGoogleAuthURL } from "../../../_api/utils/google_auth";
 import {
@@ -73,7 +73,7 @@ function TPLogin({ setEditState }) {
       <div className={styles.TPcontent}>
         <a
           href={
-            "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&response_type=code&client_id=799043813636-6752mpc2el076am9cckotrocrs0b814d.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fcommerce-behemoth11.vercel.app%2Fapi%2Fauth%2Fgoogle&flowName=GeneralOAuthFlow"
+            `https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&response_type=code&client_id=799043813636-6752mpc2el076am9cckotrocrs0b814d.apps.googleusercontent.com&redirect_uri=${window.location.origin}/api/auth/google`
           }
           target={"blank"}
         >

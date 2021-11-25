@@ -1,3 +1,4 @@
+import { categories } from './../../../component/Layout/NavBar/navBarSections';
 // import model_name from "../../models/file_name";
 
 import { Types } from "mongoose";
@@ -49,23 +50,31 @@ const handle_put = async (req, res) => {
       { $addToSet: {grouping: _id} }
     );
 
-    console.log(mongo_response);
+    // console.log(mongo_response);
   }
 
   if (req.user.role != "admin") data.representation = "none";
+
+  const _categories = data.categories || [];
+
+  let categories = [data.nature];
+  for (let i=0; i < _categories.length; i ++){
+    if (_categories[i] != data.nature) categories.push(data.nature);
+  }
 
 
   const mongo_response = await Product.updateOne(
     { _id: new Types.ObjectId(_id) },
     {
+      categories, //array
       pr_image_url, //array
       tags: data.tags, //array
       all_pr_image_url, //array
       price: data.price, //number
       color: data.color, //array
+      nature: data.nature, //string
       location: data.location, //string
       materials: data.materials, //array
-      categories: data.categories, //array
       description: data.description,
       productName: data.productName, //string
       representation: data.representation || "none",
@@ -75,7 +84,7 @@ const handle_put = async (req, res) => {
   if (error.length > 0) {
     res.status(406).json({ message: "Something Went wrong", error });
   } else {
-    res.status(200).json({ mongo_response, _id: mongo_response._id });
+    res.status(200).json({ mongo_response, _id });
   }
 };
 

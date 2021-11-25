@@ -5,7 +5,7 @@ require("dotenv").config();
 
 const HOST = process.env.HOST || "http://localhost:3000";
 
-jest.setTimeout(20000)
+jest.setTimeout(20000);
 describe("publish page -- facebook integration _1 item manipulation _delete", () => {
   let id;
   test("Should add item to existing post", async () => {
@@ -36,11 +36,26 @@ describe("publish page -- facebook integration _1 item manipulation _delete", ()
 
   test("Should create facebook post from given id", async () => {
     let response;
+
+    const product = await axios.get(HOST + "/api/product", {
+      params: { limit: 1 },
+    });
+
+    console.log(product.data.products[0]._id)
+
+    let _id;
+
+    try {
+      _id = product.data.products[0]._id;
+    } catch (error) {
+      throw new Error("No product was in the database");
+    }
+
     response = await axios
       .post(
         HOST + "/api/publish",
         {
-          _id: "61840770cd35203c54eaa7f9",
+          _id,
           message: "Testing the api_automated",
         },
         {

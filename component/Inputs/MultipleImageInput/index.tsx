@@ -1,7 +1,7 @@
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { memo } from "react";
 import ImageInput from "../ImageInput";
-import inputStyles from "../style.module.css";
+import inputStyles from "../style.module.scss";
 
 const MultipleImageInput = ({
   name,

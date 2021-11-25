@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { memo, useState } from "react";
 import DropDownFilter from "../DropDownFilter";
 import { animated, useTransition } from "react-spring";

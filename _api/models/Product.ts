@@ -11,6 +11,10 @@ export const product = new mongoose.Schema(
       type: Array,
       required: true,
     },
+    nature: {
+      type: String, 
+      required: true
+    },
     description: {
       type: String,
       required: true,

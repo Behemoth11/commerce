@@ -27,7 +27,7 @@ const useUserData = (auth) => {
   }, [_refresh]);
 
   useEffect(() => {
-    console.log("The value of the token", auth.token)
+    // console.log("The value of the token", auth.token)
     if (userData?.username == "loading" && auth.token?.value  && auth.token?.value != "loading") {
       fetchUserData();
     }else if (!auth.token){

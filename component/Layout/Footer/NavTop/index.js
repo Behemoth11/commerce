@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 
 import Svg from './Svg.js';
 import { useNavBarState } from '../NavBarContext';

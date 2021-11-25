@@ -43,7 +43,7 @@ const useFocus = () => {
   };
 
   const close_overlay = (cb?: () => void) => {
-    if (depth.current ) {
+    if (depth.current) {
       window.history.go(-depth.current);
       depth.current = 0;
     }
@@ -70,11 +70,12 @@ const useFocus = () => {
       window.history.go(-1);
       depth.current -= 1;
     }
-    console.log(depth.current);
+    // console.log(depth.current);
   };
 
   useEffect(() => {
     const handler = () => {
+      // console.log("**************the andle is runnint")
       setHashLocation(window.location.hash);
       if (window.location.hash == "") {
         setOverlay({ open: false, callbacks: [] });
@@ -82,7 +83,9 @@ const useFocus = () => {
       }
     };
 
-    window.location.hash = "";
+    setTimeout(() => {
+      window.location.hash = "";
+    }, 100);
     window.addEventListener("hashchange", handler);
     return () => window.removeEventListener("hashchange", handler);
   }, []);

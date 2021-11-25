@@ -3,7 +3,7 @@ import MyLink from "../../component/MyLink";
 import { useRouter } from "next/router";
 import Popup from "../../component/popup";
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import styles from "../../styles/product.module.css";
+import styles from "../../styles/product.module.scss";
 import ProductSlideShow from "../../component/ProductSlideShow";
 import MoreProduct from "../../component/ProductList-flex/preset";
 import { formatPrice } from "../../shared/UtilityFunctions";
@@ -322,7 +322,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
                         filters.setFilter({ [detail]: { [tag]: true } })
                       }
                     >
-                      <a>{tag}</a>
+                      {tag}
                     </span>
                   </MyLink>
                 ))}

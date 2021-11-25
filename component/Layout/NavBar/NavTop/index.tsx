@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import MyLink from "../../../MyLink";
 import { useRouter } from "next/router";
 import { useEffect, useState, useRef } from "react";
@@ -84,7 +84,8 @@ const NavTop = () => {
             <div className={styles.middle}></div>
           </div>
         </div>
-        <div className="sm">{!User.data && <Icon />}</div>
+        {/* <div className="sm">{!User.data && <Icon />}</div> */}
+         <div className="sm"><Icon /></div>
 
         <div
           className={`${styles.brandIcon}`}
@@ -114,7 +115,7 @@ const NavTop = () => {
               e.key === "Enter" && handleClick(e);
             }}
           >
-            <button className="sm">
+            <button className="">
               <svg
                 fill="#000000"
                 viewBox="0 0 50 50"
@@ -124,7 +125,7 @@ const NavTop = () => {
                 }}
               >
                 <path
-                  className="sm"
+                  className=""
                   id="svg"
                   style={{
                     strokeDashoffset:
@@ -135,7 +136,7 @@ const NavTop = () => {
               </svg>
             </button>
 
-            <form className="big">
+            {/* <form className="big">
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -165,23 +166,24 @@ const NavTop = () => {
                   setInputValue={setInputValue}
                 />
               </div>
-            </form>
-          </div>
+            </form>*/}
+          </div> 
 
-          <div className="big">{!User.data && <Icon />}</div>
+          {/* <div className="big">{!User.data && <Icon />}</div> */}
 
           {(User.data?.username == "loading" && (
             <Loading
-              width="50px"
-              background={"var(--theme-color)"}
-              style={{ margin: "7px" }}
+            width="50px"
+            background={"var(--theme-color)"}
+            style={{ margin: "7px" }}
             />
-          )) || (
-            <>
+            )) || (
+              <>
                <Account />
-              {User.data?._id && <Icon />}
+              {/* {User.data?._id && <Icon />} */}
             </>
           )}
+          <div className="big"> <Icon /></div>
         </div>
       </div>
     </nav>
@@ -295,12 +297,12 @@ const Account = () => {
   }, [toBottom]);
 
   const handleClick = (e) => {
-    console.log("The account was here");
-    console.log(myWindow.isFocused);
+    // console.log("The account was here");
+    // console.log(myWindow.isFocused);
     if (myWindow.isFocused === "account") {
       myWindow.setFocusOn("none", e);
     } else {
-      console.log("the focus on accout");
+      // console.log("the focus on accout");
       myWindow.setFocusOn("account", e);
     }
   };
@@ -332,28 +334,22 @@ const Account = () => {
               className={styles.rg_menu}
             >
               <MyLink href={"/account"}>
-                <a>
                   <div className={styles.user}>
                     <p>Account</p>
                   </div>
-                </a>
               </MyLink>
 
               {(User.hasAuthorization("seller") && (
                 <MyLink href={"/upload"}>
-                  <a>
                     <div style={{ margin: "var(--margin) 0" }}>
                       <p>Upload item</p>
                     </div>
-                  </a>
                 </MyLink>
               )) || (
                 <MyLink href={"/account"}>
-                  <a>
                     <div style={{ margin: "var(--margin) 0" }}>
                       <p>Become a seller</p>
                     </div>
-                  </a>
                 </MyLink>
               )}
               <hr />

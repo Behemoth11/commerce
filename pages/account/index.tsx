@@ -1,5 +1,5 @@
 import MyImage from "../../component/MyImage";
-import styles from "../../styles/account.module.css";
+import styles from "../../styles/account.module.scss";
 import React, { useState, useEffect } from "react";
 import MyLink from "../../component/MyLink";
 import { useRequire } from "../../shared/CustomHooks";
@@ -55,13 +55,11 @@ function Account() {
 
       <div className={styles.body}>
         <MyLink href={"/cart"}>
-          <a>
             <div className={styles.optionWrapper}>
               <p>
                 Open My Cart <img src="svg/bagIcon.svg"></img>
               </p>
             </div>
-          </a>
         </MyLink>
         <div
           className={styles.optionWrapper}
@@ -75,7 +73,7 @@ function Account() {
                 informations
               </p>
               <MyLink href="/contact?focus=become a seller">
-                <a>to contact page</a>
+                to contact page
               </MyLink>
             </div>
           </Popup>
@@ -110,7 +108,7 @@ function Account() {
                 informations
               </p>
               <MyLink href="/contact?focus=become a seller">
-                <a>to contact page</a>
+                to contact page
               </MyLink>
             </div>
           </Popup>

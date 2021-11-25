@@ -1,4 +1,27 @@
 
 .container{
-    padding: 2em; background-color: blue;
+    width: 1em;
+    height: 1em;
+    display: flex;
+    padding: 0.2em;
+    border-radius: 50%;
+    margin: 0.6em;
+    background: linear-gradient(25deg, blue, white);
+    animation: turn 1s linear infinite;
+    & >div{
+       width: 99%;
+       height: 99%;
+       margin: auto;
+       border-radius: 50%;
+       background-color: rgb(255, 255, 255);
+    }
+}
+
+@keyframes turn {
+    0%{ 
+        transform: rotateZ(0deg);
+    }
+    100%{
+        transform: rotateZ(360deg);
+    }
 }

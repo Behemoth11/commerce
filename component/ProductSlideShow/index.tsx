@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import MyImage from "../MyImage";
 import { useSpring, animated } from "react-spring";
 import React, { memo, useState, useRef, useEffect } from "react";

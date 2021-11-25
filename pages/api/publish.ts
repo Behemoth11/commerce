@@ -24,9 +24,9 @@ const handler = async (req, res) => {
       break;
 
     case "PUT":
-        //console.log("delete")
-        await PUT_handler(req, res);
-        break;
+      //console.log("delete")
+      await PUT_handler(req, res);
+      break;
 
     default:
       res.status(404).send({ message: "wrong method" });

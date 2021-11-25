@@ -7,13 +7,14 @@ const handle_put = async (req, res) => {
     const query = req.query;
     const body = req.body;
     const action = query.action;
-    console.log(query);
     const post_ids_string = string_and_array_to_array(query["post_ids[]"]);
 
     const post_ids = post_ids_string.map((id) => new Types.ObjectId(id));
 
     switch (action) {
       case "add_to_set":
+
+        console.log(body.update)
         const mongo_response = await FacebookPost.updateMany(
           { _id: { $in: post_ids }, owner: new Types.ObjectId(req.user._id) },
           { $addToSet: body.update }

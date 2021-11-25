@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { memo, FC, ReactNode, useState, useEffect } from "react";
 
 interface Props {
@@ -13,16 +13,7 @@ interface Props {
   childern?: ReactNode;
 }
 
-const Select: FC<Props> = ({
-  select_id,
-  selected,
-  message,
-  label,
-  onClick,
-  type,
-  style,
-  children,
-}) => {
+const Select: FC<Props> = ({ selected, message, label, onClick }) => {
   const [showing, setShowing] = useState(false);
   const [checked, setChecked] = useState(false);
 
@@ -42,7 +33,10 @@ const Select: FC<Props> = ({
         className={styles.checkMarker}
         style={{ transform: checked ? "scale(1)" : "scale(0)" }}
         onTransitionEnd={() => {
-          if (selected) setShowing(true);
+          console.log("The first transition ended")
+          console.log(selected)
+          if (selected ) setShowing(true);
+          else setChecked(false)
         }}
       >
         <svg viewBox="0 0 37 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,7 +45,11 @@ const Select: FC<Props> = ({
             style={{ strokeDashoffset: showing ? 0 : 60 }}
             d="M1.14084 14.6791L12.9923 24.5554L35.8586 0.694916"
             stroke="white"
-            onTransitionEnd={() => !showing && setChecked(false)}
+            onTransitionEnd={() => {
+              console.log("the second level transition endend");
+              if (!selected) setChecked(false);
+              else setShowing(true)
+            }}
           />
         </svg>
       </div>

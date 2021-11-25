@@ -29,6 +29,7 @@ const handle_post = async (req, res) => {
     price: data.price, //number
     color: data.color, //array
     owner: req.user._id,
+    nature: data.nature,
     location: data.location, //string
     materials: data.materials, //array
     categories: data.categories, //array

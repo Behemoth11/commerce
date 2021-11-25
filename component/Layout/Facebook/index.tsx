@@ -1,14 +1,15 @@
 //@ts-nocheck
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { useEffect } from "react";
 
 const Facebook = () => {
   useEffect(() => {
     if (!document || !window) return;
     console.log("The initializer ran")
+    
     window.fbAsyncInit = function () {
       window.FB.init({
-        appId: "971187146826531",
+        appId: process.env.NEXT_PUBLIC_FACEBOOK_APP_ID,
         cookie: true,
         xfbml: true,
         version: "v12.0",
@@ -24,7 +25,7 @@ const Facebook = () => {
       <div
         id="fb-customer-chat"
         attribution="biz_inbox"
-        page_id="104940965341501"
+        page_id={process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID}
         className="fb-customerchat"
       ></div>
     </>

@@ -1,3 +1,4 @@
+import { useAuthcontext } from './../Contexts/GlobalContext';
 import { categories } from "./../component/Layout/NavBar/navBarSections";
 import axios from "axios";
 import { getRelated } from "../component/Layout/NavBar/navBarSections";
@@ -65,7 +66,7 @@ export const add_captchat_token = async (input) => {
   const captchat_token = await new Promise((resolve, reject) => {
     captchat.ready(function () {
       captchat
-        .execute("6Lc-lUMdAAAAALrqJdMgC82t5NuX9BfPXfk2aGyP", {
+        .execute(process.env.NEXT_PUBLIC_RE_SITE_KEY, {
           action: "submit",
         })
         .then(function (token) {
@@ -83,4 +84,23 @@ export const getSelectionArray = (selection) => {
     if (selection[post_id]) post_to_affect.push(post_id);
   }
   return post_to_affect;
+};
+
+export const getGroups: (auth: any, setGroups: any, fields ?: string[]) => void = async (auth,setGroups, fields ) => {
+  let groups_response;
+  groups_response = await auth.axios
+    .get("/api/publish", {
+      params: {
+        which: "mine",
+        limit: "10",
+        field: fields || ["post_name", "message"],
+      },
+    })
+    .catch((err) => (groups_response = err.response));
+
+  if (groups_response.status === 200) {
+    setGroups(groups_response.data.posts);
+  } else {
+    setGroups(null);
+  }
 };

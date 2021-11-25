@@ -14,12 +14,22 @@ const handle_get = async (req, res) => {
           .status(500)
           .json({ message: "you need to be connected to see your groups" });
 
-      posts = await FacebookPost.find(
-        { owner: new Types.ObjectId(req.user._id) },
-        query["field[]"]
-      )
-        .limit(query.limit || 20)
-        .lean();
+      if (query["field[]"]?.includes("grouping")) {
+        posts = await FacebookPost.find(
+          { owner: new Types.ObjectId(req.user._id) },
+          query["field[]"]
+        )
+          .limit(query.limit || 20)
+          .populate("grouping", ["pr_image_url", "productName"])
+          .lean();
+      } else {
+        posts = await FacebookPost.find(
+          { owner: new Types.ObjectId(req.user._id) },
+          query["field[]"]
+        )
+          .limit(query.limit || 20)
+          .lean();
+      }
 
       res.status(200).json({
         posts,
@@ -44,6 +54,7 @@ const handle_get = async (req, res) => {
           message: "item not found",
         });
       }
+      break;
 
     default:
       posts = await FacebookPost.find(

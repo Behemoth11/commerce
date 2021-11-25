@@ -11,7 +11,7 @@ const handle_get = async (req, res) => {
   let limit = 50;
   let field = query.field;
 
-  console.log("new tokens")
+  // console.log("new tokens")
 
   // console.log(query, 444444444444444444444);
 

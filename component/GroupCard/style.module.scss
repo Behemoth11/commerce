@@ -1,0 +1,13 @@
+
+.b{
+    margin: var(--margin);
+    padding: var(--padding);
+    border: 1px solid black;
+    font-size: 0.8em;
+}
+
+
+.imageContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr) );
+}

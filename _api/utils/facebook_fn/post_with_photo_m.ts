@@ -8,7 +8,7 @@ const post_with_photo_m = async (message, ...urls) => {
         (await axios
           .post("https://graph.facebook.com/104940965341501/photos", null, {
             params: {
-              access_token: process.env.FACEBOOK_TOKEN,
+              access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN,
               url,
               published: false,
             },
@@ -32,7 +32,7 @@ const post_with_photo_m = async (message, ...urls) => {
       "https://graph.facebook.com/104940965341501/feed",
       qs.stringify(request_body),
       {
-        params: { access_token: process.env.FACEBOOK_TOKEN, message },
+        params: { access_token: process.env.FACEBOOK_PAGE_ACCESS_TOKEN, message },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },

@@ -1,6 +1,6 @@
 // @ts-ignore
-import styles from "./style.module.css";
-import inputStyles from "../style.module.css";
+import styles from "./style.module.scss";
+import inputStyles from "../style.module.scss";
 import { memo, useEffect, useRef } from "react";
 
 interface InputProps {
