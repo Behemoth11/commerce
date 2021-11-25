@@ -1,5 +1,5 @@
 import axios from "axios";
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import Input from "../../Inputs/NormalInput";
 import React, { useEffect, useRef, useState } from "react";
 import { validatePassword, validateUsername } from "./validator";

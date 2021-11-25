@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Expend from ".";
 import Button from "../../Button";
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 
 import { Props } from ".";
 

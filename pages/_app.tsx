@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import Script from "next/script";
 import Layout from "../component/Layout";
 import { useState, useEffect } from "react";
@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }) {
         <Script
           async
           defer
-          src={`https://www.google.com/recaptcha/api.js?render=6Lc-lUMdAAAAALrqJdMgC82t5NuX9BfPXfk2aGyP`}
+          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RE_SITE_KEY}`}
         ></Script>
         <Component {...pageProps} />
       </Layout>

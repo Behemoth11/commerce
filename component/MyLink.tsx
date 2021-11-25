@@ -13,8 +13,8 @@ const MyLink: FC<Props> = ({ children, href, className }) => {
   const myWindow = useMyWindow();
 
   const handleClick = (e) => {
-    console.log(router.asPath)
-    console.log(router.pathname)
+    // console.log(router.asPath)
+    // console.log(router.pathname)
     // e.stopPropagation();
     myWindow.setPhase("fadeOut");
     setTimeout(() => {

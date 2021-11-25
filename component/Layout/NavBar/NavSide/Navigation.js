@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import MyLink from "../../../MyLink";
 import { memo } from "react";
 import { useNavBarContext } from "../navBarContext";
@@ -124,7 +124,7 @@ const Navigation = ({
               {littleLinkList.map(({text, to}) => (
                 <MyLink key={text} href={`/${to}`}>
                   <li onClick={() => toggleNavBar()}>
-                    <a>{text}</a>
+                    {text}
                   </li>
                 </MyLink>
               ))}

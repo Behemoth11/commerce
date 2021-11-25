@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { useState, useEffect, memo, useMemo } from "react";
 import Navigation from "./Navigation";
 

@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import MyLink from "../MyLink";
 
 import React, { memo } from "react";
@@ -40,7 +40,7 @@ const Explore_SectionTitle: React.FC<Props> = ({ categories }) => {
                   )
               )}
               <MyLink href={`/`}>
-                <a>{Categories[Categories.length - 1]}</a>
+                {Categories[Categories.length - 1]}
               </MyLink>
             </div>
           </h2>

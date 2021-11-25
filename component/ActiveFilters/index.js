@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import Filter from "./Filter.js";
 import { memo, useState, useEffect } from "react";
 import { useFindContext } from "../../Contexts/FindContext";

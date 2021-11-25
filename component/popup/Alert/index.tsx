@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { memo, useRef, useState, useEffect, FC } from "react";
 import { animated, useSpring, config, useTransition } from "react-spring";
 import { useMyWindow } from "../../../Contexts/GlobalContext";

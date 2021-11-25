@@ -1,7 +1,7 @@
 import NavTop from "./NavTop";
 import NavSide from "./NavSide";
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import NavBarContext, { useNavBarContext } from "./navBarContext";
 import { memo, useState, useEffect } from "react";
 import SearchBar from "./SearchBar";

@@ -36,10 +36,14 @@ export function getGoogleAuthURL() {
 }
 
 export async function getGoogleUser({ code }) {
-  const { tokens } = await oauth2Client.getToken(code);
 
+  console.log("Just before the supects")
+
+  const { tokens } = await oauth2Client.getToken(code);
+  console.log("Just after the suspect ")
   // Fetch the user's profile with the access token and bearer
-  const googleUser = await axios
+  let response;
+  response = await axios
     .get(
       `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`,
       {
@@ -48,10 +52,7 @@ export async function getGoogleUser({ code }) {
         },
       }
     )
-    .then((res) => res.data)
-    .catch((error) => {
-      throw new Error(error.message);
-    });
+    .catch((error) => {throw new Error(error.response)})
 
-  return googleUser;
+  return response.data;
 }

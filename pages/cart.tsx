@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useTransition, animated, config } from "react-spring";
 import { useEffect, useRef, useState } from "react";
 import CartProduct from "../component/CartProduct";
-import styles from "../styles/cart.module.css";
+import styles from "../styles/cart.module.scss";
 import { useCartContext } from "../Contexts/GlobalContext";
 import { useRequire } from "../shared/CustomHooks";
 
@@ -15,7 +15,7 @@ type responseData = {
 };
 
 export default function Home() {
-  const { savedProduct } = useCartContext();
+  const { savedProduct , removeFromCart} = useCartContext();
   const message = useRef<string>();
 
   // useRequire("login");
@@ -59,6 +59,7 @@ export default function Home() {
             <CartProduct
               product={product}
               visible={savedProduct.includes(product)}
+              onClick={removeFromCart}
             />
           </animated.div>
         ))}

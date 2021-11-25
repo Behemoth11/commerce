@@ -51,7 +51,7 @@ const handle_post = async (req, res) => {
       let url = data.url;
 
       if (!url) {
-        const product = await Product.findById(data._id, "pr_image_url").lean();
+        const product = await Product.findOne({_id : new Types.ObjectId(data._id)}, "pr_image_url").lean().catch(err => console.log(err));
         url = product.pr_image_url && product.pr_image_url[0];
       }
       if (!url)
@@ -61,8 +61,8 @@ const handle_post = async (req, res) => {
 
       const message_root =
         data.message ||
-        `nous avons un nouvel articles. Suivez le lien pour plus de ${data.categories[0]}`;
-      const message_template = `https://${process.env.VERCEL_URL || data.host}/product/${data._id}`;
+        `nous avons un nouvel articles. Suivez le lien pour plus de ${data.nature}`;
+      const message_template = `https://${data.host || process.env.VERCEL_URL}/product/${data._id}`;
 
       const message = message_root + "\n" + message_template;
       const result = await post_with_photo_m(

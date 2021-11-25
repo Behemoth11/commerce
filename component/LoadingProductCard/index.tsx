@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 
 const DEFAULT_ASPECT_RATIO = 120; //you may want to change the global css aspect-ratio after changing this
 

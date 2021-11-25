@@ -1,7 +1,7 @@
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import styles from "../../styles/find.module.css";
+import styles from "../../styles/find.module.scss";
 import React, { useState, useEffect } from "react";
 import PageIndex from "../../component/pagination";
 import ActiveFilter from "../../component/ActiveFilters";
@@ -14,8 +14,6 @@ import { string_and_array_to_array } from "../../shared/UtilityFunctions";
 import FilterContainer from "../../component/FilterContainer";
 import { fetchNavigation } from "../../shared/shared_functions";
 import { useFilterContext } from "../../Contexts/GlobalContext";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const createUrl = (_categories, filters) => {
   if (!_categories) return;
@@ -145,7 +143,7 @@ function FindContent() {
           <FilterContainer
             key="45"
             showApplyFilter={false}
-            applyFilterSideEffect={() => console.log(4)}
+            applyFilterSideEffect={() => 4}
             defaultOpened={["color"]}
             maxOpened={3}
           />

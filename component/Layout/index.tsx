@@ -1,4 +1,4 @@
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { useIsomorphicLayoutEffect } from "../../shared/CustomHooks";
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useRouter } from "next/router";

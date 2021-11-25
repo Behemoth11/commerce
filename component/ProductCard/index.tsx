@@ -2,7 +2,7 @@
 import MyLink from "../MyLink";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import { memo, useState, useEffect, useRef } from "react";
 import LoadingProductCard from "../LoadingProductCard";
 import { formatPrice } from "../../shared/UtilityFunctions";
@@ -80,7 +80,6 @@ const index: React.FC<Props> = ({
             />
 
             <MyLink href={`/product/${_id}`}>
-              <a>
                 <div
                   className={`${styles.moreInfo}  ${
                     infoFieldIsOpen && styles.open
@@ -91,11 +90,9 @@ const index: React.FC<Props> = ({
                     <p>{description}</p>
                   </div>
                 </div>
-              </a>
             </MyLink>
 
             <MyLink href={`/product/${_id}`}>
-              <a>
                 <div className={`${styles.imageSection}`}>
                   <MyImage
                     imageLink={imageLink && imageLink[0]}
@@ -105,7 +102,6 @@ const index: React.FC<Props> = ({
                     onLoad={() => setIsLoading(false)}
                   />
                 </div>
-              </a>
             </MyLink>
           </div>
         </div>
@@ -121,7 +117,7 @@ const index: React.FC<Props> = ({
 
             <MyLink href={`/product/${_id}`}>
               <button className={`${styles.buy} ${styles[type]}`}>
-                <a>buy</a>
+                buy
               </button>
             </MyLink>
           </div>

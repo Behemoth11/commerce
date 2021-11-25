@@ -1,6 +1,6 @@
 // @ts-ignore
-import styles from "./style.module.css";
-// import inputStyles from "../style.module.css";
+import styles from "./style.module.scss";
+// import inputStyles from "../style.module.scss";
 import { memo, useEffect, useRef } from "react";
 import Box from "./box";
 
@@ -30,7 +30,7 @@ const CheckboxInput: React.FC<InputProps> = ({
 
   const handleChange = (label) => {
     setInputValue((prevState) => {
-      console.log(prevState);
+      // console.log(prevState);
       let myState = prevState[name] || {};
       myState = { ...myState };
       const oldValue = myState[label] || false;

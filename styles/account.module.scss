@@ -26,24 +26,29 @@
     position: relative;
     padding: var(--large-margin) 0px;
     margin: var(--large-margin) 0px;
-    background-color: rgba(191, 184, 184, 0.097);
+    // display: flex;
     &>p {
       display: flex;
       align-items: center;
     }
 
-    &>p::before {
-      content: "";
-      display: inline-block;
-      padding: 0.3em;
-      margin-right: 0.5em;
-      border-top: 2px solid var(--theme-color-1);
-      border-right: 1px solid var(--accent-color-1);
-      transform: rotateZ(45deg);
+    &:active{
+          background-color: rgba(191, 184, 184, 0.097);
     }
+
+    // &>p::before {
+    //   content: "";
+    //   display: inline-block;
+    //   padding: 0.3em;
+    //   margin-right: 0.5em;
+    //   border-top: 2px solid var(--theme-color-1);
+    //   border-right: 1px solid var(--accent-color-1);
+    //   transform: rotateZ(45deg);
+    // }
     img {
       width: 1em;
-      margin-left: 0.2em;
+      // margin-left: 0.2em;
+      margin-left: auto;
     }
   }
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import TPLogin from "./TPLogin";
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import Input from "../../Inputs/NormalInput";
 import Loading from "../../LoadingController/loading";
 import React, { useEffect, useRef, useState } from "react";

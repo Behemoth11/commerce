@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import ProductCard from "../ProductCard";
 import { memo, useState, useRef, useEffect } from "react";
 import { useIntersectionObserver } from "../../shared/CustomHooks";

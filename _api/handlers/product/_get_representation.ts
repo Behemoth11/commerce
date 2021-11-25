@@ -24,7 +24,7 @@ const handle_get = async (req, res) => {
   const representation = string_and_array_to_array(query.representation) || [];
 
   const _promises = representation.map(async (rpr) => {
-    return await Product.findOne({ representation: rpr }, query.field)
+    return await Product.findOne({ representation: {$in: rpr?.split(" ")}}, query.field)
       .lean()
       .catch((err) => error.push(err.message));
   });
@@ -61,7 +61,7 @@ const handle_get = async (req, res) => {
     //console.log(missingProducts)
     finalProducts.push(...missingProducts);
 
-  console.log(missingProducts)
+  // console.log(missingProducts)
   }
 
 

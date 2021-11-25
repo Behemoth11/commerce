@@ -59,6 +59,7 @@ export const categories = {
 //   },
 // },
 // };
+export const ITEM_NATURE = getCategories(categories, ["femme", "homme", "enfant", "ustensils"]);
 
 export const navBarSections = {
   menu: {
@@ -67,7 +68,7 @@ export const navBarSections = {
     content: ["femme", "homme", "enfant", "ustensils", "tous"],
     tous: {
       tous: "tous",
-      content: getCategories(categories, ["femme", "homme", "enfant", "ustensils"]),
+      content: ITEM_NATURE,
     },
   },
 };

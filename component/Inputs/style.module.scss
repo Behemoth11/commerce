@@ -10,12 +10,11 @@
   opacity: 0;
   width: 50%;
   z-index: -2;
-  max-height: 90px;
+  max-height: 180px;
   overflow: scroll;
   position: absolute;
   font-size: 0.9em;
   border-radius: 2px;
-  transform: translateY(-110%);
   color: rgb(232, 229, 229);
   transform: translateY(-103%);
   background-color: var(--theme-color);

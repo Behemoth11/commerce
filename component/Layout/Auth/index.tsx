@@ -1,5 +1,5 @@
 // @ts-ignore
-import styles from "./style.module.css";
+import styles from "./style.module.scss";
 import React, { memo, useEffect, useRef, useState } from "react";
 import { useMyWindow } from "../../../Contexts/GlobalContext";
 import { validatePassword, validateUsername } from "./validator";

@@ -13,7 +13,7 @@ const search = async (text, filters, options) => {
     options.field.forEach((field) => (project.$project[field] = 1));
   }
 
-  console.log(filters, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+  // console.log(filters, "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
   const products = await Product.aggregate([
     {
       $search: {
