@@ -11,12 +11,10 @@ export const GET_handler = createHandler(
   enforceRole("admin"),
   GET_contact_message
 );
-export const POST_handler = createHandler(
-    addUser,
-    POST_contact_message
-);
-  
+export const POST_handler = createHandler(addUser, POST_contact_message);
+
 export const DELETE_handler = createHandler(
-    addUser,
-    DELETE_contact_message
-  );;
+  addUser,
+  enforceRole("admin"),
+  DELETE_contact_message
+);

@@ -5,19 +5,14 @@ const getUrl = () => {
   let ssl;
 
   if (process.env.VERCEL_ENV == "development"){
-    ssl = "http://"
-  }else  if (process.env.VERCEL_ENV == "production"){
-    ssl = "https://"
-  } else if (process.env.VERCEL_ENV == "preview"){
-    ssl = "https://"
-    return `https://commerce-behemoth11.vercel.app/api/auth/google`
+    return`http://${process.env.VERCEL_URL}/api/auth/google`
   }
-  const url = ssl + process.env.VERCEL_URL + "/api/auth/google";
+  const url = process.env.HOST_URI + "/api/auth/google";
   return url;
 }
 
 const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
+  process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
   getUrl()
 );
@@ -37,10 +32,11 @@ export function getGoogleAuthURL() {
 
 export async function getGoogleUser({ code }) {
 
-  console.log("Just before the supects")
+  // console.log("Just before the supects")
 
   const { tokens } = await oauth2Client.getToken(code);
-  console.log("Just after the suspect ")
+  // console.log("The tokens from the code : ", tokens)
+  // console.log("Just after the suspect ")
   // Fetch the user's profile with the access token and bearer
   let response;
   response = await axios
@@ -52,7 +48,10 @@ export async function getGoogleUser({ code }) {
         },
       }
     )
-    .catch((error) => {throw new Error(error.response)})
+    .catch((error) => {
+      // console.log("the error I go from the request is : ", error);
+      throw new Error(error.response);
+    });
 
   return response.data;
 }

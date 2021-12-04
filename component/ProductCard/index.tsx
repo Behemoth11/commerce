@@ -48,7 +48,7 @@ const index: React.FC<Props> = ({
   return (
     <div className={`${styles.cardsContainer} ${styles[type]} no-shrink`}>
       {isLoading && (
-        <div onClick={() => setIsLoading(false)}>
+        <div>
           <LoadingProductCard
             price={price}
             type={type}
@@ -129,8 +129,9 @@ const index: React.FC<Props> = ({
                   pathname: "/find",
                   query: { categories: footer.split(" ") },
                 }}
+                style={{ textDecoration: "underline" }}
               >
-                <a style={{ textDecoration: "underline" }}>{footer}</a>
+                {footer}
               </MyLink>
             </div>
           ))}

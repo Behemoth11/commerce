@@ -67,7 +67,7 @@ export const navBarSections = {
     title: "menu",
     content: ["femme", "homme", "enfant", "ustensils", "tous"],
     tous: {
-      tous: "tous",
+      title: "tous les articles",
       content: ITEM_NATURE,
     },
   },
@@ -101,7 +101,7 @@ export const REPRESENTATIONS = getRepresentations(
   Object.keys(navBarSections.menu)
 );
 
-export const getRelated = (_categories) => {
+export const getRelated = (_categories, raw ?: boolean) => {
   let navigationQuery;
 
   if (_categories == "tous")
@@ -112,5 +112,10 @@ export const getRelated = (_categories) => {
         return new RegExp(categorie, "i").test(representation);
       });
     });
+
+  if (raw){
+    return navigationQuery.map(query => query.slice(1));
+  }
+  
   return navigationQuery.map((e) => `representation=${e.slice(1)}`).join("&"); //we slice here because there is a space at the beginning of the string
 };

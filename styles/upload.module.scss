@@ -55,25 +55,47 @@
 
 .correct{
   height: 1em;
-  margin: 0.6em;
+  // margin: 0.6em;
   &> path{
     stroke-width: 3px;
+  }
+}
+
+.task_ctn{
+  margin: var(--large-margin) 0;
+  // display: flex;
+  position: relative;
+  p{
+    display: flex;
+    align-items: center;
+  }
+  & > span{
+    text-justify: distribute;
+    margin-left: 2em;
+    color: red;
   }
 }
 
 .taskManagerIcon{
   position: relative;
   // background-color: blue;
-  width: 2em;
-  height: 2em;
-  &> *{
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.5em;
+  // display: flex;
+  &> svg{
     position: absolute;
-    top: 0%;
+    // top: 0%;
     left: 0%;
-    width: 50%;
+    width: 100%;
     // transform: translate(-50%,-50%);
   }
-
+  &>div{
+    position: absolute;
+    margin: auto;
+    width: 100%;
+  }
 }
 
 .error{

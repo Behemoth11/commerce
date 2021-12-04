@@ -23,7 +23,7 @@ function Account() {
   }, []);
 
   return (
-    <div className="big-container">
+    <div className="big-container content">
       <div className={styles.header}>
         <div>
           {(User.data?.pr_picture && (

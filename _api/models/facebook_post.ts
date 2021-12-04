@@ -6,6 +6,10 @@ export const facebookPost = new Schema({
     type: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     required: true,
   },
+  lastEdit: {
+    type: Number,
+    required: true,
+  },
   published: {
     kdshop: {
       type: Boolean,

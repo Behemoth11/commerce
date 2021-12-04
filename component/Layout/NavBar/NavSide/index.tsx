@@ -7,7 +7,6 @@ import { navBarSections } from "../navBarSections";
 import { useNavBarContext } from "../navBarContext";
 import { useMyWindow } from "../../../../Contexts/GlobalContext";
 
-
 const END_POINT = "END_POINT";
 
 const formatLocation = (object, index) => {
@@ -42,7 +41,7 @@ const index = () => {
   const [positionIndex, setPositionIndex] = useState(0);
   const { sideBarIsOpen, toggleNavBar } = useNavBarContext();
   const [sideBarLocation, setSideBarLocation] = useState(["menu"]);
-  const myWindow = useMyWindow()
+  const myWindow = useMyWindow();
 
   const updateSideBar = (update, index) => {
     setSideBarLocation((prevState) => {
@@ -53,17 +52,17 @@ const index = () => {
     setPositionIndex((prevState) => prevState + 1);
   };
 
-  const progressiveComeBack = (index,prevIndex?: number) => {
+  const progressiveComeBack = (index, prevIndex?: number) => {
     var newIndex;
 
-
     setPositionIndex((prevState) => {
-      if (prevState < 1 || prevIndex != undefined && prevState != prevIndex) return prevState;
-      newIndex = prevState-1;
+      if (prevState < 1 || (prevIndex != undefined && prevState != prevIndex))
+        return prevState;
+      newIndex = prevState - 1;
       return prevState - 1;
     });
 
-    if (newIndex && newIndex > index ) {
+    if (newIndex && newIndex > index) {
       setTimeout(() => progressiveComeBack(index, newIndex), 500);
     }
   };
@@ -80,11 +79,13 @@ const index = () => {
     [sideBarLocation]
   );
 
-
   return (
     <>
       <div
-        className={`${styles.overlay} ${myWindow.overlay.isOpen && styles.open}`}
+        id="overlay"
+        className={`${styles.overlay} ${
+          myWindow.overlay.isOpen && styles.open
+        } ${myWindow.overlay.className}`}
         onClick={() => myWindow.overlay.close()}
       ></div>
 
@@ -92,6 +93,7 @@ const index = () => {
         className={`flex
         ${styles.sideBar}
         ${sideBarIsOpen && styles.open}`}
+        id="side_nav"
       >
         {sideBarPages.map((page) => (
           <Navigation

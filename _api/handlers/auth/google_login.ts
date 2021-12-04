@@ -13,7 +13,10 @@ const handle_google_login = async (req, res) => {
   const code = req.query.code;
   if (code) {
     try {
+      // console.log("The code from google" , code)
       const user = await getGoogleUser({ code });
+
+      // console.log("the user retrieved is : ", user)
 
       const { id, given_name, name, email, family_name } = user;
       const myUser = {
@@ -63,12 +66,22 @@ const handle_google_login = async (req, res) => {
         </html>`);
       return;
     } catch (error) {
-      return res.json({
-        message: "we couldn't log you in",
-        error: error.message,
-      });
+      // console.log(error)
+
+      // return res.json({
+      //   error
+      // })
+      return res.status(400).send(`
+        <!DOCTYPE html>
+        <html>
+            <script>
+            localStorage.setItem("meta_64","1")
+            window.location.href = "/";
+            </script>
+        </html>`);
     }
   }
+
   res.send({
     url: google_url,
   });

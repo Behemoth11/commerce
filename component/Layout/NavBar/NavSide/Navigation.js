@@ -62,6 +62,7 @@ const Navigation = ({
             </h4>
 
             <div
+            id="close_side"
               className={`${styles.croxSection} flex center-children pointer`}
               onClick={() => toggleNavBar()}
             >
@@ -91,7 +92,7 @@ const Navigation = ({
                     }}
                   >
                     <div onClick={() => toggleNavBar()} className={`flex align-center`}>
-                      <a>{label}</a>
+                      {label}
                     </div>
                   </MyLink>
                 </div>
@@ -112,7 +113,7 @@ const Navigation = ({
                     className={`max-width flex pointer align-center ${styles.linkContainer}`}
                     onClick={() => toggleNavBar()}
                   >
-                    <a>{label}</a>
+                    {label}
                   </div>
                 </MyLink>
               )

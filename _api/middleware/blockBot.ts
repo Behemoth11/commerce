@@ -2,7 +2,7 @@ import verify_if_bot from "../utils/verify_if_bot";
 
 export const blockBot = async (req, res, cb) => {
 
-  if (process.env.VERCEL_ENV === "development" || process.env.VERCEL_ENV === "preview"  ) return cb(req, res);
+  if (process.env.VERCEL_ENV === "development") return cb(req, res);
   
   const captchat_token = req.body.captchat_token;
   if (!captchat_token)

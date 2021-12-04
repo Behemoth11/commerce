@@ -1,34 +1,50 @@
+@import "../mixins/index.scss";
+
 .imageContainer {
   --variable: 70px;
+  --delay: 0.1s;
   position: relative;
   padding-top: 125%;
   overflow: hidden;
   width: 100%;
+
   // background-color: rgba(0, 0, 0, 0.078);
-  & > div {
+  &>div {
     // background-color: var(--theme-color);
   }
+
+  .c_to_act {
+    position: absolute;
+    padding: 0.5em;
+    bottom: 0;
+    z-index: 2;
+  }
+
   button {
+    display: block;
+    white-space: nowrap;
     // border-left: var(--border) solid var(--accent-color);
+    border-radius: 1px;
+    margin-top: 2em;
     background-color: rgb(20, 16, 20);
     // background: linear-gradient(30deg, #161626, #bb245c 200%);
-    border-radius: 1px;
     color: var(--text-color-light);
-    padding: unquote("min(var(--large-padding), 3%)");
-    left: var(--large-padding);
-    position: absolute;
+    padding: 1em;
+    // animation: slideIn 0.8s ease-out backwards;
+    // left: var(--large-padding);
+    // position: absolute;
     font-size: 1em;
-    z-index: 2;
+    // z-index: 2;
     // box-shadow: -1px 1px 1px var(--accent-color);
   }
+
   button:nth-of-type(1) {
-    bottom: calc(10px);
   }
   button:nth-of-type(2) {
-    bottom: calc(1 * var(--variable) + 10px);
+    animation-delay: var(--delay);
   }
   button:nth-of-type(3) {
-    bottom: calc(2 * var(--variable) + 10px);
+    animation-delay: calc(var(--delay)*2)
   }
 
   &::after {
@@ -43,16 +59,30 @@
   }
 }
 
+@keyframes slideIn {
+  0% {
+    transform: translateX(min(100vw, 400px));
+  }
+
+  ;
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
 @media (min-width: 470px) {
   .imageContainer {
     padding-top: 70%;
   }
 }
+
 @media (min-width: 700px) {
   .imageContainer {
     padding-top: 50%;
   }
 }
+
 @media (min-width: 900px) {
   .imageContainer {
     padding-top: 40%;
@@ -65,6 +95,7 @@
   top: 50%;
   width: 100%;
   transform: translate(-50%, -50%);
+
   img {
     width: 100%;
   }
@@ -72,6 +103,7 @@
 
 .landingPage {
   --fCP: 58%;
+
   h3 {
     display: inline-block;
     border-bottom: 2px solid var(--theme-color);
@@ -88,13 +120,29 @@
   text-align: center;
 }
 
+// @include phone{
+//   .landingPage {
+//     --fCP: 70%;
+//   }
+// }
+
+@include small-phone{
+  .proposition{
+    margin: 0px;
+  }
+  .landingPage{
+    --fCP: 70%;
+  }
+}
 .new {
   margin: 0 var(--margin);
   text-align: center;
-  &>h3{
+
+  &>h3 {
     margin: var(--margin) 0;
   }
-  & > div:nth-child(2) {
+
+  &>div:nth-child(2) {
     font-size: 1em;
   }
 }

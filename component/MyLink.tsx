@@ -4,25 +4,26 @@ import { useMyWindow } from "../Contexts/GlobalContext";
 
 interface Props {
   children: any;
+  style?: {};
   href: string | {};
   className?: string;
 }
 
-const MyLink: FC<Props> = ({ children, href, className }) => {
+const MyLink: FC<Props> = ({ children, href, className, style }) => {
   const router = useRouter();
   const myWindow = useMyWindow();
 
   const handleClick = (e) => {
-    // console.log(router.asPath)
-    // console.log(router.pathname)
-    // e.stopPropagation();
+    myWindow.overlay.close()
     myWindow.setPhase("fadeOut");
+
     setTimeout(() => {
       router.push(href);
     }, 200);
   };
+
   return (
-    <a onClick={handleClick} className={className}>
+    <a onClick={handleClick} className={className} style={style}>
       {children}
     </a>
   );

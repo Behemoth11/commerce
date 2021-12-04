@@ -13,16 +13,14 @@ function Contact() {
   } = useRouter();
 
   useEffect(() => {
-    setInputValue({ focus: focus?.toString() || "", message: "" , contact:""});
+    setInputValue({ focus: focus?.toString() || "", message: "", contact: "" });
   }, [focus]);
 
   const [inputValue, setInputValue] = useState({
-    
     focus: "",
-    contact:"",
+    contact: "",
     message: "",
   });
-
 
   const [inputState, setInputState] = useState<
     "idle" | "loading" | "success" | "failure"
@@ -44,15 +42,17 @@ function Contact() {
 
     let response;
 
-    response = await axios.post("/api/contact_message", {
-      contact: inputValue.contact,
-      focus: inputValue.focus,
-      msg: inputValue.message,
-    }).catch(err => response = err.response);
+    response = await axios
+      .post("/api/contact_message", {
+        contact: inputValue.contact,
+        focus: inputValue.focus,
+        msg: inputValue.message,
+      })
+      .catch((err) => (response = err.response));
 
     if (response.status === 200) {
-        setInputState("success");
-        setSubmitCount(0);
+      setInputState("success");
+      setSubmitCount(0);
     } else setInputState("failure");
   };
 
@@ -79,7 +79,7 @@ function Contact() {
               margin: "var(--larger-margin) 0",
             }}
           >
-            Live a message. We will get back to you very soon.
+            Vivez un message. Nous vous répondrons très prochainement.
           </h3>
           <div style={{ padding: "var(--padding)" }}>
             <Input
@@ -106,7 +106,7 @@ function Contact() {
               setInputValue={setInputValue}
             />
             <button className="button" onClick={handleSubmit}>
-              Submit FeedBack
+              Envoyer le message
             </button>
           </div>
           <Errors errMsg={errors} />

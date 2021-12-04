@@ -4,17 +4,39 @@ import { memo, useEffect, useRef } from "react";
 import { useTransition, animated, config } from "react-spring";
 import { useMyWindow } from "../../Contexts/GlobalContext";
 
-const Popup = ({ children, duration, type, name }) => {
-  const myWindow = useMyWindow()
+interface Props {
+  duration: number;
+  type: string;
+  name: string;
+  cb?: () => void;
+}
+
+const Popup: React.FC<Props> = ({ children, duration, type, name, cb }) => {
+  const myWindow = useMyWindow();
   const popupId = useRef(0);
 
   const visibility = myWindow.isFocused === name;
-  const animate = useTransition(visibility, {
-    from: { opacity: 0, x: -100 },
-    enter: { opacity: 1, x: 0 },
-    leave: { opacity: 0, x: 100 },
-    config: config.stiff,
-  });
+
+  let animate;
+
+  switch (type) {
+    case "type1":
+      animate = useTransition(visibility, {
+        from: { opacity: 0, y: -200 },
+        enter: { opacity: 1, y: 0 },
+        leave: { opacity: 0, y: -20 },
+        config: config.stiff,
+      });
+
+      break;
+    default:
+      animate = useTransition(visibility, {
+        from: { opacity: 0, x: -100 },
+        enter: { opacity: 1, x: 0 },
+        leave: { opacity: 0, x: 100 },
+        config: config.stiff,
+      });
+  }
 
   useEffect(() => {
     // console.log("visibility accoridng to parent : ", isVisible)
@@ -24,7 +46,8 @@ const Popup = ({ children, duration, type, name }) => {
       const myPopupId = popupId.current;
       const timeOut = setTimeout(() => {
         if (myPopupId === popupId.current) {
-          myWindow.setFocusOn("none")
+          myWindow.setFocusOn("none");
+          if (cb) cb();
         }
       }, duration);
       // console.log(isVisible && "open" || "close", myWindow.isFocused, nonAnimatedVisibility)

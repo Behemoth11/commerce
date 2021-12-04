@@ -5,6 +5,7 @@ import { memo, useEffect, useRef } from "react";
 
 interface InputProps {
   name: string;
+  label?: string;
   required: boolean;
   inputValue: object;
   proposition?: object;
@@ -14,6 +15,7 @@ interface InputProps {
 
 const TextArea: React.FC<InputProps> = ({
   name,
+  label,
   required,
   inputValue,
   submitCount,
@@ -47,7 +49,7 @@ const TextArea: React.FC<InputProps> = ({
             inputStyles.failure
           }`}
         />
-        <label htmlFor={name}>{name} {!required && "(optional)"}</label>
+        <label htmlFor={name}>{label || name} {!required && "(optional)"}</label>
       </div>
     </>
   );

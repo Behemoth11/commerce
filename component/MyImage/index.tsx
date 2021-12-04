@@ -22,10 +22,10 @@ const MyImage: React.FC<{
   no_optimization,
 }) => {
   const applyTransformation = (link: string, width: number) =>
-    `https://res.cloudinary.com/dkoatnxem/image/upload/ar_${
+    `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/ar_${
       100 / ASPECT_RATIO
-    },c_crop/c_scale,w_${350}/${link}`;  
-    //   },c_crop/c_scale,w_${width+100}/${link}`;
+    },c_crop/c_scale,w_${350}/${link}`;
+  //   },c_crop/c_scale,w_${width+100}/${link}`;
 
   const imageRef = useRef<HTMLDivElement>();
   const [_imageLink, setImageLink] = useState(undefined);
@@ -37,7 +37,7 @@ const MyImage: React.FC<{
     if (no_optimization) return;
     if (!imageLink) return;
     setImageLink(applyTransformation(imageLink, imageRef.current.clientWidth));
-  }, [myWindow.size , imageLink, ASPECT_RATIO]);
+  }, [myWindow.size, imageLink, ASPECT_RATIO]);
 
   useEffect(() => {
     observer && observer.observe(imageRef.current);
@@ -70,7 +70,7 @@ const MyImage: React.FC<{
             />
           )) ||
             (loadingState && isLoading && (
-              <div className={styles.loadingPlaceholder}>...Loading</div>
+              <div className={`${styles.loadingPlaceholder} animated dark`}>...Loading</div>
             )))}
       </div>
     </div>

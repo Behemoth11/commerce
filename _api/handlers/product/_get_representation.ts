@@ -1,14 +1,24 @@
+import { Types } from "mongoose";
 import { string_and_array_to_array } from "../../../shared/UtilityFunctions";
-import {Product} from "../../models";
+import { Product } from "../../models";
 import cloudinary from "../../utils/cloudinary";
 
 const handle_get = async (req, res) => {
   const query = req.query;
   const error = [];
+  const ne = query.ne;
+
+  const GlobalQuery = {};
+
+  if (ne) {
+    try {
+      GlobalQuery["_id"] = { $ne: new Types.ObjectId(ne) };
+    } catch (error) {}
+  }
 
   if (query.representation == "all") {
-    const products = await Product.find(
-      { representation: { $nin: ["none", "hot deals"] } },
+    const products = await Product.find_visible(
+      { representation: { $nin: ["none", "hot deals"] }, ...GlobalQuery },
       query.field
     )
       .limit(query.limit)
@@ -24,7 +34,10 @@ const handle_get = async (req, res) => {
   const representation = string_and_array_to_array(query.representation) || [];
 
   const _promises = representation.map(async (rpr) => {
-    return await Product.findOne({ representation: {$in: rpr?.split(" ")}}, query.field)
+    return await Product.findOne_visible(
+      { representation: { $in: rpr?.split(" ") } , ...GlobalQuery},
+      query.field
+    )
       .lean()
       .catch((err) => error.push(err.message));
   });
@@ -42,8 +55,8 @@ const handle_get = async (req, res) => {
   if (missingRepresentation.length > 0) {
     //console.log(missingRepresentation)
     const _newPromises = missingRepresentation.map(async (rpr) => {
-      return await Product.findOne(
-        { categories: { $all: rpr.split(" ") } },
+      return await Product.findOne_visible(
+        { categories: { $all: rpr.split(" ") } , ...GlobalQuery },
         query.field
       ).catch((err) => error.push(err.message));
     });
@@ -55,15 +68,17 @@ const handle_get = async (req, res) => {
       .map((mongoObj, index) => {
         if (!mongoObj) return;
         //@ts-ignore
-        return { ...mongoObj._doc, representation: missingRepresentation[index] };
+        return {
+          ...mongoObj._doc,
+          representation: missingRepresentation[index],
+        };
       })
-      .filter((e) => e) //filters the product that are not defined;;
+      .filter((e) => e); //filters the product that are not defined;;
     //console.log(missingProducts)
     finalProducts.push(...missingProducts);
 
-  // console.log(missingProducts)
+    // console.log(missingProducts)
   }
-
 
   res.json({
     products: finalProducts,

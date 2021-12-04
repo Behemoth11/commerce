@@ -26,6 +26,7 @@ const NavBarProvider = ({ children }) => {
   const toggleNavBar = () => {
     if (sideBarIsOpen){
       myWindow.setHashLocation("none", -1)
+      // window.overlay.close()
     }else{
       myWindow.setHashLocation("#side_bar_navigation")
     }

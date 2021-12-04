@@ -9,7 +9,11 @@ import MoreProduct from "../../component/ProductList-flex/preset";
 import { formatPrice } from "../../shared/UtilityFunctions";
 import Loading from "../../component/LoadingController/loading";
 import Options from "../../component/Options";
-import { fecthRelated, fetchNavigation } from "../../shared/shared_functions";
+import {
+  distinct,
+  fecthRelated,
+  fetchNavigation,
+} from "../../shared/shared_functions";
 import {
   useAuthcontext,
   useCartContext,
@@ -18,19 +22,10 @@ import {
   useUser,
 } from "../../Contexts/GlobalContext";
 import Alert from "../../component/popup/Alert";
+import Head from "next/head";
+import connectDB, { connectDB_frontend } from "../../_api/middleware/mongodb";
 
-// const getUrl = (array) => {
-//   const query = array.map(
-//     (element) => `representation=${element.split("menu ")[1]}`
-//   );
-//   return query.join("&");
-// };
-
-const INIT = Array.from({ length: 10 }).map((e) => ({
-  representation: "nothing",
-}));
-
-const Product: React.FC = () => {
+const ProductShow = ({ mainProduct, navigation, related }) => {
   const {
     query: { productId },
   } = useRouter();
@@ -38,54 +33,41 @@ const Product: React.FC = () => {
   const User = useUser();
   const auth = useAuthcontext();
   const myWindow = useMyWindow();
-  const [data, setData] = useState<any>();
-  const [relatedProducts, setRelatedProducts] = useState(INIT);
-  const [navigationItems, setNavigatioinItems] = useState(INIT);
-
-  useEffect(() => {
-    setData(null);
-    setRelatedProducts(INIT);
-    setNavigatioinItems(INIT);
-    const getProduct = async () => {
-      if (!productId) return;
-      const data = await fetch(`/api/product/withId/${productId}`).then((res) =>
-        res.json()
-      );
-      setData(data);
-    };
-
-    getProduct();
-  }, [productId]);
-
-  useEffect(() => {
-    const products = data?.products;
-
-    if (products && products[0]) {
-      (async () => {
-        fetchNavigation(products[0].categories, setNavigatioinItems);
-        fecthRelated(products[0], setRelatedProducts);
-      })();
-    }
-  }, [data]);
-  const mainProduct = data?.products && data.products[0];
 
   const deleteProduct = async (e) => {
+    setD_state("working");
     const response = await auth.axios
-      .delete(`/api/product/withId/${productId}`)
-      .catch((err) => console.log(err));
+      .delete(`/api/product/withId/${mainProduct._id}`)
+      .catch((err) => err.response);
+
+    d_message.current = response.data.message;
+    if (response.status == 200) {
+      setD_state("success");
+    } else {
+      setD_state("failure");
+    }
   };
 
+  const [d_state, setD_state] = useState("rest");
+  const d_message = useRef();
+
+  // console.log(mainProduct)
+
   const SLIDER_URL = useMemo(
-    () =>
-      (mainProduct &&
-        mainProduct?.pr_image_url?.concat(mainProduct?.all_pr_image_url)) || [
-        undefined,
-      ],
+    () => mainProduct?.pr_image_url?.concat(mainProduct?.all_pr_image_url),
     [mainProduct]
   );
 
   return (
     <div className="big-container">
+      <Head>
+        <meta
+          key="description"
+          name="description"
+          content={mainProduct.description}
+        />
+        <title key="title">{`${mainProduct.productName} : Article en vente.`}</title>
+      </Head>
       <main className={`${styles.productPage}`}>
         <div className="flex center-children">
           <div
@@ -97,34 +79,48 @@ const Product: React.FC = () => {
               User.hasAuthorization("admin")) && (
               <Options name="options">
                 <>
+                  <MyLink
+                    href={`/upload?_id=${productId}`}
+                    className={styles.update}
+                  >
+                    Metre à jour
+                  </MyLink>
+
                   <button
                     onClick={(e) => {
                       myWindow.setFocusOn("delete_product_alert", e);
                       myWindow.overlay.open(() => myWindow.setFocusOn("none"));
                     }}
                     className={styles.delete}
-                    style={{ marginBottom: "10px" }}
+                    style={{ marginTop: "1em" }}
                   >
-                    delete item
+                    Effacer produit
                   </button>
-
-                  <MyLink
-                    href={`/upload?_id=${productId}`}
-                    className={styles.update}
-                  >
-                    update item
-                  </MyLink>
                 </>
               </Options>
             )}
             <Alert name="delete_product_alert" width="100%" type="top">
               <div className={styles.deletePopup}>
-                <p>Are you sure you want to delete this item?</p>
+                <p>Êtes-vous sûr de bien vouloir supprimer cet élément?</p>
                 <br />
+                <WorkState
+                  // style={{background: "white", padding: }}
+                  type="3"
+                  delay={2500}
+                  general={d_message.current}
+                  state={d_state}
+                  setState={setD_state}
+                  cb={{
+                    general: () => {
+                      myWindow.overlay.close();
+                      myWindow.setFocusOn("none");
+                    },
+                  }}
+                />
                 <div>
                   <button className={styles.cancel}>Cancel</button>
                   <button className={styles.dangerous} onClick={deleteProduct}>
-                    yes, delete
+                    supprimer
                   </button>
                 </div>
               </div>
@@ -137,21 +133,21 @@ const Product: React.FC = () => {
         </div>
 
         <div>
-          {relatedProducts && relatedProducts.length >= 0 && (
+          {related.length > 0 && (
             <div className={styles.moreProduct}>
               <MoreProduct
-                items={relatedProducts}
+                items={related}
                 title={"Similaire a ce produit"}
                 preset="presetnone"
               />
             </div>
           )}
 
-          {navigationItems && navigationItems.length >= 0 && (
+          {navigation.length > 0 && (
             <div className={styles.moreProduct}>
               <MoreProduct
                 preset={"preset1"}
-                items={navigationItems}
+                items={navigation}
                 title={"Ce que nous vendons"}
               />
             </div>
@@ -162,7 +158,7 @@ const Product: React.FC = () => {
   );
 };
 
-export default Product;
+export default ProductShow;
 
 interface productInformation {
   product: {
@@ -187,7 +183,7 @@ const FR = {
   tags: "tague",
   color: "couleur disponiples",
   materials: "materiaux",
-}
+};
 
 const ProductInformation: React.FC<productInformation> = ({ product }) => {
   const cart = useCartContext();
@@ -252,48 +248,81 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
 
       {(saveToCart_message.current.status === "present_in_cart" && (
         <>
-          <button>cancel</button>
+          <button>Annuler</button>
           <button
             className={styles.dangerous}
             onClick={() => cart.removeFromCart(product._id)}
           >
-            Remove
+            Enlever
           </button>
         </>
       )) || (
         <>
           <button>
-            <MyLink href={"/cart"}>show cart?</MyLink>
+            <MyLink href={"/cart"}>afficher le panier ?</MyLink>
           </button>
           <button
             className={styles.dangerous}
             onClick={() => cart.removeFromCart(product._id)}
           >
-            undo
+            annuler
           </button>
         </>
       )}
     </div>
   );
 
+  const contact = (
+    <div className={styles.contact}>
+      <a
+        className={styles.fb}
+        //@ts-ignore
+        href={`https://m.me/${product.owner?.contact?.fb_id}`}
+      >
+        <span>Facebook (recommended) </span>
+      </a>
+
+      <a
+        className={styles.wtp}
+        href={`https://api.whatsapp.com/send?phone=${
+          //@ts-ignore
+          product.owner?.contact?.phoneNumber || "+15312256403"
+        }&text=${message.current}`}
+      >
+        <span>Whatsapp</span>
+      </a>
+    </div>
+  );
+
   return (
     <div className="container vertical-flex">
-      <button className={`${styles.buyPrompt} sm flex-center`}>
-        <a
-          href={`https://api.whatsapp.com/send?phone=${
-            product.owner?.phoneNumber || "+15312256403"
-          }&text=${message.current}`}
-        >
-          Contact Seller
-        </a>
+      <button
+        className={`${styles.buyPrompt} sm flex-center`}
+        onClick={(e) => {
+          myWindow.setFocusOn("contact_seller", e);
+          myWindow.overlay.open(() => myWindow.setFocusOn("none"));
+        }}
+        // style={{ marginBottom: "10px" }}
+      >
+        <a>contacter le vendeur</a>
       </button>
+
+      <Alert
+        name="contact_seller"
+        width="100vw"
+        type="bottom"
+        className={styles.ctn}
+      >
+        {contact}
+      </Alert>
+
       <div className={`${styles.addToCartPrompt} sm flex-center `}>
         <button onClick={handleClick}>
           <Popup duration={30000} type={"theme-color"} name={"add_to_cart"}>
             <AddPopup />
           </Popup>
           <span>
-            {(items_is_in_cart && "Remove from Cart") || "Ajouter au panier"}
+            {(items_is_in_cart && "Retirer du panier") || "Ajouter au panier"}
           </span>
 
           <Loading
@@ -310,13 +339,13 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
           <h3>{formatPrice(product?.price)}</h3>
         </div>
 
-        {["tags", "color", "materials"].map((detail) => (
-          <>
-            {product[detail] && product[detail].length && (
+        {["tags", "color", "materials"].map(
+          (detail) =>
+            (product[detail] && product[detail].length && (
               <div className={styles.arrays} key={detail}>
-                <p>{FR[detail] } :</p>
+                <p>{FR[detail]} :</p>
                 {product[detail].map((tag, index) => (
-                  <MyLink href={"/find?categories=all"} key={tag + index}>
+                  <MyLink href={"/find?categories=tous"} key={tag + index}>
                     <span
                       onClick={() =>
                         filters.setFilter({ [detail]: { [tag]: true } })
@@ -327,9 +356,9 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
                   </MyLink>
                 ))}
               </div>
-            ) || ""}
-          </>
-        ))}
+            )) ||
+            ""
+        )}
 
         <div className={styles.normal}>
           <p>Location :</p>
@@ -338,13 +367,14 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
               filters.setFilter([{ origin: { [product.location]: true } }])
             }
           >
-            &nbsp; {product?.location}
+            &nbsp; {product?.location || "inconnue"}
           </span>
         </div>
 
         <p className={styles.description}>{product?.description}</p>
+
         <p>
-          Owned by <span>@{product?.owner?.username}</span>
+          Vendeur : &nbsp;<span>@{product?.owner?.username}</span>
         </p>
       </div>
 
@@ -368,13 +398,148 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         </button>
       </div>
 
-      <button className={`${styles.buyPrompt} big flex-center`}>
-        <a
-          href={`https://api.whatsapp.com/send?phone=15312256403&text=${message.current}`}
+      <button
+        className={`${styles.buyPrompt} big flex-center`}
+        onClick={(e) => {
+          myWindow.setFocusOn("cpt", e);
+          myWindow.overlay.open(() => myWindow.setFocusOn("none"));
+        }}
+      >
+        <Popup
+          duration={30000}
+          type={"theme-color"}
+          name={"cpt"}
+          cb={() => myWindow.overlay.close()}
         >
-          Contacter le vendeur
-        </a>
+          <div className={styles.contact_desktop}>
+            <a
+              className={styles.fb}
+              //@ts-ignore
+              href={`https://m.me/${product.owner?.contact?.fb_id}`}
+            >
+              <span>Facebook (recommended) </span>
+            </a>
+
+            <a
+              className={styles.wtp}
+              href={`https://api.whatsapp.com/send?phone=${
+                //@ts-ignore
+                product.owner?.contact?.phoneNumber || "+15312256403"
+              }&text=${message.current}`}
+            >
+              <span>Whatsapp</span>
+            </a>
+          </div>
+        </Popup>
+        <a>Contacter le vendeur</a>
       </button>
     </div>
   );
 };
+
+import { Product } from "../../_api/models";
+import { getRelated } from "../../component/Layout/NavBar/navBarSections";
+import { Types } from "mongoose";
+
+export async function getStaticPaths() {
+  // const { MongoClient } = (await import("mongodb")).default;
+
+  await connectDB_frontend();
+
+  const products = await Product.find_visible({}, ["_id"])
+    .limit(process.env.VERCEL_ENV == "production" ? 100 : 1)
+    .sort({ addedAt: -1 })
+    .lean();
+
+  const paths = products.map((product) => ({
+    params: { productId: product._id.toString() },
+  }));
+
+  // console.log(paths);
+  //
+  return {
+    paths: paths,
+    fallback: "blocking", // See the "fallback" section below
+  };
+}
+
+import { search } from "../../_api/handlers/product/helper";
+import WorkState from "../../component/LoadingController/workState/WorkState";
+
+export async function getStaticProps(context) {
+  try {
+    const product_id = context.params.productId;
+
+    const _id_obj = new Types.ObjectId(product_id);
+    await connectDB_frontend();
+
+    let product = await Product.findOne_visible({ _id: _id_obj })
+      .populate("owner", ["contact", "username"])
+      .lean();
+
+    product._id = product._id.toString();
+    delete product.owner._id;
+
+    const rprs = getRelated(product.categories, true);
+
+    const verifier = {};
+
+    // console.log(rprs, true);
+
+    let navigation = await Product.find_visible(
+      {
+        representation: { $in: rprs },
+        _id: { $ne: _id_obj },
+        quantity: { $gte: 0 },
+      },
+      ["productName", "description", "representation", "pr_image_url"]
+    ).lean();
+    navigation = distinct(navigation, verifier);
+
+    if (navigation.length < 4) {
+      await Promise.all(
+        rprs.map(async (representation) => {
+          const item = await Product.findOne_visible(
+            {
+              categories: { $in: representation.split(" ") },
+              _id: { $ne: _id_obj },
+            },
+            ["productName", "description", "representation", "pr_image_url"]
+          ).lean();
+
+          // console.log("the item I fount", item);
+
+          if (!item) return;
+          item._id = item._id.toString();
+          item.representation = representation;
+          if (verifier[item._id]) return;
+          verifier[item._id] = true;
+          navigation.push(item);
+        })
+      );
+    }
+
+    let { products: related } = await search(
+      product.categories.join(" "),
+      {
+        _id: { $ne: _id_obj },
+      },
+      {
+        limit: 10,
+        page: 0,
+        field: ["productName", "description", "price", "pr_image_url"],
+      }
+    );
+
+    related = distinct(related, verifier);
+
+    return {
+      props: { mainProduct: product, navigation, related }, // will be passed to the page component as props
+      revalidate: 60 * 50,
+    };
+  } catch (err) {
+    return {
+      notFound: true,
+    };
+  }
+}

@@ -33,8 +33,8 @@ const Select: FC<Props> = ({ selected, message, label, onClick }) => {
         className={styles.checkMarker}
         style={{ transform: checked ? "scale(1)" : "scale(0)" }}
         onTransitionEnd={() => {
-          console.log("The first transition ended")
-          console.log(selected)
+          // console.log("The first transition ended")
+          // console.log(selected)
           if (selected ) setShowing(true);
           else setChecked(false)
         }}
@@ -46,7 +46,7 @@ const Select: FC<Props> = ({ selected, message, label, onClick }) => {
             d="M1.14084 14.6791L12.9923 24.5554L35.8586 0.694916"
             stroke="white"
             onTransitionEnd={() => {
-              console.log("the second level transition endend");
+              // console.log("the second level transition endend");
               if (!selected) setChecked(false);
               else setShowing(true)
             }}

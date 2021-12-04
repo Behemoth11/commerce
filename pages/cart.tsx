@@ -15,18 +15,18 @@ type responseData = {
 };
 
 export default function Home() {
-  const { savedProduct , removeFromCart} = useCartContext();
+  const { savedProduct, removeFromCart } = useCartContext();
   const message = useRef<string>();
 
   // useRequire("login");
 
   const animatedProduct = useTransition(savedProduct, {
-    enter: { z_of: 10},
-    from: { z_of: 0},
-    leave: { z_of: 0},
+    enter: { z_of: 10 },
+    from: { z_of: 0 },
+    leave: { z_of: 0 },
     config: {
-      duration: 30000
-    }
+      duration: 30000,
+    },
   });
 
   const getMessage = (savedProduct) => {
@@ -50,7 +50,10 @@ export default function Home() {
   return (
     <div
       className="big-container"
-      style={{ padding: "0 var(--padding)", flexWrap: "wrap" }}
+      style={{
+        padding: "0 var(--padding)",
+        flexWrap: "wrap"
+      }}
     >
       <div className={styles.cardsContainer}>
         <h3>What's in your Cart </h3>
@@ -63,6 +66,9 @@ export default function Home() {
             />
           </animated.div>
         ))}
+        {savedProduct?.length === 0 && (
+          <p className={"float-mid"}>Votre cart est vide</p>
+        )}
       </div>
     </div>
   );

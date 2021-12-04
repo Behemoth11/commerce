@@ -50,7 +50,7 @@
     left: var(--left);
     transform: var(--transform);
     position: absolute;
-    background-color: hsl(0, 0%, 97%);
+    // background-color: hsl(0, 0%, 97%);
     
   }
 }
@@ -83,7 +83,7 @@
   width: unquote("min(100px, 35%)");
   margin: var(--children-margin);
   margin-bottom: var(--margin);
-  background-color: hsl(0, 0%, 97%);
+  // background-color: hsl(0, 0%, 97%);
   position: relative;
   height: 1.8em;
   color: transparent;

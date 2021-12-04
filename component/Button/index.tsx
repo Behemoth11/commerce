@@ -7,16 +7,17 @@ interface Props {
   type?: any;
   onClick?: (e) => void;
   style?: {};
-  childern?: ReactNode
+  className?: string,
+  children?: ReactNode
 }
 
-const Button: FC<Props> = ({ label, onClick, type, style, children }) => {
+const Button: FC<Props> = ({ label, onClick, type, style, children , className}) => {
   return (
     <button
-      className={`${styles.container} ${styles[type]}`}
+      className={`${styles.container} ${styles[type]} ${className} `}
       onClick={(e) => {
         e.preventDefault();
-        onClick(e);
+        onClick && onClick(e);
       }}
 
       style={style||{}}

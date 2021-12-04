@@ -13,6 +13,10 @@
     height: 0;
     width: 0;
   }
+
+  label{
+    cursor: pointer;
+  }
 }
 
 .mobile {
@@ -29,6 +33,7 @@
 
 .label {
   // font-size: var(--font-size);
+  // cursor: pointer;
   text-transform: capitalize;
   height: var(--height);
   font-style: oblique;
@@ -65,6 +70,7 @@
 .content {
   font-size: var(--font-size);
   padding: var(--padding);
+  cursor: pointer;
 }
 
 .radio {

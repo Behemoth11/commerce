@@ -8,8 +8,8 @@ module.exports = withPWA({
     skipWaiting: true,
     disable: process.env.VERCEL_ENV === "development",
   },
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
+  // i18n: {
+  //   locales: ["en"],
+  //   defaultLocale: "en",
+  // },
 });

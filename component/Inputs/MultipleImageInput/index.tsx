@@ -3,8 +3,19 @@ import { memo } from "react";
 import ImageInput from "../ImageInput";
 import inputStyles from "../style.module.scss";
 
-const MultipleImageInput = ({
+
+export interface Props {
+  name?: string,
+  label?: string,
+  setInputValue: any,
+  submitCount?:number,
+  inputValue?: any,
+}
+
+
+const MultipleImageInput: React.FC<Props> = ({
   name,
+  label,
   inputValue,
   submitCount,
   setInputValue,
@@ -78,7 +89,7 @@ const MultipleImageInput = ({
           onChange={(e) => loadMyPowerToAddMultipleFiles(e)}
           required
         />
-        <label htmlFor={`${name}-multiple-input`}>Add Multiple files</label>
+        <label htmlFor={`${name}-multiple-input`}>{label || name}</label>
       </div>
     </>
   );

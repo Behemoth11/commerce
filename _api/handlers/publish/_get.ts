@@ -14,20 +14,30 @@ const handle_get = async (req, res) => {
           .status(500)
           .json({ message: "you need to be connected to see your groups" });
 
+      // console.log("the new query  ", query)
+
       if (query["field[]"]?.includes("grouping")) {
         posts = await FacebookPost.find(
-          { owner: new Types.ObjectId(req.user._id) },
+          {
+            owner: new Types.ObjectId(req.user._id),
+            "published.fb": { $in: query["published[]"] },
+          },
           query["field[]"]
         )
           .limit(query.limit || 20)
-          .populate("grouping", ["pr_image_url", "productName"])
+          .sort({ lastEdit: -1 })
+          .populate("grouping", ["pr_image_url", "productName", "price"])
           .lean();
       } else {
         posts = await FacebookPost.find(
-          { owner: new Types.ObjectId(req.user._id) },
+          {
+            owner: new Types.ObjectId(req.user._id),
+            "published.fb": { $in: query["published[]"] },
+          },
           query["field[]"]
         )
           .limit(query.limit || 20)
+          .sort({ lastEdit: -1 })
           .lean();
       }
 
@@ -62,6 +72,7 @@ const handle_get = async (req, res) => {
         query["field[]"]
       )
         .limit(query.limit || 20)
+        .sort({ lastEdit: -1 })
         .lean();
       return res.status(200).json({
         posts,

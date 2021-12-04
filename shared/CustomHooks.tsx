@@ -4,9 +4,11 @@ import {
   useRef,
   MutableRefObject,
   useLayoutEffect,
+  SetStateAction,
+  Dispatch,
 } from "react";
 import axios from "axios";
-import { useUser } from "../Contexts/GlobalContext";
+import { useMyWindow, useUser } from "../Contexts/GlobalContext";
 import { useRouter } from "next/router";
 
 export const useIsomorphicLayoutEffect =
@@ -115,10 +117,9 @@ export const useAuthAxios = () => {
   );
 
   const getNewToken = async () => {
-    let axiosResponse;
-    axiosResponse = await authAxios
+    let axiosResponse = await authAxios
       .get("/api/auth/token")
-      .catch((err) => (axiosResponse = err.response));
+      .catch((err) => err.response);
 
     if (axiosResponse.status == 200) {
       const { token, expiresAt } = axiosResponse.data;
@@ -133,7 +134,9 @@ export const useAuthAxios = () => {
       // console.log("Verifying if the token is espired")
       if (!tokenRef.current) return;
       const timeLeft =
-        parseInt(tokenRef.current.expiresAt) * 1000 - new Date().getTime() - 1000 * 60 * 7;
+        parseInt(tokenRef.current.expiresAt) * 1000 -
+        new Date().getTime() -
+        1000 * 60 * 7;
       if (timeLeft <= 0) {
         //console.log("I will refresh because it is time")
         getNewToken();
@@ -152,9 +155,12 @@ export const useAuthAxios = () => {
 
 export const useRequire = (userState) => {
   let should_be_redirected = false;
+  const myWindow = useMyWindow();
 
   const router = useRouter();
   const User = useUser();
+
+  if (User?.data?.username === "loading") return;
 
   switch (userState) {
     case "login":
@@ -162,7 +168,32 @@ export const useRequire = (userState) => {
         should_be_redirected = true;
       }
       break;
+    case "seller":
+      if (
+        !User.data ||
+        (User.data.role !== "seller" && User.data.role !== "admin")
+      ) {
+        should_be_redirected = true;
+      }
+      break;
   }
 
-  if (should_be_redirected) router.push("/");
+  if (should_be_redirected) {
+    myWindow.setPhase("fadeOut");
+    setTimeout(() => {
+      router.push("/");
+    }, 200);
+  }
+};
+
+export const useSelectiveState = (init) => {
+  const [state, _setState] = useState(init);
+  const state_id = useRef(0);
+
+  const setState: Dispatch<(prevState: undefined) => undefined> = (arg) => {
+    state_id.current++;
+    _setState(arg);
+  };
+
+  return [state, state_id, setState]
 };

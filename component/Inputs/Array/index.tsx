@@ -2,21 +2,26 @@
 import styles from "./style.module.scss";
 import inputStyles from "../style.module.scss";
 import React, { memo, useEffect, useRef, useState } from "react";
+import { clamp } from "../../../shared/shared_functions";
 
 interface InputProps {
   name: string;
+  label?: string;
   required: boolean;
   inputValue: object;
-  proposition?: object;
   submitCount?: number;
-  type?: "text" | "number" | "filte";
+  proposition?: object;
+  type?: "text" | "number" | "date";
+  inputProps?: { [key: string]: any };
   setInputValue: React.Dispatch<React.SetStateAction<{}>>;
 }
 
 const InputArray: React.FC<InputProps> = ({
   type,
   name,
+  label,
   required,
+  inputProps,
   inputValue,
   submitCount,
   proposition,
@@ -38,7 +43,10 @@ const InputArray: React.FC<InputProps> = ({
     if (data.length <= 0) return;
     setPersonalState("");
     setInputValue((prevState) => {
-      const previous_value = prevState[name] || []
+      let previous_value = prevState[name] || [];
+      if (type === "number") {
+        data = clamp(data, inputProps.min, inputProps.max).toString();
+      }
       if (new RegExp(data, "i").test(previous_value)) return prevState;
       return {
         ...prevState,
@@ -74,7 +82,15 @@ const InputArray: React.FC<InputProps> = ({
           value={personalState}
           name={inputValue[name]}
           id={name}
-          onChange={(e) => setPersonalState(e.target.value.toLowerCase())}
+          onChange={(e) => {
+            // if (type === "nfumber")
+            //   setPersonalState(
+            //     clamp(e.target.value, inputProps.min, inputProps.max).toString()
+            //   );
+            // else {
+            setPersonalState(e.target.value.toLowerCase());
+            // }
+          }}
           className={`flex-center ${
             personalState?.length && inputStyles.filled
           } ${
@@ -86,9 +102,13 @@ const InputArray: React.FC<InputProps> = ({
           ref={inputRef}
           type={type || "text"}
           autoComplete="off"
+          {...inputProps}
         />
-        <label htmlFor={name}>{name} {!required && "(optional)"}</label>
-        {(myProposition?.length > 0|| !proposition && (
+        <label htmlFor={name}>
+          {label || name} {!required && "(optional)"}
+        </label>
+        {myProposition?.length > 0 ||
+          (!proposition && (
             <button
               className={inputStyles.addButtonArray}
               onClick={(e) => addData(e, personalState)}

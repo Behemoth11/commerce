@@ -9,9 +9,10 @@ interface Props {
   type: "top" | "bottom";
   width: string;
   name: string;
+  className?: string;
 }
 
-const Alert: FC<Props> = ({ children, type, width, name }) => {
+const Alert: FC<Props> = ({ children,className, type, width, name }) => {
   const myWindow = useMyWindow();
   const popupId = useRef(0);
 
@@ -27,9 +28,10 @@ const Alert: FC<Props> = ({ children, type, width, name }) => {
     if (visible) return;
     popupId.current++;
   }, [visible]);
+  
   return (
     <animated.div
-      className={`${styles.container} ${styles[type]}`}
+      className={`${styles.container} ${styles[type]} ${className}`}
       onClick={(e) => e.stopPropagation()}
       style={animate}
     >

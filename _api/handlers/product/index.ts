@@ -24,7 +24,7 @@ export const POST_handler = createHandler(
 export const DELETE_handler = createHandler(
   addUser,
   enforceRole("seller"),
-  blockBot,
+  // blockBot,
   DELETE
 );
 export const GET_handler = GET;

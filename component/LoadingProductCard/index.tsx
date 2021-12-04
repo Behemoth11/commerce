@@ -36,9 +36,9 @@ const index: React.FC<Props> = ({
 
       {(price && (
         <div className={`${styles.description} max-width vertical-flex`}>
-          <div className={`${styles.description2} ${styles[type]}`}>
+          <div className={`${styles.description2}  ${styles[type]}`}>
             p
-            <div className={`${styles.after}`} />
+            <div className={`${styles.after} animated`} />
           </div>
 
           <button className={`${styles.buy} ${styles[type]} ${isVisible && "animated"}`}>buy </button>

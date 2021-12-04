@@ -3,13 +3,15 @@
   display: grid;
   grid-template-columns: 70% 1fr;
 
-  & > div:nth-child(1) {
+  &>div:nth-child(1) {
     grid-column: 1/2;
   }
-  & > div:nth-child(2) {
+
+  &>div:nth-child(2) {
     grid-column: span 1;
   }
-  & > div:nth-child(3) {
+
+  &>div:nth-child(3) {
     grid-column: span 2;
   }
 }
@@ -17,10 +19,12 @@
 @media (max-width: 1000px) {
   .productPage {
     grid-template-columns: 100%;
-    & > div:nth-child(2) {
+
+    &>div:nth-child(2) {
       grid-row: 2/3;
     }
-    & > div:nth-child(3) {
+
+    &>div:nth-child(3) {
       grid-column: span 1;
     }
   }
@@ -33,10 +37,12 @@
 }
 
 .buyPrompt {
+  position:relative;
   background-color: var(--accent-color);
   color: white;
   width: 95%;
   border-radius: var(--border-radius);
+
   a {
     width: 100%;
     height: 100%;
@@ -44,13 +50,15 @@
     display: block;
   }
 }
+
 .addToCartPrompt {
   border: 1px solid var(--theme-color);
   width: 70%;
   margin-top: var(--margin);
   border-radius: var(--border-radius);
   position: relative;
-  & > button {
+
+  &>button {
     padding: 5px;
     width: 100%;
     text-align: center;
@@ -66,6 +74,7 @@
   min-height: 200px;
   margin: 40px 0;
   padding: 0 var(--large-margin) var(--large-margin) var(--large-margin);
+
   * {
     width: fit-content;
   }
@@ -79,10 +88,12 @@
     // margin-top: 2em;
     font-weight: 200;
   }
+
   div {
     padding: 0.2em 0;
     display: flex;
   }
+
   .arrays {
     display: flex;
     align-items: center;
@@ -94,14 +105,19 @@
       font-weight: lighter;
       text-transform: capitalize;
     }
-    span {
+    a{
+      display: block;
+      // margin-top: 2px;
       margin: 4px;
+    }
+    span {
       color: white;
       font-size: 0.8em;
       padding: 2px 8px;
       border-radius: 4px;
       text-transform: lowercase;
       background-color: var(--theme-color);
+
       &:active {
         background-color: var(--theme-color-1);
       }
@@ -118,9 +134,12 @@
   margin-top: var(--large-margin);
   border-radius: var(--border-radius);
   background-color: var(--accent-color-3);
-  & ~ p {
+
+  &~p {
     font-size: 0.8em;
-    margin-top: 0.5em;white-space: pre-wrap
+    margin-top: 0.5em;
+
+    white-space: pre-wrap ;
     span {
       color: var(--accent-color);
       text-decoration: underline;
@@ -132,6 +151,7 @@
   position: relative;
   margin-right: 0.5em;
   text-transform: capitalize;
+
   &::after {
     position: absolute;
     height: 0.1em;
@@ -142,6 +162,7 @@
     background-color: currentColor;
   }
 }
+
 .normal {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -152,6 +173,7 @@
     text-transform: capitalize;
     text-decoration: underline;
   }
+
   span {
     text-transform: capitalize;
   }
@@ -162,6 +184,7 @@
 .moreProduct {
   margin: var(--large-margin) 0;
   max-width: 100%;
+
   &:nth-child(2) {
     margin-bottom: var(--margin);
   }
@@ -171,14 +194,17 @@
   flex-wrap: wrap;
   align-items: flex-end;
   width: 100%;
+
   * {
     width: fit-content;
     text-align: center;
     margin: auto;
   }
+
   h2 {
     color: hsl(0, 0%, 0%);
   }
+
   h3 {
     text-decoration: underline;
   }
@@ -194,7 +220,7 @@
   background-color: white;
   transform: translate(-50%, -100%);
 
-  button{
+  button {
     padding: 0.2em;
     margin: 1em 0.2em;
     width: 10ch;
@@ -203,9 +229,9 @@
   }
 
 
-  .dangerous{
+  .dangerous {
     background-color: rgb(239, 40, 40);
-      color: white;
+    color: white;
   }
 
 }
@@ -234,25 +260,69 @@
   border-radius: var(--border-radius);
   background-color: var(--theme-color-2);
   font-size: small;
-  &>p{
+
+  &>p {
     text-align: center;
   }
-  button{
+
+  button {
     width: 10ch;
     padding: 0.2em 0.4em;
-    
+
   }
-  .dangerous{
+
+  .dangerous {
     border-radius: var(--border-radius);
     background-color: red;
     
     color: white;
     float: right;
   }
-  .cancel{
+  
+  .cancel {
     background-color: var(--theme-color-5);
     border-radius: var(--border-radius);
     color: black;
-
+    
   }
+  
+}
+.contact, .contact_desktop {
+  width: 100vw;
+  border-radius: 5px;
+  max-width: 600px;
+
+  // z-index: 5;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: var(--larger-margin);
+  padding-top: var(--large-margin);
+  color: white;
+  // z-index: 122;
+
+  .fb, .wtp {
+    flex-shrink: 0;
+    margin: var(--margin) auto;
+    display: flex;
+    background-color: #036ee4;
+    text-align: center;
+    width: 90%;
+    height: 2em;
+
+    span {
+      display: block;
+      margin: auto;
+
+    }
+  }
+
+  .wtp{
+    background-color: #3fc250;
+  }
+}
+
+
+.contact_desktop{
+  width: 100%;
 }
