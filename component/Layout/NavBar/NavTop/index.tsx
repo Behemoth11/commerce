@@ -24,15 +24,18 @@ const useScrollDirectionToBottom = (
 ) => {
   const { toBottom, setToBottom } = useNavBarContext();
 
+  
+
   useEffect(() => {
     element = document.getElementById(element);
     const getScrollSpeed = (e, firstTake = true, previousScroll) => {
       if (!firstTake) {
-        const currentScroll = element.scrollTop
+        const currentScroll = element.scrollTop;
         if (currentScroll < 100) return setToBottom(false);
 
         let scrollIntensity = currentScroll - previousScroll;
-        if (Math.abs(scrollIntensity) >= sensibility) setToBottom(scrollIntensity > 0 ? true : false);
+        if (Math.abs(scrollIntensity) >= sensibility)
+          setToBottom(scrollIntensity > 0 ? true : false);
 
         return;
       }
@@ -43,7 +46,8 @@ const useScrollDirectionToBottom = (
     };
 
     element.addEventListener("scroll", getScrollSpeed);
-    return () => element.removeEventListener("scroll", getScrollSpeed,{passive: true});
+    return () =>
+      element.removeEventListener("scroll", getScrollSpeed, { passive: true });
   }, []);
 
   return toBottom;
@@ -73,10 +77,11 @@ const NavTop = () => {
   }, [myWindow.phase]);
   return (
     <nav
-      className={`${styles.navTop} ${toBottom  && styles.hidden} container flex`}
+      className={`${styles.navTop} ${toBottom && styles.hidden} container flex`}
     >
       <div className="big-container flex flex-center center-children">
         <div
+          id="burger"
           className={`${styles.burgerDivContainer}`}
           onClick={() => toggleNavBar()}
         >
@@ -85,19 +90,19 @@ const NavTop = () => {
           </div>
         </div>
         {/* <div className="sm">{!User.data && <Icon />}</div> */}
-         <div className="sm"><Icon /></div>
+        <div className="sm">
+          <Icon />
+        </div>
 
         <div
           className={`${styles.brandIcon}`}
           onClick={(e) => e.stopPropagation()}
         >
-          {
-            router.pathname === "/" && 
-            <img src="/svg/BrandLogo.svg" /> || <MyLink href="/">
-            <img src="/svg/BrandLogo.svg" />
-          </MyLink>    
-          }
-          
+          {(router.pathname === "/" && <img src="/svg/BrandLogo.svg" />) || (
+            <MyLink href="/">
+              <img src="/svg/BrandLogo.svg" />
+            </MyLink>
+          )}
         </div>
         <div className={styles.linkContainer}>
           {menu.content.map((element) => (
@@ -167,23 +172,27 @@ const NavTop = () => {
                 />
               </div>
             </form>*/}
-          </div> 
+          </div>
 
           {/* <div className="big">{!User.data && <Icon />}</div> */}
 
           {(User.data?.username == "loading" && (
             <Loading
-            width="50px"
-            background={"var(--theme-color)"}
-            style={{ margin: "7px" }}
+              width="50px"
+              background={"var(--theme-color)"}
+              style={{ margin: "7px" }}
             />
-            )) || (
-              <>
-               <Account />
+          )) || (
+            <>
+              <Account />
               {/* {User.data?._id && <Icon />} */}
             </>
           )}
-          <div className="big"> <Icon /></div>
+
+          <div className="big">
+            <Icon />
+          </div>
+          
         </div>
       </div>
     </nav>
@@ -216,7 +225,7 @@ const Links = ({ title, elementData }) => {
                     },
                   }}
                 >
-                  <a>{subHeaderelement}</a>
+                  {subHeaderelement}
                 </MyLink>
               </h2>
 
@@ -231,9 +240,7 @@ const Links = ({ title, elementData }) => {
                         },
                       }}
                     >
-                      <h3>
-                        <a> {element}</a>
-                      </h3>
+                      <h3>{element}</h3>
                     </MyLink>
                   </li>
                 ))}
@@ -309,15 +316,21 @@ const Account = () => {
 
   const handleLogout = async () => {
     let response;
+
+    //@ts-ignore
+    if (window.FB) window.FB.logout();
+
+    User.setUserData({ username: "loading" });
     response = await auth.axios
       .post("/api/auth/logout")
       .catch((err) => (response = err));
 
     if (response.status === 200) {
-      auth.setToken(undefined);
-      User.setUserData(undefined);
+      auth.setToken(null);
+      User.setUserData(null);
     }
   };
+
   return (
     <div className="flex">
       <div
@@ -334,22 +347,23 @@ const Account = () => {
               className={styles.rg_menu}
             >
               <MyLink href={"/account"}>
-                  <div className={styles.user}>
-                    <p>Account</p>
-                  </div>
+                <div className={styles.user}>
+                  <p>Account</p>
+                </div>
               </MyLink>
 
               {(User.hasAuthorization("seller") && (
-                <MyLink href={"/upload"}>
-                    <div style={{ margin: "var(--margin) 0" }}>
-                      <p>Upload item</p>
-                    </div>
-                </MyLink>
+                <>
+                  <MyLink href={"/upload"} className={styles.ac_link}>
+                    Upload item
+                  </MyLink>
+                  <MyLink href={"/seller/groups"} className={styles.ac_link}>
+                    Edit Groups
+                  </MyLink>
+                </>
               )) || (
-                <MyLink href={"/account"}>
-                    <div style={{ margin: "var(--margin) 0" }}>
-                      <p>Become a seller</p>
-                    </div>
+                <MyLink href={"/account"} className={styles.ac_link}>
+                  Vendre
                 </MyLink>
               )}
               <hr />

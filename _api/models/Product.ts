@@ -31,6 +31,10 @@ export const product = new mongoose.Schema(
       type: Array,
       required: false,
     },
+    color: {
+      type: Array,
+      required: false
+    },
     rating: {
       type: Number,
     },
@@ -44,7 +48,7 @@ export const product = new mongoose.Schema(
         default: false,
       },
       post_id: {
-        type: String,
+        type: Array,
         default: null,
       },
       date_published:{
@@ -72,6 +76,5 @@ export const product = new mongoose.Schema(
       type: Number,
       required: true,
     },
-  },
-  { strict: false }
+  }
 );

@@ -15,14 +15,21 @@ const handle_post = async (req, res) => {
     ),
   ]);
 
-  // if (req.user.role != "admin") delete data.representation;
+  if (req.user.role != "admin") delete data.representation;
 
   const meta = data.meta;
 
+  const _categories = data.categories || [];
+
+  let categories = [data.nature];
+  for (let i=0; i < _categories.length; i ++){
+    if (_categories[i] != data.nature) categories.push(_categories[i]);
+  }
 
   /************mongoDb upload***************/
 
   const mongo_response = await Product.create({
+    categories, //array
     pr_image_url, //array
     tags: data.tags, //array
     all_pr_image_url, //array
@@ -30,9 +37,9 @@ const handle_post = async (req, res) => {
     color: data.color, //array
     owner: req.user._id,
     nature: data.nature,
+    quantity: data.quantity,
     location: data.location, //string
     materials: data.materials, //array
-    categories: data.categories, //array
     description: data.description,
     addedAt: new Date().getTime(),
     productName: data.productName, //string

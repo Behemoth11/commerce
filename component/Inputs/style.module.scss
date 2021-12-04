@@ -69,11 +69,12 @@
 }
 
 .inputContainer {
-  margin: auto;
+  // margin: auto;
   margin: 5px auto;
   position: relative;
   // border: 1px solid blue;
   label {
+    pointer-events: none;
     background-color: rgb(255, 255, 255);
     background-repeat: no-repeat;
     background-size: 100% 50%;
@@ -89,11 +90,11 @@
   }
   
   input,
-  textarea {
+  textarea,select {
     background-color: white;
     width: 100%;
     font-size: 1em;
-    padding: 5px 2px;
+    // padding: 5px 2px;
     outline: none !important;
     border: 1px solid rgb(89, 89, 89);
     padding: 10px 8px !important;

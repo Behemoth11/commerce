@@ -5,6 +5,7 @@ import { memo, useEffect, useRef } from "react";
 
 interface InputProps {
   error?: {};
+  min?: string;
   name: string;
   label?: string;
   required: boolean;
@@ -14,11 +15,12 @@ interface InputProps {
   submitCount?: number;
   defaultValue?: string;
   allowCapitalCase?: boolean;
-  type?: "text" | "number" | "password";
+  type?: "text" | "number" | "password" | "date";
   setInputValue: React.Dispatch<React.SetStateAction<{}>>;
 }
 
 const Input: React.FC<InputProps> = ({
+  min,
   name,
   type,
   error,
@@ -59,11 +61,12 @@ const Input: React.FC<InputProps> = ({
     <div>
       <div className={`${inputStyles.inputContainer}`}>
         <input
-          value={inputValue[name] || ""}
-          name={inputValue[name]}
-          placeholder={placeholder}
-          id={name}
-          required={required}
+        min={min}
+        id={name}
+        required={required}
+        name={inputValue[name]}
+        placeholder={placeholder}
+        value={inputValue[name] || ""}
           onChange={(e) => handleChange(e.target.value)}
           className={`flex-center ${
             `${inputValue[name]}`?.length && inputStyles.filled

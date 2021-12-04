@@ -1,6 +1,6 @@
 import { Product } from "../../models";
 
-const search = async (text, filters, options) => {
+export const search = async (text, filters, options) => {
   const project = {
     $project: {
       _id: 1,

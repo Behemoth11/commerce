@@ -1,6 +1,9 @@
 
 
 .container{
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
     color: white;
     margin: var(--large-margin);
     border-radius: var(--border-radius);
@@ -9,6 +12,17 @@
     &.type1{
         background-color: var(--theme-color-5);
         color: var(--accent-color-2)
+    }
+
+    &.type2{
+        border: 1px var(--accent-color) solid;
+        background-color: var(--theme-color-3);
+    }
+
+    &.type3{
+        color: var(--theme-color-3);
+        pointer-events: none;
+        background-color: var(--theme-color-5);
     }
 }
 

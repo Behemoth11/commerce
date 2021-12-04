@@ -74,7 +74,7 @@ function Feedback() {
               margin: "var(--larger-margin) 0",
             }}
           >
-            Write your feedback in the box bellow
+           Écrivez vos commentaires dans la case ci-dessous
           </h3>
           <div style={{ padding: "var(--padding)" }}>
             <Input
@@ -93,7 +93,7 @@ function Feedback() {
               setInputValue={setInputValue}
             />
             <button className="button" onClick={handleSubmit}>
-              Submit FeedBack
+            Envoyer le commentaire
             </button>
           </div>
           <Errors errMsg={errors} />

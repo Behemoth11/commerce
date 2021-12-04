@@ -1,9 +1,112 @@
-.container{
-    display: grid;
-    grid-template-columns: 30% 1fr;
+@import "../mixins/index.scss";
+
+.b {
+    min-height: 100vh;
+
 }
 
-.i_c{
+.t_s {
+    text-align: center;
+    padding-top: 20px;
+    // font-size: 3em;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 30% 1fr;
+    position: relative;
+}
+
+.i_c {
     display: grid;
     grid-template-columns: 50% 50%;
+}
+
+.phone {
+    display: none;
+}
+
+.cp_ctn {
+    max-width: 60ch;
+}
+
+.g_d {
+    position: sticky;
+    top: 10px;
+    padding: var(--large-margin);
+
+    h2 {
+        border-bottom: 2px solid var(--accent-color);
+    }
+}
+
+.grid {
+    margin: 0 40px;
+    text-align: center;
+}
+
+.control{
+    position: relative;
+}
+
+.post_types{
+    z-index: 2;
+    width: 25ch;
+    position: absolute; 
+    display: inline-block;
+    background-color: white;
+}
+
+@include desktop {
+    .i_c {
+        grid-template-columns: 100%;
+    }
+
+    .container {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+// @include tablet{
+//     .container{
+//         grid-template-columns: 50% 50%;
+//     }
+//     .i_c{
+//         grid-template-columns: 100%;
+//     }
+// }
+
+
+@include tablet {
+    .container {
+        grid-template-columns: 100%;
+    }
+
+    .phone {
+        display: block;
+    }
+
+    .i_c_sm {
+        display: grid;
+        // grid-template-columns: 100%;
+    }
+
+    .g_d {
+        display: none;
+    }
+
+    .not_phone {
+        display: none;
+    }
+}
+
+.loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    padding-top: 1em;
+    // align-items: center;
+    justify-content: center;
+    font-size: 5em;
 }

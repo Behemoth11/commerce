@@ -5,6 +5,7 @@ import DropDownFilter from "../DropDownFilter";
 import { animated, useTransition } from "react-spring";
 import { useFilterContext } from "../../Contexts/GlobalContext";
 import Input from "../Inputs/NormalInput";
+import Button from "../Button";
 
 interface Props {
   maxOpened?: 3;
@@ -33,11 +34,11 @@ const FilterContainer: React.FC<Props> = ({
   //animations
   const animate_applyFilter = useTransition(wasClicked, {
     from: {
-      transform: "translateX(-100%)",
+      transform: "translateY(-100%)",
       opacity: 0,
     },
-    enter: { transform: "translatex(-50%)", opacity: 1 },
-    leave: { transform: "translateX(-100%)", opacity: 0 },
+    enter: { transform: "translateY(-0%)", opacity: 1 },
+    leave: { transform: "translateY(-100%)", opacity: 0 },
   });
 
   const updateOpenedFilters = (name, isOpen) => {
@@ -75,13 +76,13 @@ const FilterContainer: React.FC<Props> = ({
         <DropDownFilter
           filterName={"color"}
           content={[
-            "blue",
-            "pink",
-            "green",
-            "black",
-            "yellow",
-            "brown",
-            "white",
+            "bleu",
+            "rouge",
+            "vert",
+            "noire",
+            "jaune",
+            "marron",
+            "blanc",
           ]}
           isOpen={openedFilters.includes("color")}
           toggle={updateOpenedFilters}
@@ -90,7 +91,7 @@ const FilterContainer: React.FC<Props> = ({
           toggleChecked={filters.toggleFilter}
           mobile={showApplyFilter}
         />
-        <DropDownFilter
+        {/* <DropDownFilter
           filterName={"location"}
           content={["gabon", "u.s", "Ghana", "black"]}
           isOpen={openedFilters.includes("location")}
@@ -99,9 +100,9 @@ const FilterContainer: React.FC<Props> = ({
           stateFunction={setFilter}
           toggleChecked={filters.toggleFilter}
           mobile={showApplyFilter}
-        />
+        /> */}
 
-        <DropDownFilter
+        {/* <DropDownFilter
           filterName={"brand"}
           content={["toyota", "pejo", "Nissan", "nike", "underarmor"]}
           isOpen={openedFilters.includes("brand")}
@@ -110,7 +111,7 @@ const FilterContainer: React.FC<Props> = ({
           stateFunction={setFilter}
           toggleChecked={filters.toggleFilter}
           mobile={showApplyFilter}
-        />
+        /> */}
         <div className={styles.priceFilter}>
           <h6>Price : </h6>
           <div>
@@ -137,7 +138,7 @@ const FilterContainer: React.FC<Props> = ({
         (_style, condition) =>
           condition &&
           showApplyFilter && (
-            <animated.button
+            <animated.div
               className={`${styles.apply} flex center-children`}
               style={_style}
               onClick={async() => {
@@ -146,8 +147,8 @@ const FilterContainer: React.FC<Props> = ({
                 filters.setFilter(_filter);
               }}
             >
-              <p>Apply Filter</p>
-            </animated.button>
+              <Button>Apply Filter</Button>
+            </animated.div>
           )
       )}
     </div>

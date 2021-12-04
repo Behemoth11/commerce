@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
@@ -25,7 +25,7 @@ export const uploadMany = async (data, error, not_uploaded) => {
 
   for (let i = 0; i < data.length; i++) {
     const isOnMyServer = new RegExp(
-      "https://res.cloudinary.com/dkoatnxem"
+      `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}`
     ).test(data[i].slice(0, 50));
     if (isOnMyServer) {
       const image_url = data[i].split("image/upload/")[1]

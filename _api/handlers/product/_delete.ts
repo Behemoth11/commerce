@@ -13,13 +13,13 @@ const handle_delete = async (req, res) => {
     _id: new Types.ObjectId(Id),
   }).lean();
   //@ts-ignore
-  if (mongo_product.owner != req.user._id) {
+  if (mongo_product.owner != req.user._id || req.user.role !== "admin") {
     return res.status(401).json({ message: "could not process the operation" });
   }
   
   const erasedProduct = await Product.findOneAndUpdate({
     _id: new Types.ObjectId(Id),
-  }, {$set: {quantity: 0}}).catch((err) => error.push(err.message));
+  }, {$set: {quantity: -1}}).catch((err) => error.push(err.message));
 
   //@ts-ignore
   if (erasedProduct && erasedProduct.deletedCount == 0) {
@@ -27,19 +27,19 @@ const handle_delete = async (req, res) => {
     return;
   }
 
-  try {
-    eraseImages(
-      [
-        //@ts-ignore
-        ...erasedProduct.pr_image_url,
-        //@ts-ignore
-        ...erasedProduct.all_pr_image_url,
-      ],
-      error
-    );
-  } catch (err) {
-    error.push(err.message);
-  }
+  // try {
+  //   eraseImages(
+  //     [
+  //       //@ts-ignore
+  //       ...erasedProduct.pr_image_url,
+  //       //@ts-ignore
+  //       ...erasedProduct.all_pr_image_url,
+  //     ],
+  //     error
+  //   );
+  // } catch (err) {
+  //   error.push(err.message);
+  // }
 
   res.json({
     erasedProduct,

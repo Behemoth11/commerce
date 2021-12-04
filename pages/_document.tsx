@@ -10,7 +10,8 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <link rel="manifest" href="/manifest.json" />
-          <link rel="apple-touch-icon" href="/logo-96x96.png" />
+          <link rel="icon" href="/KS.ico" />
+          <link rel="apple-touch-icon" href="/icon-512x512.png" />
         </Head>
 
         <body>

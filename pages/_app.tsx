@@ -11,17 +11,19 @@ function MyApp({ Component, pageProps }) {
         <Script
           async
           defer
-          crossOrigin="anonymous"
+          // crossOrigin="anonymous"
           src="https://connect.facebook.net/en_US/sdk.js"
         ></Script>
         <Script
           async
           defer
+          // crossOrigin="anonymous"
           src="https://connect.facebook.net/fr_FR/sdk/xfbml.customerchat.js"
         ></Script>
         <Script
           async
           defer
+          // crossOrigin="anonymous"
           src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RE_SITE_KEY}`}
         ></Script>
         <Component {...pageProps} />

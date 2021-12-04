@@ -24,7 +24,7 @@
             width: 1em;
             height: 1em;
             margin-right: 0.7em;
-            border: 1.3px solid #0f0f137d;
+            border: 1.3px solid var(--theme-color-3);
             transition: border-radius 0.1s ease-in-out,
                 background-color 0.1s ease-in-out, border-color 0.1s ease-in-out;
         }
@@ -37,7 +37,7 @@
     input:checked~label {
         span {
             border-radius: 3px;
-            background-color: var(--accent-color);
+            background-color: var(--accent-color-3);
             border: 1.3px solid #6060657d;
         }
     }

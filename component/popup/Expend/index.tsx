@@ -10,9 +10,10 @@ export interface Props{
   visible: boolean
   children: ReactNode,
   closePopup: () => void;
+  className?: string,
 }
 
-const Expend:FC<Props> = ({ visible, children, top_prop, dependency }) => {
+const Expend:FC<Props> = ({ visible, children, top_prop, dependency, className }) => {
   const myWindow = useMyWindow();
   const popupRef = useRef();
   const childRef = useRef();
@@ -70,12 +71,12 @@ const Expend:FC<Props> = ({ visible, children, top_prop, dependency }) => {
         height: position.height + "px",
       });
     }
-  }, [visible].concat(dependency||[]));
+  }, [visible, myWindow.size ].concat(dependency||[]));
 
 
   return (
     <animated.div
-      className={`${styles.container} ${visible && styles.visible}`}
+      className={`${styles.container} ${visible && styles.visible} ${className}`}
       onClick={(e) => e.stopPropagation()}
       style={styles_animated}
       ref={popupRef}

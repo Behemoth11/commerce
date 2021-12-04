@@ -14,4 +14,13 @@ const connectDB = handler => async (req, res) => {
    return;
 };
 
+export const connectDB_frontend = async (...args) => {
+   if (mongoose.connections[0].readyState) {
+      return;
+   }
+   
+   await mongoose.connect(process.env.mongodburl, {
+   }, () => console.log("Database connected"));
+    return;
+}
 export default connectDB;

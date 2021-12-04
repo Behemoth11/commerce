@@ -1,2 +1,39 @@
+.content {
+    max-width: 70ch;
 
+    p,
+    li {
+        margin: 1em 0;
+        padding: unset;
+    }
 
+    ul {
+        margin-left: 2em;
+    }
+
+    h1,
+    h2 {
+        font-weight: bold;
+    }
+
+    h3,
+    h4 {
+        font-weight: bold;
+    }
+
+    .nav {
+
+        margin-top: 2em;
+        display: flex;
+        flex-wrap: wrap;
+
+        a {
+            display: block;
+            margin-right: 2em;
+            margin-top: 0.5em;
+            padding: var(--padding);
+            color: var(--accent-color-2);
+            background-color: var(--theme-color-5);
+        }
+    }
+}

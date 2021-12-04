@@ -3,7 +3,8 @@ import { ContactMessage } from "../../models";
 
 const handle_post = async (req, res) => {
   const { msg, focus, contact } = req.body;
-  const sender_id = req.user._id;
+  const sender_id = req.user?._id;
+  // console.log(req.body)
 
   let error;
   const mongo_response = await ContactMessage.create({

@@ -4,11 +4,13 @@
 }
 
 .cardsContainer {
-  min-height: 80vh;
   display: flex;
+  min-height: 80vh;
   max-width: 500px;
+  position: relative;
   text-align: center;
   flex-direction: column;
+  // color:  #ffffff;
   h3 {
     text-decoration: underline;
     margin: var(--large-margin) 0;

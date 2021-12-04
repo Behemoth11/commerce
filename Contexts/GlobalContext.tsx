@@ -17,7 +17,7 @@ let bn: boolean;
 
 const CartContext = createContext({
   savedProduct: [{ _id: "" }],
-  saveToCart: async  (product) => ({
+  saveToCart: async (product) => ({
     status: "string",
     message: "string",
   }),
@@ -49,11 +49,17 @@ const MyWindowContext = createContext({
   size: 0,
   overlay: {
     open: (cb?: () => void) => console.log(5),
-    close: (cb?: () => void) => console.log(5),
+    close: (cb?: () => void, param?: "force") => console.log(5),
     isOpen: Math.random() == 1,
+    className: "",
   },
   hashLocation: "",
-  setHashLocation: (id: string, direction?: number, cb?: () => void) => console.log(0),
+  setHashLocation: (
+    id: string,
+    direction?: number,
+    cb?: () => void,
+    className?: string
+  ) => console.log(0),
 });
 export const useMyWindow = () => {
   return useContext(MyWindowContext);
@@ -80,6 +86,16 @@ export const useFilterContext = () => {
   return useContext(FilterContext);
 };
 
+declare global {
+  interface Array<T> {
+    map_unique(
+      verifier: {},
+      cb?: (item?: any, index?: number) => any,
+      get_id?: (variable: any) => string
+    ): Array<T>;
+  }
+}
+
 function GlobalContextProvider({ children }) {
   const auth = useAuthAxios();
 
@@ -91,6 +107,39 @@ function GlobalContextProvider({ children }) {
   useEffect(() => {
     localStorage.setItem("meta_64", "0");
   }, []);
+
+  Array.prototype.map_unique = function (
+    verifier: {},
+    cb?: (item?: any, index?: number) => any,
+    get_id?: (variable: any) => string
+  ) {
+    let result = [];
+
+    let origin_i = 0;
+    let target_i = 0;
+
+    while (origin_i < this.length) {
+      const id = get_id ? get_id(this[origin_i]) : this[origin_i]?._id;
+
+      if (verifier[id] === true) {
+        // console.log("I decided not to render the item");
+        origin_i++;
+        continue;
+      }
+
+      (result[target_i] =
+        (cb && cb(this[origin_i], origin_i)) || this[origin_i]),
+        origin_i;
+
+      
+
+      verifier[id] = true;
+      origin_i++;
+      target_i++;
+    }
+
+    return result;
+  };
 
   return (
     <CartContext.Provider value={cart}>

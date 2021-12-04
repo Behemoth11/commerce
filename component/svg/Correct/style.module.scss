@@ -1,4 +1,5 @@
 .svg{
+    display: block;
     stroke: green;
     transition: stroke-dashoffset var(--fast-animation-duration) ease-in-out;
 }

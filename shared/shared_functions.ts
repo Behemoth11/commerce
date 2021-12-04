@@ -1,16 +1,17 @@
-import { useAuthcontext } from './../Contexts/GlobalContext';
+import { useAuthcontext } from "./../Contexts/GlobalContext";
 import { categories } from "./../component/Layout/NavBar/navBarSections";
 import axios from "axios";
 import { getRelated } from "../component/Layout/NavBar/navBarSections";
 
-export const fetchNavigation = async (categories, cb) => {
+export const fetchNavigation = async (categories, cb, origin?: string) => {
   let response;
+
   if (categories != "all") {
     const representation = getRelated(categories);
     if (representation.length >= 5)
       response = await axios
         .get(
-          `/api/product/representation?${representation}&field=pr_image_url&field=description&field=productName&field=representation`
+          `/api/product/representation?${representation}&field=pr_image_url&field=description&field=productName&field=representation&ne=${origin}`
         )
         .catch((err) => console.log(err));
   }
@@ -18,11 +19,12 @@ export const fetchNavigation = async (categories, cb) => {
   if (!response || response.data.products.length < 2) {
     response = await axios
       .get(
-        `/api/product/representation?representation=all&field=pr_image_url&field=description&field=productName&field=representation&limit=15`
+        `/api/product/representation?representation=all&field=pr_image_url&field=description&field=productName&field=representation&limit=15&ne=${origin}`
       )
       .catch((err) => console.log(err));
   }
-  cb(response.data.products);
+
+  cb(distinct(response.data.products, {}));
 };
 
 export const fecthRelated = async (product, cb) => {
@@ -63,6 +65,8 @@ export const add_captchat_token = async (input) => {
 
   //@ts-ignore
   const captchat = window.grecaptcha;
+
+  if (!captchat) return;
   const captchat_token = await new Promise((resolve, reject) => {
     captchat.ready(function () {
       captchat
@@ -86,13 +90,19 @@ export const getSelectionArray = (selection) => {
   return post_to_affect;
 };
 
-export const getGroups: (auth: any, setGroups: any, fields ?: string[]) => void = async (auth,setGroups, fields ) => {
+export const getGroups: (
+  auth: any,
+  setGroups: any,
+  fields?: string[],
+  published?: [boolean]
+) => void = async (auth, setGroups, fields, published = [false]) => {
   let groups_response;
   groups_response = await auth.axios
     .get("/api/publish", {
       params: {
         which: "mine",
         limit: "10",
+        published: published,
         field: fields || ["post_name", "message"],
       },
     })
@@ -104,3 +114,59 @@ export const getGroups: (auth: any, setGroups: any, fields ?: string[]) => void 
     setGroups(null);
   }
 };
+
+export const distinct = (
+  arr,
+  verifier,
+  get_id?: (item: { [prop: string]: string }) => string | string[]
+) => {
+  let result = [];
+
+  let origin_i = 0;
+  let target_i = 0;
+
+  while (origin_i < arr.length) {
+    const id = get_id ? get_id(arr[origin_i]) : arr[origin_i]?._id;
+
+    if (verifier[id] === true) {
+      origin_i++;
+      continue;
+    }
+
+    arr[origin_i]._id = arr[origin_i]._id.toString();
+
+    result[target_i] = arr[origin_i];
+
+    if (Array.isArray(id)) {
+      id.forEach((id) => (verifier[id] = true));
+    } else {
+      verifier[id] = true;
+    }
+
+    origin_i++;
+    target_i++;
+  }
+
+  return result;
+};
+
+export const getDate = () => {
+  var today = new Date();
+  var dd: number|string = today.getDate();
+  var mm: number | string = today.getMonth() + 1; //January is 0!
+  var yyyy:number | string = today.getFullYear();
+
+  if (dd < 10) {
+    dd = "0" + dd;
+  }
+
+  if (mm < 10) {
+    mm = "0" + mm;
+  }
+
+
+  return (yyyy + "-" + mm + "-" + dd) as string;
+};
+
+
+export const clamp = (num, min, max) => Math.min(Math.max(num, min), max)

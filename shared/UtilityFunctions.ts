@@ -52,6 +52,6 @@ export const checkForm = (formData, nonRequired, errors) => {
 
 export const formatUrl = (array) => {
   return array.map((item) =>
-    item ? `https://res.cloudinary.com/dkoatnxem/image/upload/${item}` : ""
+    item ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/${item}` : ""
   );
 };

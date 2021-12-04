@@ -1,13 +1,98 @@
+.b {
+  margin-top: 2em;
+  // padding: var(--padding);
+  // border: 1px solid black;
+  position: relative;
+  font-size: 0.8em;
+  background-color: var(--theme-color-6);
+  box-shadow: 0.2em 0.2em 1em var(--theme-color-4), -0.2em -0.2em 1em var(--theme-color-5);
 
-.b{
-    margin: var(--margin);
+  h2 {
+    white-space: nowrap;
     padding: var(--padding);
-    border: 1px solid black;
-    font-size: 0.8em;
+    // color: var(--theme-color-5);
+    background-color: var(--theme-color);
+    color: white;
+    // border-bottom: 2px solid var(--accent-color-2);
+    width: fit-content;
+    font-size: 1.2em;
+    // padding: 0 var(--padding);
+    // background-color: var(--accent-color-1);
+  }
 }
 
+.b_ctn {
+  padding: var(--padding);
 
-.imageContainer{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr) );
+  p {
+    font-size: 1.2em;
+  }
+
+  .imageContainer {
+    padding-top: 1em;
+  }
+}
+
+.deletePopup {
+  width: 70%;
+  max-width: 30ch;
+  margin: auto;
+  color: white;
+  padding: var(--large-padding);
+  border-radius: var(--border-radius);
+  background-color: var(--theme-color-2);
+  font-size: small;
+
+  &>p {
+    text-align: center;
+  }
+
+  button {
+    width: 10ch;
+    padding: 0.2em 0.4em;
+
+  }
+
+  .dangerous {
+    border-radius: var(--border-radius);
+    background-color: red;
+
+    color: white;
+    float: right;
+  }
+
+  .cancel {
+    background-color: var(--theme-color-5);
+    border-radius: var(--border-radius);
+    color: black;
+
+  }
+
+}
+
+.imageContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+}
+
+.footer {
+  // border-top: 1px solid var(--accent-color-2);
+  display: flex;
+  margin-top: var(--large-margin);
+  justify-content: space-between;
+
+  .btn {
+    // color: white;
+    color: var(--theme-color-2);
+    background-color: var(--theme-color-4);
+    // margin: var(--margin) 0;
+    padding: var(--large-margin);
+    // border-radius: var(--border-radius);
+  }
+}
+
+.pp_ctn {
+  padding: var(--large-margin);
+  background-color: white;
+  width: fit-content;
 }

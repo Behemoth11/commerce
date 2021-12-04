@@ -4,8 +4,18 @@ import MyImage from "../../MyImage";
 import { memo } from "react";
 import inputStyles from "../style.module.scss";
 
-const ImageInput = ({
+export interface Props {
+  name?: string,
+  label?: string,
+  position?: number,
+  imageLink: string,
+  setInputValue: any,
+  submitCount?:number,
+}
+
+const ImageInput: React.FC<Props> =  ({
   name,
+  label,
   position,
   imageLink,
   submitCount,
@@ -85,7 +95,7 @@ const ImageInput = ({
           accept="image/*"
         />
         {formatedImageLink?.length}
-        {name.length && <label htmlFor={name + position + "0"}>{name}</label>}
+        {name.length && <label htmlFor={name + position + "0"}>{label || name}</label>}
       </div>
     </div>
   );

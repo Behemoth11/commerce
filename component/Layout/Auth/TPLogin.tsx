@@ -53,11 +53,12 @@ function TPLogin({ setEditState }) {
       auth.setToken(data.token);
     }
 
-    if (status == "connected"){
+    if (status == "connected" && authResponse){
       act(authResponse)
     } else{
       //@ts-ignore
       window.FB.login((response) => {
+        if (!response.authResponse) return;
         act(response.authResponse)
       })
     }
@@ -73,7 +74,7 @@ function TPLogin({ setEditState }) {
       <div className={styles.TPcontent}>
         <a
           href={
-            `https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&response_type=code&client_id=799043813636-6752mpc2el076am9cckotrocrs0b814d.apps.googleusercontent.com&redirect_uri=${window.location.origin}/api/auth/google`
+            `https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&response_type=code&client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}&redirect_uri=${window.location.origin}/api/auth/google`
           }
           target={"blank"}
         >

@@ -6,6 +6,8 @@ import jwtDecode from "jwt-decode";
 const handle_refresh = async (req, res) => {
   const refreshToken = req.cookies.z_model_23;
 
+  // console.log(refreshToken)
+
   try {
     let error;
     if (!refreshToken) {
@@ -17,6 +19,8 @@ const handle_refresh = async (req, res) => {
     const savedToken = await RefreshToken.findOneAndDelete({
       token: refreshToken,
     }).catch((err) => (error = err));
+
+    // console.log("the savved token : ", savedToken)
     if (!savedToken)
       return res.status(406).json({
         message: "Something went wrong 1",

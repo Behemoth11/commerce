@@ -13,8 +13,9 @@ const handle_put = async (req, res) => {
   const not_changed = {};
   const old_images = data.pr_image_url.concat(data.all_pr_image_url);
 
-  const mongo_product = await Product.findOne({
+  const mongo_product = await Product.findOne_visible({
     _id: new Types.ObjectId(_id),
+
   }).lean();
   //@ts-ignore
   if (mongo_product.owner != req.user._id && req.user.role != "admin") {
@@ -42,7 +43,7 @@ const handle_put = async (req, res) => {
     const message_template = `${data.meta.host}/product/${_id}` 
 
     const message = message_root + "\n" + message_template
-    const response = await post_with_photo_m(message, "https://res.cloudinary.com/dkoatnxem/image/upload/" + pr_image_url[0]);
+    const response = await post_with_photo_m(message, `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/` + pr_image_url[0]);
   }
   if (meta?.post_with_group){
     const mongo_response = await FacebookPost.updateMany(
@@ -53,13 +54,13 @@ const handle_put = async (req, res) => {
     // console.log(mongo_response);
   }
 
-  if (req.user.role != "admin") data.representation = "none";
+  if (req.user.role != "admin") delete data.representation;
 
   const _categories = data.categories || [];
 
   let categories = [data.nature];
   for (let i=0; i < _categories.length; i ++){
-    if (_categories[i] != data.nature) categories.push(data.nature);
+    if (_categories[i] != data.nature) categories.push(_categories[i]);
   }
 
 
@@ -74,10 +75,12 @@ const handle_put = async (req, res) => {
       color: data.color, //array
       nature: data.nature, //string
       location: data.location, //string
+      quantity: data.quantity,
       materials: data.materials, //array
       description: data.description,
+      addedAt: new Date().getTime(),
       productName: data.productName, //string
-      representation: data.representation || "none",
+      [data.representation && "representation" || "k"]: data.representation
     }
   ).catch((err) => error.push(err.message));
 

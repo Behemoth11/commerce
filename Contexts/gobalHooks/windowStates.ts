@@ -8,6 +8,7 @@ const useFocus = () => {
   const [overlay_state, setOverlay] = useState({
     open: false,
     callbacks: [],
+    className: "",
   });
 
   const [phase, setPhase] = useState("fadeIn");
@@ -35,37 +36,45 @@ const useFocus = () => {
   }, []);
 
   //overlay
-  const open_overlay = (cb?: () => void) => {
+  const open_overlay = (cb?: () => void, className?: string) => {
     setOverlay((prevState) => ({
       open: true,
       callbacks: (cb && prevState.callbacks.concat(cb)) || prevState.callbacks,
+      className,
     }));
   };
 
-  const close_overlay = (cb?: () => void) => {
-    if (depth.current) {
+  const close_overlay = (cb?: () => void, param?: string) => {
+    if (depth.current && param !== "force") {
       window.history.go(-depth.current);
       depth.current = 0;
     }
-    setOverlay({ open: false, callbacks: [] });
+    setOverlay({ open: false, callbacks: [], className: "" });
   };
 
   const overlay = {
     close: close_overlay,
     open: open_overlay,
     isOpen: overlay_state.open,
+    className: overlay_state.className,
   };
   const [hashLocation, setHashLocation] = useState("");
   const depth = useRef(0);
 
-  const open = (id: string, direction?: number, cb?: () => void) => {
+  const open = (
+    id: string,
+    direction?: number,
+    cb?: () => void,
+    className?: string
+  ) => {
+    // console.log("Should I open the overlay : ", overlay, cb);
     if (!direction || direction === 1) {
       window.location.hash = id;
       depth.current += 1;
-      open_overlay();
+      open_overlay(() => 4, className || "");
     } else if (direction === 0) {
       window.location.hash = id;
-      open_overlay();
+      open_overlay(() => 4, className || "");
     } else if (direction === -1) {
       window.history.go(-1);
       depth.current -= 1;
@@ -77,8 +86,8 @@ const useFocus = () => {
     const handler = () => {
       // console.log("**************the andle is runnint")
       setHashLocation(window.location.hash);
-      if (window.location.hash == "") {
-        setOverlay({ open: false, callbacks: [] });
+      if (window.location.hash == "" || /%20/.test(window.location.hash)) {
+        setOverlay({ open: false, callbacks: [], className: "" });
         depth.current = 0;
       }
     };

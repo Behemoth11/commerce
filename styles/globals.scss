@@ -1,3 +1,6 @@
+@import "../mixins/index.scss";
+
+
 :root {
   --border: 2px;
   --thin-border: 1.5px;
@@ -16,6 +19,7 @@
   --theme-color-3: #505057de;
   --theme-color-4: #c9c9d0;
   --theme-color-5: #ebebf2;
+  --theme-color-6: rgb(242, 242, 242);
   --accent-color: #f0387c;
   --accent-color-1: #ed3277;
   --accent-color-2: #eb4884;
@@ -75,6 +79,9 @@ h1 {
   font-weight: 100;
 }
 
+a{
+  cursor: pointer !important;
+}
 h2 {
   font-size: 1.5em;
   font-weight: 100;
@@ -114,8 +121,9 @@ img {
   height: 100%;
   width: 100%;
   font-size: 1em;
+  scroll-margin: 5em;
   // overflow-y: auto;
-  // scroll-behavior: smooth;
+  // scroll-behavior:smooth;
   overflow-x: hidden;
   color: var(--text-color-dark);
   font-family: "Manrope", sans-serif;
@@ -164,6 +172,11 @@ img {
 .big-container {
   width: 100%;
   max-width: var(--page-max-width);
+  // min-height: 100vh;
+}
+
+.content{
+  min-height: 100vh;
 }
 
 .flex {
@@ -274,15 +287,15 @@ img {
   position: relative;
   color: transparent;
   border-radius: 3px;
-  background-color: hsl(0, 0%, 97%);
-
+  background-color: hsl(0, 0%, 95%);
+  border: none !important;
   &::after {
     content: "";
     z-index: 0;
     background: linear-gradient(to left,
-        hsl(0, 0%, 97%),
+        hsl(0, 0%, 95%),
         hsl(0, 0%, 100%),
-        hsl(0, 0%, 97%));
+        hsl(0, 0%, 95%));
     background-repeat: no-repeat;
     position: absolute;
     height: 100%;
@@ -290,6 +303,16 @@ img {
     left: 10px;
     top: 0;
     animation: loading 2s linear infinite;
+  }
+
+  &.dark{
+    background-color: black;
+    &::after {
+      background: linear-gradient(to left,
+          hsl(0, 0%, 0%),
+          hsl(0, 0%, 7%),
+          hsl(0, 0%,0%));
+    }
   }
 }
 
@@ -306,4 +329,40 @@ img {
 
 .grecaptcha-badge {
   visibility: hidden;
+}
+
+
+.cp_ctn{
+  max-width: 60ch;
+}
+
+
+.tablet{
+  display: none;
+}
+
+@include tablet {
+
+  .tablet {
+      display: block;
+  }
+}
+
+
+.float-mid{
+  position:absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  padding-top: 1em;
+  // align-items: center;
+  justify-content: center;
+  font-size: 5em;
 }

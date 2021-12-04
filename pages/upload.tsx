@@ -45,6 +45,8 @@ type edit = "upload" | "update" | "loading" | "success" | "error";
 
 const ACTION = {
   SUBMIT: "soumission du produit",
+  FB_UPLOAD: "Création du poste facebook",
+  ADD_TO_GROUP: "Ajout du poste a groupe de poste",
 };
 
 const uploadContext = createContext({
@@ -102,7 +104,7 @@ function Upload() {
             "categories",
             "description",
             "price",
-            "quatity",
+            "quantity",
             "location",
             "pr_image_url",
             "all_pr_image_url",
@@ -202,15 +204,20 @@ function Upload() {
       });
     };
 
-    updateTask("soumission du produit", "working");
+    taskRef.current = {};
+
+    updateTask(ACTION.SUBMIT, "working");
 
     const _id = await submitItem();
 
     if (_id) {
-      updateTask("soumission du produit", "success");
+      updateTask(ACTION.SUBMIT, "success");
     } else {
-      updateTask("soumission du produit", "failure");
+      updateTask(ACTION.SUBMIT, "failure");
     }
+
+    console.log(tasks)
+    console.log(taskRef)
 
     if (_id) {
       for (const task in tasks) {
@@ -254,24 +261,25 @@ function Upload() {
               </p>
             ))}
           </div>
-
           {getSelectionArray(tasks).map((task) => (
             <div
-              className="flex center-children"
+              className={styles.task_ctn} //center-children
               style={{ width: "fit-content" }}
             >
-              <div className={styles.taskManagerIcon}>
-                <SvgCorrect
-                  showing={tasks[task] === "success"}
-                  className={styles.correct}
-                />
-                <LoadingCircle visible={tasks[task] === "working"} />
-                <Cross
-                  showing={tasks[task] === "failure"}
-                  className={styles.correct}
-                />
-              </div>
-              {task}
+              <p>
+                <span className={styles.taskManagerIcon}>
+                  <SvgCorrect
+                    showing={tasks[task] === "success"}
+                    className={styles.correct}
+                  />
+                  <LoadingCircle visible={tasks[task] === "working"} />
+                  <Cross
+                    showing={tasks[task] === "failure"}
+                    className={styles.correct}
+                  />
+                </span>
+                {task}
+              </p>
 
               {taskRef.current[task]?.error && (
                 <span className={styles.error}>
@@ -280,11 +288,28 @@ function Upload() {
               )}
             </div>
           ))}
+          {/* <div
+            className={styles.task_ctn} //
+            style={{ width: "fit-content" }}
+          >
+            <p>
+              <span className={styles.taskManagerIcon}>
+                <SvgCorrect showing={true} className={styles.correct} />
+                <LoadingCircle visible={false} />
+                <Cross showing={false} className={styles.correct} />
+              </span>
+              {"very difficult task"}
+            </p>
 
+            <span className={styles.error}>
+              "Something went very very wong I am sorry"
+            </span>
+          </div> */}
           <Errors errMsg={errMsg} />
           <Input
             required={true}
             name={"productName"}
+            label={"Nom du produit"}
             inputValue={inputValue}
             submitCount={submitCount}
             proposition={proposition}
@@ -292,6 +317,7 @@ function Upload() {
           />
           <ImageInput
             name="presentationImage"
+            label={"Image principale"}
             position={0}
             imageLink={
               inputValue["presentationImage"] &&
@@ -301,18 +327,18 @@ function Upload() {
             setInputValue={setInputValue}
           />
           {/* array should be inputed as string with a separator that can either be determined here or on the server */}
-
           <Input
             required={true}
             name={"nature"}
+            label="Nature"
             inputValue={inputValue}
             submitCount={submitCount}
             proposition={proposition}
             setInputValue={setInputValue}
           />
-
           <Input
             name={"price"}
+            label={"Prix"}
             required={true}
             type={"number"}
             inputValue={inputValue}
@@ -323,14 +349,41 @@ function Upload() {
           <TextArea
             required={true}
             name={"description"}
+            label="Description"
             inputValue={inputValue}
             submitCount={submitCount}
             setInputValue={setInputValue}
           />
-          {"categories/materials/color/tags".split("/").map((element) => (
+          <Input
+            type={"number"}
+            required={false}
+            name={"quantity"}
+            inputValue={inputValue}
+            submitCount={submitCount}
+            proposition={proposition}
+            label={"Quantité disponible"}
+            setInputValue={setInputValue}
+          />
+        
+          {[
+            { label: "categories", element: "categories" },
+            {
+              label: "matériels",
+              element: "materials",
+            },
+            {
+              label: "couleurs",
+              element: "color",
+            },
+            {
+              label: "tags",
+              element: "tags",
+            },
+          ].map(({ label, element }) => (
             <InputArray
               key={element}
               name={element}
+              label={label}
               required={false}
               inputValue={inputValue}
               submitCount={submitCount}
@@ -356,13 +409,12 @@ function Upload() {
           />
           <MultipleImageInput
             name={"images"}
+            label="images supplémentaires +"
             inputValue={inputValue}
             submitCount={submitCount}
             setInputValue={setInputValue}
           />
-
           <CaptChat />
-
           <div
             className="container flex center-children"
             style={{ position: "relative" }}
@@ -383,12 +435,12 @@ function Upload() {
               <Box
                 id={"option_upload_to_facebook"}
                 name={"upload"}
-                checked={tasks["create_post"] === true}
+                checked={tasks[ACTION.FB_UPLOAD] === true}
                 label={"Ajouter cet article a votre page facebook"}
-                onChange={() => handleOptionChange("create_post")}
+                onChange={() => handleOptionChange(ACTION.FB_UPLOAD)}
               />
 
-              {tasks["create_post"] === true && (
+              {tasks[ACTION.FB_UPLOAD] === true && (
                 <div style={{ display: "inline-block" }}>
                   <Button
                     style={{ margin: 0 }}
@@ -402,13 +454,13 @@ function Upload() {
 
               <Box
                 id={"add_to_facebook_poste"}
-                name={"post_with_group"}
-                checked={tasks["post_with_group"] === true}
+                name={ACTION.ADD_TO_GROUP}
+                checked={tasks[ACTION.ADD_TO_GROUP] === true}
                 label={"Grouper cet article pour un poste de groupe"}
-                onChange={() => handleOptionChange("post_with_group")}
+                onChange={() => handleOptionChange(ACTION.ADD_TO_GROUP)}
               />
 
-              {tasks["post_with_group"] === true && (
+              {tasks[ACTION.ADD_TO_GROUP] === true && (
                 <div style={{ display: "inline-block" }}>
                   <Button
                     style={{ margin: 0 }}
@@ -434,7 +486,7 @@ function Upload() {
               }}
               className={styles.submit}
             >
-              <span>Submit</span>
+              <span>Envoyer</span>
             </button>
           </div>
         </div>
@@ -466,7 +518,7 @@ const SelectGroup = ({ handleSubmit, taskRef }) => {
   };
 
   const myAction = async (active_product_id, setTask) => {
-    setTask("post_with_group", "working");
+    setTask(ACTION.ADD_TO_GROUP, "working");
 
     let response;
     response = await auth.axios
@@ -486,20 +538,20 @@ const SelectGroup = ({ handleSubmit, taskRef }) => {
       .catch((err) => (response = err.response));
 
     if (response.status === 200) {
-      setTask("post_with_group", "success");
+      setTask(ACTION.ADD_TO_GROUP, "success");
     } else {
-      taskRef.current.post_with_group.error = response.data.message;
-      setTask("post_with_group", "failure");
+      taskRef.current[ACTION.ADD_TO_GROUP].error = response.data.message;
+      setTask(ACTION.ADD_TO_GROUP, "failure");
     }
 
     return response.data;
   };
 
   useEffect(() => {
-    if (taskRef.current.post_with_group) {
-      taskRef.current.post_with_group.action = myAction;
+    if (taskRef.current[ACTION.ADD_TO_GROUP]) {
+      taskRef.current[ACTION.ADD_TO_GROUP].action = myAction;
     } else {
-      taskRef.current.post_with_group = { action: myAction };
+      taskRef.current[ACTION.ADD_TO_GROUP] = { action: myAction };
     }
   }, [myAction]);
 
@@ -551,7 +603,7 @@ const PostOnFacebook = ({ handleSubmit, inputValue, taskRef }) => {
   const myAction = async (_id, setTask) => {
     let response;
 
-    setTask("create_post", "working");
+    setTask(ACTION.FB_UPLOAD, "working");
 
     response = await auth.axios
       .post(
@@ -574,20 +626,20 @@ const PostOnFacebook = ({ handleSubmit, inputValue, taskRef }) => {
       .catch((err) => (response = err.response));
 
     if (response.status === 200) {
-      setTask("create_post", "success");
+      setTask(ACTION.FB_UPLOAD, "success");
     } else {
-      taskRef.current.create_post.error = response.data.message;
-      setTask("create_post", "failure");
+      taskRef.current[ACTION.FB_UPLOAD].error = response.data.message;
+      setTask(ACTION.FB_UPLOAD, "failure");
     }
 
     return response.data;
   };
 
   useEffect(() => {
-    if (taskRef.current.post_with_group) {
-      taskRef.current.create_post.action = myAction;
+    if (taskRef.current[ACTION.ADD_TO_GROUP]) {
+      taskRef.current[ACTION.FB_UPLOAD].action = myAction;
     } else {
-      taskRef.current.create_post = { action: myAction };
+      taskRef.current[ACTION.FB_UPLOAD] = { action: myAction };
     }
   }, [myAction]);
 

@@ -1,3 +1,6 @@
+import { FacebookPost } from "./../../models/index";
+import { facebookPost } from "./../../models/facebook_post";
+import { Types } from "mongoose";
 import { string_and_array_to_array } from "../../../shared/UtilityFunctions";
 import { Product } from "../../models";
 import cloudinary from "../../utils/cloudinary";
@@ -27,17 +30,47 @@ const handle_get = async (req, res) => {
   delete query.field;
 
   let is_a_text_search = false;
+  let is_group_query = false;
 
   const keys = Object.keys(query);
   const searchQuery: { [key: string]: {} } = {};
 
+  searchQuery.quantity = { $gte: 0 };
+
   if (query.ne) {
-    searchQuery._id = { $ne: query.ne };
+    try {
+      const not_include = string_and_array_to_array(query.ne).map(
+        (id) => new Types.ObjectId(id)
+      );
+
+      searchQuery._id = { $nin: not_include };
+      
+    } catch (err) {}
     delete query.ne;
   }
 
-  if (query.categories && query.categories[0] === "search") {
-    is_a_text_search = true;
+  if (query.categories) {
+    if (query.categories[0] === "search") {
+      is_a_text_search = true;
+    } else if (query.categories[0] === "groups") {
+      is_group_query = true;
+
+      const group = await FacebookPost.findOne(
+        {
+          _id: new Types.ObjectId(query.categories[1]),
+          "published.kdshop": true,
+        },
+        "grouping"
+      )
+        .populate("grouping")
+        .catch((err) => console.log(err));
+
+      // console.log(group)
+
+      return res.status(200).json({
+        products: group.grouping,
+      });
+    }
   }
 
   for (let i = 0; i < keys.length; i++) {
@@ -48,9 +81,9 @@ const handle_get = async (req, res) => {
         const range = query.price.split("to");
         if (range[1] != "infinity") {
           //infinity var rely only on var in frontend
-          searchQuery["price"] = { $gt: range[0], $lt: range[1] };
+          searchQuery["price"] = { $gte: range[0], $lte: range[1] };
         } else {
-          searchQuery["price"] = { $gt: range[0] };
+          searchQuery["price"] = { $gte: range[0] };
         }
         break;
       case "categories":
@@ -74,8 +107,11 @@ const handle_get = async (req, res) => {
     });
   }
 
-  let products = await Product.find(searchQuery, field)
-    .sort({ addedAt: 1 })
+  // console.log(req.query)
+  // console.log(searchQuery)
+
+  let products = await Product.find_visible(searchQuery, field)
+    .sort({ addedAt: -1 })
     .skip(page * limit)
     .limit(limit + 1)
     .lean()

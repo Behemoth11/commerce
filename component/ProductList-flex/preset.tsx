@@ -11,7 +11,7 @@ interface moreProduct {
 
 
 const MoreProduct: React.FC<moreProduct> = ({ items, preset,title,style }) => {
-  return (
+  return items.length >0 && (
     <div className={`${styles.moreProduct} ${styles[preset]}`}>
       <h3>
         {title}

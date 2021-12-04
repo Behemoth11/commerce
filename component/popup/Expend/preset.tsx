@@ -6,6 +6,8 @@ import styles from "./style.module.scss";
 import { Props } from ".";
 
 interface MyProps extends Props {
+  labels?: {[label: string]: string} 
+  type?: string;
   header: string;
   close: () => void;
   next: (e?: any) => void;
@@ -13,6 +15,9 @@ interface MyProps extends Props {
 }
 
 const PopupExpendPreset: FC<MyProps> = ({
+  type,
+  labels,
+  className,
   dependency,
   closePopup,
   top_prop,
@@ -29,15 +34,20 @@ const PopupExpendPreset: FC<MyProps> = ({
       top_prop={top_prop}
       closePopup={closePopup}
       dependency={dependency}
+      className={className}
     >
       <div
         className={styles.optionContainer}
         style={{ width, maxHeight: `calc(90vh - ${top_prop}px)` }}
       >
-        <h2>{header}</h2>
-        <div className={styles.children}>{children}</div>
-        <Button label={"retour"} type="type1" onClick={close} />
-        <Button label={"continuer"} onClick={next} />
+        {(!["2"].includes(type) && (
+          <>
+            <h2>{header}</h2>
+            <div className={styles.children}>{children}</div>
+            <Button label={labels?.back || "retour"} type="type1" onClick={close} />
+            <Button label={labels?.forward || "continuer"} onClick={next} />
+          </>
+        )) || <div className={styles.children}>{children}</div>}
       </div>
     </Expend>
   );

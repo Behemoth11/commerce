@@ -1,10 +1,13 @@
+
+
+
 .container {
 
   left:0;
   right: 0;
   z-index: 3;
   position: fixed;
-  pointer-events: none;
+  // pointer-events: none;
   &.bottom{
     bottom: 0;
   }
