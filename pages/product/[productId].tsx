@@ -26,9 +26,10 @@ import Head from "next/head";
 import connectDB, { connectDB_frontend } from "../../_api/middleware/mongodb";
 
 const ProductShow = ({ mainProduct, navigation, related }) => {
+  const router = useRouter();
   const {
     query: { productId },
-  } = useRouter();
+  } = router;
 
   const User = useUser();
   const auth = useAuthcontext();
@@ -64,6 +65,14 @@ const ProductShow = ({ mainProduct, navigation, related }) => {
         <meta
           key="description"
           name="description"
+          content={mainProduct.description}
+        />
+        <meta property="og:title" content={mainProduct.productName} />
+        <meta property="og:type" content={mainProduct.nature} />
+        <meta property="og:image" content={mainProduct.pr_image_url[0]} />
+        <meta property="og:site_name" content="KdShop" />
+        <meta
+          property="og:description"
           content={mainProduct.description}
         />
         <title key="title">{`${mainProduct.productName} : Article en vente.`}</title>
@@ -111,6 +120,9 @@ const ProductShow = ({ mainProduct, navigation, related }) => {
                   state={d_state}
                   setState={setD_state}
                   cb={{
+                    success: () => {
+                      window.history.go(-1);
+                    },
                     general: () => {
                       myWindow.overlay.close();
                       myWindow.setFocusOn("none");
@@ -118,7 +130,15 @@ const ProductShow = ({ mainProduct, navigation, related }) => {
                   }}
                 />
                 <div>
-                  <button className={styles.cancel}>Cancel</button>
+                  <button
+                    className={styles.cancel}
+                    onClick={() => {
+                      myWindow.overlay.close();
+                      myWindow.setFocusOn("none");
+                    }}
+                  >
+                    Cancel
+                  </button>
                   <button className={styles.dangerous} onClick={deleteProduct}>
                     supprimer
                   </button>
@@ -300,7 +320,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         className={`${styles.buyPrompt} sm flex-center`}
         onClick={(e) => {
           myWindow.setFocusOn("contact_seller", e);
-          myWindow.overlay.open(() => myWindow.setFocusOn("none"));
+          myWindow.overlay.open(() => myWindow.setFocusOn("none"), "sm");
         }}
         // style={{ marginBottom: "10px" }}
       >
@@ -402,7 +422,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
         className={`${styles.buyPrompt} big flex-center`}
         onClick={(e) => {
           myWindow.setFocusOn("cpt", e);
-          myWindow.overlay.open(() => myWindow.setFocusOn("none"));
+          // myWindow.overlay.open(() => myWindow.setFocusOn("none"), "sm");
         }}
       >
         <Popup
@@ -447,7 +467,7 @@ export async function getStaticPaths() {
   await connectDB_frontend();
 
   const products = await Product.find_visible({}, ["_id"])
-    .limit(process.env.VERCEL_ENV == "production" ? 100 : 1)
+    .limit(process.env.VERCEL_ENV == "production" ? 100 : 100)
     .sort({ addedAt: -1 })
     .lean();
 

@@ -10,6 +10,10 @@ export const facebookPost = new Schema({
     type: Number,
     required: true,
   },
+  host: {
+    type: String,
+
+  },
   published: {
     kdshop: {
       type: Boolean,
@@ -35,4 +39,26 @@ export const facebookPost = new Schema({
   post_name: {
     type: "String",
   },
+  post_type:{
+    type: String,
+    required: true,
+  },
+  post_date:{
+    type: String,
+  },
+  frequency: {
+    type: String,
+  },
+  selected_days:{
+    type: [String],
+  },
+  selected_monthly: {
+    type: String
+  },
+  custom_frequency: {
+    type: Number,
+  },
+  next_date: {
+    type: String,
+  }
 });

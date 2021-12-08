@@ -40,6 +40,11 @@ import handle_refresh from "../_api/handlers/auth/refreshToken";
 import LoadingCircle from "../component/LoadingController/LoadingCircle";
 import SvgCorrect from "../component/svg/Correct/correct";
 import Cross from "../component/svg/Correct/cross";
+import {
+  create_error_message,
+  formatError,
+  Verifier,
+} from "../shared/InputChek";
 
 type edit = "upload" | "update" | "loading" | "success" | "error";
 
@@ -47,6 +52,7 @@ const ACTION = {
   SUBMIT: "soumission du produit",
   FB_UPLOAD: "Création du poste facebook",
   ADD_TO_GROUP: "Ajout du poste a groupe de poste",
+  FETCHING: "Recuperation des donne du produit",
 };
 
 const uploadContext = createContext({
@@ -69,6 +75,15 @@ const nonRequired = {
   representation: true,
 }; // also change the requied field present on input component
 
+const REQUIRED_FIELD = [
+  "productName",
+  "description",
+  "price",
+  "quantity",
+  "location",
+  "presentationImage",
+  "nature",
+];
 function Upload() {
   const { query } = useRouter();
 
@@ -92,8 +107,22 @@ function Upload() {
     document.getElementById("__next")?.scrollTo({ top: 0, behavior: "smooth" });
   }, [editRef.current]);
 
+  const [refresh_listenner, _refresh] = useState(false);
+
+  const refresh = () => {
+    _refresh((p) => p!);
+  };
+
+  const updateTask = (task_name: string, status: string | boolean) => {
+    setTask((prevState) => {
+      // console.log(task_name, "should now be ", status);
+      return { ...prevState, [task_name]: status };
+    });
+  };
+
   useEffect(() => {
     const fetch = async (_id) => {
+      updateTask(ACTION.FETCHING, "working");
       const axiosResponse = await axios
         .get(
           `/api/product/withId/${query._id}?${[
@@ -114,24 +143,28 @@ function Upload() {
             .map((field) => `field=${field}`)
             .join("&")}`
         )
-        .catch((err) => console.log(err));
+        .catch((err) => err.response);
       let productData;
       if (axiosResponse) {
         productData = axiosResponse?.data?.products[0];
       }
       if (productData) {
+        updateTask(ACTION.FETCHING, undefined);
+
         setInputValue({
           ...productData,
           presentationImage: formatUrl(productData.pr_image_url),
           images: formatUrl(productData.all_pr_image_url),
         });
+      } else {
+        updateTask(ACTION.FETCHING, "failure");
       }
     };
 
     if (editRef.current == "update") {
       fetch(query._id);
     }
-  }, [editRef.current]);
+  }, [editRef.current, refresh_listenner]);
 
   const [submitCount, setSubmitCount] = useState<number>(0);
   const [inputValue, setInputValue] = useState<{}>({});
@@ -156,10 +189,16 @@ function Upload() {
     document.getElementById("__next")?.scrollTo({ top: 0, behavior: "smooth" });
     const errors = [];
 
+    const verifier = new Verifier({}, REQUIRED_FIELD);
+
     checkForm(_inputValue, nonRequired, errors);
 
-    setErrMsg([...errors]);
-    if (errors.length > 0) {
+    const { relevant_input, error, validation } = verifier.validate(inputValue);
+
+    const formated_errors = create_error_message(error);
+
+    setErrMsg([...formated_errors]);
+    if (!validation) {
       setEditState(editRef.current);
       return;
     }
@@ -197,12 +236,6 @@ function Upload() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const updateTask = (task_name: string, status: string | boolean) => {
-      setTask((prevState) => {
-        // console.log(task_name, "should now be ", status);
-        return { ...prevState, [task_name]: status };
-      });
-    };
 
     taskRef.current = {};
 
@@ -216,9 +249,6 @@ function Upload() {
       updateTask(ACTION.SUBMIT, "failure");
     }
 
-    console.log(tasks)
-    console.log(taskRef)
-
     if (_id) {
       for (const task in tasks) {
         if (tasks[task] === true) {
@@ -226,6 +256,8 @@ function Upload() {
         }
       }
     }
+
+    refresh();
   };
   const taskRef = useRef({});
 
@@ -263,6 +295,7 @@ function Upload() {
           </div>
           {getSelectionArray(tasks).map((task) => (
             <div
+              key={task}
               className={styles.task_ctn} //center-children
               style={{ width: "fit-content" }}
             >
@@ -307,7 +340,7 @@ function Upload() {
           </div> */}
           <Errors errMsg={errMsg} />
           <Input
-            required={true}
+            required={REQUIRED_FIELD.includes("productName")}
             name={"productName"}
             label={"Nom du produit"}
             inputValue={inputValue}
@@ -328,7 +361,7 @@ function Upload() {
           />
           {/* array should be inputed as string with a separator that can either be determined here or on the server */}
           <Input
-            required={true}
+            required={REQUIRED_FIELD.includes("nature")}
             name={"nature"}
             label="Nature"
             inputValue={inputValue}
@@ -339,7 +372,7 @@ function Upload() {
           <Input
             name={"price"}
             label={"Prix"}
-            required={true}
+            required={REQUIRED_FIELD.includes("price")}
             type={"number"}
             inputValue={inputValue}
             submitCount={submitCount}
@@ -347,7 +380,7 @@ function Upload() {
             setInputValue={setInputValue}
           />
           <TextArea
-            required={true}
+            required={REQUIRED_FIELD.includes("description")}
             name={"description"}
             label="Description"
             inputValue={inputValue}
@@ -356,15 +389,24 @@ function Upload() {
           />
           <Input
             type={"number"}
-            required={false}
             name={"quantity"}
             inputValue={inputValue}
             submitCount={submitCount}
             proposition={proposition}
             label={"Quantité disponible"}
             setInputValue={setInputValue}
+            required={REQUIRED_FIELD.includes("quantity")}
           />
-        
+
+          <Input
+            name="location"
+            required={REQUIRED_FIELD.includes("location")}
+            inputValue={inputValue}
+            submitCount={submitCount}
+            proposition={proposition}
+            setInputValue={setInputValue}
+          />
+
           {[
             { label: "categories", element: "categories" },
             {
@@ -384,23 +426,16 @@ function Upload() {
               key={element}
               name={element}
               label={label}
-              required={false}
+              required={REQUIRED_FIELD.includes(element)}
               inputValue={inputValue}
               submitCount={submitCount}
               proposition={proposition}
               setInputValue={setInputValue}
             />
           ))}
+
           <Input
-            name="location"
-            required={false}
-            inputValue={inputValue}
-            submitCount={submitCount}
-            proposition={proposition}
-            setInputValue={setInputValue}
-          />
-          <Input
-            required={false}
+            required={REQUIRED_FIELD.includes("representation")}
             name="representation"
             inputValue={inputValue}
             submitCount={submitCount}

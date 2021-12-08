@@ -45,10 +45,36 @@ const useFocus = () => {
   };
 
   const close_overlay = (cb?: () => void, param?: string) => {
-    if (depth.current && param !== "force") {
-      window.history.go(-depth.current);
-      depth.current = 0;
+    const len = history.length;
+
+    let i = 0;
+    var index = 0;
+
+    if (param === "force") {
+      handler();
+      return;
     }
+    while (len - 1 - i >= 0) {
+      console.log(history);
+      if (history[len - 1 - i] === "" || history[len - 1 - i] === "#none") {
+        // console.log("the location of the item ", i);
+        index = i;
+        break;
+      }
+      i++;
+    }
+
+    // if (depth.current && param !== "force") {
+    //   window.history.go(-depth.current);
+    //   depth.current = 0;
+    // }
+
+    // console.log("How much should I go back ", index);
+
+    if (index > 0) {
+      window.history.go(-index);
+    }
+
     setOverlay({ open: false, callbacks: [], className: "" });
   };
 
@@ -58,8 +84,9 @@ const useFocus = () => {
     isOpen: overlay_state.open,
     className: overlay_state.className,
   };
-  const [hashLocation, setHashLocation] = useState("");
+  const [history, setHashLocation] = useState([""]);
   const depth = useRef(0);
+  const hashLocation = history[history.length - 1];
 
   const open = (
     id: string,
@@ -67,14 +94,15 @@ const useFocus = () => {
     cb?: () => void,
     className?: string
   ) => {
-    // console.log("Should I open the overlay : ", overlay, cb);
+    if (className) {
+      setOverlay((prev) => ({ ...prev, className }));
+    }
+
     if (!direction || direction === 1) {
       window.location.hash = id;
       depth.current += 1;
-      open_overlay(() => 4, className || "");
     } else if (direction === 0) {
       window.location.hash = id;
-      open_overlay(() => 4, className || "");
     } else if (direction === -1) {
       window.history.go(-1);
       depth.current -= 1;
@@ -82,19 +110,36 @@ const useFocus = () => {
     // console.log(depth.current);
   };
 
-  useEffect(() => {
-    const handler = () => {
-      // console.log("**************the andle is runnint")
-      setHashLocation(window.location.hash);
-      if (window.location.hash == "" || /%20/.test(window.location.hash)) {
-        setOverlay({ open: false, callbacks: [], className: "" });
-        depth.current = 0;
-      }
-    };
+  const handler = () => {
+    setHashLocation((prev) => {
+      const len = prev.length;
 
+      // console.log(prev, window.location.hash);
+
+      if (prev[len - 2] === window.location.hash) {
+        return prev.slice(0, -1);
+      } else {
+        return [...prev, window.location.hash];
+      }
+    });
+
+    if (
+      window.location.hash === "#none" ||
+      window.location.hash == "" ||
+      /%20/.test(window.location.hash)
+    ) {
+      // console.log("just closing the overlay")
+      setOverlay({ open: false, callbacks: [], className: "" });
+    } else {
+      setOverlay((prev) => ({ ...prev, open: true, callbacks: [] }));
+    }
+  };
+
+  useEffect(() => {
     setTimeout(() => {
       window.location.hash = "";
     }, 100);
+
     window.addEventListener("hashchange", handler);
     return () => window.removeEventListener("hashchange", handler);
   }, []);

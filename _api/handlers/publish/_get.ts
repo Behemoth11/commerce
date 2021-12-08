@@ -17,6 +17,7 @@ const handle_get = async (req, res) => {
       // console.log("the new query  ", query)
 
       if (query["field[]"]?.includes("grouping")) {
+
         posts = await FacebookPost.find(
           {
             owner: new Types.ObjectId(req.user._id),
@@ -28,6 +29,8 @@ const handle_get = async (req, res) => {
           .sort({ lastEdit: -1 })
           .populate("grouping", ["pr_image_url", "productName", "price"])
           .lean();
+
+        // console.log(posts)
       } else {
         posts = await FacebookPost.find(
           {

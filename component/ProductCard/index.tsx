@@ -99,6 +99,7 @@ const index: React.FC<Props> = ({
                     ASPECT_RATIO={aspect_ratio || DEFAULT_ASPECT_RATIO}
                     isVisible={isVisible}
                     observer={observer}
+                    alt={`Image de ${productName}`}
                     onLoad={() => setIsLoading(false)}
                   />
                 </div>

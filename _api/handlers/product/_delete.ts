@@ -1,7 +1,5 @@
-
-
 import { Types } from "mongoose";
-import {Product} from "../../models";
+import { Product } from "../../models";
 import { eraseImages } from "../../utils/cloudinary";
 
 const handle_delete = async (req, res) => {
@@ -16,10 +14,13 @@ const handle_delete = async (req, res) => {
   if (mongo_product.owner != req.user._id || req.user.role !== "admin") {
     return res.status(401).json({ message: "could not process the operation" });
   }
-  
-  const erasedProduct = await Product.findOneAndUpdate({
-    _id: new Types.ObjectId(Id),
-  }, {$set: {quantity: -1}}).catch((err) => error.push(err.message));
+
+  const erasedProduct = await Product.findOneAndUpdate(
+    {
+      _id: new Types.ObjectId(Id),
+    },
+    { $set: { quantity: -1 } }
+  ).catch((err) => error.push(err.message));
 
   //@ts-ignore
   if (erasedProduct && erasedProduct.deletedCount == 0) {
@@ -27,21 +28,8 @@ const handle_delete = async (req, res) => {
     return;
   }
 
-  // try {
-  //   eraseImages(
-  //     [
-  //       //@ts-ignore
-  //       ...erasedProduct.pr_image_url,
-  //       //@ts-ignore
-  //       ...erasedProduct.all_pr_image_url,
-  //     ],
-  //     error
-  //   );
-  // } catch (err) {
-  //   error.push(err.message);
-  // }
-
   res.json({
+    message: "success: modifications prendrons effet dans quelquest minutes",
     erasedProduct,
     error,
   });

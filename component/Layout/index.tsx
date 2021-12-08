@@ -1,6 +1,9 @@
 import styles from "./style.module.scss";
-import { useIsomorphicLayoutEffect, useSelectiveState } from "../../shared/CustomHooks";
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import {
+  useIsomorphicLayoutEffect,
+  useSelectiveState,
+} from "../../shared/CustomHooks";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { useRouter } from "next/router";
 import NavBar from "./NavBar";
 import Footer from "./Footer";
@@ -9,7 +12,15 @@ import { useMyWindow } from "../../Contexts/GlobalContext";
 import Facebook from "./Facebook";
 import { compare } from "../../shared/shared_functions";
 import LoadingCircle from "../LoadingController/LoadingCircle";
-// import {compare } from
+import SearchBar from "./NavBar/SearchBar";
+
+const addScript = (url) => {
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src = url;
+
+  document.head.appendChild(script);
+};
 
 function index({ children }) {
   const router = useRouter();
@@ -22,18 +33,23 @@ function index({ children }) {
       !compare(router.query, old_url.current.query)
     ) {
       document.getElementById("__next").scroll(0, 0);
-      // myWindow.overlay.close(null, "force")
       old_url.current = { query: router.query, pathname: router.pathname };
     }
     
+    myWindow.overlay.close(null,"force")
     myWindow.setPhase("fadeIn");
 
-
-    setInternalState("idle")
-
+    setInternalState("idle");
   }, [children]);
 
-  const [internalState, internalState_id,  setInternalState] = useSelectiveState("idle")
+  useEffect(() => {
+    addScript("https://connect.facebook.net/en_US/sdk.js")
+    addScript("https://connect.facebook.net/fr_FR/sdk/xfbml.customerchat.js")
+    addScript(`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RE_SITE_KEY}`)
+  }, []);
+
+  const [internalState, internalState_id, setInternalState] =
+    useSelectiveState("idle");
 
   return (
     <>
@@ -56,10 +72,10 @@ function index({ children }) {
 
             const _id = internalState_id.current;
             setTimeout(() => {
-              if (_id === internalState_id.current){
+              if (_id === internalState_id.current) {
                 setInternalState("loading");
               }
-            }, 1000)
+            }, 1000);
           }}
         >
           {children}
@@ -69,6 +85,7 @@ function index({ children }) {
         <Footer />
         <Facebook />
       </div>
+      <SearchBar />
     </>
   );
 }

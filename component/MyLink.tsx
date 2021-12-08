@@ -14,7 +14,8 @@ const MyLink: FC<Props> = ({ children, href, className, style }) => {
   const myWindow = useMyWindow();
 
   const handleClick = (e) => {
-    myWindow.overlay.close()
+    window.location.hash= "";
+    // myWindow.overlay.close(null,"force")
     myWindow.setPhase("fadeOut");
 
     setTimeout(() => {

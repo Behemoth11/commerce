@@ -18,7 +18,7 @@
 .overlay {
   background-color: hsla(0, 0%, 0%, 0.871);
   pointer-events: none;
-  position: absolute;
+  position: fixed;
   height: 120vh;
   width: 100%;
   opacity: 0;
@@ -142,7 +142,7 @@
       transform: rotateZ(-90deg);
     }
 
-    div{
+    a{
       padding: var(--padding);
       height: 100%;
       width:50%;

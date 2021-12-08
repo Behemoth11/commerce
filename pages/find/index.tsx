@@ -152,10 +152,10 @@ function FindContent({ title, description }) {
             maxOpened={3}
           />
         </div>
-        <div>
+        <div >
           {products.length === 0 && (
             <div
-              style={{ textAlign: "center", marginTop: "var(--larger-margin)" }}
+              style={{ textAlign: "center", margin: "15vh 0" }}
             >
               Auncun articles correspondant
             </div>

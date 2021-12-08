@@ -1,0 +1,11 @@
+{
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/_error": "pages/_error.js",
+  "/api/publish": "pages/api/publish.js",
+  "/api/auth/token": "pages/api/auth/token.js",
+  "/api/user/userData": "pages/api/user/userData.js",
+  "/seller/groups": "pages/seller/groups.js",
+  "/api/product/withId/[product_id]": "pages/api/product/withId/[product_id].js",
+  "/": "pages/index.js"
+}
