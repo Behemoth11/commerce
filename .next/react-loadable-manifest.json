@@ -1,8 +1,14 @@
 {
-  "seller/groups.tsx -> lodash": {
-    "id": 6486,
+  "../node_modules/next/dist/client/next-dev.js -> ./dev/noop": {
+    "id": "./node_modules/next/dist/client/dev/noop.js",
     "files": [
-      "static/chunks/29107295.2648cb5e919f7c78c7cc.js"
+      "static/chunks/node_modules_next_dist_client_dev_noop_js.js"
+    ]
+  },
+  "seller/groups.tsx -> lodash": {
+    "id": "./node_modules/lodash/lodash.js",
+    "files": [
+      "static/chunks/node_modules_lodash_lodash_js.js"
     ]
   }
 }

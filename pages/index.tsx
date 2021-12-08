@@ -21,12 +21,11 @@ type responseData = {
 };
 
 export default function Home({ representation_items, hot_deals, new_items }) {
-
   // console.log(representation_items, hot_deals, new_items)
   return (
     <div
       className={`${styles.landingPage} big-container`}
-      style={{ fontSize: "0.8em" }}
+      style={{ fontSize: "0.8em", width: "100%" }}
     >
       <Head>
         <meta
@@ -41,29 +40,34 @@ export default function Home({ representation_items, hot_deals, new_items }) {
           <picture>
             <source
               media="(min-width: 700px)"
-              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_1000/v1634645262/chris-ainsworth-tIUXSj2iFVY-unsplash_zlgadf.jpg"
+              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_800/v1634645262/chris-ainsworth-tIUXSj2iFVY-unsplash_zlgadf.jpg 800vw,
+              https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_1000/v1634645262/chris-ainsworth-tIUXSj2iFVY-unsplash_zlgadf.jpg 100w "
             />
             <source
               media="(min-width: 470px)"
-              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_1.4,c_crop/c_scale,w_800/v1635785732/istockphoto-1254508881-170667a_imegeh.jpg 600w"
+              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_1.4,c_crop/c_scale,w_500/v1635785732/istockphoto-1254508881-170667a_imegeh.jpg 500w, https://res.cloudinary.com/dkoatnxem/image/upload/ar_1.4,c_crop/c_scale,w_800/v1635785732/istockphoto-1254508881-170667a_imegeh.jpg 800w"
             />
-            <source srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg 600w" />
+            <source srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_0.8,c_crop/c_scale,w_600/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg 600w,https://res.cloudinary.com/dkoatnxem/image/upload/ar_0.8,c_crop/c_scale,w_300/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg 300w" />
             <img
-              src="https://res.cloudinary.com/dkoatnxem/image/upload/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg "
+              src="https://res.cloudinary.com/dkoatnxem/image/upload/ar_0.8,c_crop/c_scale,w_800/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg"
               alt=""
             />
           </picture>
         </div>
-        <div className={styles.c_to_act}>
-          <button>
-            <MyLink href={"/find?categories=femme"}>Pour Homme</MyLink>
-          </button>
-          <button>
-            <MyLink href={"/find?categories=homme"}>Pour Femme</MyLink>
-          </button>
-          <button>
-            <MyLink href={"/find?categories=enfant"}>Pour Enfant</MyLink>
-          </button>
+
+        <div className={styles.c_to_act_ctn}>
+          <div className={styles.c_to_act}>
+            <MyLink href={"/find?categories=femme"}>
+              <button> Pour Homme</button>
+            </MyLink>
+
+            <MyLink href={"/find?categories=homme"}>
+              <button>Pour Femme</button>
+            </MyLink>
+            <MyLink href={"/find?categories=enfant"}>
+              <button>Pour Enfant</button>
+            </MyLink>
+          </div>
         </div>
       </div>
 
@@ -102,35 +106,46 @@ export default function Home({ representation_items, hot_deals, new_items }) {
 export const getStaticProps = async () => {
   await connectDB_frontend();
 
-  let representation_items = await Product.find_visible({ representation: { $nin: ["hot deals", "none"] }, quantity: {$gte: 0} }, [
-    "productName",
-    "description",
-    "representation",
-    "pr_image_url"
-  ]).lean();
+  let representation_items = await Product.find_visible(
+    { representation: { $nin: ["hot deals", "none"] }, quantity: { $gte: 0 } },
+    ["productName", "description", "representation", "pr_image_url"]
+  ).lean();
 
   const verifier = {};
 
   representation_items.forEach((item) => (item._id = item._id.toString()));
-  representation_items  = distinct(representation_items, verifier, (item) => [item._id, item.representation] )
+  representation_items = distinct(representation_items, {}, (item) => [
+    item._id,
+    item.representation,
+  ]);
 
   // console.log(verifier)
 
-  let hot_deals = await Product.find_visible({representation: "hot deals" , quantity: {$gte: 0}}, ["productName", "price", "description", "pr_image_url"]).lean();
+  let hot_deals = await Product.find_visible(
+    { representation: "hot deals", quantity: { $gte: 0 } },
+    ["productName", "price", "description", "pr_image_url"]
+  ).lean();
 
   hot_deals.forEach((item) => (item._id = item._id.toString()));
-  hot_deals = distinct(hot_deals, verifier)
+  hot_deals = distinct(hot_deals, verifier);
 
   // console.log(verifier)
 
-  let new_items = await Product.find({quantity: {$gte: 0}}, ["productName", "price", "description", "pr_image_url"]).sort({addedAt: -1}).limit(20).lean()
+  let new_items = await Product.find({ quantity: { $gte: 0 } }, [
+    "productName",
+    "price",
+    "description",
+    "pr_image_url",
+  ])
+    .sort({ addedAt: -1 })
+    .limit(20)
+    .lean();
 
-  new_items.forEach(item => item._id = item._id.toString())
-  new_items = distinct(new_items, verifier)
+  new_items.forEach((item) => (item._id = item._id.toString()));
+  new_items = distinct(new_items, verifier);
 
   return {
     props: { representation_items, hot_deals, new_items },
-    revalidate: process.env.VERCEL_ENV === "production" && 5 * 60 && 60
+    revalidate: (process.env.VERCEL_ENV === "production" && 5 * 60) || 60,
   };
-
 };

@@ -11,7 +11,7 @@ const handle_refresh = async (req, res) => {
   try {
     let error;
     if (!refreshToken) {
-      return res.status(406).json({
+      return res.status(403).json({
         message: "You do not deserve a token, you filfy human ahahah",
       });
     }
@@ -22,7 +22,7 @@ const handle_refresh = async (req, res) => {
 
     // console.log("the savved token : ", savedToken)
     if (!savedToken)
-      return res.status(406).json({
+      return res.status(500).json({
         message: "Something went wrong 1",
       });
 
@@ -34,7 +34,7 @@ const handle_refresh = async (req, res) => {
       );
     } catch (error) {
       //console.log(error);
-      return res.status(406).json({
+      return res.status(403).json({
         message: "why are you trying to hack me",
       });
     }
@@ -57,7 +57,7 @@ const handle_refresh = async (req, res) => {
     const newRefreshToken = await createRefreshToken(user);
 
     if (!newRefreshToken) {
-      return res.status(501).json({ message: "we couldn't refresh the token" });
+      return res.status(400).json({ message: "we couldn't refresh the token" });
     }
 
     //console.log(newRefreshToken);

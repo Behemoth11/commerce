@@ -1,7 +1,16 @@
 .wrapper {
-  display: grid;
-  position: relative;
+  // display: grid;
+  position: absolute;
+  top: 0;
+  // overflow-y: scroll;
+  // background-color: blue;
+
+  // overflow-y: scroll;
+  // height: 100px;
+  left: 50%;
+  transform: translate(-50%);
   margin: auto;
+  z-index: 2;
   svg {
     height: 2em;
     margin: auto;
@@ -13,9 +22,13 @@
     stroke: var(--theme-color-1);
     transition: stroke-dashoffset var(--animation-duration) ease-in;
   }
+
 }
 
 .inputContainer {
+  // margin-left: ;
+  top: var(--margin);
+  // background-color: green;
   padding: 0 var(--margin);
   height: 3.2em;
   width: 100%;
@@ -31,3 +44,4 @@
    transform: translate(-50%, -50%);
  }
 }
+

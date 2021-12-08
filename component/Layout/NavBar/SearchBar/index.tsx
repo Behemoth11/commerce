@@ -17,7 +17,7 @@ const SearchBar = () => {
 
   const springAnimate = useSpring({
     from: { transform: "translate(0%,-100%)" },
-    transform: (visible && "translate(0%, 100%)") || "translate(0%,-100%)",
+    transform: (visible && "translate(0%, 75%)") || "translate(0%,-100%)",
     onRest: () => {
       setIsCompleteVisible(visible);
     },

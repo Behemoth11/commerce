@@ -18,7 +18,6 @@ const R_NavBar = () => {
       >
         <NavTop />
         <NavSide />
-        <SearchBar />
       </div>
     </>
   );

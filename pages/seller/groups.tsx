@@ -18,13 +18,21 @@ import { getDate, getGroups } from "../../shared/shared_functions";
 import styles from "../../styles/groups.module.scss";
 import Expend from "../../component/popup/Expend";
 import WorkState from "../../component/LoadingController/workState/WorkState";
-import { useRequire } from "../../shared/CustomHooks";
+import {
+  useIsomorphicLayoutEffect,
+  useRequire,
+} from "../../shared/CustomHooks";
 import Header from "../../component/Text/Header";
 import DropDownFilter from "../../component/DropDownFilter";
 import Box from "../../component/Inputs/CheckBoxes/box";
 import Select, { MyOption } from "../../component/Inputs/Select";
 import DynamicHeight from "../../component/Effect/DynamicHeight";
 import Array from "../../component/Inputs/Array";
+import {
+  create_error_message,
+  Verifier,
+} from "../../shared/InputChek";
+import Errors from "../../component/Inputs/Errors";
 
 const useRefresher = () => {
   const [refresh, setRefresh] = useState(true);
@@ -62,7 +70,19 @@ const groups = ({}) => {
       getGroups(
         auth,
         setGroups,
-        ["post_name", "message", "grouping", "published"],
+        [
+          "post_name",
+          "message",
+          "grouping",
+          "published",
+          "post_type",
+          "post_date",
+          "frequency",
+          "next_date",
+          "selected_days",
+          "selected_monthly",
+          "custom_frequency",
+        ],
         [show_published]
       );
     }
@@ -96,11 +116,9 @@ const groups = ({}) => {
 
   const [active, setActive] = useState(myWindow.hashLocation);
 
-  const [inputValue, setInputValue] = useState({});
-
   const activeGroup = getActiveGroup(active);
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (myWindow.hashLocation != "") {
       setActive(myWindow.hashLocation);
     } else {
@@ -189,14 +207,13 @@ const groups = ({}) => {
         <>
           <h2>
             {activeGroup.post_name}{" "}
+          </h2>
             <WorkState
-              style={{ display: "inline-block" }}
               state={fb_state}
               setState={set_fb_state}
               general={fbRef.current}
               cb={{ success: () => myWindow.overlay.close() }}
             />
-          </h2>
           <div className={styles.i_c}>
             {(activeGroup.grouping.length &&
               activeGroup.grouping.map((item) => (
@@ -306,7 +323,7 @@ const groups = ({}) => {
               ))}
             </div>
 
-            <div style={{marginLeft: "2em"}}>
+            <div style={{ marginLeft: "2em" }}>
               <div className={styles.g_d}>
                 <ActiveGroup />
                 {["#create_post", "#edit_post"].includes(active) && (
@@ -337,58 +354,59 @@ export default groups;
 const GroupContext = createContext({
   inputValue: {},
   setInputValue: (arg: {} | ((args: any) => void)) => console.log(4),
-  createPost: () => console.log(4),
-  updatePost: (_id: string) => console.log(4),
+  setInputValue_withLayout: (arg: {} | ((args: any) => void)) => console.log(4),
+  createPost: (request_body: {}, cb: (result) => void) => console.log(4),
+  updatePost: (_id: string, request_body: {}, cb: (result) => void) =>
+    console.log(4),
   state: "",
   setState: () => console.log(4),
   groups: [{ _id: "none" }],
+  layoutflag: 0,
 });
 
 const Groups = ({ children, refresh, groups }) => {
   const [inputValue, setInputValue] = useState<any>({});
   const [state, setState] = useState("rest");
   const auth = useAuthcontext();
+
+  const [layoutflag, setRefresh] = useState(0);
+
+  const setInputValue_withLayout = (arg) => {
+    setRefresh((p) => p + 1);
+    setInputValue(arg);
+  };
   // const myWindow = useMyWindow();
 
-  const createPost = async () => {
+  const createPost = async (request_body, cb) => {
     setState("working");
     let response;
     response = await auth.axios
-      .post(
-        "/api/publish",
-        {
-          post_name: inputValue.post_name,
-          message: inputValue.message,
-          host: window.location.hostname,
+      .post("/api/publish", request_body, {
+        params: {
+          ids: inputValue.item_ids || [],
+          target: "group_post",
         },
-        {
-          params: {
-            ids: inputValue.item_ids || [],
-            target: "group_post",
-          },
-        }
-      )
+      })
       .catch((err) => (response = err.response));
 
     if (response.status === 200) {
       setState("success");
       refresh();
+      cb("success");
     } else {
       setState("failure");
+      cb("failure");
     }
   };
 
-  const updatePost = async (_id) => {
+  const updatePost = async (_id, request_body, cb) => {
     setState("working");
     let response;
     response = await auth.axios
       .put(
         "/api/publish",
         {
-          update: {
-            post_name: inputValue.post_name,
-            message: inputValue.message,
-          },
+          update: request_body,
         },
         {
           params: {
@@ -402,9 +420,11 @@ const Groups = ({ children, refresh, groups }) => {
 
     if (response.status === 200) {
       setState("success");
+      cb("success");
       refresh();
     } else {
       setState("failure");
+      cb("failure");
     }
   };
 
@@ -413,9 +433,11 @@ const Groups = ({ children, refresh, groups }) => {
       value={{
         inputValue,
         setInputValue,
+        layoutflag,
         createPost,
         updatePost,
         state,
+        setInputValue_withLayout,
         //@ts-ignore
         setState,
         groups,
@@ -428,19 +450,20 @@ const Groups = ({ children, refresh, groups }) => {
 
 const FormInputGroup = () => {
   const {
-    inputValue,
+    setInputValue_withLayout,
     setInputValue,
+    inputValue,
     createPost,
     updatePost,
-    state,
     setState,
+    state,
     groups,
   } = useContext(GroupContext);
   const myWindow = useMyWindow();
 
   const getFocusItem = () => {
     let focusItem;
-    console.log(groups);
+    // console.log(groups);
     if (!groups) return null;
     for (let i = 0; i < groups.length; i++) {
       if (groups[i]._id === myWindow.isFocused) {
@@ -456,32 +479,82 @@ const FormInputGroup = () => {
   useEffect(() => {
     const focusItem = getFocusItem();
     // console.log("the focus item", focusItem)
-    // console.log(inputValue)
     if (focusItem) {
+      // setSubmitCount(0);
       setInputValue(focusItem);
+      // console.log("I just updated the input Value", focusItem)
     }
   }, [myWindow.isFocused]);
+
+  useEffect(() => {
+    setSubmitCount(0);
+    setErrors([]);
+    if (myWindow.hashLocation === "#create_post") {
+      setInputValue({post_type: "normal_post", post_name: "", message: ""});
+    }
+  }, [myWindow.hashLocation]);
 
   const lct = myWindow.hashLocation;
   const post_type = inputValue["post_type"];
 
-  const custom_frequency = ["weekly", "monthly"].includes(
-    inputValue["frequency"]
-  )
-    ? "custom"
-    : inputValue["frequency"];
+  const [submitCount, setSubmitCount] = useState(0);
 
-  // console.log(inputValue);
+  const require_stack = {
+    requires: ["post_name", "message", "post_type"],
+    post_type: {
+      scheduled_post: {
+        requires: ["post_date"],
+      },
+      repetitive_post: {
+        requires: ["frequency"],
+        frequency: {
+          weekly: {
+            requires: ["selected_days"],
+          },
+          monthly: {
+            requires: ["selected_monthly"],
+          },
+          custom: {
+            requires: ["custom_frequency", "next_date"],
+          },
+        },
+      },
+    },
+  };
+
+  const [errors, setErrors] = useState([]);
+
+  const check_input = () => {
+    const verifier = new Verifier(
+      {
+        post_type: ["normal_post", "repetitive_post", "scheduled_post"],
+      },
+      require_stack
+    );
+    const { validation, error, relevant_input } = verifier.validate(inputValue)
+
+    if (!validation) {
+      const error_messages = create_error_message(error);
+      setErrors(error_messages);
+      return false;
+    } else {
+      return relevant_input;
+    }
+  };
+
+  // console.log(inputValue)
+
+  const visible = ["#create_post", "#edit_post"].includes(
+    myWindow.hashLocation
+  );
+
+  console.log(inputValue)
+
   return (
     <form
       className={styles.cp_ctn}
       onSubmit={(e) => {
         e.preventDefault();
-        if (lct === "#create_post") {
-          createPost();
-        } else {
-          updatePost(inputValue["_id"]);
-        }
       }}
     >
       <h2>
@@ -489,22 +562,27 @@ const FormInputGroup = () => {
           ? "Creer un groupe de poste"
           : "mettre a jour le post"}
       </h2>
+
       <WorkState
         state={state}
+        type="type1"
         setState={setState}
         cb={{
           success: () => {
-            if (["#create_post"].includes(myWindow.hashLocation))
+            if (["#create_post", "#edit_post"].includes(myWindow.hashLocation))
               window.history.go(-1);
           },
         }}
       />
+
+      <Errors errMsg={errors} />
       <NormalInput
         required={true}
         name="post_name"
         label="Nom du groupe"
         inputValue={inputValue}
         setInputValue={setInputValue}
+        submitCount={submitCount}
         // defaultValue={}
       />
       <TextArea
@@ -512,6 +590,7 @@ const FormInputGroup = () => {
         name="message"
         label="message associer au poste"
         inputValue={inputValue}
+        submitCount={submitCount}
         setInputValue={setInputValue}
       />
 
@@ -520,21 +599,23 @@ const FormInputGroup = () => {
         name={"post_type"}
         inputValue={inputValue}
         label={"Type de poste"}
+        submitCount={submitCount}
         defaultValue={"normal_post"}
-        setInputValue={setInputValue}
+        setInputValue={setInputValue_withLayout}
       >
         <MyOption value="normal_post">Poste normal</MyOption>
         <MyOption value="scheduled_post">Poste programmé</MyOption>
         <MyOption value="repetitive_post">poste répétitif</MyOption>
       </Select>
 
-      <DynamicHeight show={post_type === "scheduled_post"}>
+      <DynamicHeight isVisible={visible} show={post_type === "scheduled_post"}>
         <div style={{ padding: "5px 0px" }}>
           <NormalInput
             required={true}
             name="post_date"
             label="poster automatiquement le"
             inputValue={inputValue}
+            submitCount={submitCount}
             setInputValue={setInputValue}
             min={getDate()}
             type="date"
@@ -542,15 +623,16 @@ const FormInputGroup = () => {
         </div>
       </DynamicHeight>
 
-      <DynamicHeight show={post_type === "repetitive_post"}>
+      <DynamicHeight isVisible={visible} show={post_type === "repetitive_post"}>
         <div style={{ padding: "5px 0px" }}>
           <Select
             required={true}
             name={"frequency"}
             inputValue={inputValue}
+            submitCount={submitCount}
             label={"Frequence du post"}
             defaultValue={"weekly"}
-            setInputValue={setInputValue}
+            setInputValue={setInputValue_withLayout}
           >
             <MyOption value="weekly">Hebdomadaire</MyOption>
             <MyOption value="monthly">Mensuel</MyOption>
@@ -564,16 +646,19 @@ const FormInputGroup = () => {
       </DynamicHeight>
 
       <DynamicHeight
+        isVisible={visible}
         show={
           post_type === "repetitive_post" &&
           inputValue["frequency"] === "weekly"
         }
+        dependency={[inputValue]}
       >
         <div style={{ padding: "5px 0px" }}>
           <Array
             name={"selected_days"}
             label={"jour de post"}
             required={true}
+            submitCount={submitCount}
             inputValue={inputValue}
             setInputValue={setInputValue}
             proposition={{
@@ -592,16 +677,19 @@ const FormInputGroup = () => {
       </DynamicHeight>
 
       <DynamicHeight
+        isVisible={visible}
         show={
           post_type === "repetitive_post" &&
           inputValue["frequency"] === "monthly"
         }
+        dependency={[inputValue]}
       >
         <div style={{ padding: "5px 0px" }}>
           <Array
             name={"selected_monthly"}
             label={"jour de post"}
             type={"number"}
+            submitCount={submitCount}
             required={true}
             inputValue={inputValue}
             setInputValue={setInputValue}
@@ -611,6 +699,7 @@ const FormInputGroup = () => {
       </DynamicHeight>
 
       <DynamicHeight
+        isVisible={visible}
         show={
           post_type === "repetitive_post" &&
           inputValue["frequency"] === "custom"
@@ -621,8 +710,10 @@ const FormInputGroup = () => {
             name={"custom_frequency"}
             label={"frequence de poste"}
             type={"number"}
+            submitCount={submitCount}
             required={true}
             inputValue={inputValue}
+            defaultValue={inputValue["custom_frequency"]}
             setInputValue={setInputValue}
           />
 
@@ -630,7 +721,9 @@ const FormInputGroup = () => {
             required={true}
             name="next_date"
             label="Plannifier le prochain post pour le"
+            defaultValue={inputValue["next_date"]}
             inputValue={inputValue}
+            submitCount={submitCount}
             setInputValue={setInputValue}
             min={getDate()}
             type="date"
@@ -638,24 +731,47 @@ const FormInputGroup = () => {
         </div>
       </DynamicHeight>
 
+      <Button style={{marginLeft: "0px"}} type={"type1"} onClick={() => myWindow.overlay.close()}>
+        retour
+      </Button>
+
       <Button
         onClick={(e) => {
           e.preventDefault();
+          setSubmitCount((prev) => prev + 1);
+          const relevant_input = check_input();
+          if (!relevant_input) return;
+
+          const request_body = Object.assign(relevant_input, {
+            host: window.location.hostname,
+          });
+
+          const cb = (result) => {
+            if (result === "success") {
+              setSubmitCount(0);
+              setErrors([]);
+            }
+          };
+
           if (lct === "#create_post") {
-            createPost();
+            createPost(request_body, cb);
           } else {
-            updatePost(inputValue["_id"]);
+            // console.log(inputValue)
+            updatePost(inputValue["_id"], request_body, cb);
           }
         }}
       >
-        {lct === "#create_post" ? "Créer" : "mettre à jour"}
+        {inputValue["_id"] ? "mettre à jour" : "Créer"}
       </Button>
     </form>
   );
 };
 
 const FormWithOverlay = () => {
-  const { state } = useContext(GroupContext);
+  const { inputValue } = useContext(GroupContext);
+  // // console.log(inputValue);
+
+  // // console.log(layoutflag)
   const myWindow = useMyWindow();
   return (
     <PopupExpendPreset
@@ -674,7 +790,7 @@ const FormWithOverlay = () => {
         myWindow.overlay.close();
         // handleSubmit(e);
       }}
-      dependency={[state]}
+      dependency={[]}
       className={styles.phone}
       labels={{ back: "retour", forward: "creer" }}
     >

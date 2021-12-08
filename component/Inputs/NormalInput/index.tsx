@@ -73,7 +73,8 @@ const Input: React.FC<InputProps> = ({
           } ${
             required &&
             submitCount > 0 &&
-            !`${inputValue[name]}`?.length &&
+            !inputValue[name]?.length &&
+            // !`${inputValue[name]}`?.length &&
             inputStyles.failure
           }`}
           ref={inputRef}

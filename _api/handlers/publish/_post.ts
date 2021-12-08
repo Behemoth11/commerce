@@ -4,24 +4,26 @@ import post_with_photo_m from "../../utils/facebook_fn/post_with_photo_m";
 import { FacebookPost, Product } from "./../../models/index";
 
 const handle_post = async (req, res) => {
-  const data = req.body;
+  const data = req.body || {};
+  const query = req.query;
   const target = req.query.target;
-  const error = [];
+  // console.log(data)
+  let error = "";
 
   switch (target) {
     case "group_post":
       const product_ids = data["ids[]"];
+      // console.log(data)
       const item_group = await FacebookPost.create({
         grouping: product_ids,
         published: {
-          kdshop: data.publish_kdshop || data.publish_facebook,
-          fb: data.publish_facebook,
+          kdshop: query.publish_kdshop || query.publish_facebook,
+          fb: query.publish_facebook,
         },
         owner: req.user._id,
-        message: data.message,
-        post_name: data.post_name,
         lastEdit: new Date().getTime(),
-      }).catch((err) => error.push(err.message));
+        ...data
+      }).catch((err) => error = err.message);
 
       if (data.publish_facebook) {
         const post_picture = await Product.find_visible(
@@ -83,7 +85,7 @@ const handle_post = async (req, res) => {
         data.host || process.env.VERCEL_URL
       }/product/${data._id}`;
 
-      const message = message_root + "\n" + message_template;
+      const message = message_root + "\n\n" + message_template;
       const result = await post_with_photo_m(
         message,
         `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/` +
@@ -101,6 +103,7 @@ const handle_post = async (req, res) => {
         }
       );
 
+      // console.log(result)
       if (result.id) {
         return res.status(200).json({
           post_id: result.id,
@@ -110,8 +113,6 @@ const handle_post = async (req, res) => {
           message: "something went wrong",
         });
       }
-
-      break;
   }
 };
 

@@ -92,10 +92,10 @@ const GroupCard: FC<Props> = ({
                   myWindow.overlay.close();
                 }}
               >
-                Cancel
+                annuler
               </button>
               <button className={styles.dangerous} onClick={delete_group}>
-                yes, delete
+                oui, effacer
               </button>
             </div>
           </div>
@@ -115,14 +115,15 @@ const GroupCard: FC<Props> = ({
                   myWindow.overlay.open(() => myWindow.setFocusOn("none"));
                 }}
               >
-                delete the post
+                effacer le post
               </Button>
               <Button
                 type={"type"}
                 onClick={(e) => {
                   e.stopPropagation();
-                  myWindow.setHashLocation("#edit_post", null, null, "tablet");
                   myWindow.setFocusOn(_id);
+                  myWindow.setHashLocation("#edit_post", null, null, "tablet");
+              
                 }}
               >
                 <img
@@ -130,7 +131,7 @@ const GroupCard: FC<Props> = ({
                   src={"/svg/setting.svg"}
                   alt="setting icon"
                 />
-                Change Settings
+                Changer les parametres
               </Button>
             </div>
           </Popup>
@@ -140,7 +141,7 @@ const GroupCard: FC<Props> = ({
               myWindow.setFocusOn(id, e);
             }}
           >
-            editer le post post
+            editer le poste
           </button>
         </div>
         <div>

@@ -92,8 +92,9 @@ function DropDownFilter({
               </div>
             ))) ||
             content.map((name) => (
-              <>
+              <div className={styles.c_wrp}>
                 <input
+                key={name+marker}
                   type="checkbox"
                   id={filterName + name + marker}
                   name={name}
@@ -105,14 +106,15 @@ function DropDownFilter({
                   }
                 />
                 <label
-                  key={name}
+                key={name+marker}
+                  // key={name}
                   htmlFor={filterName + name + marker}
                   className={`${styles.colorItem} ${
                     (myState[name] && styles.checked) || ""
                   }`}
                   style={{ backgroundColor: match[name] }}
                 ></label>
-              </>
+              </div>
             ))}
         </div>
       </div>

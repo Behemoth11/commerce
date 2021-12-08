@@ -34,21 +34,25 @@ const InputSelect: React.FC<InputProps> = ({
 
   const handleChange = (e) => {
     // console.log(e.target.value)
-    console.log(inputValue)
+    // console.log(inputValue)
     setInputValue(prevState => {
       return {...prevState, [name]: e.target.value}
     })
   }
 
   useEffect(() => {
+    // console.log(inputValue[name] && , "the thing")
+
     setInputValue(prevState => {
       return {...prevState, [name]: defaultValue ||""}
     })
   }, [])
 
+  // console.log(inputValue, "the input value")
+
   return (
     <div className={` ${inputStyles.inputContainer}`}>
-      <select value={inputValue[name]} onChange={handleChange} className={`${inputValue[name] && inputStyles.filled} ${styles.input_ctn}`}>
+      <select value={inputValue[name]} onChange={handleChange} className={`${inputStyles.filled} ${styles.input_ctn}`}>
         <SelectContext.Provider value={{}}>{children}</SelectContext.Provider>
       </select>
       <label>{label}</label>
@@ -56,7 +60,7 @@ const InputSelect: React.FC<InputProps> = ({
   );
 };
 
-interface OptionProps {}
+// interface OptionProps {};
 
 export const MyOption = (props) => {
   const {} = useContext(SelectContext);

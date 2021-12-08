@@ -79,17 +79,22 @@ const handle_put = async (req, res) => {
         delete body.update.fb_id;
         delete body.update.owner;
 
-        if (post_ids.length > 0){
+        // console.log(post_ids);
+
+        if (post_ids.length < 1) {
           return res.status(404).json({
-            message: "Aucun groupe spécifié"
-          })
+            message: "Aucun groupe spécifié",
+          });
         }
 
+        // console.log(body.update)
 
         const mongo_response_1 = await FacebookPost.updateMany(
           { _id: { $in: post_ids }, owner: new Types.ObjectId(req.user._id) },
           { $set: body.update }
         ).catch((err) => err.message);
+
+        console.log(mongo_response_1);
 
         if (mongo_response_1.modifiedCount > 0) {
           return res.status(200).json({
@@ -128,7 +133,7 @@ const handle_put = async (req, res) => {
 
         // const Post =
 
-        const message_template = `\nhttps://${
+        const message_template = `\n\nhttps://${
           body.host || process.env.VERCEL_URL
         }/groups/${post._id}`;
 
@@ -143,15 +148,23 @@ const handle_put = async (req, res) => {
           {
             _id: post._id,
           },
-          { $set: { "published.fb": true, "published.kdshop": true, fb_id: facebook_post.id } }
+          {
+            $set: {
+              "published.fb": true,
+              "published.kdshop": true,
+              fb_id: facebook_post.id,
+            },
+          }
         ).catch((err) => console.log(err.message));
 
-        FacebookPost.create({
-          grouping: [],
-          owner: req.user._id,
-          message: post.message,
-          post_name: post.post_name,
-        });
+        if (post.post_type != "normal_post") {
+          // FacebookPost.create({
+          //   grouping: [],
+          //   owner: req.user._id,
+          //   message: post.message,
+          //   post_name: post.post_name,
+          // });
+        }
 
         if (facebook_post.id)
           return res.status(200).json({

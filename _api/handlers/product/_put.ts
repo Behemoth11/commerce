@@ -29,6 +29,12 @@ const handle_put = async (req, res) => {
     uploadMany(data["images"], error, not_changed),
   ]);
 
+  console.log(not_changed, error)
+
+  console.log(old_images)
+
+  console.log("we will delete : ", old_images.filter((image) => !not_changed[image]))
+
   const erase = await eraseImages(
     old_images.filter((image) => !not_changed[image]),
     error

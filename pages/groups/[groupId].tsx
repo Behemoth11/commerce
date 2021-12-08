@@ -4,6 +4,7 @@ import ProductListFlex from "../../component/ProductList-flex";
 import MoreProduct from "../../component/ProductList-flex/preset";
 import ProductListGrid from "../../component/ProductList-grid";
 import Header from "../../component/Text/Header";
+import Head from "next/head";
 import styles from "../../styles/groups.module.scss";
 
 const INIT = Array.from({ length: 10 }).map((e) => ({ price: 100 }));
@@ -36,6 +37,19 @@ const groups = ({ group, navigation }) => {
       className={`big-container content`}
       style={{ padding: "0 var(--padding)", flexWrap: "wrap" }}
     >
+      <Head>
+        <meta
+          key="description"
+          name="description"
+          content={group.message}
+        />
+        <meta property="og:title" content={group.post_name} />
+        <meta property="og:type" content={group.nature} />
+        {/* <meta property="og:image" content={group.grouping[0]} /> */}
+        <meta property="og:site_name" content="KdShop" />
+        <meta property="og:description" content={group.message} />
+        <title key="title">{`${group.post_name} : Article en vente.`}</title>
+      </Head>
       <Header level={2}>{group.post_name}</Header>
       <ProductListGrid
         displayType="double"
@@ -47,7 +61,7 @@ const groups = ({ group, navigation }) => {
       {Object.keys(navigation).map((ctx) => {
         return (
           <MoreProduct
-            items={navigation[ctx].map_unique(verifier)}
+            items={navigation[ctx]}
             title={`Voire plus de ${ctx}`}
             style={{ marginTop: "2em" }}
           />
@@ -108,7 +122,7 @@ export async function getStaticProps(context) {
       ])
       .lean();
 
-    group = group[0]
+    group = group[0];
 
     if (!group) {
       throw new Error("The page is not found");
@@ -156,7 +170,8 @@ export async function getStaticProps(context) {
       //   console.log(category)
       const response = await Product.find_visible(
         {
-          categories: { $in: [category] },quantity: {$gte: 0} ,
+          categories: { $in: [category] },
+          quantity: { $gte: 0 },
           _id: {
             $nin: not_include.map((item) => new Types.ObjectId(item._id)),
           },

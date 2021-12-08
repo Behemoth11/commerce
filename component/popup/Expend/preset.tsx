@@ -17,6 +17,7 @@ interface MyProps extends Props {
 const PopupExpendPreset: FC<MyProps> = ({
   type,
   labels,
+  timeout,
   className,
   dependency,
   closePopup,
@@ -35,6 +36,7 @@ const PopupExpendPreset: FC<MyProps> = ({
       closePopup={closePopup}
       dependency={dependency}
       className={className}
+      timeout={timeout}
     >
       <div
         className={styles.optionContainer}

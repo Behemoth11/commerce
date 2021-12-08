@@ -168,5 +168,10 @@ export const getDate = () => {
   return (yyyy + "-" + mm + "-" + dd) as string;
 };
 
+export const isEmpty = (arr: string | []) => {
+  if (!arr || arr.length < 1) return true;
+  return false;
+};
+
 
 export const clamp = (num, min, max) => Math.min(Math.max(num, min), max)

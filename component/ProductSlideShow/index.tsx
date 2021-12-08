@@ -75,7 +75,7 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
       if (animate) setTemporaryState(setHasReachTheLimit, "LEFT", false, 200);
       targetScrollPosition = 0;
     }
-    if (targetScrollPosition > S_W) {
+    if (targetScrollPosition > S_W && newIndex != 0) {
       if (animate) setTemporaryState(setHasReachTheLimit, "RIGHT", false, 200);
       targetScrollPosition = S_W;
     }
@@ -111,7 +111,7 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
 
   useEffect(() => {
     update(0, false);
-  }, [imageUrls]);
+  }, [imageUrls, myWindow.size]);
 
   const [coordinate, _setCoordinate] = useState({ x: 0, y: 0 });
   const coordinateRef = useRef({ x: 0, y: 0, scroll: 0 });

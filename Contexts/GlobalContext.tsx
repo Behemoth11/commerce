@@ -48,7 +48,7 @@ const MyWindowContext = createContext({
   setPhase: (id: string) => console.log(0),
   size: 0,
   overlay: {
-    open: (cb?: () => void) => console.log(5),
+    open: (cb?: () => void, className?: string) => console.log(5),
     close: (cb?: () => void, param?: "force") => console.log(5),
     isOpen: Math.random() == 1,
     className: "",
