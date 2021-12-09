@@ -25,10 +25,15 @@ const getNumberOfTracker: (
   dummyChild: React.MutableRefObject<HTMLDivElement>
 ) => string[] = (element, dummyChild) => {
   const result = [];
-  let number = Math.ceil(
+
+  // console.log((element.current.scrollWidth) /
+  // element.current.clientWidth)
+  let number = Math.round(
     (element.current.scrollWidth - dummyChild.current.scrollWidth) /
       element.current.clientWidth
   );
+
+  // console.log(number, "console.log -- the number of tracker")
 
   while (number > 0) {
     result.push("");
@@ -71,11 +76,15 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
     const S_W = sliderRef.current.scrollWidth - vsbl_S_W - childrenWidth;
     var targetScrollPosition = vsbl_S_W * newIndex;
 
+    console.log(targetScrollPosition, S_W)
+
     if (targetScrollPosition < 0) {
+      // console.log("to much on the right")
       if (animate) setTemporaryState(setHasReachTheLimit, "LEFT", false, 200);
       targetScrollPosition = 0;
     }
-    if (targetScrollPosition > S_W && newIndex != 0) {
+    else if (targetScrollPosition > S_W && newIndex!= 0) {
+      // console.log("to much on the left")
       if (animate) setTemporaryState(setHasReachTheLimit, "RIGHT", false, 200);
       targetScrollPosition = S_W;
     }

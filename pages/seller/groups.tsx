@@ -134,13 +134,13 @@ const groups = ({}) => {
 
   const removeItem = async (product_id) => {
     const _id = myWindow.hashLocation.slice(1);
-    const _ = (await import("lodash")).default;
+    const cloneDeep = (await import("lodash.clonedeep")).default;
 
     // console.log(_, "this is the value of low dash");
 
     let item_index;
     setGroups((prevState) => {
-      const state_copy = _.cloneDeep(prevState);
+      const state_copy = cloneDeep(prevState);
       // console.log(state_copy);
       for (let i = 0; i < state_copy.length; i++) {
         if (state_copy[i]._id === _id) {

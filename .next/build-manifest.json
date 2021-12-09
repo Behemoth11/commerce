@@ -29,10 +29,20 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/seller/groups": [
+    "/find": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/seller/groups.js"
+      "static/chunks/pages/find.js"
+    ],
+    "/product/[productId]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/product/[productId].js"
+    ],
+    "/upload": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/upload.js"
     ]
   },
   "ampFirstPages": []

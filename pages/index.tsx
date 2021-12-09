@@ -40,7 +40,7 @@ export default function Home({ representation_items, hot_deals, new_items }) {
           <picture>
             <source
               media="(min-width: 700px)"
-              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_800/v1634645262/chris-ainsworth-tIUXSj2iFVY-unsplash_zlgadf.jpg 800vw,
+              srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_800/v1634645262/chris-ainsworth-tIUXSj2iFVY-unsplash_zlgadf.jpg 800w,
               https://res.cloudinary.com/dkoatnxem/image/upload/ar_2,c_crop/c_scale,w_1000/v1634645262/chris-ainsworth-tIUXSj2iFVY-unsplash_zlgadf.jpg 100w "
             />
             <source
@@ -50,7 +50,7 @@ export default function Home({ representation_items, hot_deals, new_items }) {
             <source srcSet="https://res.cloudinary.com/dkoatnxem/image/upload/ar_0.8,c_crop/c_scale,w_600/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg 600w,https://res.cloudinary.com/dkoatnxem/image/upload/ar_0.8,c_crop/c_scale,w_300/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg 300w" />
             <img
               src="https://res.cloudinary.com/dkoatnxem/image/upload/ar_0.8,c_crop/c_scale,w_800/v1635785618/photo-1560769629-975ec94e6a86_u1flvd.jpg"
-              alt=""
+              alt="background image"
             />
           </picture>
         </div>

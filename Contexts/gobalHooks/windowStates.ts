@@ -46,6 +46,7 @@ const useFocus = () => {
 
   const close_overlay = (cb?: () => void, param?: string) => {
     const len = history.length;
+    // console.log("the close overlya function is running")
 
     let i = 0;
     var index = 0;
@@ -94,6 +95,7 @@ const useFocus = () => {
     cb?: () => void,
     className?: string
   ) => {
+    
     if (className) {
       setOverlay((prev) => ({ ...prev, className }));
     }
@@ -111,16 +113,29 @@ const useFocus = () => {
   };
 
   const handler = () => {
+    console.log("the function is running")
     setHashLocation((prev) => {
       const len = prev.length;
 
+
       // console.log(prev, window.location.hash);
+      // console.log("the state before : " , prev)
 
       if (prev[len - 2] === window.location.hash) {
-        return prev.slice(0, -1);
-      } else {
+        // const newArray = 
+        // console.log("the state that I am returning , " ,newArray)
+        return prev.slice(0,-1);
+      } else if(prev[len-1] !== window.location.hash) {
+
+        // console.log("the state before : " , prev)
+        // const newArray = [...prev, window.location.hash];
+        // console.log("the state that I am returning , " ,newArray)
+        
         return [...prev, window.location.hash];
+      }else{
+        return prev;
       }
+
     });
 
     if (
@@ -134,6 +149,10 @@ const useFocus = () => {
       setOverlay((prev) => ({ ...prev, open: true, callbacks: [] }));
     }
   };
+
+  useEffect(() => {
+    console.log(history)
+  }, [history])
 
   useEffect(() => {
     setTimeout(() => {

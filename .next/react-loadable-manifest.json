@@ -4,11 +4,5 @@
     "files": [
       "static/chunks/node_modules_next_dist_client_dev_noop_js.js"
     ]
-  },
-  "seller/groups.tsx -> lodash": {
-    "id": "./node_modules/lodash/lodash.js",
-    "files": [
-      "static/chunks/node_modules_lodash_lodash_js.js"
-    ]
   }
 }
