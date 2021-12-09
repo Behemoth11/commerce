@@ -6,7 +6,7 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import styles from "../../styles/product.module.scss";
 import ProductSlideShow from "../../component/ProductSlideShow";
 import MoreProduct from "../../component/ProductList-flex/preset";
-import { formatPrice } from "../../shared/UtilityFunctions";
+import { formatPrice, formatUrl } from "../../shared/UtilityFunctions";
 import Loading from "../../component/LoadingController/loading";
 import Options from "../../component/Options";
 import {
@@ -69,12 +69,9 @@ const ProductShow = ({ mainProduct, navigation, related }) => {
         />
         <meta property="og:title" content={mainProduct.productName} />
         <meta property="og:type" content={mainProduct.nature} />
-        <meta property="og:image" content={mainProduct.pr_image_url[0]} />
+        <meta property="og:image" content={formatUrl(mainProduct.pr_image_url[0])} />
         <meta property="og:site_name" content="KdShop" />
-        <meta
-          property="og:description"
-          content={mainProduct.description}
-        />
+        <meta property="og:description" content={mainProduct.description} />
         <title key="title">{`${mainProduct.productName} : Article en vente.`}</title>
       </Head>
       <main className={`${styles.productPage}`}>
@@ -217,7 +214,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
   const message = useRef<string>();
 
   const getMessage = (product) => {
-    return `I am interested in buying the ${product?.productName}.\n
+    return `Je suis interesse par ce produit ${product?.productName}.\n
     ${window?.location?.href}`;
   };
 
@@ -279,7 +276,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
       )) || (
         <>
           <button>
-            <MyLink href={"/cart"}>afficher le panier ?</MyLink>
+            <MyLink href={"/cart"}>afficher panier</MyLink>
           </button>
           <button
             className={styles.dangerous}
@@ -296,8 +293,11 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
     <div className={styles.contact}>
       <a
         className={styles.fb}
-        //@ts-ignore
-        href={`https://m.me/${product.owner?.contact?.fb_id}`}
+        href={`https://m.me/${
+          //@ts-ignore
+          product.owner?.contact?.fb_id ||
+          process.env.NEXT_PUBLIC_FACEBOOK_PAGE_ID
+        }?ref=${JSON.stringify({ _id: product._id })}`}
       >
         <span>Facebook (recommended) </span>
       </a>
@@ -407,7 +407,7 @@ const ProductInformation: React.FC<productInformation> = ({ product }) => {
             <AddPopup />
           </Popup>
           <span>
-            {(items_is_in_cart && "Remove from Cart") || "Add to Cart"}
+            {(items_is_in_cart && "Retirer du panier") || "Ajouter au panier"}
           </span>
 
           <Loading
