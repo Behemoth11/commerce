@@ -40,13 +40,14 @@ export const useScreenSize: () => "big" | "small" = () => {
 };
 
 export const useIntersectionObserver: (
-  rootMargin?: string
+  rootMargin?: string, 
+  defaultVisibility?: number,
 ) => [
   visibilityIndex: number,
   observer: IntersectionObserver,
   observerRef: any
-] = (rootMargin) => {
-  const [visibilityIndex, setVisibilityIndex] = useState<number>(0);
+] = (rootMargin, defaultVisibility) => {
+  const [visibilityIndex, setVisibilityIndex] = useState<number>(defaultVisibility||0);
   const [observer, setObserver] = useState<IntersectionObserver>();
   const observerRef = useRef<HTMLDivElement>();
 
