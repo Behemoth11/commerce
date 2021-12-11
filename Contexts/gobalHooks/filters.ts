@@ -5,17 +5,19 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 export type stateCallBack = Dispatch<SetStateAction<any>> | undefined;
 
 const useFilter = () => {
-  const [filter, setFilter] = useState({});
+  const [filter, setFilter] = useState({_spec: ""});
 
   const toggleFilter = (
     filter: string,
     name: string,
-    _callback: stateCallBack
+    _callback: stateCallBack,
+    behavior?: "string"
   ) => {
     const callback = _callback || setFilter;
 
     callback((_prevState) => {
-      let prevState = { ..._prevState };
+      let _spec = behavior || "passive";
+      let prevState = { ..._prevState, _spec };
 
       let update = prevState[filter];
       update = update || {};

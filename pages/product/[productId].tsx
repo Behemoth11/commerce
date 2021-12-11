@@ -6,7 +6,12 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import styles from "../../styles/product.module.scss";
 import ProductSlideShow from "../../component/ProductSlideShow";
 import MoreProduct from "../../component/ProductList-flex/preset";
-import { formatPrice, formatUrl } from "../../shared/UtilityFunctions";
+import {
+  adapt,
+  formatPrice,
+  formatUrl,
+  formatUrls,
+} from "../../shared/UtilityFunctions";
 import Loading from "../../component/LoadingController/loading";
 import Options from "../../component/Options";
 import {
@@ -69,7 +74,22 @@ const ProductShow = ({ mainProduct, navigation, related }) => {
         />
         <meta property="og:title" content={mainProduct.productName} />
         <meta property="og:type" content={mainProduct.nature} />
-        <meta property="og:image" content={formatUrl(mainProduct.pr_image_url[0])} />
+        <meta
+          property="og:image"
+          itemProp="image"
+          content={formatUrl(mainProduct.pr_image_url[0])}
+        />
+
+        <meta
+          property="og:image"
+          itemProp="image"
+          content={adapt(mainProduct.pr_image_url[0], 300, 100)}
+        />
+        <meta
+          property="twitter:image"
+          itemProp="image"
+          content={adapt(mainProduct.pr_image_url[0], 300, 100)}
+        />
         <meta property="og:site_name" content="KdShop" />
         <meta property="og:description" content={mainProduct.description} />
         <title key="title">{`${mainProduct.productName} : Article en vente.`}</title>
@@ -497,13 +517,15 @@ export async function getStaticProps(context) {
       .populate("owner", ["contact", "username"])
       .lean();
 
-    product._id = product._id.toString();
-    delete product.owner._id;
-
-    const rprs = getRelated(product.categories, true);
-
-    const verifier = {};
-
+      
+      product._id = product._id.toString();
+      delete product.owner._id;
+      
+      const rprs = getRelated(product.categories, true);
+      // console.log(product)
+      
+      const verifier = {};
+      
     // console.log(rprs, true);
 
     let navigation = await Product.find_visible(
@@ -514,7 +536,8 @@ export async function getStaticProps(context) {
       },
       ["productName", "description", "representation", "pr_image_url"]
     ).lean();
-    navigation = distinct(navigation, verifier);
+    const navigation_verifier = {};
+    navigation = distinct(navigation, navigation_verifier);
 
     if (navigation.length < 4) {
       await Promise.all(
@@ -532,8 +555,8 @@ export async function getStaticProps(context) {
           if (!item) return;
           item._id = item._id.toString();
           item.representation = representation;
-          if (verifier[item._id]) return;
-          verifier[item._id] = true;
+          if (navigation_verifier[item._id]) return;
+          navigation_verifier[item._id] = true;
           navigation.push(item);
         })
       );
@@ -543,14 +566,16 @@ export async function getStaticProps(context) {
       product.categories.join(" "),
       {
         _id: { $ne: _id_obj },
+        quantity: { $gte: 0 },
       },
       {
         limit: 10,
         page: 0,
+        
         field: ["productName", "description", "price", "pr_image_url"],
       }
     );
-
+    // console.log(related)
     related = distinct(related, verifier);
 
     return {
@@ -558,6 +583,7 @@ export async function getStaticProps(context) {
       revalidate: 60 * 50,
     };
   } catch (err) {
+    // console.log(err)
     return {
       notFound: true,
     };

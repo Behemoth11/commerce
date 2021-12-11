@@ -79,7 +79,7 @@ function DropDownFilter({
                   value={name}
                   checked={(myState && myState[name]) || false}
                   onChange={(e) =>{
-                    toggleChecked(filterName, name, stateFunction)}
+                    toggleChecked(filterName, name, stateFunction, mobile && "now" || "passive" )}
                   }
                 />
                 <label
@@ -102,7 +102,7 @@ function DropDownFilter({
                   className={styles.colorInput}
                   checked={myState[name] || false}
                   onChange={() =>
-                    toggleChecked(filterName, name, stateFunction)
+                    toggleChecked(filterName, name, stateFunction,  mobile && "now" || "passive")
                   }
                 />
                 <label

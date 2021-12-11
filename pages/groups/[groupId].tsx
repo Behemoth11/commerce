@@ -45,7 +45,7 @@ const groups = ({ group, navigation }) => {
         />
         <meta property="og:title" content={group.post_name} />
         <meta property="og:type" content={group.nature} />
-        {/* <meta property="og:image" content={group.grouping[0]} /> */}
+        {/* <meta property="og:image" itemProp="image" content={group.grouping[0]} /> */}
         <meta property="og:site_name" content="KdShop" />
         <meta property="og:description" content={group.message} />
         <title key="title">{`${group.post_name} : Article en vente.`}</title>

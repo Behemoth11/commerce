@@ -58,6 +58,7 @@ const FilterContainer: React.FC<Props> = ({
     }
   };
 
+
   const setFilter = (showApplyFilter && _setFilter) || filters.setFilter;
   const filter = (showApplyFilter && _filter) || filters.value;
 
@@ -91,27 +92,6 @@ const FilterContainer: React.FC<Props> = ({
           toggleChecked={filters.toggleFilter}
           mobile={showApplyFilter}
         />
-        {/* <DropDownFilter
-          filterName={"location"}
-          content={["gabon", "u.s", "Ghana", "black"]}
-          isOpen={openedFilters.includes("location")}
-          toggle={updateOpenedFilters}
-          filter={filter}
-          stateFunction={setFilter}
-          toggleChecked={filters.toggleFilter}
-          mobile={showApplyFilter}
-        /> */}
-
-        {/* <DropDownFilter
-          filterName={"brand"}
-          content={["toyota", "pejo", "Nissan", "nike", "underarmor"]}
-          isOpen={openedFilters.includes("brand")}
-          toggle={updateOpenedFilters}
-          filter={filter}
-          stateFunction={setFilter}
-          toggleChecked={filters.toggleFilter}
-          mobile={showApplyFilter}
-        /> */}
         <div className={styles.priceFilter}>
           <h6>Price : </h6>
           <div>
@@ -144,7 +124,7 @@ const FilterContainer: React.FC<Props> = ({
               onClick={async() => {
                 applyFilterSideEffect();
                 setWasClicked(false)
-                filters.setFilter(_filter);
+                filters.setFilter({..._filter, _spec : "now"});
               }}
             >
               <Button>Apply Filter</Button>

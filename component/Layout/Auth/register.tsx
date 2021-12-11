@@ -12,38 +12,57 @@ import {
   useMyWindow,
 } from "../../../Contexts/GlobalContext";
 import { add_captchat_token } from "../../../shared/shared_functions";
+import { create_error_message, Verifier } from "../../../shared/InputChek";
+import Errors from "../../Inputs/Errors";
+import DynamicHeight from "../../Effect/DynamicHeight";
+import Cross from "../../svg/Correct/cross";
 
-const Register = ({
-  inputValue,
-  setInputValue,
-  setHeight,
-  active,
-  setActive,
-}) => {
+const Register = ({ setHeight, active, setActive }) => {
   const [error, setError] = useState({});
   const [editState, setEditState] = useState("register");
 
   const User = useUser();
   const auth = useAuthcontext();
   const myWindow = useMyWindow();
+  const [inputValue, setInputValue] = useState({});
 
   const handleSubmit = async () => {
     const data = {
       username: inputValue["username"],
       password: inputValue["password"],
-      lastName: inputValue["Last Name"],
-      firstName: inputValue["First Name"],
+      lastName: inputValue["last_name"],
+      firstName: inputValue["first_name"],
+      re_password: inputValue["re_password"],
     };
-    setError({});
-    const error_password = validatePassword(data.password);
-    const error_username = validateUsername(data.username);
 
-    if (error_password.length > 0 || error_username.length > 0) {
-      return setError({ password: error_password, username: error_username });
+    const verifier = new Verifier(undefined, [
+      "username",
+      "password",
+      "lastName",
+      "firstName",
+      "re_password",
+    ]);
+    setError({});
+
+    console.log(inputValue);
+
+    const { validation, error, relevant_input } = verifier.validate(data);
+
+    const formated_errors = create_error_message(error);
+
+    if (inputValue["re_password"] !== inputValue["password"]){
+      formated_errors.push("mot de passe et verification doive etre identique")
     }
+
+    setError([...formated_errors]);
+
+    if (formated_errors.length > 0 ) {
+      return;
+    }
+
     setEditState("loading");
 
-    await add_captchat_token(data)
+    await add_captchat_token(data);
     const registerResponse = await axios
       .post("/api/auth/register", data)
       .catch((err) => setError({ username: [err.response.data.message] }));
@@ -74,6 +93,11 @@ const Register = ({
     }
   }, [active, error, myWindow.size]);
 
+  useEffect(() => {
+    setError([]);
+    setInputValue({})
+  }, [active]);
+
   return transition(
     (style, condition) =>
       condition && (
@@ -84,27 +108,31 @@ const Register = ({
         >
           <div className={styles._formContainer}>
             <h3> Creer a compte gratuit !</h3>
-            <form className={styles.registerForm}>
+            {/* <DynamicHeight isVisible={active} show={true} dependency={[error]}> */}
+              <Errors errMsg={error} />
+            {/* </DynamicHeight> */}
+
+            <form className={styles.registerForm} autoComplete="off">
               <div className={styles.two}>
                 <Input
                   error={error}
                   required={true}
                   label={"prenom"}
-                  name="First Name"
+                  name="first_name"
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
-                  defaultValue={inputValue["First Name"]}
+                  defaultValue={null}
                 />
                 <Input
                   error={error}
                   required={true}
                   label="non de famille"
-                  name="Last Name"
+                  name="last_name"
                   inputValue={inputValue}
                   allowCapitalCase={true}
                   setInputValue={setInputValue}
-                  defaultValue={inputValue["Last Name"]}
+                  defaultValue={null}
                 />
               </div>
               <Input
@@ -114,7 +142,7 @@ const Register = ({
                 required={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
-                defaultValue={inputValue["username"]}
+                defaultValue={null}
               />
 
               <Input
@@ -126,8 +154,21 @@ const Register = ({
                 allowCapitalCase={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
-                defaultValue={inputValue["password"]}
+                defaultValue={null}
               />
+
+              <Input
+                error={error}
+                type="password"
+                name="re_password"
+                required={true}
+                label="verifier mot de passe"
+                allowCapitalCase={true}
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+                defaultValue={null}
+              />
+
               <div className={styles.terms}>
                 <p>
                   En creant un compte vous accepter
@@ -146,6 +187,9 @@ const Register = ({
             </div>
             <TPLogin setEditState={setEditState} />
           </div>
+          <span className={styles.cross} onClick={() => myWindow.overlay.close()}>
+          <Cross showing={true} stroke="black" />
+        </span>
         </animated.div>
       )
   );

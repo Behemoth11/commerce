@@ -77,8 +77,8 @@ export const useUser = () => {
 };
 
 const FilterContext = createContext({
-  value: {},
-  toggleFilter: (filter: string, name: string, _callback: stateCallBack) =>
+  value: {_spec: ""},
+  toggleFilter: (filter: string, name: string, _callback: stateCallBack, behavior?: string) =>
     console.log(0),
   setFilter: (payload: {}) => console.log(0),
 });
@@ -86,15 +86,15 @@ export const useFilterContext = () => {
   return useContext(FilterContext);
 };
 
-declare global {
-  interface Array<T> {
-    map_unique(
-      verifier: {},
-      cb?: (item?: any, index?: number) => any,
-      get_id?: (variable: any) => string
-    ): Array<T>;
-  }
-}
+// declare global {
+//   interface Array<T> {
+//     map_unique(
+//       verifier: {},
+//       cb?: (item?: any, index?: number) => any,
+//       get_id?: (variable: any) => string
+//     ): Array<T>;
+//   }
+// }
 
 function GlobalContextProvider({ children }) {
   const auth = useAuthAxios();
@@ -108,38 +108,38 @@ function GlobalContextProvider({ children }) {
     localStorage.setItem("meta_64", "0");
   }, []);
 
-  Array.prototype.map_unique = function (
-    verifier: {},
-    cb?: (item?: any, index?: number) => any,
-    get_id?: (variable: any) => string
-  ) {
-    let result = [];
+  // Array.prototype.map_unique = function (
+  //   verifier: {},
+  //   cb?: (item?: any, index?: number) => any,
+  //   get_id?: (variable: any) => string
+  // ) {
+  //   let result = [];
 
-    let origin_i = 0;
-    let target_i = 0;
+  //   let origin_i = 0;
+  //   let target_i = 0;
 
-    while (origin_i < this.length) {
-      const id = get_id ? get_id(this[origin_i]) : this[origin_i]?._id;
+  //   while (origin_i < this.length) {
+  //     const id = get_id ? get_id(this[origin_i]) : this[origin_i]?._id;
 
-      if (verifier[id] === true) {
-        // console.log("I decided not to render the item");
-        origin_i++;
-        continue;
-      }
+  //     if (verifier[id] === true) {
+  //       // console.log("I decided not to render the item");
+  //       origin_i++;
+  //       continue;
+  //     }
 
-      (result[target_i] =
-        (cb && cb(this[origin_i], origin_i)) || this[origin_i]),
-        origin_i;
+  //     (result[target_i] =
+  //       (cb && cb(this[origin_i], origin_i)) || this[origin_i]),
+  //       origin_i;
 
       
 
-      verifier[id] = true;
-      origin_i++;
-      target_i++;
-    }
+  //     verifier[id] = true;
+  //     origin_i++;
+  //     target_i++;
+  //   }
 
-    return result;
-  };
+  //   return result;
+  // };
 
   return (
     <CartContext.Provider value={cart}>

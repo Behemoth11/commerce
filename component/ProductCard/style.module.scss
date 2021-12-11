@@ -79,6 +79,10 @@
 .informations {
   overflow: auto;
   text-align: center;
+  p{
+
+    white-space: pre-wrap ;
+  }
 }
 /****************************description**************************************/
 .description {

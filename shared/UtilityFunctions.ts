@@ -50,8 +50,31 @@ export const checkForm = (formData, nonRequired, errors) => {
   }
 }
 
-export const formatUrl = (array) => {
-  return array.map((item) =>
-    item ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/${item}` : ""
+export const limitStringTo = (max_length: number, string: string,) => {
+  if (!string) return;
+  const finalString = string.slice(0, max_length-2);
+  if (finalString.length < string.length){
+    return finalString+"...";
+  }else{
+    return string;
+  }
+
+}
+export const formatUrls = (urls: []) => {
+  return urls.map((item) =>
+    item
+      ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/${item}`
+      : ""
   );
 };
+
+export const formatUrl = (url: string) => {
+  return `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/${url}`;
+};
+
+export const adapt = (link: string, width: number, aspect_ratio: number) =>
+`https://res.cloudinary.com/${
+  process.env.NEXT_PUBLIC_CLOUDINARY_NAME
+}/image/upload/ar_${
+  Math.round(10000 / aspect_ratio) / 100
+},c_crop/c_scale,w_${width}/${link}.jpg`;

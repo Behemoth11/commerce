@@ -35,7 +35,9 @@ const Input: React.FC<InputProps> = ({
   allowCapitalCase,
 }) => {
   const inputRef = useRef<HTMLInputElement>();
+  
   useEffect(() => {
+    if (defaultValue === null) return;
     setInputValue((prevState) => ({
       ...prevState,
       [name]: defaultValue || "",
