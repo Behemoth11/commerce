@@ -58,7 +58,8 @@ const index: React.FC<{ imageUrls: string[] }> = ({ imageUrls }) => {
   };
 
   const [visibilityIndex, observer, observerRef] =
-    useIntersectionObserver("0px");
+    useIntersectionObserver("0px", 0);
+
   const [hasReachedTheLimit, setHasReachTheLimit] = useState<boolean | string>(
     false
   );
