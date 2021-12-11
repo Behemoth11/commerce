@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 import {
-  formatUrl,
+  formatUrls,
   string_and_array_to_array,
 } from "../../../shared/UtilityFunctions";
 import post_with_photo_m from "../../utils/facebook_fn/post_with_photo_m";
@@ -133,14 +133,14 @@ const handle_put = async (req, res) => {
 
         // const Post =
 
-        const message_template = `\n\nhttps://${
+        const link = `https://${
           body.host || process.env.VERCEL_URL
         }/groups/${post._id}`;
 
-        const url = formatUrl(raw_url);
+        const url = formatUrls(raw_url);
 
         const facebook_post = await post_with_photo_m(
-          post.message + message_template,
+          post.message,  link,
           ...url
         );
 

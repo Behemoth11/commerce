@@ -2,7 +2,7 @@ import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styles from "../../styles/find.module.scss";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PageIndex from "../../component/pagination";
 import ActiveFilter from "../../component/ActiveFilters";
 import FilterOverlay from "../../component/FilterOverlay";
@@ -59,6 +59,8 @@ function FindContent({ title, description }) {
   const [relatedItems, setRelatedItems] = useState([
     { representation: "x" },
     { representation: "x" },
+    { representation: "x" },
+    { representation: "x" },
   ]);
   // console.log("the categories are ", categories)
   useEffect(() => {
@@ -69,23 +71,14 @@ function FindContent({ title, description }) {
     })();
   }, [categories]);
 
+  const item_state_id = useRef(0);
   useEffect(() => {
-    (async () => {
-      // if (!categories) {
-      //   router.push(
-      //     {
-      //       pathname: router.pathname,
-      //       query: { ...router.query, categories: "tous" },
-      //     },
-      //     undefined,
-      //     { shallow: true }
-      //   );
-      // }
-      // if (!filters.value) return;'
+    const LATENCY = 1000;
+    setProducts(INIT);
+    item_state_id.current++;
 
-      setProducts(INIT)
-
-      const query = createUrl(categories, filters.value);
+    const getItems = async (filters) => {
+      const query = createUrl(categories, filters);
 
       const beginningTime = new Date().getTime();
       // @ts-ignore
@@ -107,7 +100,17 @@ function FindContent({ title, description }) {
 
       setProducts(data.products);
       setAreMoreProduct(data.more);
-    })();
+    };
+
+    const { _spec, ...filers_val } = filters.value;
+    if (filters.value["_spec"] === "now") getItems(filers_val);
+    else {
+      const _id = item_state_id.current;
+      setTimeout(() => {
+        if (_id !== item_state_id.current) return;
+        getItems(filers_val);
+      }, LATENCY);
+    }
   }, [filters.value, categories, page]);
 
   const setPage = (newPage) => {
@@ -152,11 +155,9 @@ function FindContent({ title, description }) {
             maxOpened={3}
           />
         </div>
-        <div >
+        <div>
           {products.length === 0 && (
-            <div
-              style={{ textAlign: "center", margin: "15vh 0" }}
-            >
+            <div style={{ textAlign: "center", margin: "15vh 0" }}>
               Auncun articles correspondant
             </div>
           )}

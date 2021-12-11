@@ -91,7 +91,7 @@ const Navigation = ({
                       },
                     }}
                   >
-                    <div onClick={() => toggleNavBar()} className={`flex align-center`}>
+                    <div onClick={() => toggleNavBar()} >
                       {label}
                     </div>
                   </MyLink>

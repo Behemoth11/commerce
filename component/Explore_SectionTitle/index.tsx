@@ -31,23 +31,24 @@ const Explore_SectionTitle: React.FC<Props> = ({ categories }) => {
             </div>
             <div className={`${styles.rubriqueLink}`}>
               <MyLink href={`/`}>Home</MyLink>&nbsp; / &nbsp;
-              {Categories.slice(0, -1).map(
+              {Categories.map(
                 (element, index) =>
                   element && (
                     <span key={element}>
                       <MyLink
                         href={{
                           pathname: "/find",
-                          query: { categories: categories.slice(0, index + 1) },
+                          query: { categories: element.toLowerCase() },
                         }}
                       >
                         {element.toLowerCase()}
                       </MyLink>
-                      &nbsp; /&nbsp;
+                      
+                      &nbsp; {index < Categories.length -1 && "/" || ""} &nbsp;
                     </span>
                   )
               )}
-              <MyLink href={`/`}>{Categories[Categories.length - 1]}</MyLink>
+              {/* <MyLink href={`/`}>{Categories[Categories.length - 1]}</MyLink> */}
             </div>
           </h2>
         </>

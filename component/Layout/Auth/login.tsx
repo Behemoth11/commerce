@@ -13,17 +13,21 @@ import {
 } from "../../../Contexts/GlobalContext";
 import { add_captchat_token } from "../../../shared/shared_functions";
 import CaptChat from "../../CaptChat";
+import DynamicHeight from "../../Effect/DynamicHeight";
+import Cross from "../../svg/Correct/cross";
 
-const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
+const Login = ({ setHeight, active, setActive }) => {
   const [error, setError] = useState({});
   const [editState, setEditState] = useState("login");
   const User = useUser();
   const auth = useAuthcontext();
   const myWindow = useMyWindow();
 
+  const [inputValue, setInputValue] = useState({});
+
   const handleSubmit = async () => {
     const data = {
-      username: inputValue["user name"],
+      username: inputValue["user_name"],
       password: inputValue["password"],
     };
     const error_password = validatePassword(data.password);
@@ -35,7 +39,7 @@ const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
     setEditState("loading");
 
     await add_captchat_token(data);
-    
+
     const loginResponse = await axios
       .post("/api/auth/login", data)
       .catch((err) => {
@@ -48,7 +52,7 @@ const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
       auth.setToken({ value: token, expiresAt });
 
       setEditState("success");
-      window.history.go(-1)
+      window.history.go(-1);
     } else setEditState("failure");
   };
 
@@ -64,7 +68,13 @@ const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
   const myRef = useRef();
 
   useEffect(() => {
+    setError([])
+  }, [active])
+
+
+  useEffect(() => {
     if (active) {
+      setError("")
       //@ts-ignore
       setHeight(myRef.current.clientHeight);
     }
@@ -81,9 +91,18 @@ const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
         >
           <div className={styles._formContainer}>
             <h3> Se connecter a KdShop</h3>
+            <DynamicHeight show={true}>
+              {
+                //@ts-ignore
+                error.global && (
+                  //@ts-ignore
+                  <div className={styles.error}>*{error.global}</div>
+                )
+              }
+            </DynamicHeight>
             <form className={styles.loginForm}>
               <Input
-                name="user name"
+                name="user_name"
                 required={true}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
@@ -98,30 +117,24 @@ const Login = ({ inputValue, setInputValue, setHeight , active, setActive}) => {
                 setInputValue={setInputValue}
                 defaultValue={inputValue["password"]}
               />
-              <CaptChat/>
+              <CaptChat />
             </form>
-            {
-              //@ts-ignore
-              error.global && (
-                //@ts-ignore
-                <div className={styles.error}>*{error.global}</div>
-              )
-            }
+
             <button className={styles.validate} onClick={handleSubmit}>
               <span>Login</span>
               <Loading width={editState == "loading" ? "4em" : "0"} />
             </button>
 
-            <div
-              className={styles.else}
-              onClick={() => setActive("register")}
-            >
+            <div className={styles.else} onClick={() => setActive("register")}>
               <p>Vous n'avez pas encore de compte?</p>
               <span>creer un compte graduit.</span>
             </div>
 
             <TPLogin setEditState={setEditState} />
           </div>
+          <span className={styles.cross} onClick={() => myWindow.overlay.close()}>
+          <Cross showing={true} stroke="black" />
+        </span>
         </animated.div>
       )
   );

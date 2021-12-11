@@ -44,20 +44,21 @@ const ActiveFilters = ({ displayType, setDisplayType }) => {
         <div className={styles.filterContainer}>
           {filterNames.map(
             (filterName) =>
-              (filterName == "price" && (
+              filterName.slice(0, 1) !== "_" &&
+              ((filterName == "price" && (
                 <Filter
                   content={filters.value[filterName]}
                   key={filterName}
                   action={() => filters.toggleFilter(filterName, name)}
                 />
               )) ||
-              Object.keys(filters.value[filterName]).map((name) => (
-                <Filter
-                  content={name}
-                  key={filterName + name}
-                  action={() => filters.toggleFilter(filterName, name)}
-                />
-              ))
+                Object.keys(filters.value[filterName]).map((name) => (
+                  <Filter
+                    content={name}
+                    key={filterName + name}
+                    action={() => filters.toggleFilter(filterName, name)}
+                  />
+                )))
           )}
           {filterNames.length == 0 && (
             <>
@@ -68,10 +69,7 @@ const ActiveFilters = ({ displayType, setDisplayType }) => {
                 />
               </div>
               <div className="big">
-                <Filter
-                  content={"No Filter"}
-                  action={() => 2}
-                />
+                <Filter content={"No Filter"} action={() => 2} />
               </div>
             </>
           )}

@@ -11,14 +11,14 @@ export class Verifier {
   private require_stack: {};
 
   constructor(verifier?: verifier, require_stack?: {}) {
-    this.verifiers = verifier;
+    this.verifiers = verifier || {};
     this.require_stack = require_stack;
   }
 
   private static getRelevantField = (input, require_stack) => {
     if (Array.isArray(require_stack)) return require_stack;
 
-    const importantField = require_stack.requires;
+    const importantField = require_stack.requires || Object.keys(input);
 
     if (!importantField) return [];
 
@@ -46,6 +46,7 @@ export class Verifier {
   ) => {
     const verifier = this.verifiers[fieldName];
     if (verifier === undefined) {
+      console.log(value)
       return !isEmpty(value) || "empty";
     } else if (Array.isArray(verifier)) {
       if (isEmpty(value)) return "empty";

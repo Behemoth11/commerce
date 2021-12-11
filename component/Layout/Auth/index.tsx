@@ -6,16 +6,15 @@ import { validatePassword, validateUsername } from "./validator";
 import { useSpring, animated, config, useTransition } from "react-spring";
 import Login from "./login";
 import Register from "./register";
+import Cross from "../../svg/Correct/cross";
 
 const index = () => {
-  const [inputValue, setInputValue] = useState({});
   const [height, setHeight] = useState(400);
   const myWindow = useMyWindow();
   const dummyRef = useRef(0);
 
   const [visible, setVisible] = useState(false);
-  const [active, setActive] = useState<"login"|"register" | "">("")
-
+  const [active, setActive] = useState<"login" | "register" | "">("");
 
   const [animateHeight, animateApi] = useSpring(() => ({
     height: 400,
@@ -26,14 +25,12 @@ const index = () => {
   }, [height]);
 
   useEffect(() => {
-    if (
-      myWindow.hashLocation === "#auth"
-    ) {
+    if (myWindow.hashLocation === "#auth") {
       setVisible(true);
-      setActive("login")
+      setActive("login");
     } else {
       const id = dummyRef.current;
-      setActive("")
+      setActive("");
       setTimeout(() => {
         if (id == dummyRef.current) {
           setVisible(false);
@@ -53,15 +50,11 @@ const index = () => {
       >
         <animated.div style={{ ...animateHeight }}>
           <Register
-            inputValue={inputValue}
-            setInputValue={setInputValue}
             setHeight={setHeight}
             active={active === "register"}
             setActive={setActive}
           />
           <Login
-            inputValue={inputValue}
-            setInputValue={setInputValue}
             setHeight={setHeight}
             active={active === "login"}
             setActive={setActive}

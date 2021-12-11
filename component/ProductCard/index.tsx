@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import styles from "./style.module.scss";
 import { memo, useState, useEffect, useRef } from "react";
 import LoadingProductCard from "../LoadingProductCard";
-import { formatPrice } from "../../shared/UtilityFunctions";
+import { formatPrice, limitStringTo } from "../../shared/UtilityFunctions";
 import { getRandomInteger } from "../../shared/UtilityFunctions";
 import MyImage from "../../component/MyImage";
 
@@ -25,7 +25,7 @@ interface Props {
   aspect_ratio?: number;
   footer?: any;
   productName: string;
-  description: { head: string; info: string };
+  description: string;
 }
 
 const index: React.FC<Props> = ({
@@ -87,7 +87,7 @@ const index: React.FC<Props> = ({
                 >
                   <div className={`${styles.informations}`}>
                     <h2>{productName}</h2>
-                    <p>{description}</p>
+                    <p>{description && limitStringTo(90, description)}</p>
                   </div>
                 </div>
             </MyLink>
@@ -128,7 +128,7 @@ const index: React.FC<Props> = ({
               <MyLink
                 href={{
                   pathname: "/find",
-                  query: { categories: footer.split(" ") },
+                  query: { categories: footer.split(" ").filter(str => str) },
                 }}
                 style={{ textDecoration: "underline" }}
               >

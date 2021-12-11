@@ -29,11 +29,11 @@ const handle_put = async (req, res) => {
     uploadMany(data["images"], error, not_changed),
   ]);
 
-  console.log(not_changed, error)
+  // console.log(not_changed, error)
 
-  console.log(old_images)
+  // console.log(old_images)
 
-  console.log("we will delete : ", old_images.filter((image) => !not_changed[image]))
+  // console.log("we will delete : ", old_images.filter((image) => !not_changed[image]))
 
   const erase = await eraseImages(
     old_images.filter((image) => !not_changed[image]),
@@ -43,13 +43,14 @@ const handle_put = async (req, res) => {
   const meta = data.meta
 
   if (meta?.create_post) {
-    const message_root =
+    const message =
       data.meta.message ||
       `nous avons un nouvel articles. Suivez le lien pour plus de ${data.categories[0]}`;
-    const message_template = `${data.meta.host}/product/${_id}` 
 
-    const message = message_root + "\n" + message_template
-    const response = await post_with_photo_m(message, `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/` + pr_image_url[0]);
+    const link = `https://${data.meta.host}/product/${_id}` 
+
+    // const message = message_root + "\n" + message_template
+    const response = await post_with_photo_m(message,link, `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_NAME}/image/upload/` + pr_image_url[0]);
   }
   if (meta?.post_with_group){
     const mongo_response = await FacebookPost.updateMany(

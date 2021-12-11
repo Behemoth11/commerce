@@ -2,6 +2,7 @@ import {
   getCategories,
   ITEM_NATURE,
   navBarSections,
+  REPRESENTATIONS,
 } from "../component/Layout/NavBar/navBarSections";
 
 import React, {
@@ -18,7 +19,7 @@ import styles from "../styles/upload.module.scss";
 import InputArray from "../component/Inputs/Array";
 import Input from "../component/Inputs/NormalInput";
 import TextArea from "../component/Inputs/TextArea";
-import { checkForm, formatUrl } from "../shared/UtilityFunctions";
+import { checkForm, formatUrls } from "../shared/UtilityFunctions";
 import ImageInput from "../component/Inputs/ImageInput";
 import LoadingController from "../component/LoadingController";
 import MultipleImageInput from "../component/Inputs/MultipleImageInput";
@@ -76,11 +77,14 @@ const nonRequired = {
 }; // also change the requied field present on input component
 
 const REQUIRED_FIELD = [
+  // "all_pr_image_url",
+  // "pr_image_url",
   "productName",
   "description",
   "price",
   "quantity",
   "location",
+  // "images",
   "presentationImage",
   "nature",
 ];
@@ -153,8 +157,8 @@ function Upload() {
 
         setInputValue({
           ...productData,
-          presentationImage: formatUrl(productData.pr_image_url),
-          images: formatUrl(productData.all_pr_image_url),
+          presentationImage: formatUrls(productData.pr_image_url),
+          images: formatUrls(productData.all_pr_image_url),
         });
       } else {
         updateTask(ACTION.FETCHING, "failure");
@@ -179,23 +183,27 @@ function Upload() {
     color: ["bleu", "vert", "violet", "marron", "noire", "blanc", "jaune"],
     categories: getCategories(navBarSections, ["menu"]),
     tags: ["inexpensive", "affordable", "good", "bad"],
-    representation: ["hot deals", "women", "men", "stuff"],
+    representation: ["hot deals"].concat(REPRESENTATIONS),
     nature: ITEM_NATURE,
   });
 
   const submitItem = async () => {
-    const _inputValue = { ...inputValue };
+    // const _inputValue = { ...inputValue };
     setSubmitCount((prevState) => prevState + 1);
     document.getElementById("__next")?.scrollTo({ top: 0, behavior: "smooth" });
     const errors = [];
 
     const verifier = new Verifier({}, REQUIRED_FIELD);
 
-    checkForm(_inputValue, nonRequired, errors);
+    // checkForm(_inputValue, nonRequired, errors);
 
     const { relevant_input, error, validation } = verifier.validate(inputValue);
 
     const formated_errors = create_error_message(error);
+
+    if (relevant_input["password"] !== relevant_input["re_password"]){
+      formated_errors.push("mots de passe et verification n'ont pas la meme valeur")
+    }
 
     setErrMsg([...formated_errors]);
     if (!validation) {
@@ -206,15 +214,15 @@ function Upload() {
     let res;
     _setEditState("loading");
 
-    await add_captchat_token(_inputValue);
+    await add_captchat_token(inputValue);
 
     if (editRef.current == "update") {
       res = await auth.axios
-        .put(`/api/product/withId/${query._id}`, _inputValue)
+        .put(`/api/product/withId/${query._id}`, inputValue)
         .catch((err) => (res = err.response));
     } else if (editRef.current == "upload") {
       res = await auth.axios
-        .post("/api/product", _inputValue)
+        .post("/api/product", inputValue)
         .catch((err) => (res = err.response));
     }
 
