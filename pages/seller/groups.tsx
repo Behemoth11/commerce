@@ -28,10 +28,7 @@ import Box from "../../component/Inputs/CheckBoxes/box";
 import Select, { MyOption } from "../../component/Inputs/Select";
 import DynamicHeight from "../../component/Effect/DynamicHeight";
 import Array from "../../component/Inputs/Array";
-import {
-  create_error_message,
-  Verifier,
-} from "../../shared/InputChek";
+import { create_error_message, Verifier } from "../../shared/InputChek";
 import Errors from "../../component/Inputs/Errors";
 
 const useRefresher = () => {
@@ -55,7 +52,7 @@ const groups = ({}) => {
   useRequire("seller");
   const [groups, setGroups] = useState<undefined | null | [group]>(undefined);
 
-  const [listener, refresh] = useRefresher();
+  const [listener, refresh ] = useRefresher();
 
   const auth = useAuthcontext();
   const User = useUser();
@@ -187,8 +184,11 @@ const groups = ({}) => {
     fbRef.current = response.message;
     if (response.status === 200) {
       set_fb_state("success");
-      //@ts-ignore
-      refresh();
+      setTimeout(() => {
+        myWindow.overlay.close();
+        //@ts-ignore
+        refresh();
+      }, 2000)
     } else {
       set_fb_state("failure");
     }
@@ -205,15 +205,17 @@ const groups = ({}) => {
     return (
       activeGroup && (
         <>
-          <h2>
-            {activeGroup.post_name}{" "}
-          </h2>
-            <WorkState
-              state={fb_state}
-              setState={set_fb_state}
-              general={fbRef.current}
-              cb={{ success: () => myWindow.overlay.close() }}
-            />
+          <h2>{activeGroup.post_name} </h2>
+          <WorkState
+            state={fb_state}
+            setState={set_fb_state}
+            general={fbRef.current}
+            cb={{
+              success: () => {
+
+              },
+            }}
+          />
           <div className={styles.i_c}>
             {(activeGroup.grouping.length &&
               activeGroup.grouping.map((item) => (
@@ -237,6 +239,8 @@ const groups = ({}) => {
       )
     );
   };
+  // console.log("the hash location", myWindow.hashLocation)
+  // console.log(getActiveGroup(myWindow.hashLocation) )
 
   return (
     <div
@@ -246,26 +250,6 @@ const groups = ({}) => {
       <Groups refresh={refresh} groups={groups}>
         <Header level={2}>Voyer les groupes que vous havez configure</Header>
         <div onClick={(e) => e.stopPropagation()} className={styles.control}>
-          <PopupExpendPreset
-            type={"2"}
-            top_prop={20}
-            width="95vw"
-            visible={(getActiveGroup(myWindow.hashLocation) && true) || false}
-            closePopup={() => window.history.go(-1)}
-            header={activeGroup && activeGroup.post_name}
-            close={() => {
-              myWindow.setHashLocation("none", -1);
-            }}
-            next={(e) => {
-              myWindow.overlay.close();
-              // handleSubmit(e);
-            }}
-            dependency={[groups, active, fb_state]}
-            className={styles.phone}
-          >
-            <ActiveGroup />
-          </PopupExpendPreset>
-
           <PopupExpendPreset
             type={"2"}
             top_prop={20}
@@ -490,7 +474,7 @@ const FormInputGroup = () => {
     setSubmitCount(0);
     setErrors([]);
     if (myWindow.hashLocation === "#create_post") {
-      setInputValue({post_type: "normal_post", post_name: "", message: ""});
+      setInputValue({ post_type: "normal_post", post_name: "", message: "" });
     }
   }, [myWindow.hashLocation]);
 
@@ -531,7 +515,7 @@ const FormInputGroup = () => {
       },
       require_stack
     );
-    const { validation, error, relevant_input } = verifier.validate(inputValue)
+    const { validation, error, relevant_input } = verifier.validate(inputValue);
 
     if (!validation) {
       const error_messages = create_error_message(error);
@@ -548,7 +532,7 @@ const FormInputGroup = () => {
     myWindow.hashLocation
   );
 
-  console.log(inputValue)
+  // console.log(inputValue)
 
   return (
     <form
@@ -731,7 +715,11 @@ const FormInputGroup = () => {
         </div>
       </DynamicHeight>
 
-      <Button style={{marginLeft: "0px"}} type={"type1"} onClick={() => myWindow.overlay.close()}>
+      <Button
+        style={{ marginLeft: "0px" }}
+        type={"type1"}
+        onClick={() => myWindow.overlay.close()}
+      >
         retour
       </Button>
 

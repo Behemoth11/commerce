@@ -44,9 +44,12 @@ const useFocus = () => {
     }));
   };
 
+
   const close_overlay = (cb?: () => void, param?: string) => {
+
+    console.log("I am clossing the overlay")
     const len = history.length;
-    // console.log("the close overlya function is running")
+    console.log("the close overlay function is running")
 
     let i = 0;
     var index = 0;
@@ -56,7 +59,7 @@ const useFocus = () => {
       return;
     }
     while (len - 1 - i >= 0) {
-      console.log(history);
+      // console.log(history);
       if (history[len - 1 - i] === "" || history[len - 1 - i] === "#none") {
         // console.log("the location of the item ", i);
         index = i;
@@ -71,6 +74,7 @@ const useFocus = () => {
     // }
 
     // console.log("How much should I go back ", index);
+    // console.log(history)
 
     if (index > 0) {
       window.history.go(-index);
@@ -88,6 +92,10 @@ const useFocus = () => {
   const [history, setHashLocation] = useState([""]);
   const depth = useRef(0);
   const hashLocation = history[history.length - 1];
+
+  useEffect(() => {
+    console.log(hashLocation)
+  }, [hashLocation])
 
   const open = (
     id: string,
@@ -113,7 +121,7 @@ const useFocus = () => {
   };
 
   const handler = () => {
-    console.log("the function is running")
+    // console.log("the function is running")
     setHashLocation((prev) => {
       const len = prev.length;
 
@@ -151,7 +159,7 @@ const useFocus = () => {
   };
 
   useEffect(() => {
-    console.log(history)
+    // console.log(history,"********************")
   }, [history])
 
   useEffect(() => {

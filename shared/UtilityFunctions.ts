@@ -34,7 +34,7 @@ export const checkForm = (formData, nonRequired, errors) => {
   for (let i = 0; i < keys.length; i++) {
     const key = keys[i];
 
-    if (nonRequired[key] || formData[key] ) continue;
+    if (nonRequired[key] || formData[key]) continue;
 
     if (Array.isArray(formData[key])) {
       let errorOnKey = 0;
@@ -44,22 +44,21 @@ export const checkForm = (formData, nonRequired, errors) => {
           errors.push(`${key} should be entirely field`);
         }
       });
-    } 
+    }
 
     if (!formData[key]) errors.push(`${key} should be field`);
   }
-}
+};
 
-export const limitStringTo = (max_length: number, string: string,) => {
+export const limitStringTo = (max_length: number, string: string) => {
   if (!string) return;
-  const finalString = string.slice(0, max_length-2);
-  if (finalString.length < string.length){
-    return finalString+"...";
-  }else{
+  const finalString = string.slice(0, max_length - 2);
+  if (finalString.length < string.length) {
+    return finalString + "...";
+  } else {
     return string;
   }
-
-}
+};
 export const formatUrls = (urls: []) => {
   return urls.map((item) =>
     item
@@ -73,8 +72,39 @@ export const formatUrl = (url: string) => {
 };
 
 export const adapt = (link: string, width: number, aspect_ratio: number) =>
-`https://res.cloudinary.com/${
-  process.env.NEXT_PUBLIC_CLOUDINARY_NAME
-}/image/upload/ar_${
-  Math.round(10000 / aspect_ratio) / 100
-},c_crop/c_scale,w_${width}/${link}.jpg`;
+  `https://res.cloudinary.com/${
+    process.env.NEXT_PUBLIC_CLOUDINARY_NAME
+  }/image/upload/ar_${
+    Math.round(10000 / aspect_ratio) / 100
+  },c_crop/c_scale,w_${width}/${link}.jpg`;
+
+export const createHref = (
+  href:
+    | { pathname: string; query: { [query: string]: string[] | string } }
+    | string
+) => {
+  if (typeof href === "string") return href;
+  let pathname = href.pathname;
+  const queries = href.query;
+
+  let query_arr = [];
+
+  for (const query in queries) {
+    const query_value = queries[query];
+
+    if (typeof query_value === "string") {
+      query_arr.push(`${query}=${query_value}`);
+    } else {
+      for (const unique_query_value of query_value) {
+        query_arr.push(`${query}=${unique_query_value}`);
+      }
+    }
+  }
+
+  let query_string = "";
+  if (query_arr.length > 0) {
+    query_string = "?" + query_arr.join("&");
+  }
+
+  return pathname + query_string;
+};

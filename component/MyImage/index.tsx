@@ -48,7 +48,7 @@ const MyImage: React.FC<{
   }, [observer]);
 
   useEffect(() => {
-    if (isVisible) console.log("I am visible");
+    // if (isVisible) console.log("I am visible");
     if (isVisible) observer && observer.unobserve(imageRef.current);
   }, [isVisible]);
 

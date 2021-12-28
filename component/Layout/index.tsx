@@ -34,9 +34,9 @@ function index({ children }) {
     ) {
       document.getElementById("__next").scroll(0, 0);
       old_url.current = { query: router.query, pathname: router.pathname };
+      // myWindow.overlay.close(null,"force")
     }
     
-    myWindow.overlay.close(null,"force")
     myWindow.setPhase("fadeIn");
 
     setInternalState("idle");

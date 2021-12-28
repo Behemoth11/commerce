@@ -70,6 +70,7 @@ const GroupCard: FC<Props> = ({
         <div className={styles.imageContainer}>
           {pictures.map((picture) => (
             <MyImage
+              key={picture}
               isVisible={true}
               imageLink={picture}
               ASPECT_RATIO={100}
@@ -123,7 +124,6 @@ const GroupCard: FC<Props> = ({
                   e.stopPropagation();
                   myWindow.setFocusOn(_id);
                   myWindow.setHashLocation("#edit_post", null, null, "tablet");
-              
                 }}
               >
                 <img
